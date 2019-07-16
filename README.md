@@ -1,4 +1,4 @@
-**NOTE**: This branch is no longer under active development or maintainence. To use the BLE library upto date with Amazon FreeRTOS code please use **master** branch.
+**NOTE**: This branch is no longer under active development or maintainence. To use the BLE library upto date with Amazon FreeRTOS code please use [master](https://github.com/aws/amazon-freertos/tree/master) branch.
 
 ## Getting Started
 
