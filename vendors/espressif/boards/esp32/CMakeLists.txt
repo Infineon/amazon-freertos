@@ -21,6 +21,11 @@ target_link_options(
     INTERFACE ${linker_flags}
 )
 
+target_compile_definitions(
+	AFR::compiler::mcu_port
+	INTERFACE AFR_USE_GLOBAL_ESP_MUTEX
+)
+
 # -------------------------------------------------------------------------------------------------
 # Amazon FreeRTOS portable layers
 # -------------------------------------------------------------------------------------------------
@@ -42,6 +47,7 @@ endif()
 afr_mcu_port(kernel)
 afr_glob_src(driver_src DIRECTORY "${esp_idf_dir}" RECURSE)
 
+
 set(
     kernel_inc_dirs
     "${esp_idf_dir}/components/app_update/include/"
@@ -56,6 +62,7 @@ set(
     "${esp_idf_dir}/components/soc/esp32/include"
     "${esp_idf_dir}/components/soc/include"
     "${esp_idf_dir}/components/spi_flash/include"
+    "${esp_idf_dir}/components/newlib/platform_include"
     "${board_dir}/application_code/espressif_code/freertos/include"
     "${board_dir}/application_code/espressif_code/ethernet/include"
     "${board_dir}/application_code/espressif_code/mbedtls/port/include"
@@ -67,10 +74,19 @@ target_include_directories(
     AFR::kernel::mcu_port
     INTERFACE
         ${kernel_inc_dirs}
-        "${AFR_KERNEL_DIR}/portable/ThirdParty/GCC/Xtensa_ESP32/include/"
+        "${AFR_KERNEL_DIR}/portable/ThirdParty/GCC/Xtensa_ESP32"
+        "${AFR_KERNEL_DIR}/portable/ThirdParty/GCC/Xtensa_ESP32/include"
         "${aws_credentials_include}"
         "${board_dir}/config_files"
         "$<$<NOT:${AFR_METADATA_MODE}>:${CMAKE_BINARY_DIR}/config>"
+)
+
+# Add a global ESP-IDF Portmux for use by libraries in portENTER_CRITICAL
+# This is enabled for all non-kernel libraries by defining the preprocessor symbol
+# AFR_USE_GLOBL_ESP_MUTEX in the top-level makefile
+target_sources(
+	AFR::kernel::mcu_port
+	INTERFACE "${afr_ports_dir}/smp_mutex/global_smp_mutex.c"
 )
 
 # WiFi
@@ -162,6 +178,15 @@ target_link_libraries(
         AFR::pkcs11
 )
 
+
+# ESP-IDF version of FreeRTOS kernel requires these flags.
+# Instead, we want only the kernel to inherit these
+target_compile_definitions(
+	AFR::kernel::mcu_port
+	INTERFACE
+	_ESP_FREERTOS_INTERNAL
+	)
+
 # -------------------------------------------------------------------------------------------------
 # Amazon FreeRTOS demos and tests
 # -------------------------------------------------------------------------------------------------
@@ -169,7 +194,10 @@ afr_glob_src(config_files DIRECTORY "${board_dir}/config_files")
 
 if(AFR_IS_TESTING)
     set(exe_target aws_tests)
-    set(extra_exe_sources "${AFR_TESTS_DIR}/common/iot_tests_network.c")
+    set(extra_exe_sources 
+	    "${AFR_TESTS_DIR}/common/iot_tests_network.c"
+	    "${board_dir}/application_code/esp_smp_tests.c"
+    )
 else()
     set(exe_target aws_demos)
     set(
@@ -312,3 +340,4 @@ add_custom_target(monitor
     -P run_idf_monitor.cmake
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
     )
+
