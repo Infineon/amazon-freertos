@@ -30,10 +30,10 @@
  * Update udptestECHO_SERVER_ADDR# and
  * udptestECHO_PORT with IP address
  * and port of unencrypted TCP echo server. */
-#define udptestECHO_SERVER_ADDR0         10
-#define udptestECHO_SERVER_ADDR1         184
-#define udptestECHO_SERVER_ADDR2         166
-#define udptestECHO_SERVER_ADDR3         154
+#define udptestECHO_SERVER_ADDR0         34
+#define udptestECHO_SERVER_ADDR1         218
+#define udptestECHO_SERVER_ADDR2         25
+#define udptestECHO_SERVER_ADDR3         197
 #define udptestECHO_PORT                 ( 8883 )
 
 /* Non-Encrypted Echo Server.
