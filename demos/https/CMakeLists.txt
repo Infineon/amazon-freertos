@@ -1,9 +1,25 @@
 # AFR HTTPS demo
 afr_demo_module(https)
 
-afr_set_demo_metadata(ID "HTTPS_SYNC_DOWNLOAD_DEMO")
-afr_set_demo_metadata(DESCRIPTION "Examples that demonstrate the HTTPS Client")
-afr_set_demo_metadata(DISPLAY_NAME "HTTPS Client Demos")
+afr_write_demo_metadata("
+https:
+  id: HTTPS_SYNC_DOWNLOAD_DEMO
+  description: Examples that demonstrate the HTTPS Client
+  display_name: HTTPS Client Demos
+  configuredDemos:
+    - exampleName: HTTPS_SYNC_DOWNLOAD_DEMO
+      description: HTTPS client demo will perform download task using synchronous method
+      defaultChoice: true
+    - exampleName: HTTPS_ASYNC_DOWNLOAD_DEMO
+      description: HTTPS client demo will perform download task using asynchronous method
+      defaultChoice: false
+    - exampleName: HTTPS_SYNC_UPLOAD_DEMO
+      description: HTTPS client demo will perform upload task using synchronous method
+      defaultChoice: false
+    - exampleName: HTTPS_ASYNC_UPLOAD_DEMO
+      description: HTTPS client demo will perform upload task using asynchronous method
+      defaultChoice: false
+")
 
 afr_module_sources(
     ${AFR_CURRENT_MODULE}

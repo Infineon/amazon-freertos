@@ -152,6 +152,11 @@ function(afr_add_subdirectory module_name)
   afr_cache_append(AFR_METADATA_CMAKE_FILES "${module_name}/CMakeLists.txt")
 endfunction()
 
+# Write demo metadata to a file.
+function(afr_write_demo_metadata metadata)
+    file(APPEND "${AFR_METADATA_OUTPUT_DIR}/console/demos.yml" "${metadata}")
+endfunction()
+
 function(afr_write_metadata)
     set(ide_dir "${AFR_METADATA_OUTPUT_DIR}/ide")
     set(console_dir "${AFR_METADATA_OUTPUT_DIR}/console")
