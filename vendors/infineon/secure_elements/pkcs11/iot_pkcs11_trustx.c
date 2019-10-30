@@ -1031,7 +1031,7 @@ CK_RV prvAddObjectToList( CK_OBJECT_HANDLE xPalHandle,
                     xResult = prvDeleteObjectFromList( xAppHandle2 );
                 }
 
-                lOptigaOid = strtol(pcLabel, &xEnd, 16);
+                lOptigaOid = strtol((char*)pcLabel, &xEnd, 16);
 
                 CK_BYTE pucDumbData[68];
                 uint16_t ucDumbDataLength = 68;
@@ -3142,14 +3142,15 @@ CK_DEFINE_FUNCTION( CK_RV, C_GenerateKeyPair )( CK_SESSION_HANDLE xSession,
             /* For the public key, the OPTIGA library will return the standard 65 
             bytes of uncompressed curve points plus a 3-byte tag. The latter will 
             be intentionally overwritten below. */
-            if ( OPTIGA_LIB_SUCCESS != optiga_crypt_ecc_generate_keypair(OPTIGA_ECC_NIST_P_256,
+			uint32_t ret = optiga_crypt_ecc_generate_keypair(OPTIGA_ECC_NIST_P_256,
                                                                          (uint8_t)OPTIGA_KEY_USAGE_SIGN,
                                                                          FALSE,
                                                                          &lOptigaOid,
                                                                          pucPublicKeyDer,
-                                                                         &ucPublicKeyDerLength))
+                                                                         &ucPublicKeyDerLength);
+            if ( OPTIGA_LIB_SUCCESS != ret)
             {
-                PKCS11_PRINT( ( "ERROR: Failed to generate a keypair \r\n" ) );
+                PKCS11_PRINT( ( "ERROR: Failed to generate a keypair. Error code: 0x%02X label = %s\r\n", ret, pxPrivateLabel->pValue ) );
                 xResult = CKR_FUNCTION_FAILED;
             }
         }
