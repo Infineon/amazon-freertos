@@ -1,5 +1,5 @@
-This repository is a forked version of the main FreeRTOS github [repo](https://github.com/aws/amazon-freertos/).
-It focuses on helping to integrate the OPTIGA Trust X and M embedded security solutions.
+__This repository is a forked version of the main FreeRTOS github [repo](https://github.com/aws/amazon-freertos/).
+It focuses on helping to integrate the OPTIGA Trust X and M embedded security solutions.__
 
 ## Cloning
 This repo uses [Git Submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to bring in dependent components.
