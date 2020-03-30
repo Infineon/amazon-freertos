@@ -49,7 +49,7 @@ The following MCU boards are supported for FreeRTOS:
 ## amazon-freeRTOS/projects
 The ```./projects``` folder contains the IDE test and demo projects for each vendor and their boards. The majority of boards can be built with both IDE and cmake (there are some exceptions!). Please refer to the Getting Started Guides above for board specific instructions.
 
-## Porting guide to enable Trust M on your FreeRTOS compatible board
+## Porting guide to enable Trust X/M on your FreeRTOS compatible board
 
 IF you want to port Trust X/M onto any board listed [here](https://github.com/Infineon/amazon-freertos-optiga-trust/tree/feature/trustm/vendors), you can follow the steps below. The OPTIGA Trust X/M integrates into FreeRTOS comaptible board in three points, namely:
 1) **PKCS#11 Interface integration**. It doesn't require any further porting. As soon as you FreeRTOS board is compatile to version 201910 and above the PKCS#11 interface can be taken as it is. You can read more about this [here](https://github.com/Infineon/amazon-freertos-optiga-trust/tree/feature/trustm/libraries/abstractions/pkcs11).
