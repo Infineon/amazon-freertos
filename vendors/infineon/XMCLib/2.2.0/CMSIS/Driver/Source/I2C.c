@@ -573,10 +573,10 @@ static int32_t I2C_PowerControl(ARM_POWER_STATE state, I2C_RESOURCES *const i2c)
     XMC_I2C_CH_SetInputSource(i2c->i2c, XMC_I2C_CH_INPUT_SDA, i2c->sda_pin_input);
     XMC_I2C_CH_SetInputSource(i2c->i2c, XMC_I2C_CH_INPUT_SCL, i2c->scl_pin_input);
 
-    XMC_USIC_CH_EnableInputDigitalFilter(i2c->i2c, XMC_I2C_CH_INPUT_SDA);
-    XMC_USIC_CH_EnableInputSync(i2c->i2c, XMC_I2C_CH_INPUT_SDA);
-    XMC_USIC_CH_EnableInputDigitalFilter(i2c->i2c, XMC_I2C_CH_INPUT_SCL);
-    XMC_USIC_CH_EnableInputSync(i2c->i2c, XMC_I2C_CH_INPUT_SCL);
+    XMC_USIC_CH_EnableInputDigitalFilter(i2c->i2c, (XMC_USIC_CH_INPUT_t)XMC_I2C_CH_INPUT_SDA);
+    XMC_USIC_CH_EnableInputSync(i2c->i2c, (XMC_USIC_CH_INPUT_t)XMC_I2C_CH_INPUT_SDA);
+    XMC_USIC_CH_EnableInputDigitalFilter(i2c->i2c, (XMC_USIC_CH_INPUT_t)XMC_I2C_CH_INPUT_SCL);
+    XMC_USIC_CH_EnableInputSync(i2c->i2c, (XMC_USIC_CH_INPUT_t)XMC_I2C_CH_INPUT_SCL);
 
     XMC_I2C_CH_SetHoldDelay(i2c->i2c, i2c->hdel);
 
@@ -1342,11 +1342,13 @@ static int32_t I2C_Control(uint32_t control, uint32_t arg, I2C_RESOURCES *const 
       XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
       // Clear the bus by sending nine clock pulses
       XMC_I2C_CH_MasterStart(i2c->i2c, 0xff, XMC_I2C_CH_CMD_READ);
-  	  while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U);
+  	  while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U)
+      ;
 
   	  XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
   	  XMC_I2C_CH_MasterStop(i2c->i2c);
-  	  while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U);
+  	  while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U)
+      ;
 
       break;
   

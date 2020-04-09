@@ -57,6 +57,7 @@
  * INCLUDES
  *******************************************************************************/
 #include "Driver_ETH_PHY.h"
+#include "RTE_Components.h"
 
 #if defined(RTE_Drivers_PHY_KSZ8081)
 

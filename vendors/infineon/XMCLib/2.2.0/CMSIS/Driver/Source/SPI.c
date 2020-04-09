@@ -42,6 +42,7 @@
  * History
  *
  * Version 2.12 Added interrupt priority
+ *              Fixed current mode identification
  *
  * Version 2.11 Fix compiler warnings
  *
@@ -79,6 +80,8 @@
 
 #define SPI_BIT_ORDER_MSB_LSB (0UL)
 #define SPI_BIT_ORDER_LSB_MSB (1UL)
+
+#define ARM_SPI_MODE_Msk (0x07UL << ARM_SPI_CONTROL_Pos)
 
 // Driver Version
 static const ARM_DRIVER_VERSION DriverVersion = 
@@ -1766,7 +1769,7 @@ static int32_t SPI_Control(uint32_t control, uint32_t arg, SPI_RESOURCES *const 
       break;
   
     case ARM_SPI_SET_BUS_SPEED:             // Set Bus Speed in bps; arg = value
-      if(spi->info->mode == ARM_SPI_MODE_MASTER)
+      if((spi->info->mode & ARM_SPI_MODE_Msk) == ARM_SPI_MODE_MASTER)
       {
         // Configure pin
         XMC_GPIO_SetMode(spi->mosi_miso_port.port, spi->mosi_miso_port.pin, XMC_GPIO_MODE_INPUT_TRISTATE);
@@ -1804,7 +1807,7 @@ static int32_t SPI_Control(uint32_t control, uint32_t arg, SPI_RESOURCES *const 
         XMC_GPIO_Init(spi->slave_select_output_port.port,spi->slave_select_output_port.pin,spi->pin_slave_select_output_config);              
       }
       
-      if(spi->info->mode == ARM_SPI_MODE_MASTER_SIMPLEX)
+      if((spi->info->mode & ARM_SPI_MODE_Msk) == ARM_SPI_MODE_MASTER_SIMPLEX)
       {
         XMC_GPIO_SetMode(spi->mosi_miso_port.port, spi->mosi_miso_port.pin, XMC_GPIO_MODE_INPUT_TRISTATE);
         XMC_GPIO_SetMode(spi->output_clck_port.port, spi->output_clck_port.pin, XMC_GPIO_MODE_INPUT_TRISTATE);
@@ -1872,7 +1875,7 @@ static int32_t SPI_Control(uint32_t control, uint32_t arg, SPI_RESOURCES *const 
   
   }
   
-  if (spi->info->mode ==  ARM_SPI_MODE_MASTER) 
+  if (((spi->info->mode & ARM_SPI_MODE_Msk) == ARM_SPI_MODE_MASTER) || ((spi->info->mode & ARM_SPI_MODE_Msk) == ARM_SPI_MODE_MASTER_SIMPLEX)) 
   {
     switch (control & ARM_SPI_SS_MASTER_MODE_Msk) 
     {
@@ -1923,7 +1926,7 @@ static int32_t SPI_Control(uint32_t control, uint32_t arg, SPI_RESOURCES *const 
       }
     }
 
-    if (spi->info->mode ==  ARM_SPI_MODE_SLAVE) 
+    if ((spi->info->mode & ARM_SPI_MODE_Msk) ==  ARM_SPI_MODE_SLAVE) 
     {
       switch (control & ARM_SPI_SS_SLAVE_MODE_Msk) 
       {

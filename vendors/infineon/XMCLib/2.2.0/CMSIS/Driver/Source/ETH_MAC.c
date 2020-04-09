@@ -377,6 +377,7 @@ static ARM_ETH_MAC_CAPABILITIES ETH_MAC_GetCapabilities(void)
 
 static int32_t ETH_MAC_Initialize(ARM_ETH_MAC_SignalEvent_t cb_event)
 {
+  uint32_t eth_clk;
   XMC_GPIO_CONFIG_t gpio_config;
     
   if (handler.flags & ETH_MAC_FLAG_INIT) {
@@ -389,20 +390,42 @@ static int32_t ETH_MAC_Initialize(ARM_ETH_MAC_SignalEvent_t cb_event)
   /* Register driver callback function */
   handler.cb_event = cb_event;
 
+  /* Enable ETH_MAC peripheral clock */
+  SCU_CLK->CLKSET |= SCU_CLK_CLKSET_ETH0CEN_Msk;
+
+#if UC_DEVICE != XMC4500
+  SCU_CLK->CGATCLR2 |= SCU_CLK_CGATCLR2_ETH0_Msk;     
+#endif
+      
+  /* Reset ETH_MAC peripheral */
+  SCU_RESET->PRSET2 |= SCU_RESET_PRSET2_ETH0RS_Msk;
+  SCU_RESET->PRCLR2 |= SCU_RESET_PRCLR2_ETH0RS_Msk;
+	
+  eth_clk = GetEthernetClockFrequency();
+  if (eth_clk <= 35000000U) {
+    ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_16;
+  }
+  else if (eth_clk <= 60000000U) {
+    ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_26;
+  }
+  else if (eth_clk <= 100000000U) {
+    ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_42;
+  }
+  else if (eth_clk <= 150000000U) {
+    ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_62;
+  }
+  else if (eth_clk <= 200000000U) {
+    ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_102;
+  }
+  else if (eth_clk <= 250000000U) {
+    ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_124;
+  }
+  else {
+    return ARM_DRIVER_ERROR_UNSUPPORTED;
+  }
+	
   /* Configure ETH_MAC pins */
 #if RTE_ENET_MII
-  ETH0_CON->CON = (RTE_ENET_MII_RXD0_PIN_ID << ETH_CON_RXD0_Pos) |
-                  (RTE_ENET_MII_RXD1_PIN_ID << ETH_CON_RXD1_Pos) |
-                  (RTE_ENET_MII_RXD2_PIN_ID << ETH_CON_RXD2_Pos) |
-                  (RTE_ENET_MII_RXD3_PIN_ID << ETH_CON_RXD3_Pos) |
-                  (RTE_ENET_MII_RXCLK_PIN_ID << ETH_CON_CLK_RMII_Pos) |
-                  (RTE_ENET_MII_RXDV_PIN_ID << ETH_CON_CRS_DV_Pos) |
-                  (RTE_ENET_MII_CRS_PIN_ID << ETH_CON_CRS_Pos) |
-                  (RTE_ENET_MII_RXER_PIN_ID << ETH_CON_RXER_Pos) |
-                  (RTE_ENET_MII_COL_PIN_ID << ETH_CON_COL_Pos) |
-                  (RTE_ENET_MII_TXCLK_PIN_ID << ETH_CON_CLK_TX_Pos) |
-                  (RTE_ENET_MIIM_MDIO_PIN_ID << ETH_CON_MDIO_Pos);
-
   gpio_config.mode = XMC_GPIO_MODE_INPUT_TRISTATE;
   XMC_GPIO_Init(RTE_ENET_MII_RXD0_PIN, &gpio_config);
   XMC_GPIO_Init(RTE_ENET_MII_RXD1_PIN, &gpio_config);
@@ -415,6 +438,19 @@ static int32_t ETH_MAC_Initialize(ARM_ETH_MAC_SignalEvent_t cb_event)
   XMC_GPIO_Init(RTE_ENET_MII_COL_PIN, &gpio_config);
   XMC_GPIO_Init(RTE_ENET_MII_TXCLK_PIN, &gpio_config);
   XMC_GPIO_Init(RTE_ENET_MIIM_MDIO_PIN, &gpio_config);
+
+  ETH0_CON->CON = (RTE_ENET_MII_RXD0_PIN_ID << ETH_CON_RXD0_Pos) |
+                  (RTE_ENET_MII_RXD1_PIN_ID << ETH_CON_RXD1_Pos) |
+                  (RTE_ENET_MII_RXD2_PIN_ID << ETH_CON_RXD2_Pos) |
+                  (RTE_ENET_MII_RXD3_PIN_ID << ETH_CON_RXD3_Pos) |
+                  (RTE_ENET_MII_RXCLK_PIN_ID << ETH_CON_CLK_RMII_Pos) |
+                  (RTE_ENET_MII_RXDV_PIN_ID << ETH_CON_CRS_DV_Pos) |
+                  (RTE_ENET_MII_CRS_PIN_ID << ETH_CON_CRS_Pos) |
+                  (RTE_ENET_MII_RXER_PIN_ID << ETH_CON_RXER_Pos) |
+                  (RTE_ENET_MII_COL_PIN_ID << ETH_CON_COL_Pos) |
+                  (RTE_ENET_MII_TXCLK_PIN_ID << ETH_CON_CLK_TX_Pos) |
+                  (RTE_ENET_MIIM_MDIO_PIN_ID << ETH_CON_MDIO_Pos);
+
    
   gpio_config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;
   gpio_config.output_strength = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SHARP_EDGE;
@@ -442,15 +478,7 @@ static int32_t ETH_MAC_Initialize(ARM_ETH_MAC_SignalEvent_t cb_event)
   
   XMC_GPIO_SetHardwareControl(RTE_ENET_MIIM_MDIO_PIN, RTE_ENET_MIIM_MDIO_HWSEL);
                   
-#else  
-  ETH0_CON->CON = ETH_CON_INFSEL_Msk |
-                  (RTE_ENET_RMII_RXD0_PIN_ID << ETH_CON_RXD0_Pos) |
-                  (RTE_ENET_RMII_RXD1_PIN_ID << ETH_CON_RXD1_Pos) |
-                  (RTE_ENET_RMII_REFCLK_PIN_ID << ETH_CON_CLK_RMII_Pos) |
-                  (RTE_ENET_RMII_CRS_DV_PIN_ID << ETH_CON_CRS_DV_Pos) |
-                  (RTE_ENET_RMII_RXER_PIN_ID << ETH_CON_RXER_Pos) |
-                  (RTE_ENET_MIIM_MDIO_PIN_ID << ETH_CON_MDIO_Pos);  
-    
+#else     
   gpio_config.mode = XMC_GPIO_MODE_INPUT_TRISTATE;
   XMC_GPIO_Init(RTE_ENET_RMII_RXD0_PIN, &gpio_config);
   XMC_GPIO_Init(RTE_ENET_RMII_RXD1_PIN, &gpio_config);
@@ -459,6 +487,14 @@ static int32_t ETH_MAC_Initialize(ARM_ETH_MAC_SignalEvent_t cb_event)
   XMC_GPIO_Init(RTE_ENET_RMII_RXER_PIN, &gpio_config);
   XMC_GPIO_Init(RTE_ENET_MIIM_MDIO_PIN, &gpio_config);
    
+  ETH0_CON->CON = ETH_CON_INFSEL_Msk |
+                  (RTE_ENET_RMII_RXD0_PIN_ID << ETH_CON_RXD0_Pos) |
+                  (RTE_ENET_RMII_RXD1_PIN_ID << ETH_CON_RXD1_Pos) |
+                  (RTE_ENET_RMII_REFCLK_PIN_ID << ETH_CON_CLK_RMII_Pos) |
+                  (RTE_ENET_RMII_CRS_DV_PIN_ID << ETH_CON_CRS_DV_Pos) |
+                  (RTE_ENET_RMII_RXER_PIN_ID << ETH_CON_RXER_Pos) |
+                  (RTE_ENET_MIIM_MDIO_PIN_ID << ETH_CON_MDIO_Pos);  
+	 
   gpio_config.output_level = XMC_GPIO_OUTPUT_LEVEL_LOW;
   gpio_config.output_strength = XMC_GPIO_OUTPUT_STRENGTH_STRONG_SHARP_EDGE;
   
@@ -489,8 +525,7 @@ static int32_t ETH_MAC_Uninitialize(void)
 
 static int32_t ETH_MAC_PowerControl(ARM_POWER_STATE state)
 {
-  uint32_t eth_clk;
-  
+ 
   switch (state)
   {
     case ARM_POWER_OFF:
@@ -528,45 +563,11 @@ static int32_t ETH_MAC_PowerControl(ARM_POWER_STATE state)
       if ((handler.flags & ETH_MAC_FLAG_INIT) == 0) {
         return ARM_DRIVER_ERROR;
       }
-            
-      /* Enable ETH_MAC peripheral clock */
-      SCU_CLK->CLKSET |= SCU_CLK_CLKSET_ETH0CEN_Msk;
-
-#if UC_DEVICE != XMC4500
-      SCU_CLK->CGATCLR2 |= SCU_CLK_CGATCLR2_ETH0_Msk;     
-#endif
-      
-      /* Reset ETH_MAC peripheral */
-      SCU_RESET->PRSET2 |= SCU_RESET_PRSET2_ETH0RS_Msk;
-      SCU_RESET->PRCLR2 |= SCU_RESET_PRCLR2_ETH0RS_Msk;
-      
+                  
       /* Soft reset ETH_MAC DMA controller */
       ETH0->BUS_MODE |= ETH_BUS_MODE_SWR_Msk;
       while ((ETH0->BUS_MODE & ETH_BUS_MODE_SWR_Msk) != 0U);
-            
-      eth_clk = GetEthernetClockFrequency();
-      if (eth_clk <= 35000000U) {
-        ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_16;
-      }
-      else if (eth_clk <= 60000000U) {
-        ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_26;
-      }
-      else if (eth_clk <= 100000000U) {
-        ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_42;
-      }
-      else if (eth_clk <= 150000000U) {
-        ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_62;
-      }
-      else if (eth_clk <= 200000000U) {
-        ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_102;
-      }
-      else if (eth_clk <= 250000000U) {
-        ETH0->GMII_ADDRESS = ETH_MAC_MDC_DIVIDER_124;
-      }
-      else {
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
-      }
-      
+                  
       /* Initialize MAC configuration */
       ETH0->MAC_CONFIGURATION = ETH_MAC_CONFIGURATION_DO_Msk; /* Disable Receive Own in half duplex*/
 
