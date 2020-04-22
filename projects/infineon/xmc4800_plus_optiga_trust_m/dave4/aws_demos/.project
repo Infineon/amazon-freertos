@@ -132,6 +132,16 @@
 			<locationURI>AFR_HOME/freertos_kernel/timers.c</locationURI>
 		</link>
 		<link>
+			<name>application_code/infineon_code/get_optiga_certificate.h</name>
+			<type>1</type>
+			<locationURI>AFR_HOME/vendors/infineon/boards/xmc4800_plus_optiga_trust_m/aws_demos/application_code/infineon_code/get_optiga_certificate.h</locationURI>
+		</link>
+		<link>
+			<name>application_code/infineon_code/get_optiga_certificate.c</name>
+			<type>1</type>
+			<locationURI>AFR_HOME/vendors/infineon/boards/xmc4800_plus_optiga_trust_m/aws_demos/application_code/infineon_code/get_optiga_certificate.c</locationURI>
+		</link>
+		<link>
 			<name>application_code/infineon_code/console_io.c</name>
 			<type>1</type>
 			<locationURI>AFR_HOME/vendors/infineon/boards/xmc4800_plus_optiga_trust_m/aws_demos/application_code/infineon_code/console_io.c</locationURI>
@@ -2205,26 +2215,6 @@
 			<name>vendors/infineon/XMCLib/2.1.20/DAVE_Generated/XMC4800/TIMER/timer_extern.h</name>
 			<type>1</type>
 			<locationURI>AFR_HOME/vendors/infineon/XMCLib/2.1.20/DAVE_Generated/XMC4800/TIMER/timer_extern.h</locationURI>
-		</link>
-		<link>
-			<name>vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/example_authenticate_chip.c</name>
-			<type>1</type>
-			<locationURI>AFR_HOME/vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/example_authenticate_chip.c</locationURI>
-		</link>
-		<link>
-			<name>vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/mbedtls_config.h</name>
-			<type>1</type>
-			<locationURI>AFR_HOME/vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/mbedtls_config.h</locationURI>
-		</link>
-		<link>
-			<name>vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/pal_crypt.h</name>
-			<type>1</type>
-			<locationURI>AFR_HOME/vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/pal_crypt.h</locationURI>
-		</link>
-		<link>
-			<name>vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/pal_crypt_mbedtls.c</name>
-			<type>1</type>
-			<locationURI>AFR_HOME/vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip/pal_crypt_mbedtls.c</locationURI>
 		</link>
 		<link>
 			<name>vendors/infineon/secure_elements/optiga_trust_m/optiga/comms/ifx_i2c/ifx_i2c.c</name>

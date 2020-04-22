@@ -44,6 +44,9 @@
 
 #include "optiga/pal/pal_os_event.h"
 
+// Optional if you need to get the certificate from your OPTIGA sample
+#include "get_optiga_certificate.h"
+
 /* Logging Task Defines. */
 #define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 15 )
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 8 )
@@ -121,6 +124,9 @@ void vApplicationDaemonTaskStartupHook( void )
     /* Initialize the AWS Libraries system. */
     if ( SYSTEM_Init() == pdPASS )
     {
+    	// Uncomment the following two lines, if you want to get the pre-provisioned certificate
+    	//vGetOptigaCertificate();
+
     	/* Connect to the configured Wi-Fi access point. */
         prvWifiConnect();
 
