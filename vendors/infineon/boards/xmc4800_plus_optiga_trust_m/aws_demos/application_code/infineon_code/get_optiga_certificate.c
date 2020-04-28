@@ -125,7 +125,7 @@ CK_RV xExtractOptigaCertificate( CK_SESSION_HANDLE xSession,
 
     if( CKR_OK == xResult )
 	{
-		xResult = prvGetCertificateHandle( pxFunctionList, xSession, "0xE0E0", &xHandle );
+		xResult = prvGetCertificateHandle( pxFunctionList, xSession, pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS, &xHandle );
 	}
 
     if( ( xHandle != 0 ) && ( xResult == CKR_OK ) ) /* 0 is an invalid handle */
