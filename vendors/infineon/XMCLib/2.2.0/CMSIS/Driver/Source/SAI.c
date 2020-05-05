@@ -108,9 +108,9 @@ static const ARM_SAI_CAPABILITIES i2s0_driver_capabilities =
   0  /* supports Frame error event: \ref ARM_SAI_EVENT_FRAME_ERROR */
 };
 
-static I2S_INFO I2S0_INFO;
+static volatile I2S_INFO I2S0_INFO;
 
-static const I2S_RESOURCES I2S0_Resources = 
+static I2S_RESOURCES I2S0_Resources = 
 {
   {RTE_I2S0_TX_PORT},
   RTE_I2S0_TX_AF,
@@ -161,9 +161,9 @@ static const ARM_SAI_CAPABILITIES i2s1_driver_capabilities =
     0  /* supports Frame error event: \ref ARM_SAI_EVENT_FRAME_ERROR */
 };
 
-static I2S_INFO I2S1_INFO;
+static volatile I2S_INFO I2S1_INFO;
 
-static const I2S_RESOURCES I2S1_Resources = {
+static I2S_RESOURCES I2S1_Resources = {
   {RTE_I2S1_TX_PORT},
   RTE_I2S1_TX_AF,
   {RTE_I2S1_RX_PORT},
@@ -213,9 +213,9 @@ static const ARM_SAI_CAPABILITIES i2s2_driver_capabilities =
     0  /* supports Frame error event: \ref ARM_SAI_EVENT_FRAME_ERROR */
 };
 
-static I2S_INFO I2S2_INFO;
+static volatile I2S_INFO I2S2_INFO;
 
-static const I2S_RESOURCES I2S2_Resources = 
+static I2S_RESOURCES I2S2_Resources = 
 {
   {RTE_I2S2_TX_PORT},
   RTE_I2S2_TX_AF,
@@ -266,9 +266,9 @@ static const ARM_SAI_CAPABILITIES i2s3_driver_capabilities =
     0  /* supports Frame error event: \ref ARM_SAI_EVENT_FRAME_ERROR */
 };
 
-static I2S_INFO I2S3_INFO;
+static volatile I2S_INFO I2S3_INFO;
 
-static const I2S_RESOURCES I2S3_Resources = 
+static I2S_RESOURCES I2S3_Resources = 
 {
   {RTE_I2S3_TX_PORT},
   RTE_I2S3_TX_AF,
@@ -319,9 +319,9 @@ static const ARM_SAI_CAPABILITIES i2s4_driver_capabilities =
     0  /* supports Frame error event: \ref ARM_SAI_EVENT_FRAME_ERROR */
 };
 
-static I2S_INFO I2S4_INFO;
+static volatile I2S_INFO I2S4_INFO;
 
-static const I2S_RESOURCES I2S4_Resources = {
+static I2S_RESOURCES I2S4_Resources = {
   {RTE_I2S4_TX_PORT},
   RTE_I2S4_TX_AF,
   {RTE_I2S4_RX_PORT},
@@ -372,9 +372,9 @@ static const ARM_SAI_CAPABILITIES i2s5_driver_capabilities =
 };
 
 
-static I2S_INFO I2S5_INFO;
+static volatile I2S_INFO I2S5_INFO;
 
-static const I2S_RESOURCES I2S5_Resources = {
+static I2S_RESOURCES I2S5_Resources = {
   {RTE_I2S5_TX_PORT},
   RTE_I2S5_TX_AF,
   {RTE_I2S5_RX_PORT},
@@ -406,7 +406,7 @@ static const I2S_RESOURCES I2S5_Resources = {
 #endif
 
 /* I2S Resources */
-static const I2S_RESOURCES  *i2s[6] = {
+static I2S_RESOURCES *const i2s_resources[6] = {
 #if (RTE_I2S0 != 0)
   &I2S0_Resources,
 #else
@@ -528,42 +528,42 @@ static int32_t I2S_Initialize (ARM_SAI_SignalEvent_t cb_event, I2S_RESOURCES *co
 #if (RTE_I2S0 != 0)
 static int32_t I2S0_Initialize(ARM_SAI_SignalEvent_t cb_event) 
 {
-  return I2S_Initialize(cb_event, i2s[0]);
+  return I2S_Initialize(cb_event, i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static int32_t I2S1_Initialize(ARM_SAI_SignalEvent_t cb_event) 
 {
-  return I2S_Initialize(cb_event, i2s[1]);
+  return I2S_Initialize(cb_event, i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static int32_t I2S2_Initialize(ARM_SAI_SignalEvent_t cb_event) 
 {
-  return I2S_Initialize(cb_event, i2s[2]);
+  return I2S_Initialize(cb_event, i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static int32_t I2S3_Initialize(ARM_SAI_SignalEvent_t cb_event) 
 {
-  return I2S_Initialize(cb_event, i2s[3]);
+  return I2S_Initialize(cb_event, i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static int32_t I2S4_Initialize(ARM_SAI_SignalEvent_t cb_event) 
 {
-  return I2S_Initialize(cb_event, i2s[4]);
+  return I2S_Initialize(cb_event, i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static int32_t I2S5_Initialize(ARM_SAI_SignalEvent_t cb_event) 
 {
-  return I2S_Initialize(cb_event, i2s[5]);
+  return I2S_Initialize(cb_event, i2s_resources[5]);
 }
 #endif
 
@@ -583,42 +583,42 @@ static int32_t I2S_Uninitialize(I2S_RESOURCES *const i2s)
 #if (RTE_I2S0 != 0)
 static int32_t I2S0_Uninitialize(void) 
 {
-  return I2S_Uninitialize(i2s[0]);
+  return I2S_Uninitialize(i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static int32_t I2S1_Uninitialize(void) 
 {
-  return I2S_Uninitialize(i2s[1]);
+  return I2S_Uninitialize(i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static int32_t I2S2_Uninitialize(void) 
 {
-  return I2S_Uninitialize(i2s[2]);
+  return I2S_Uninitialize(i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static int32_t I2S3_Uninitialize(void) 
 {
-  return I2S_Uninitialize(i2s[3]);
+  return I2S_Uninitialize(i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static int32_t I2S4_Uninitialize(void) 
 {
-  return I2S_Uninitialize(i2s[4]);
+  return I2S_Uninitialize(i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static int32_t I2S5_Uninitialize(void) 
 {
-  return I2S_Uninitialize(i2s[5]);
+  return I2S_Uninitialize(i2s_resources[5]);
 }
 #endif
 
@@ -709,42 +709,42 @@ static int32_t I2S_PowerControl(ARM_POWER_STATE state, I2S_RESOURCES *const i2s)
 #if (RTE_I2S0 != 0)
 static int32_t I2S0_PowerControl(ARM_POWER_STATE state)
 {
-  return I2S_PowerControl(state, i2s[0]);
+  return I2S_PowerControl(state, i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static int32_t I2S1_PowerControl(ARM_POWER_STATE state)
 {
-  return I2S_PowerControl(state, i2s[1]);
+  return I2S_PowerControl(state, i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static int32_t I2S2_PowerControl(ARM_POWER_STATE state)
 {
-  return I2S_PowerControl(state, i2s[2]);
+  return I2S_PowerControl(state, i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static int32_t I2S3_PowerControl(ARM_POWER_STATE state)
 {
-  return I2S_PowerControl(state, i2s[3]);
+  return I2S_PowerControl(state, i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static int32_t I2S4_PowerControl(ARM_POWER_STATE state)
 {
-  return I2S_PowerControl(state, i2s[4]);
+  return I2S_PowerControl(state, i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static int32_t I2S5_PowerControl(ARM_POWER_STATE state)
 {
-  return I2S_PowerControl(state, i2s[5]);
+  return I2S_PowerControl(state, i2s_resources[5]);
 }
 #endif
 
@@ -811,42 +811,42 @@ static int32_t I2S_Send(const void *data, uint32_t num, I2S_RESOURCES *const i2s
 #if (RTE_I2S0 != 0)
 static int32_t I2S0_Send(const void *data, uint32_t num)
 {
-  return I2S_Send(data, num, i2s[0]);
+  return I2S_Send(data, num, i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static int32_t I2S1_Send(const void *data, uint32_t num)
 {
-  return I2S_Send(data, num, i2s[1]);
+  return I2S_Send(data, num, i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static int32_t I2S2_Send(const void *data, uint32_t num)
 {
-  return I2S_Send(data, num, i2s[2]);
+  return I2S_Send(data, num, i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static int32_t I2S3_Send(const void *data, uint32_t num)
 {
-  return I2S_Send(data, num, i2s[3]);
+  return I2S_Send(data, num, i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static int32_t I2S4_Send(const void *data, uint32_t num)
 {
-  return I2S_Send(data, num, i2s[4]);
+  return I2S_Send(data, num, i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static int32_t I2S5_Send(const void *data, uint32_t num)
 {
-  return I2S_Send(data, num, i2s[5]);
+  return I2S_Send(data, num, i2s_resources[5]);
 }
 #endif
 
@@ -918,42 +918,42 @@ static int32_t I2S_Receive(void *data, uint32_t num, I2S_RESOURCES *const i2s)
 #if (RTE_I2S0 != 0)
 static int32_t I2S0_Receive(void *data, uint32_t num)
 {
-  return I2S_Receive(data, num, i2s[0]);
+  return I2S_Receive(data, num, i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static int32_t I2S1_Receive(void *data, uint32_t num)
 {
-  return I2S_Receive(data, num, i2s[1]);
+  return I2S_Receive(data, num, i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static int32_t I2S2_Receive(void *data, uint32_t num)
 {
-  return I2S_Receive(data, num, i2s[2]);
+  return I2S_Receive(data, num, i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static int32_t I2S3_Receive(void *data, uint32_t num)
 {
-  return I2S_Receive(data, num, i2s[3]);
+  return I2S_Receive(data, num, i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static int32_t I2S4_Receive(void *data, uint32_t num)
 {
-  return I2S_Receive(data, num, i2s[4]);
+  return I2S_Receive(data, num, i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static int32_t I2S5_Receive(void *data, uint32_t num)
 {
-  return I2S_Receive(data, num, i2s[5]);
+  return I2S_Receive(data, num, i2s_resources[5]);
 }
 #endif
 
@@ -972,42 +972,42 @@ __STATIC_INLINE uint32_t I2S_GetTxCount(I2S_RESOURCES *const i2s)
 #if (RTE_I2S0 != 0)
 static uint32_t I2S0_GetTxCount (void) 
 {
-  return I2S_GetTxCount(i2s[0]);
+  return I2S_GetTxCount(i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static uint32_t I2S1_GetTxCount (void) 
 {
-  return I2S_GetTxCount(i2s[1]);
+  return I2S_GetTxCount(i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static uint32_t I2S2_GetTxCount (void) 
 {
-  return I2S_GetTxCount(i2s[2]);
+  return I2S_GetTxCount(i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static uint32_t I2S3_GetTxCount (void) 
 {
-  return I2S_GetTxCount(i2s[3]);
+  return I2S_GetTxCount(i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static uint32_t I2S4_GetTxCount (void) 
 {
-  return I2S_GetTxCount(i2s[4]);
+  return I2S_GetTxCount(i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static uint32_t I2S5_GetTxCount (void) 
 {
-  return I2S_GetTxCount(i2s[5]);
+  return I2S_GetTxCount(i2s_resources[5]);
 }
 #endif
 
@@ -1025,37 +1025,37 @@ __STATIC_INLINE uint32_t I2S_GetRxCount (I2S_RESOURCES *i2s)
 #if (RTE_I2S0 != 0)
 static uint32_t I2S0_GetRxCount (void) 
 {
-  return I2S_GetRxCount(i2s[0]);
+  return I2S_GetRxCount(i2s_resources[0]);
 }
 #endif
 #if (RTE_I2S1 != 0)
 static uint32_t I2S1_GetRxCount (void) 
 {
-  return I2S_GetRxCount(i2s[1]);
+  return I2S_GetRxCount(i2s_resources[1]);
 }
 #endif
 #if (RTE_I2S2 != 0)
 static uint32_t I2S2_GetRxCount (void) 
 {
-  return I2S_GetRxCount(i2s[2]);
+  return I2S_GetRxCount(i2s_resources[2]);
 }
 #endif
 #if (RTE_I2S3 != 0)
 static uint32_t I2S3_GetRxCount (void) 
 {
-  return I2S_GetRxCount(i2s[3]);
+  return I2S_GetRxCount(i2s_resources[3]);
 }
 #endif
 #if (RTE_I2S4 != 0)
 static uint32_t I2S4_GetRxCount (void) 
 {
-  return I2S_GetRxCount(i2s[4]);
+  return I2S_GetRxCount(i2s_resources[4]);
 }
 #endif
 #if (RTE_I2S5 != 0)
 static uint32_t I2S5_GetRxCount (void) 
 {
-  return I2S_GetRxCount(i2s[5]);
+  return I2S_GetRxCount(i2s_resources[5]);
 }
 #endif
 
@@ -1358,42 +1358,42 @@ static int32_t I2S_Control(uint32_t control, uint32_t arg1, uint32_t arg2, I2S_R
 #if (RTE_I2S0 != 0)
 static int32_t I2S0_Control(uint32_t control, uint32_t arg1, uint32_t arg2)
 {
-  return I2S_Control(control, arg1, arg2, i2s[0]);
+  return I2S_Control(control, arg1, arg2, i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static int32_t I2S1_Control(uint32_t control, uint32_t arg1, uint32_t arg2)
 {
-  return I2S_Control(control, arg1, arg2, i2s[1]);
+  return I2S_Control(control, arg1, arg2, i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static int32_t I2S2_Control(uint32_t control, uint32_t arg1, uint32_t arg2)
 {
-  return I2S_Control(control, arg1, arg2, i2s[2]);
+  return I2S_Control(control, arg1, arg2, i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static int32_t I2S3_Control(uint32_t control, uint32_t arg1, uint32_t arg2)
 {
-  return I2S_Control(control, arg1, arg2, i2s[3]);
+  return I2S_Control(control, arg1, arg2, i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static int32_t I2S4_Control(uint32_t control, uint32_t arg1, uint32_t arg2)
 {
-  return I2S_Control(control, arg1, arg2, i2s[4]);
+  return I2S_Control(control, arg1, arg2, i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static int32_t I2S5_Control(uint32_t control, uint32_t arg1, uint32_t arg2)
 {
-  return I2S_Control(control, arg1, arg2, i2s[5]);
+  return I2S_Control(control, arg1, arg2, i2s_resources[5]);
 }
 #endif
 
@@ -1405,56 +1405,48 @@ static int32_t I2S5_Control(uint32_t control, uint32_t arg1, uint32_t arg2)
 ***********************************************************************************************************************/
 static ARM_SAI_STATUS I2S_GetStatus(I2S_RESOURCES *i2s)
 {
-  ARM_SAI_STATUS status;
-
-  status.tx_busy      = i2s->info->status.tx_busy;
-  status.rx_busy      = i2s->info->status.rx_busy;
-  status.tx_underflow = i2s->info->status.tx_underflow;
-  status.rx_overflow  = i2s->info->status.rx_overflow;
-  status.frame_error  = i2s->info->status.frame_error;
-
-  return status;
+  return i2s->info->status;
 }
 
 #if (RTE_I2S0 != 0)
 static ARM_SAI_STATUS I2S0_GetStatus(void) 
 {
-  return I2S_GetStatus(i2s[0]);
+  return I2S_GetStatus(i2s_resources[0]);
 }
 #endif
 
 #if (RTE_I2S1 != 0)
 static ARM_SAI_STATUS I2S1_GetStatus(void) 
 {
-  return I2S_GetStatus(i2s[1]);
+  return I2S_GetStatus(i2s_resources[1]);
 }
 #endif
 
 #if (RTE_I2S2 != 0)
 static ARM_SAI_STATUS I2S2_GetStatus(void) 
 {
-  return I2S_GetStatus(i2s[2]);
+  return I2S_GetStatus(i2s_resources[2]);
 }
 #endif
 
 #if (RTE_I2S3 != 0)
 static ARM_SAI_STATUS I2S3_GetStatus(void) 
 {
-  return I2S_GetStatus(i2s[3]);
+  return I2S_GetStatus(i2s_resources[3]);
 }
 #endif
 
 #if (RTE_I2S4 != 0)
 static ARM_SAI_STATUS I2S4_GetStatus(void) 
 {
-  return I2S_GetStatus(i2s[4]);
+  return I2S_GetStatus(i2s_resources[4]);
 }
 #endif
 
 #if (RTE_I2S5 != 0)
 static ARM_SAI_STATUS I2S5_GetStatus(void) 
 {
-  return I2S_GetStatus(i2s[5]);
+  return I2S_GetStatus(i2s_resources[5]);
 }
 #endif
 
@@ -1587,7 +1579,7 @@ static void I2S_RX_ISR(I2S_RESOURCES  *i2s)
     
     if ((i2s->info->xfer.rx_num - i2s->info->xfer.rx_cnt) <= (i2s->rx_fifo_size_num >> 1))
     {
-      XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(i2s->i2s, (XMC_USIC_CH_FIFO_SIZE_t)i2s->rx_fifo_size_reg, i2s->info->xfer.rx_num - i2s->info->xfer.rx_cnt - 1U);
+      XMC_USIC_CH_RXFIFO_SetTriggerLimit(i2s->i2s, i2s->info->xfer.rx_num - i2s->info->xfer.rx_cnt - 1U);
     }
   }
 
@@ -1612,40 +1604,40 @@ static void I2S_RX_ISR(I2S_RESOURCES  *i2s)
 void I2S0_ISR(void)
 {
 #if RTE_I2S0_RX_FIFO_SIZE == NO_FIFO
-  if (i2s[0]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[0]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
+  if (i2s_resources[0]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[0]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[0]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
-    I2S_RX_ISR(i2s[0]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[0]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
+    I2S_RX_ISR(i2s_resources[0]);
   }
-  if (i2s[0]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[0]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s[0]->info->xfer.mono_mode)
+  if (i2s_resources[0]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[0]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s_resources[0]->info->xfer.mono_mode)
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[0]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
-    I2S_RX_ISR(i2s[0]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[0]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    I2S_RX_ISR(i2s_resources[0]);
   }
 #else
-  if (i2s[0]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[0]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[0]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[0]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[0]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
-    I2S_RX_ISR(i2s[0]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[0]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+    I2S_RX_ISR(i2s_resources[0]);
   }
-  if (i2s[0]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[0]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s[0]->info->xfer.mono_mode)
+  if (i2s_resources[0]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[0]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s_resources[0]->info->xfer.mono_mode)
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[0]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    I2S_RX_ISR(i2s[0]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[0]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    I2S_RX_ISR(i2s_resources[0]);
   }
 #endif
 
 #if RTE_I2S0_TX_FIFO_SIZE == NO_FIFO
-  if (i2s[0]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(i2s[0]->i2s) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (i2s_resources[0]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(i2s_resources[0]->i2s) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(i2s[0]->i2s, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-    I2S_TX_ISR(i2s[0]);
+    XMC_UART_CH_ClearStatusFlag(i2s_resources[0]->i2s, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    I2S_TX_ISR(i2s_resources[0]);
   }
 #else
-  if (i2s[0]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s[0]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[0]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s_resources[0]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(i2s[0]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    I2S_TX_ISR(i2s[0]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(i2s_resources[0]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    I2S_TX_ISR(i2s_resources[0]);
   }
 #endif
 }
@@ -1655,40 +1647,40 @@ void I2S0_ISR(void)
 void I2S1_ISR(void)
 {
 #if RTE_I2S0_RX_FIFO_SIZE == NO_FIFO
-  if (i2s[1]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[1]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
+  if (i2s_resources[1]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[1]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[1]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
-    I2S_RX_ISR(i2s[1]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[1]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
+    I2S_RX_ISR(i2s_resources[1]);
   }
-  if (i2s[1]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[1]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s[1]->info->xfer.mono_mode)
+  if (i2s_resources[1]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[1]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s_resources[1]->info->xfer.mono_mode)
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[1]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
-    I2S_RX_ISR(i2s[1]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[1]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    I2S_RX_ISR(i2s_resources[1]);
   }
 #else
-  if (i2s[1]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[1]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[1]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[1]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[1]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
-    I2S_RX_ISR(i2s[1]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[1]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+    I2S_RX_ISR(i2s_resources[1]);
   }
-  if (i2s[1]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[1]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s[1]->info->xfer.mono_mode)
+  if (i2s_resources[1]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[1]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s_resources[1]->info->xfer.mono_mode)
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[1]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    I2S_RX_ISR(i2s[1]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[1]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    I2S_RX_ISR(i2s_resources[1]);
   }
 #endif
 
 #if RTE_I2S1_TX_FIFO_SIZE == NO_FIFO
-  if (i2s[1]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[1]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (i2s_resources[1]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[1]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[1]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
-    I2S_TX_ISR(i2s[1]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[1]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
+    I2S_TX_ISR(i2s_resources[1]);
   }
 #else
-  if (i2s[1]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s[1]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[1]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s_resources[1]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(i2s[1]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    I2S_TX_ISR(i2s[1]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(i2s_resources[1]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    I2S_TX_ISR(i2s_resources[1]);
   }
 #endif
 }
@@ -1698,40 +1690,40 @@ void I2S1_ISR(void)
 void I2S2_ISR(void)
 {
 #if RTE_I2S0_RX_FIFO_SIZE == NO_FIFO
-  if (i2s[2]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[2]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
+  if (i2s_resources[2]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[2]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[2]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
-    I2S_RX_ISR(i2s[2]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[2]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
+    I2S_RX_ISR(i2s_resources[2]);
   }
-  if (i2s[2]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[2]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s[2]->info->xfer.mono_mode)
+  if (i2s_resources[2]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[2]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s_resources[2]->info->xfer.mono_mode)
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[2]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
-    I2S_RX_ISR(i2s[2]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[2]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    I2S_RX_ISR(i2s_resources[2]);
   }
 #else
-  if (i2s[2]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[2]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[2]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[2]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[2]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
-    I2S_RX_ISR(i2s[2]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[2]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+    I2S_RX_ISR(i2s_resources[2]);
   }
-  if (i2s[2]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[2]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s[2]->info->xfer.mono_mode)
+  if (i2s_resources[2]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[2]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s_resources[2]->info->xfer.mono_mode)
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[2]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    I2S_RX_ISR(i2s[2]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[2]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    I2S_RX_ISR(i2s_resources[2]);
   }
 #endif
 
 #if RTE_I2S1_TX_FIFO_SIZE == NO_FIFO
-  if (i2s[2]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[2]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (i2s_resources[2]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[2]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[2]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
-    I2S_TX_ISR(i2s[2]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[2]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
+    I2S_TX_ISR(i2s_resources[2]);
   }
 #else
-  if (i2s[2]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s[2]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[2]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s_resources[2]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(i2s[2]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    I2S_TX_ISR(i2s[2]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(i2s_resources[2]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    I2S_TX_ISR(i2s_resources[2]);
   }
 #endif
 }
@@ -1741,40 +1733,40 @@ void I2S2_ISR(void)
 void I2S3_ISR(void)
 {
 #if RTE_I2S0_RX_FIFO_SIZE == NO_FIFO
-  if (i2s[3]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[3]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
+  if (i2s_resources[3]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[3]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[3]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
-    I2S_RX_ISR(i2s[3]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[3]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
+    I2S_RX_ISR(i2s_resources[3]);
   }
-  if (i2s[3]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[3]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s[3]->info->xfer.mono_mode)
+  if (i2s_resources[3]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[3]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s_resources[3]->info->xfer.mono_mode)
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[3]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
-    I2S_RX_ISR(i2s[3]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[3]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    I2S_RX_ISR(i2s_resources[3]);
   }
 #else
-  if (i2s[3]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[3]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[3]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[3]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[3]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
-    I2S_RX_ISR(i2s[3]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[3]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+    I2S_RX_ISR(i2s_resources[3]);
   }
-  if (i2s[3]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[3]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s[3]->info->xfer.mono_mode)
+  if (i2s_resources[3]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[3]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s_resources[3]->info->xfer.mono_mode)
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[3]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    I2S_RX_ISR(i2s[3]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[3]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    I2S_RX_ISR(i2s_resources[3]);
   }
 #endif
 
 #if RTE_I2S1_TX_FIFO_SIZE == NO_FIFO
-  if (i2s[3]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[3]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (i2s_resources[3]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[3]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[3]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
-    I2S_TX_ISR(i2s[3]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[3]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
+    I2S_TX_ISR(i2s_resources[3]);
   }
 #else
-  if (i2s[3]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s[3]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[3]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s_resources[3]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(i2s[3]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    I2S_TX_ISR(i2s[3]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(i2s_resources[3]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    I2S_TX_ISR(i2s_resources[3]);
   }
 #endif
 }
@@ -1784,40 +1776,40 @@ void I2S3_ISR(void)
 void I2S4_ISR(void)
 {
 #if RTE_I2S0_RX_FIFO_SIZE == NO_FIFO
-  if (i2s[4]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[4]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
+  if (i2s_resources[4]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[4]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[4]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
-    I2S_RX_ISR(i2s[4]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[4]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
+    I2S_RX_ISR(i2s_resources[4]);
   }
-  if (i2s[4]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[4]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s[4]->info->xfer.mono_mode)
+  if (i2s_resources[4]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[4]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s_resources[4]->info->xfer.mono_mode)
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[4]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
-    I2S_RX_ISR(i2s[4]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[4]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    I2S_RX_ISR(i2s_resources[4]);
   }
 #else
-  if (i2s[4]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[4]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[4]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[4]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[4]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
-    I2S_RX_ISR(i2s[4]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[4]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+    I2S_RX_ISR(i2s_resources[4]);
   }
-  if (i2s[4]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[4]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s[4]->info->xfer.mono_mode)
+  if (i2s_resources[4]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[4]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s_resources[4]->info->xfer.mono_mode)
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[4]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    I2S_RX_ISR(i2s[4]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[4]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    I2S_RX_ISR(i2s_resources[4]);
   }
 #endif
 
 #if RTE_I2S1_TX_FIFO_SIZE == NO_FIFO
-  if (i2s[4]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[4]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (i2s_resources[4]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[4]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[4]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
-    I2S_TX_ISR(i2s[4]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[4]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
+    I2S_TX_ISR(i2s_resources[4]);
   }
 #else
-  if (i2s[4]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s[4]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[4]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s_resources[4]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(i2s[4]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    I2S_TX_ISR(i2s[4]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(i2s_resources[4]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    I2S_TX_ISR(i2s_resources[4]);
   }
 #endif
 }
@@ -1827,40 +1819,40 @@ void I2S4_ISR(void)
 void I2S5_ISR(void)
 {
 #if RTE_I2S0_RX_FIFO_SIZE == NO_FIFO
-  if (i2s[5]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[5]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
+  if (i2s_resources[5]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[5]->i2s) & XMC_I2S_CH_EVENT_STANDARD_RECEIVE) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[5]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
-    I2S_RX_ISR(i2s[5]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[5]->i2s, XMC_I2S_CH_EVENT_STANDARD_RECEIVE);
+    I2S_RX_ISR(i2s_resources[5]);
   }
-  if (i2s[5]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[5]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s[5]->info->xfer.mono_mode)
+  if (i2s_resources[5]->info->status.rx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[5]->i2s) & XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE) != 0) && !i2s_resources[5]->info->xfer.mono_mode)
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[5]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
-    I2S_RX_ISR(i2s[5]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[5]->i2s, XMC_I2S_CH_EVENT_ALTERNATIVE_RECEIVE);
+    I2S_RX_ISR(i2s_resources[5]);
   }
 #else
-  if (i2s[5]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[5]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[5]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[5]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[5]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
-    I2S_RX_ISR(i2s[5]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[5]->i2s, XMC_USIC_CH_RXFIFO_EVENT_STANDARD);
+    I2S_RX_ISR(i2s_resources[5]);
   }
-  if (i2s[5]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s[5]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s[5]->info->xfer.mono_mode)
+  if (i2s_resources[5]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(i2s_resources[5]->i2s) & XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE) != 0) && !i2s_resources[5]->info->xfer.mono_mode)
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(i2s[5]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    I2S_RX_ISR(i2s[5]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(i2s_resources[5]->i2s, XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    I2S_RX_ISR(i2s_resources[5]);
   }
 #endif
 
 #if RTE_I2S1_TX_FIFO_SIZE == NO_FIFO
-  if (i2s[5]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s[5]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (i2s_resources[5]->info->status.tx_busy && ((XMC_I2S_CH_GetStatusFlag(i2s_resources[5]->i2s) & XMC_I2S_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_I2S_CH_ClearStatusFlag(i2s[5]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
-    I2S_TX_ISR(i2s[5]);
+    XMC_I2S_CH_ClearStatusFlag(i2s_resources[5]->i2s, XMC_I2S_CH_EVENT_TRANSMIT_BUFFER);
+    I2S_TX_ISR(i2s_resources[5]);
   }
 #else
-  if (i2s[5]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s[5]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (i2s_resources[5]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(i2s_resources[5]->i2s) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(i2s[5]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    I2S_TX_ISR(i2s[5]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(i2s_resources[5]->i2s, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    I2S_TX_ISR(i2s_resources[5]);
   }
 #endif
 }

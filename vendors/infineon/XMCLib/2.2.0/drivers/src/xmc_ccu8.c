@@ -69,6 +69,9 @@
  * 2017-04-27:
  *     - XMC_CCU8_SLICE_SetPrescaler() changed div_val parameter to type XMC_CCU8_SLICE_PRESCALER_t 
  *
+ * 2019-04-29:
+ *     - XMC_CCU8_SLICE_SetTimerRepeatMode() fix assertion
+ * 
  * @endcond
  */
 /*********************************************************************************************************************
@@ -937,14 +940,14 @@ void XMC_CCU8_SLICE_SetInput(XMC_CCU8_SLICE_t *const slice,
 
 /* API to program timer repeat mode - Single shot vs repeat  */
 void XMC_CCU8_SLICE_SetTimerRepeatMode(XMC_CCU8_SLICE_t *const slice,
-                                   const XMC_CCU8_SLICE_TIMER_REPEAT_MODE_t mode)
+                                       const XMC_CCU8_SLICE_TIMER_REPEAT_MODE_t mode)
 {
   uint32_t tc;
 
   XMC_ASSERT("XMC_CCU8_SLICE_SetTimerRepeatMode:Invalid Slice Pointer", XMC_CCU8_IsValidSlice(slice));
   XMC_ASSERT("XMC_CCU8_SLICE_SetTimerRepeatMode:Invalid Timer Repeat Mode", 
              ((mode == XMC_CCU8_SLICE_TIMER_REPEAT_MODE_REPEAT) ||\
-              (mode == (mode == XMC_CCU8_SLICE_TIMER_REPEAT_MODE_REPEAT))));
+              (mode == XMC_CCU8_SLICE_TIMER_REPEAT_MODE_SINGLE)));
 
   tc = slice->TC;
 

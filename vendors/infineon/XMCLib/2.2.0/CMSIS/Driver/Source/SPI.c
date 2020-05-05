@@ -155,7 +155,7 @@ static const ARM_SPI_CAPABILITIES DriverCapabilities =
 #define RTE_SPI0_SLAVE_SELECT_LINE_PORT RTE_SPI0_SLAVE_SELECT_LINE_0_PORT
 #endif
 
-static SPI_INFO SPI0_Info;
+static volatile SPI_INFO SPI0_Info;
 static XMC_GPIO_CONFIG_t SPI0_miso_conf; 
 static XMC_GPIO_CONFIG_t SPI0_mosi_conf; 
 static XMC_GPIO_CONFIG_t SPI0_input_clock_conf; 
@@ -166,7 +166,7 @@ static XMC_GPIO_CONFIG_t SPI0_seli_conf;
 #endif
 
 /* SPI0 Resources */
-static const SPI_RESOURCES SPI0_Resources = 
+static SPI_RESOURCES SPI0_Resources = 
 {
   {RTE_SPI0_RX_PORT},
   &SPI0_miso_conf,
@@ -243,7 +243,7 @@ static const SPI_RESOURCES SPI0_Resources =
 #define RTE_SPI1_SLAVE_SELECT_LINE_PORT RTE_SPI1_SLAVE_SELECT_LINE_0_PORT
 #endif
 
-static SPI_INFO SPI1_Info;
+static volatile SPI_INFO SPI1_Info;
 static XMC_GPIO_CONFIG_t SPI1_miso_conf; 
 static XMC_GPIO_CONFIG_t SPI1_mosi_conf; 
 static XMC_GPIO_CONFIG_t SPI1_input_clock_conf; 
@@ -254,7 +254,7 @@ static XMC_GPIO_CONFIG_t SPI1_seli_conf;
 #endif
 
 /* SPI1 Resources */
-static const SPI_RESOURCES SPI1_Resources = 
+static SPI_RESOURCES SPI1_Resources = 
 {
   {RTE_SPI1_RX_PORT},
   &SPI1_miso_conf,
@@ -337,7 +337,7 @@ static const SPI_RESOURCES SPI1_Resources =
 #define RTE_SPI2_SLAVE_SELECT_LINE_PORT RTE_SPI2_SLAVE_SELECT_LINE_0_PORT
 #endif
 
-static SPI_INFO SPI2_Info;
+static volatile SPI_INFO SPI2_Info;
 static XMC_GPIO_CONFIG_t SPI2_miso_conf; 
 static XMC_GPIO_CONFIG_t SPI2_mosi_conf; 
 static XMC_GPIO_CONFIG_t SPI2_input_clock_conf; 
@@ -348,7 +348,7 @@ static XMC_GPIO_CONFIG_t SPI2_seli_conf;
 #endif
 
 /* SPI2 Resources */
-static const SPI_RESOURCES SPI2_Resources = 
+static SPI_RESOURCES SPI2_Resources = 
 {
   {RTE_SPI2_RX_PORT},
   &SPI2_miso_conf,
@@ -426,7 +426,7 @@ static const SPI_RESOURCES SPI2_Resources =
 #define RTE_SPI3_SLAVE_SELECT_LINE_PORT RTE_SPI3_SLAVE_SELECT_LINE_0_PORT
 #endif
 
-static SPI_INFO SPI3_Info;
+static volatile SPI_INFO SPI3_Info;
 static XMC_GPIO_CONFIG_t SPI3_miso_conf; 
 static XMC_GPIO_CONFIG_t SPI3_mosi_conf; 
 static XMC_GPIO_CONFIG_t SPI3_input_clock_conf; 
@@ -437,7 +437,7 @@ static XMC_GPIO_CONFIG_t SPI3_seli_conf;
 #endif
 
 /* SPI3 Resources */
-static const SPI_RESOURCES SPI3_Resources = 
+static SPI_RESOURCES SPI3_Resources = 
 {
   {RTE_SPI3_RX_PORT},
   &SPI3_miso_conf,
@@ -519,7 +519,7 @@ static const SPI_RESOURCES SPI3_Resources =
 #define RTE_SPI4_SLAVE_SELECT_LINE_PORT RTE_SPI4_SLAVE_SELECT_LINE_0_PORT 
 #endif
 
-static SPI_INFO SPI4_Info;
+static volatile SPI_INFO SPI4_Info;
 static XMC_GPIO_CONFIG_t SPI4_miso_conf; 
 static XMC_GPIO_CONFIG_t SPI4_mosi_conf; 
 static XMC_GPIO_CONFIG_t SPI4_input_clock_conf; 
@@ -530,7 +530,7 @@ static XMC_GPIO_CONFIG_t SPI4_seli_conf;
 #endif
 
 /* SPI4 Resources */
-static const SPI_RESOURCES SPI4_Resources = 
+static SPI_RESOURCES SPI4_Resources = 
 {
   {RTE_SPI4_RX_PORT},
   &SPI4_miso_conf,
@@ -605,7 +605,7 @@ static const SPI_RESOURCES SPI4_Resources =
 #endif
 
 
-static SPI_INFO SPI5_Info;
+static volatile SPI_INFO SPI5_Info;
 static XMC_GPIO_CONFIG_t SPI5_miso_conf; 
 static XMC_GPIO_CONFIG_t SPI5_mosi_conf; 
 static XMC_GPIO_CONFIG_t SPI5_input_clock_conf; 
@@ -616,7 +616,7 @@ static XMC_GPIO_CONFIG_t SPI5_seli_conf;
 #endif
 
 /* SPI5 Resources */
-static const SPI_RESOURCES SPI5_Resources = 
+static SPI_RESOURCES SPI5_Resources = 
 {
   {RTE_SPI5_RX_PORT},
   &SPI5_miso_conf,
@@ -668,7 +668,7 @@ static const SPI_RESOURCES SPI5_Resources =
 
 
 /* SPI Resources */
-static const SPI_RESOURCES  *spi[6] = 
+static SPI_RESOURCES *const spi_resources[6] = 
 {
 #if (RTE_SPI0 != 0)
   &SPI0_Resources,
@@ -727,42 +727,42 @@ __STATIC_INLINE ARM_SPI_CAPABILITIES SPI_GetCapabilities(SPI_RESOURCES *const sp
 #if (RTE_SPI0 != 0)
 static ARM_SPI_CAPABILITIES SPI0_GetCapabilities(void) 
 {
-  return SPI_GetCapabilities(spi[0]);
+  return SPI_GetCapabilities(spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static ARM_SPI_CAPABILITIES SPI1_GetCapabilities(void) 
 {
-  return SPI_GetCapabilities(spi[1]);
+  return SPI_GetCapabilities(spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static ARM_SPI_CAPABILITIES SPI2_GetCapabilities(void) 
 {
-  return SPI_GetCapabilities(spi[2]);
+  return SPI_GetCapabilities(spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static ARM_SPI_CAPABILITIES SPI3_GetCapabilities(void) 
 {
-  return SPI_GetCapabilities(spi[3]);
+  return SPI_GetCapabilities(spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static ARM_SPI_CAPABILITIES SPI4_GetCapabilities(void) 
 {
-  return SPI_GetCapabilities(spi[4]);
+  return SPI_GetCapabilities(spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static ARM_SPI_CAPABILITIES SPI5_GetCapabilities(void) 
 {
-  return SPI_GetCapabilities(spi[5]);
+  return SPI_GetCapabilities(spi_resources[5]);
 }
 #endif
 
@@ -792,42 +792,42 @@ static int32_t SPI_Initialize(ARM_SPI_SignalEvent_t cb_event, SPI_RESOURCES *con
 #if (RTE_SPI0 != 0)
 static int32_t SPI0_Initialize(ARM_SPI_SignalEvent_t cb_event) 
 {
-  return SPI_Initialize(cb_event, spi[0]);
+  return SPI_Initialize(cb_event, spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static int32_t SPI1_Initialize(ARM_SPI_SignalEvent_t cb_event)
 {
-  return SPI_Initialize(cb_event, spi[1]);
+  return SPI_Initialize(cb_event, spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static int32_t SPI2_Initialize(ARM_SPI_SignalEvent_t cb_event) 
 {
-  return SPI_Initialize(cb_event, spi[2]);
+  return SPI_Initialize(cb_event, spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static int32_t SPI3_Initialize(ARM_SPI_SignalEvent_t cb_event) 
 {
-  return SPI_Initialize (cb_event, spi[3]);
+  return SPI_Initialize (cb_event, spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static int32_t SPI4_Initialize(ARM_SPI_SignalEvent_t cb_event) 
 {
-  return SPI_Initialize (cb_event, spi[4]);
+  return SPI_Initialize (cb_event, spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static int32_t SPI5_Initialize(ARM_SPI_SignalEvent_t cb_event) 
 {
-  return SPI_Initialize (cb_event, spi[5]);
+  return SPI_Initialize (cb_event, spi_resources[5]);
 }
 #endif
 
@@ -848,42 +848,42 @@ static int32_t SPI_Uninitialize(SPI_RESOURCES *const spi)
 #if (RTE_SPI0 != 0)
 static int32_t SPI0_Uninitialize(void) 
 {
-  return SPI_Uninitialize(spi[0]);
+  return SPI_Uninitialize(spi_resources[0]);
 }
 #endif  
 
 #if (RTE_SPI1 != 0)
 static int32_t SPI1_Uninitialize(void) 
 {
-  return SPI_Uninitialize(spi[1]);
+  return SPI_Uninitialize(spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static int32_t SPI2_Uninitialize(void)
 {
-  return SPI_Uninitialize(spi[2]);
+  return SPI_Uninitialize(spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static int32_t SPI3_Uninitialize(void) 
 {
-  return SPI_Uninitialize(spi[3]);
+  return SPI_Uninitialize(spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static int32_t SPI4_Uninitialize(void) 
 {
-  return SPI_Uninitialize(spi[4]);
+  return SPI_Uninitialize(spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static int32_t SPI5_Uninitialize(void) 
 {
-  return SPI_Uninitialize(spi[5]);
+  return SPI_Uninitialize(spi_resources[5]);
 }
 #endif
 
@@ -971,42 +971,42 @@ static int32_t SPI_PowerControl(ARM_POWER_STATE state, SPI_RESOURCES *const spi)
 #if (RTE_SPI0 != 0)
 static int32_t SPI0_PowerControl(ARM_POWER_STATE state) 
 {
-  return SPI_PowerControl(state, spi[0]);
+  return SPI_PowerControl(state, spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static int32_t SPI1_PowerControl(ARM_POWER_STATE state) 
 {
-  return SPI_PowerControl(state, spi[1]);
+  return SPI_PowerControl(state, spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static int32_t SPI2_PowerControl(ARM_POWER_STATE state) 
 {
-  return SPI_PowerControl(state, spi[2]);
+  return SPI_PowerControl(state, spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static int32_t SPI3_PowerControl(ARM_POWER_STATE state) 
 {
-  return SPI_PowerControl(state, spi[3]);
+  return SPI_PowerControl(state, spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static int32_t SPI4_PowerControl(ARM_POWER_STATE state) 
 {
-  return SPI_PowerControl(state, spi[4]);
+  return SPI_PowerControl(state, spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static int32_t SPI5_PowerControl(ARM_POWER_STATE state) 
 {
-  return SPI_PowerControl(state, spi[5]);
+  return SPI_PowerControl(state, spi_resources[5]);
 }
 #endif
 
@@ -1080,7 +1080,7 @@ static int32_t SPI_Send(const void *data, uint32_t num, SPI_RESOURCES *const spi
     }
     else
     {
-      XMC_USIC_CH_RXFIFO_Configure(spi->spi, spi->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)spi->rx_fifo_size_reg, spi->rx_fifo_size_num >> 1); 
+      XMC_USIC_CH_RXFIFO_Configure(spi->spi, spi->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)spi->rx_fifo_size_reg, spi->rx_fifo_size_num - 1); 
     }     
   } 
 
@@ -1100,9 +1100,7 @@ static int32_t SPI_Send(const void *data, uint32_t num, SPI_RESOURCES *const spi
   }
   else
   {   
-    XMC_SPI_CH_DisableDataTransmission(spi->spi);
-    /* Write to FIFO till Fifo is full */
-    while((XMC_USIC_CH_TXFIFO_IsFull(spi->spi) == false))
+    for (int i = 0; i < spi->tx_fifo_size_num; ++i)
     {
       if (spi->info->xfer.tx_cnt < spi->info->xfer.num)
       {      
@@ -1124,7 +1122,6 @@ static int32_t SPI_Send(const void *data, uint32_t num, SPI_RESOURCES *const spi
         break;
       }   
     } 
-    XMC_SPI_CH_EnableDataTransmission(spi->spi);
   }        
   return ARM_DRIVER_OK;
 }
@@ -1132,42 +1129,42 @@ static int32_t SPI_Send(const void *data, uint32_t num, SPI_RESOURCES *const spi
 #if (RTE_SPI0 != 0)
 static int32_t SPI0_Send(const void *data, uint32_t num) 
 {
-  return SPI_Send(data, num, spi[0]);
+  return SPI_Send(data, num, spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static int32_t SPI1_Send(const void *data, uint32_t num) 
 {
-  return SPI_Send(data, num, spi[1]);
+  return SPI_Send(data, num, spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static int32_t SPI2_Send(const void *data, uint32_t num) 
 {
-  return SPI_Send(data, num, spi[2]);
+  return SPI_Send(data, num, spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static int32_t SPI3_Send(const void *data, uint32_t num) 
 {
-  return SPI_Send(data, num, spi[3]);
+  return SPI_Send(data, num, spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static int32_t SPI4_Send(const void *data, uint32_t num) 
 {
-  return SPI_Send(data, num, spi[4]);
+  return SPI_Send(data, num, spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static int32_t SPI5_Send(const void *data, uint32_t num) 
 {
-  return SPI_Send(data, num, spi[5]);
+  return SPI_Send(data, num, spi_resources[5]);
 }
 #endif
 
@@ -1241,7 +1238,7 @@ static int32_t SPI_Receive(void  *data, uint32_t num, SPI_RESOURCES *const spi)
     }
     else
     {
-      XMC_USIC_CH_RXFIFO_Configure(spi->spi, spi->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)spi->rx_fifo_size_reg, spi->rx_fifo_size_num >> 1); 
+      XMC_USIC_CH_RXFIFO_Configure(spi->spi, spi->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)spi->rx_fifo_size_reg, spi->rx_fifo_size_num - 1); 
     }     
   } 
 
@@ -1252,9 +1249,7 @@ static int32_t SPI_Receive(void  *data, uint32_t num, SPI_RESOURCES *const spi)
   }
   else
   {    
-    XMC_SPI_CH_DisableDataTransmission(spi->spi);
-    /* Write to FIFO till Fifo is full */
-    while((XMC_USIC_CH_TXFIFO_IsFull(spi->spi) == false))
+    for (int i = 0; i < spi->tx_fifo_size_num; ++i)
     {
       if(spi->info->xfer.tx_cnt < spi->info->xfer.num)
       {      
@@ -1266,7 +1261,6 @@ static int32_t SPI_Receive(void  *data, uint32_t num, SPI_RESOURCES *const spi)
         break;
       }   
     } 
-    XMC_SPI_CH_EnableDataTransmission(spi->spi);
   } 
         
   return ARM_DRIVER_OK;
@@ -1275,42 +1269,42 @@ static int32_t SPI_Receive(void  *data, uint32_t num, SPI_RESOURCES *const spi)
 #if (RTE_SPI0 != 0)
 static int32_t SPI0_Receive(void *data, uint32_t num) 
 {
-  return SPI_Receive(data, num, spi[0]);
+  return SPI_Receive(data, num, spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static int32_t SPI1_Receive(void *data, uint32_t num) 
 {
-  return SPI_Receive(data, num, spi[1]);
+  return SPI_Receive(data, num, spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static int32_t SPI2_Receive(void *data, uint32_t num) 
 {
-  return SPI_Receive(data, num, spi[2]);
+  return SPI_Receive(data, num, spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static int32_t SPI3_Receive(void *data, uint32_t num) 
 {
-  return SPI_Receive(data, num, spi[3]);
+  return SPI_Receive(data, num, spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static int32_t SPI4_Receive(void *data, uint32_t num) 
 {
-  return SPI_Receive(data, num, spi[4]);
+  return SPI_Receive(data, num, spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static int32_t SPI5_Receive(void *data, uint32_t num) 
 {
-  return SPI_Receive(data, num, spi[5]);
+  return SPI_Receive(data, num, spi_resources[5]);
 }
 #endif
 
@@ -1383,7 +1377,7 @@ static int32_t SPI_Transfer(const void *data_out, void *data_in, uint32_t num, S
     }
     else
     {
-      XMC_USIC_CH_RXFIFO_Configure(spi->spi, spi->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)spi->rx_fifo_size_reg, spi->rx_fifo_size_num >> 1); 
+      XMC_USIC_CH_RXFIFO_Configure(spi->spi, spi->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)spi->rx_fifo_size_reg, spi->rx_fifo_size_num - 1); 
     }     
   } 
 
@@ -1403,9 +1397,7 @@ static int32_t SPI_Transfer(const void *data_out, void *data_in, uint32_t num, S
   }
   else
   {   
-    XMC_SPI_CH_DisableDataTransmission(spi->spi);
-    /* Write to FIFO till Fifo is full */
-    while((XMC_USIC_CH_TXFIFO_IsFull(spi->spi) == false))
+    for (int i = 0; i < spi->tx_fifo_size_num; ++i)
     {
       if (spi->info->xfer.tx_cnt < spi->info->xfer.num)
       {      
@@ -1427,7 +1419,6 @@ static int32_t SPI_Transfer(const void *data_out, void *data_in, uint32_t num, S
         break;
       }   
     } 
-    XMC_SPI_CH_EnableDataTransmission(spi->spi);
   }        
         
   return ARM_DRIVER_OK;
@@ -1436,42 +1427,42 @@ static int32_t SPI_Transfer(const void *data_out, void *data_in, uint32_t num, S
 #if (RTE_SPI0 != 0)
 static int32_t SPI0_Transfer(const void *data_out, void *data_in, uint32_t num) 
 {
-  return SPI_Transfer(data_out, data_in, num, spi[0]);
+  return SPI_Transfer(data_out, data_in, num, spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static int32_t SPI1_Transfer(const void *data_out, void *data_in, uint32_t num) 
 {
-  return SPI_Transfer(data_out, data_in, num, spi[1]);
+  return SPI_Transfer(data_out, data_in, num, spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static int32_t SPI2_Transfer(const void *data_out, void *data_in, uint32_t num) 
 {
-  return SPI_Transfer(data_out, data_in, num, spi[2]);
+  return SPI_Transfer(data_out, data_in, num, spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static int32_t SPI3_Transfer(const void *data_out, void *data_in, uint32_t num) 
 {
-  return SPI_Transfer(data_out, data_in, num, spi[3]);
+  return SPI_Transfer(data_out, data_in, num, spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static int32_t SPI4_Transfer(const void *data_out, void *data_in, uint32_t num) 
 {
-  return SPI_Transfer(data_out, data_in, num, spi[4]);
+  return SPI_Transfer(data_out, data_in, num, spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static int32_t SPI5_Transfer(const void *data_out, void *data_in, uint32_t num) 
 {
-  return SPI_Transfer(data_out, data_in, num, spi[5]);
+  return SPI_Transfer(data_out, data_in, num, spi_resources[5]);
 }
 #endif
   
@@ -1490,42 +1481,42 @@ __STATIC_INLINE uint32_t SPI_GetDataCount(SPI_RESOURCES *const spi)
 #if (RTE_SPI0 != 0)
 static uint32_t SPI0_GetDataCount(void) 
 {
-  return SPI_GetDataCount(spi[0]);
+  return SPI_GetDataCount(spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static uint32_t SPI1_GetDataCount(void) 
 {
-  return SPI_GetDataCount(spi[1]);
+  return SPI_GetDataCount(spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static uint32_t SPI2_GetDataCount(void) 
 {
-  return SPI_GetDataCount(spi[2]);
+  return SPI_GetDataCount(spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static uint32_t SPI3_GetDataCount(void) 
 {
-  return SPI_GetDataCount(spi[3]);
+  return SPI_GetDataCount(spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static uint32_t SPI4_GetDataCount(void) 
 {
-  return SPI_GetDataCount(spi[4]);
+  return SPI_GetDataCount(spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static uint32_t SPI5_GetDataCount(void) 
 {
-  return SPI_GetDataCount(spi[5]);
+  return SPI_GetDataCount(spi_resources[5]);
 }
 #endif
 
@@ -1535,56 +1526,50 @@ static uint32_t SPI5_GetDataCount(void)
   \param[in]   spi     Pointer to SPI resources
   \return      SPI status \ref ARM_SPI_STATUS
 */
-static ARM_SPI_STATUS SPI_GetStatus(SPI_RESOURCES *const spi) 
-{
-  ARM_SPI_STATUS status;
-
-  status.busy         = spi->info->status.busy;
-  status.data_lost    = spi->info->status.data_lost;
-  status.mode_fault   = spi->info->status.mode_fault;
-  
-  return status;
+__STATIC_INLINE ARM_SPI_STATUS SPI_GetStatus(SPI_RESOURCES *const spi) 
+{ 
+  return spi->info->status;
 }
 
 #if (RTE_SPI0 != 0)
 static ARM_SPI_STATUS SPI0_GetStatus(void) 
 {
-  return SPI_GetStatus(spi[0]);
+  return SPI_GetStatus(spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static ARM_SPI_STATUS SPI1_GetStatus(void) 
 {
-  return SPI_GetStatus(spi[1]);
+  return SPI_GetStatus(spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static ARM_SPI_STATUS SPI2_GetStatus(void) 
 {
-  return SPI_GetStatus(spi[2]);
+  return SPI_GetStatus(spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static ARM_SPI_STATUS SPI3_GetStatus(void) 
 {
-  return SPI_GetStatus(spi[3]);
+  return SPI_GetStatus(spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static ARM_SPI_STATUS SPI4_GetStatus(void) 
 {
-  return SPI_GetStatus(spi[4]);
+  return SPI_GetStatus(spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static ARM_SPI_STATUS SPI5_GetStatus(void) 
 {
-  return SPI_GetStatus(spi[5]);
+  return SPI_GetStatus(spi_resources[5]);
 }
 #endif
   
@@ -2006,42 +1991,42 @@ static int32_t SPI_Control(uint32_t control, uint32_t arg, SPI_RESOURCES *const 
 #if (RTE_SPI0 != 0)
 static int32_t SPI0_Control(uint32_t control, uint32_t arg) 
 {
-  return SPI_Control(control, arg, spi[0]);
+  return SPI_Control(control, arg, spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 static int32_t SPI1_Control(uint32_t control, uint32_t arg) 
 {
-  return SPI_Control(control, arg, spi[1]);
+  return SPI_Control(control, arg, spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 static int32_t SPI2_Control(uint32_t control, uint32_t arg) 
 {
-  return SPI_Control(control, arg, spi[2]);
+  return SPI_Control(control, arg, spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 static int32_t SPI3_Control(uint32_t control, uint32_t arg) 
 {
-  return SPI_Control(control, arg, spi[3]);
+  return SPI_Control(control, arg, spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 static int32_t SPI4_Control(uint32_t control,uint32_t arg) 
 {
-  return SPI_Control(control, arg, spi[4]);
+  return SPI_Control(control, arg, spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 static int32_t SPI5_Control(uint32_t control, uint32_t arg)
 {
-  return SPI_Control(control, arg, spi[5]);
+  return SPI_Control(control, arg, spi_resources[5]);
 }
 #endif
   
@@ -2057,14 +2042,17 @@ static void SPI_IRQHandler(SPI_RESOURCES *const spi)
   if(XMC_SPI_CH_GetStatusFlag(spi->spi)& XMC_SPI_CH_STATUS_FLAG_DATA_LOST_INDICATION)
   {
     spi->info->status.data_lost  = 1;
+    XMC_SPI_CH_ClearStatusFlag(spi->spi, XMC_SPI_CH_STATUS_FLAG_DATA_LOST_INDICATION);
     if (spi->info->cb_event) spi->info->cb_event(ARM_SPI_EVENT_DATA_LOST);
   }
 
-  if(spi->info->xfer.rx_cnt < spi->info->xfer.num)
+  // Not using FIFO  
+  if (spi->rx_fifo_size_reg == NO_FIFO)
   {
-    // Not using FIFO  
-    if(spi->rx_fifo_size_reg == NO_FIFO)
-    {
+    if(XMC_SPI_CH_GetStatusFlag(spi->spi)& (XMC_SPI_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_SPI_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION))
+    { 
+      XMC_SPI_CH_ClearStatusFlag(spi->spi, XMC_SPI_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_SPI_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
+      
       spi->info->xfer.rx_cnt++;
       data = (uint8_t)XMC_SPI_CH_GetReceivedData(spi->spi);
       
@@ -2080,9 +2068,52 @@ static void SPI_IRQHandler(SPI_RESOURCES *const spi)
           *(spi->info->xfer.rx_buf++) = data;
         }
       }
+
+      uint32_t remaining = spi->info->xfer.num - spi->info->xfer.rx_cnt;
+      if (remaining == 0)
+      {
+        XMC_SPI_CH_DisableEvent(spi->spi, XMC_SPI_CH_STATUS_FLAG_DATA_LOST_INDICATION | 
+                                          XMC_SPI_CH_EVENT_ALTERNATIVE_RECEIVE | 
+                                          XMC_SPI_CH_EVENT_STANDARD_RECEIVE);
+    
+        // Clear  busy flag and set receive transfer complete event
+        spi->info->status.busy = 0;      
+        if (spi->info->cb_event) spi->info->cb_event(ARM_SPI_EVENT_TRANSFER_COMPLETE);    
+      }
+      else
+      {
+        if(spi->info->xfer.tx_cnt < spi->info->xfer.num)
+        {
+          spi->info->xfer.tx_cnt++;
+          if (spi->info->xfer.tx_buf != NULL) 
+          {           
+            if (spi->info->xfer.bit_order == SPI_BIT_ORDER_MSB_LSB)
+            {
+              data = *(uint8_t *)((uint32_t)spi->info->xfer.tx_buf ^ (spi->info->xfer.data_bytes - 1));
+              spi->info->xfer.tx_buf++;
+            }
+            else
+            {
+              data = *(spi->info->xfer.tx_buf++);
+            }
+
+            XMC_SPI_CH_Transmit(spi->spi, *(spi->info->xfer.tx_buf++), XMC_SPI_CH_MODE_STANDARD);
+          }
+          else
+          {
+            XMC_SPI_CH_Transmit(spi->spi,(uint8_t)spi->info->xfer.def_val, XMC_SPI_CH_MODE_STANDARD);
+          }   
+        }
+      }
     }
-    else
-    {
+  }
+  // Using FIFO  	
+  else
+  {
+    if(XMC_USIC_CH_RXFIFO_GetEvent(spi->spi) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE))
+    { 
+      XMC_USIC_CH_RXFIFO_ClearEvent(spi->spi, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+			
       while(XMC_USIC_CH_RXFIFO_IsEmpty(spi->spi) == false)
       { 
         if(spi->info->xfer.rx_cnt < spi->info->xfer.num)
@@ -2107,67 +2138,25 @@ static void SPI_IRQHandler(SPI_RESOURCES *const spi)
           break;
         } 
       } 
-    }
   
-    if (spi->info->xfer.num == spi->info->xfer.rx_cnt)
-    {
-      if(spi->rx_fifo_size_reg == NO_FIFO)
-      {   
-        XMC_SPI_CH_DisableEvent(spi->spi, XMC_SPI_CH_STATUS_FLAG_DATA_LOST_INDICATION | 
-                                          XMC_SPI_CH_EVENT_ALTERNATIVE_RECEIVE | 
-                                          XMC_SPI_CH_EVENT_STANDARD_RECEIVE);
-      }
-      else
+      uint32_t remaining = spi->info->xfer.num - spi->info->xfer.rx_cnt;
+      if (remaining == 0)
       {
         XMC_SPI_CH_DisableEvent(spi->spi, XMC_SPI_CH_STATUS_FLAG_DATA_LOST_INDICATION);
         XMC_USIC_CH_RXFIFO_DisableEvent(spi->spi, XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE);
-      }
      
-      // Clear  busy flag and set receive transfer complete event
-      spi->info->status.busy = 0;      
-      if (spi->info->cb_event) spi->info->cb_event(ARM_SPI_EVENT_TRANSFER_COMPLETE);    
-    }
-    else
-    {
-      if((spi->info->xfer.num - spi->info->xfer.rx_cnt) <= (spi->rx_fifo_size_num >> 1))
-      {
-        XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(spi->spi, (XMC_USIC_CH_FIFO_SIZE_t)spi->rx_fifo_size_reg, spi->info->xfer.num - spi->info->xfer.rx_cnt - 1U);
-        XMC_USIC_CH_RXFIFO_ClearEvent(spi->spi, XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE);
-        NVIC_ClearPendingIRQ(spi->irq_rx_num);
-      }  
-     
-      if(spi->tx_fifo_size_reg == NO_FIFO)
-      {   
-        if(spi->info->xfer.tx_cnt < spi->info->xfer.num)
-        {
-          spi->info->xfer.tx_cnt++;
-          if (spi->info->xfer.tx_buf != NULL) 
-          {           
-            if (spi->info->xfer.bit_order == SPI_BIT_ORDER_MSB_LSB)
-            {
-              data = *(uint8_t *)((uint32_t)spi->info->xfer.tx_buf ^ (spi->info->xfer.data_bytes - 1));
-              spi->info->xfer.tx_buf++;
-            }
-            else
-            {
-              data = *(spi->info->xfer.tx_buf++);
-            }
-
-            XMC_SPI_CH_Transmit(spi->spi, *(spi->info->xfer.tx_buf++), XMC_SPI_CH_MODE_STANDARD);
-          }
-          else
-          {
-            XMC_SPI_CH_Transmit(spi->spi,(uint8_t)spi->info->xfer.def_val, XMC_SPI_CH_MODE_STANDARD);
-          }   
-        }
+        // Clear  busy flag and set receive transfer complete event
+        spi->info->status.busy = 0;      
+        if (spi->info->cb_event) spi->info->cb_event(ARM_SPI_EVENT_TRANSFER_COMPLETE);    
       }
       else
-      {
-       
-        XMC_SPI_CH_DisableDataTransmission(spi->spi);
-        
-        /* Write to FIFO till Fifo is full */
-        while((XMC_USIC_CH_TXFIFO_IsFull(spi->spi) == false))
+      {	
+        if(remaining <= spi->rx_fifo_size_num)
+        {
+          XMC_USIC_CH_RXFIFO_SetTriggerLimit(spi->spi, remaining - 1U);
+        }  
+		    
+        for (int i = 0; i < spi->tx_fifo_size_num; ++i)
         {
           if(spi->info->xfer.tx_cnt < spi->info->xfer.num)
           {    
@@ -2196,9 +2185,6 @@ static void SPI_IRQHandler(SPI_RESOURCES *const spi)
             break;
           }      
         }    
-        
-        XMC_SPI_CH_EnableDataTransmission(spi->spi);
-        
       }    
     }
   }
@@ -2207,42 +2193,42 @@ static void SPI_IRQHandler(SPI_RESOURCES *const spi)
 #if (RTE_SPI0 != 0)
 void SPI0_ISR(void) 
 {
-  SPI_IRQHandler(spi[0]);
+  SPI_IRQHandler(spi_resources[0]);
 }
 #endif
 
 #if (RTE_SPI1 != 0)
 void SPI1_ISR(void) 
 {
-  SPI_IRQHandler(spi[1]);
+  SPI_IRQHandler(spi_resources[1]);
 }
 #endif
 
 #if (RTE_SPI2 != 0)
 void SPI2_ISR(void) 
 {
-  SPI_IRQHandler(spi[2]);
+  SPI_IRQHandler(spi_resources[2]);
 }
 #endif
 
 #if (RTE_SPI3 != 0)
 void SPI3_ISR(void) 
 {
-  SPI_IRQHandler(spi[3]);
+  SPI_IRQHandler(spi_resources[3]);
 }
 #endif
 
 #if (RTE_SPI4 != 0)
 void SPI4_ISR(void) 
 {
-  SPI_IRQHandler(spi[4]);
+  SPI_IRQHandler(spi_resources[4]);
 }
 #endif
 
 #if (RTE_SPI5 != 0)
 void SPI5_ISR(void) 
 {
-  SPI_IRQHandler(spi[5]);
+  SPI_IRQHandler(spi_resources[5]);
 }
 #endif
 

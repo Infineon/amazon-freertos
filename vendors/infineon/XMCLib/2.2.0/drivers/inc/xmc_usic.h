@@ -100,6 +100,9 @@
  * 2019-12-05:
  *     - Added XMC_USIC_CH_TXFIFO_PutDataEx()
  * 
+ * 2020-04-30:
+ *     - Added XMC_USIC_CH_TXFIFO_SetTriggerLimit() and XMC_USIC_CH_RXFIFO_SetTriggerLimit()
+ * 
  * @endcond
  *
  */
@@ -1592,6 +1595,27 @@ void XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
 /**
  * @param channel Pointer to USIC channel handler of type @ref XMC_USIC_CH_t \n
  * 				   \b Range: @ref XMC_USIC0_CH0, @ref XMC_USIC0_CH1 to @ref XMC_USIC2_CH1 based on device support.
+ * @param limit Threshold for transmit FIFO filling level to be considered for generating events. \n
+ * 		\b Range: 0 to \a fifo size -1.
+ * @return None
+ *
+ * \par<b>Description</b><br>
+ * Sets the trigger limit for the TX FIFO. \n\n
+ *
+ * \par<b>Related APIs:</b><BR>
+ * XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit() \n\n\n
+ */
+__STATIC_INLINE void XMC_USIC_CH_TXFIFO_SetTriggerLimit(XMC_USIC_CH_t *const channel,
+                                                        const uint32_t limit)
+{
+  channel->TBCTR = (channel->TBCTR & (uint32_t)~USIC_CH_TBCTR_LIMIT_Msk) | ((limit << USIC_CH_TBCTR_LIMIT_Pos) & USIC_CH_TBCTR_LIMIT_Msk);
+}
+
+
+
+/**
+ * @param channel Pointer to USIC channel handler of type @ref XMC_USIC_CH_t \n
+ * 				   \b Range: @ref XMC_USIC0_CH0, @ref XMC_USIC0_CH1 to @ref XMC_USIC2_CH1 based on device support.
  * @param event Events to be enabled. Multiple events can be bitwise OR combined. @ref XMC_USIC_CH_TXFIFO_EVENT_CONF_t \n
  * @return None
  *
@@ -1925,6 +1949,25 @@ void XMC_USIC_CH_RXFIFO_Configure(XMC_USIC_CH_t *const channel,
 void XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
                                             const XMC_USIC_CH_FIFO_SIZE_t size,
                                             const uint32_t limit);
+
+/**
+ * @param channel Pointer to USIC channel handler of type @ref XMC_USIC_CH_t \n
+ * 				   \b Range: @ref XMC_USIC0_CH0, @ref XMC_USIC0_CH1 to @ref XMC_USIC2_CH1 based on device support.
+ * @param limit Threshold for transmit FIFO filling level to be considered for generating events. \n
+ * 		\b Range: 0 to \a fifo size -1.
+ * @return None
+ *
+ * \par<b>Description</b><br>
+ * Sets the trigger limit for the TX FIFO. \n\n
+ *
+ * \par<b>Related APIs:</b><BR>
+ * XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit() \n\n\n
+ */
+__STATIC_INLINE void XMC_USIC_CH_RXFIFO_SetTriggerLimit(XMC_USIC_CH_t *const channel,
+                                                        const uint32_t limit)
+{
+  channel->RBCTR = (channel->RBCTR & (uint32_t)~USIC_CH_RBCTR_LIMIT_Msk) | ((limit << USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+}
 
 /**
  * @param channel Pointer to USIC channel handler of type @ref XMC_USIC_CH_t \n

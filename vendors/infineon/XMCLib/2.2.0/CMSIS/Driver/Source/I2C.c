@@ -122,12 +122,12 @@ static const ARM_I2C_CAPABILITIES DriverCapabilities =
 /* I2C0 */
 #if (RTE_I2C0 != 0)
 
-static I2C_INFO I2C0_Info;
+static volatile I2C_INFO I2C0_Info;
 static XMC_GPIO_CONFIG_t I2C0_sda_conf; 
 static XMC_GPIO_CONFIG_t I2C0_scl_conf; 
 
 /* I2C0 Resources */
-static const I2C_RESOURCES I2C0_Resources = 
+static I2C_RESOURCES I2C0_Resources = 
 {
   {RTE_I2C0_TX_PORT},
   RTE_I2C0_TX_AF,
@@ -154,12 +154,12 @@ static const I2C_RESOURCES I2C0_Resources =
 /* I2C1 */
 #if (RTE_I2C1 != 0)
 
-static I2C_INFO I2C1_Info;
+static volatile I2C_INFO I2C1_Info;
 static XMC_GPIO_CONFIG_t I2C1_sda_conf; 
 static XMC_GPIO_CONFIG_t I2C1_scl_conf; 
 
 /* I2C1 Resources */
-static const I2C_RESOURCES I2C1_Resources = 
+static I2C_RESOURCES I2C1_Resources = 
 {
   {RTE_I2C1_TX_PORT},
   RTE_I2C1_TX_AF,
@@ -186,12 +186,12 @@ static const I2C_RESOURCES I2C1_Resources =
 /* I2C2 */
 #if (RTE_I2C2 != 0)
 
-static I2C_INFO I2C2_Info;
+static volatile I2C_INFO I2C2_Info;
 static XMC_GPIO_CONFIG_t I2C2_sda_conf; 
 static XMC_GPIO_CONFIG_t I2C2_scl_conf; 
 
 /* I2C2 Resources */
-static const I2C_RESOURCES I2C2_Resources = 
+static I2C_RESOURCES I2C2_Resources = 
 {
   {RTE_I2C2_TX_PORT},
   RTE_I2C2_TX_AF,
@@ -218,12 +218,12 @@ static const I2C_RESOURCES I2C2_Resources =
 /* I2C3 */
 #if (RTE_I2C3 != 0)
 
-static I2C_INFO I2C3_Info;
+static volatile I2C_INFO I2C3_Info;
 static XMC_GPIO_CONFIG_t I2C3_sda_conf; 
 static XMC_GPIO_CONFIG_t I2C3_scl_conf; 
 
 /* I2C3 Resources */
-static const I2C_RESOURCES I2C3_Resources = 
+static I2C_RESOURCES I2C3_Resources = 
 {
   {RTE_I2C3_TX_PORT},
   RTE_I2C3_TX_AF,
@@ -251,12 +251,12 @@ static const I2C_RESOURCES I2C3_Resources =
 /* I2C4 */
 #if (RTE_I2C4 != 0)
 
-static I2C_INFO I2C4_Info;
+static volatile I2C_INFO I2C4_Info;
 static XMC_GPIO_CONFIG_t I2C4_sda_conf; 
 static XMC_GPIO_CONFIG_t I2C4_scl_conf; 
 
 /* I2C4 Resources */
-static const I2C_RESOURCES I2C4_Resources = 
+static I2C_RESOURCES I2C4_Resources = 
 {
   {RTE_I2C4_TX_PORT},
   RTE_I2C4_TX_AF,
@@ -284,12 +284,12 @@ static const I2C_RESOURCES I2C4_Resources =
 /* I2C5 */
 #if (RTE_I2C5 != 0)
 
-static I2C_INFO I2C5_Info;
+static volatile I2C_INFO I2C5_Info;
 static XMC_GPIO_CONFIG_t I2C5_sda_conf; 
 static XMC_GPIO_CONFIG_t I2C5_scl_conf; 
 
 /* I2C4 Resources */
-static const I2C_RESOURCES I2C5_Resources = 
+static I2C_RESOURCES I2C5_Resources = 
 {
   {RTE_I2C5_TX_PORT},
   RTE_I2C5_TX_AF,
@@ -316,7 +316,7 @@ static const I2C_RESOURCES I2C5_Resources =
 
 
 /* I2C Resources */
-static const I2C_RESOURCES  *i2c[6] = 
+static I2C_RESOURCES *const i2c_resources[6] = 
 {
 #if (RTE_I2C0 != 0)
   &I2C0_Resources,
@@ -376,42 +376,42 @@ __STATIC_INLINE ARM_I2C_CAPABILITIES I2C_GetCapabilities(I2C_RESOURCES *const i2
 #if (RTE_I2C0 != 0)
 static ARM_I2C_CAPABILITIES I2C0_GetCapabilities(void)
 {
-  return I2C_GetCapabilities(i2c[0]);
+  return I2C_GetCapabilities(i2c_resources[0]);
 }
 #endif
 
 #if (RTE_I2C1 != 0)
 static ARM_I2C_CAPABILITIES I2C1_GetCapabilities(void) 
 {
-  return I2C_GetCapabilities(i2c[1]);
+  return I2C_GetCapabilities(i2c_resources[1]);
 }
 #endif
 
 #if (RTE_I2C2 != 0)
 static ARM_I2C_CAPABILITIES I2C2_GetCapabilities(void) 
 {
-  return I2C_GetCapabilities(i2c[2]);
+  return I2C_GetCapabilities(i2c_resources[2]);
 }
 #endif
 
 #if (RTE_I2C3 != 0)
 static ARM_I2C_CAPABILITIES I2C3_GetCapabilities(void) 
 {
-  return I2C_GetCapabilities(i2c[3]);
+  return I2C_GetCapabilities(i2c_resources[3]);
 }
 #endif
 
 #if (RTE_I2C4 != 0)
 static ARM_I2C_CAPABILITIES I2C4_GetCapabilities(void)
 {
-  return I2C_GetCapabilities(i2c[4]);
+  return I2C_GetCapabilities(i2c_resources[4]);
 }
 #endif
 
 #if (RTE_I2C5 != 0)
 static ARM_I2C_CAPABILITIES I2C5_GetCapabilities(void) 
 {
-  return I2C_GetCapabilities(i2c[5]);
+  return I2C_GetCapabilities(i2c_resources[5]);
 }
 #endif
 
@@ -446,42 +446,42 @@ static int32_t I2C_Initialize(ARM_I2C_SignalEvent_t cb_event, I2C_RESOURCES *con
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_Initialize(ARM_I2C_SignalEvent_t cb_event) 
 {
-  return I2C_Initialize(cb_event, i2c[0]);
+  return I2C_Initialize(cb_event, i2c_resources[0]);
 }
 #endif
 
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_Initialize(ARM_I2C_SignalEvent_t cb_event) 
 {
-  return I2C_Initialize(cb_event, i2c[1]);
+  return I2C_Initialize(cb_event, i2c_resources[1]);
 }
 #endif
 
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_Initialize(ARM_I2C_SignalEvent_t cb_event) 
 {
-  return I2C_Initialize(cb_event, i2c[2]);
+  return I2C_Initialize(cb_event, i2c_resources[2]);
 }
 #endif
 
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_Initialize(ARM_I2C_SignalEvent_t cb_event) 
 {
-  return I2C_Initialize(cb_event, i2c[3]);
+  return I2C_Initialize(cb_event, i2c_resources[3]);
 }
 #endif
 
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_Initialize(ARM_I2C_SignalEvent_t cb_event) 
 {
-  return I2C_Initialize(cb_event, i2c[4]);
+  return I2C_Initialize(cb_event, i2c_resources[4]);
 }
 #endif
 
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_Initialize(ARM_I2C_SignalEvent_t cb_event) 
 {
-  return I2C_Initialize(cb_event, i2c[5]);
+  return I2C_Initialize(cb_event, i2c_resources[5]);
 }
 #endif
 
@@ -496,44 +496,43 @@ static int32_t I2C_Uninitialize (I2C_RESOURCES *const i2c)
 {
   // Reset I2C status flags
   i2c->info->flags = 0;
-  i2c->info->flags &= ~I2C_FLAG_INITIALIZED;
   return ARM_DRIVER_OK;
 }
 
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_Uninitialize(void) 
 {
-  return I2C_Uninitialize(i2c[0]);
+  return I2C_Uninitialize(i2c_resources[0]);
 }
 #endif  
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_Uninitialize(void) 
 {
-  return I2C_Uninitialize(i2c[1]);
+  return I2C_Uninitialize(i2c_resources[1]);
 }
 #endif
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_Uninitialize(void) 
 {
-  return I2C_Uninitialize(i2c[2]);
+  return I2C_Uninitialize(i2c_resources[2]);
 }
 #endif
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_Uninitialize(void) 
 {
-  return I2C_Uninitialize(i2c[3]);
+  return I2C_Uninitialize(i2c_resources[3]);
 }
 #endif
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_Uninitialize(void) 
 {
-  return I2C_Uninitialize(i2c[4]);
+  return I2C_Uninitialize(i2c_resources[4]);
 }
 #endif
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_Uninitialize(void) 
 {
-  return I2C_Uninitialize(i2c[5]);
+  return I2C_Uninitialize(i2c_resources[5]);
 }
 #endif
 /**
@@ -628,7 +627,7 @@ static int32_t I2C_PowerControl(ARM_POWER_STATE state, I2C_RESOURCES *const i2c)
     XMC_GPIO_Init(i2c->sda_tx_port.port,     i2c->sda_tx_port.pin,     i2c->pin_sda_config);                                           
     XMC_GPIO_Init(i2c->scl_output_port.port, i2c->scl_output_port.pin, i2c->pin_scl_config);                                                       
 
-    i2c->info->flags &= ~I2C_FLAG_POWERED;
+    i2c->info->flags &= (uint8_t)~I2C_FLAG_POWERED;
   } 
   else 
   {
@@ -641,37 +640,37 @@ static int32_t I2C_PowerControl(ARM_POWER_STATE state, I2C_RESOURCES *const i2c)
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_PowerControl(ARM_POWER_STATE state) 
 {
-  return I2C_PowerControl(state, i2c[0]);
+  return I2C_PowerControl(state, i2c_resources[0]);
 }
 #endif
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_PowerControl(ARM_POWER_STATE state) 
 {
-  return I2C_PowerControl(state, i2c[1]);
+  return I2C_PowerControl(state, i2c_resources[1]);
 }
 #endif
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_PowerControl(ARM_POWER_STATE state) 
 {
-  return I2C_PowerControl(state, i2c[2]);
+  return I2C_PowerControl(state, i2c_resources[2]);
 }
 #endif
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_PowerControl(ARM_POWER_STATE state) 
 {
-  return I2C_PowerControl(state, i2c[3]);
+  return I2C_PowerControl(state, i2c_resources[3]);
 }
 #endif
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_PowerControl(ARM_POWER_STATE state) 
 {
-  return I2C_PowerControl(state, i2c[4]);
+  return I2C_PowerControl(state, i2c_resources[4]);
 }
 #endif
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_PowerControl(ARM_POWER_STATE state) 
 {
-  return I2C_PowerControl(state, i2c[5]);
+  return I2C_PowerControl(state, i2c_resources[5]);
 }
 #endif
 /**
@@ -735,6 +734,7 @@ static int32_t I2C_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t n
   XMC_USIC_CH_TXFIFO_Flush(i2c->i2c); 
   
   XMC_I2C_CH_EnableEvent(i2c->i2c, XMC_I2C_CH_EVENT_ACK |
+                                   XMC_I2C_CH_EVENT_STOP_CONDITION_RECEIVED |
                                    XMC_I2C_CH_EVENT_NACK |
                                    XMC_I2C_CH_EVENT_ARBITRATION_LOST |
                                    XMC_I2C_CH_EVENT_ERROR);
@@ -759,42 +759,42 @@ static int32_t I2C_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t n
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t num, bool xfer_pending) 
 {
-  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c[0]);
+  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c_resources[0]);
 }
 #endif
 
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t num, bool xfer_pending) 
 {
-  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c[1]);
+  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c_resources[1]);
 }
 #endif
 
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t num, bool xfer_pending)
 {
-  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c[2]);
+  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c_resources[2]);
 }
 #endif
 
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t num, bool xfer_pending) 
 {
-  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c[3]);
+  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c_resources[3]);
 }
 #endif
 
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t num, bool xfer_pending) 
 {
-  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c[4]);
+  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c_resources[4]);
 }
 #endif
 
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t num, bool xfer_pending) 
 {
-  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c[5]);
+  return I2C_MasterTransmit(addr, data, num, xfer_pending, i2c_resources[5]);
 }
 #endif
 
@@ -887,6 +887,7 @@ static int32_t I2C_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, boo
   } 
   
   XMC_I2C_CH_EnableEvent(i2c->i2c, XMC_I2C_CH_EVENT_ACK |
+                                   XMC_I2C_CH_EVENT_STOP_CONDITION_RECEIVED |
                                    XMC_I2C_CH_EVENT_NACK |
                                    XMC_I2C_CH_EVENT_ARBITRATION_LOST | 
                                    XMC_I2C_CH_EVENT_ERROR);                     
@@ -911,42 +912,42 @@ static int32_t I2C_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, boo
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, bool xfer_pending)
 {
-  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c[0]);
+  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c_resources[0]);
 }
 #endif
 
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, bool xfer_pending)
 {
-  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c[1]);
+  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c_resources[1]);
 }
 #endif
 
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, bool xfer_pending)
 {
-  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c[2]);
+  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c_resources[2]);
 }
 #endif
 
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, bool xfer_pending)
 {
-  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c[3]);
+  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c_resources[3]);
 }
 #endif
 
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, bool xfer_pending)
 {
-  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c[4]);
+  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c_resources[4]);
 }
 #endif
 
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, bool xfer_pending)
 {
-  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c[5]);
+  return I2C_MasterReceive(addr, data, num, xfer_pending, i2c_resources[5]);
 }
 #endif
 
@@ -992,7 +993,6 @@ static int32_t I2C_SlaveTransmit(const uint8_t *data, uint32_t num, I2C_RESOURCE
   XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_ERROR |
                                        XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED |
                                        XMC_I2C_CH_STATUS_FLAG_SLAVE_READ_REQUESTED |
-                                       XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST |
                                        XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
   
   /* Set control variables */
@@ -1009,7 +1009,6 @@ static int32_t I2C_SlaveTransmit(const uint8_t *data, uint32_t num, I2C_RESOURCE
  
   XMC_I2C_CH_EnableEvent(i2c->i2c, XMC_I2C_CH_EVENT_SLAVE_READ_REQUEST | 
                                    XMC_I2C_CH_EVENT_NACK | 
-                                   XMC_I2C_CH_EVENT_ARBITRATION_LOST | 
                                    XMC_I2C_CH_EVENT_ERROR);
  
   XMC_I2C_CH_SetInterruptNodePointer(i2c->i2c, SRno);
@@ -1034,42 +1033,42 @@ static int32_t I2C_SlaveTransmit(const uint8_t *data, uint32_t num, I2C_RESOURCE
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_SlaveTransmit(const uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveTransmit(data, num, i2c[0]);
+  return I2C_SlaveTransmit(data, num, i2c_resources[0]);
 }
 #endif
 
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_SlaveTransmit(const uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveTransmit(data, num, i2c[1]);
+  return I2C_SlaveTransmit(data, num, i2c_resources[1]);
 }
 #endif
 
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_SlaveTransmit(const uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveTransmit(data, num, i2c[2]);
+  return I2C_SlaveTransmit(data, num, i2c_resources[2]);
 }
 #endif
 
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_SlaveTransmit(const uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveTransmit(data, num, i2c[3]);
+  return I2C_SlaveTransmit(data, num, i2c_resources[3]);
 }
 #endif
 
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_SlaveTransmit(const uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveTransmit(data, num, i2c[4]);
+  return I2C_SlaveTransmit(data, num, i2c_resources[4]);
 }
 #endif
 
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_SlaveTransmit(const uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveTransmit(data, num, i2c[5]);
+  return I2C_SlaveTransmit(data, num, i2c_resources[5]);
 }
 #endif  
   
@@ -1113,11 +1112,9 @@ static int32_t I2C_SlaveReceive(uint8_t *data, uint32_t num, I2C_RESOURCES *cons
 
   XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_ERROR |
                                        XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED |
-                                       XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST |
                                        XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
   
   XMC_I2C_CH_EnableEvent(i2c->i2c, XMC_I2C_CH_EVENT_NACK | 
-                                   XMC_I2C_CH_EVENT_ARBITRATION_LOST |
                                    XMC_I2C_CH_EVENT_ERROR);
  
   /* Set control variables */
@@ -1148,7 +1145,7 @@ static int32_t I2C_SlaveReceive(uint8_t *data, uint32_t num, I2C_RESOURCES *cons
   
     if(num <= i2c->rx_fifo_size_num)
     {
-      XMC_USIC_CH_RXFIFO_Configure(i2c->i2c, i2c->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)i2c->rx_fifo_size_reg, i2c->info->xfer.rx_num - 1U); 
+      XMC_USIC_CH_RXFIFO_Configure(i2c->i2c, i2c->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)i2c->rx_fifo_size_reg, num - 1U); 
     }
     else
     {
@@ -1164,37 +1161,37 @@ static int32_t I2C_SlaveReceive(uint8_t *data, uint32_t num, I2C_RESOURCES *cons
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_SlaveReceive(uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveReceive(data, num, i2c[0]);
+  return I2C_SlaveReceive(data, num, i2c_resources[0]);
 }
 #endif
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_SlaveReceive(uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveReceive(data, num, i2c[1]);
+  return I2C_SlaveReceive(data, num, i2c_resources[1]);
 }
 #endif
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_SlaveReceive(uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveReceive(data, num, i2c[2]);
+  return I2C_SlaveReceive(data, num, i2c_resources[2]);
 }
 #endif
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_SlaveReceive(uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveReceive(data, num, i2c[3]);
+  return I2C_SlaveReceive(data, num, i2c_resources[3]);
 }
 #endif
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_SlaveReceive(uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveReceive(data, num, i2c[4]);
+  return I2C_SlaveReceive(data, num, i2c_resources[4]);
 }
 #endif
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_SlaveReceive(uint8_t *data, uint32_t num) 
 {
-  return I2C_SlaveReceive(data, num, i2c[5]);
+  return I2C_SlaveReceive(data, num, i2c_resources[5]);
 }
 #endif
 
@@ -1219,37 +1216,37 @@ __STATIC_INLINE int32_t I2C_GetDataCount(I2C_RESOURCES *const i2c)
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_GetDataCount(void) 
 {
-  return I2C_GetDataCount(i2c[0]);
+  return I2C_GetDataCount(i2c_resources[0]);
 }
 #endif
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_GetDataCount(void) 
 {
-  return I2C_GetDataCount(i2c[1]);
+  return I2C_GetDataCount(i2c_resources[1]);
 }
 #endif
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_GetDataCount(void) 
 {
-  return I2C_GetDataCount(i2c[2]);
+  return I2C_GetDataCount(i2c_resources[2]);
 }
 #endif
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_GetDataCount(void) 
 {
-  return I2C_GetDataCount(i2c[3]);
+  return I2C_GetDataCount(i2c_resources[3]);
 }
 #endif
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_GetDataCount(void) 
 {
-  return I2C_GetDataCount(i2c[4]);
+  return I2C_GetDataCount(i2c_resources[4]);
 }
 #endif
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_GetDataCount(void) 
 {
-  return I2C_GetDataCount(i2c[5]);
+  return I2C_GetDataCount(i2c_resources[5]);
 }
 #endif
 
@@ -1259,53 +1256,45 @@ static int32_t I2C5_GetDataCount(void)
   \param[in]   i2c     Pointer to I2C resources
   \return      I2C status \ref ARM_I2C_STATUS
 */
-static ARM_I2C_STATUS I2C_GetStatus(I2C_RESOURCES *const i2c) 
+__STATIC_INLINE ARM_I2C_STATUS I2C_GetStatus(I2C_RESOURCES *const i2c) 
 {
-  ARM_I2C_STATUS status;
-  
-  status.busy             = i2c->info->status.busy;             
-  status.mode             = i2c->info->status.mode; 
-  status.direction        = i2c->info->status.direction;
-  status.general_call     = i2c->info->status.general_call;
-  status.arbitration_lost = i2c->info->status.arbitration_lost;
-  
-  return status;
+  return i2c->info->status;
 }
 
 #if (RTE_I2C0 != 0)
 static ARM_I2C_STATUS I2C0_GetStatus(void) 
 {
-  return I2C_GetStatus(i2c[0]);
+  return I2C_GetStatus(i2c_resources[0]);
 }
 #endif
 #if (RTE_I2C1 != 0)
 static ARM_I2C_STATUS I2C1_GetStatus(void) 
 {
-  return I2C_GetStatus(i2c[1]);
+  return I2C_GetStatus(i2c_resources[1]);
 }
 #endif
 #if (RTE_I2C2 != 0)
 static ARM_I2C_STATUS I2C2_GetStatus(void) 
 {
-  return I2C_GetStatus(i2c[2]);
+  return I2C_GetStatus(i2c_resources[2]);
 }
 #endif
 #if (RTE_I2C3 != 0)
 static ARM_I2C_STATUS I2C3_GetStatus(void) 
 {
-  return I2C_GetStatus(i2c[3]);
+  return I2C_GetStatus(i2c_resources[3]);
 }
 #endif
 #if (RTE_I2C4 != 0)
 static ARM_I2C_STATUS I2C4_GetStatus(void) 
 {
-  return I2C_GetStatus(i2c[4]);
+  return I2C_GetStatus(i2c_resources[4]);
 }
 #endif
 #if (RTE_I2C5 != 0)
 static ARM_I2C_STATUS I2C5_GetStatus(void) 
 {
-  return I2C_GetStatus(i2c[5]);
+  return I2C_GetStatus(i2c_resources[5]);
 }
 #endif
   
@@ -1384,37 +1373,37 @@ static int32_t I2C_Control(uint32_t control, uint32_t arg, I2C_RESOURCES *const 
 #if (RTE_I2C0 != 0)
 static int32_t I2C0_Control(uint32_t control, uint32_t arg) 
 {
-  return I2C_Control(control, arg, i2c[0]);
+  return I2C_Control(control, arg, i2c_resources[0]);
 }
 #endif
 #if (RTE_I2C1 != 0)
 static int32_t I2C1_Control(uint32_t control, uint32_t arg) 
 {
-  return I2C_Control(control, arg, i2c[1]);
+  return I2C_Control(control, arg, i2c_resources[1]);
 }
 #endif
 #if (RTE_I2C2 != 0)
 static int32_t I2C2_Control(uint32_t control, uint32_t arg) 
 {
-  return I2C_Control(control, arg, i2c[2]);
+  return I2C_Control(control, arg, i2c_resources[2]);
 }
 #endif
 #if (RTE_I2C3 != 0)
 static int32_t I2C3_Control(uint32_t control, uint32_t arg) 
 {
-  return I2C_Control(control, arg, i2c[3]);
+  return I2C_Control(control, arg, i2c_resources[3]);
 }
 #endif
 #if (RTE_I2C4 != 0)
 static int32_t I2C4_Control(uint32_t control, uint32_t arg) 
 {
-  return I2C_Control(control, arg, i2c[4]);
+  return I2C_Control(control, arg, i2c_resources[4]);
 }
 #endif
 #if (RTE_I2C5 != 0)
 static int32_t I2C5_Control(uint32_t control, uint32_t arg) 
 {
-  return I2C_Control(control, arg, i2c[5]);
+  return I2C_Control(control, arg, i2c_resources[5]);
 }
 #endif
   
@@ -1444,7 +1433,7 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
       XMC_USIC_CH_SetTransmitBufferStatus(i2c->i2c, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
     }
 
-    if ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST) != 0)
+    else if ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST) != 0)
     {
       XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST);
       i2c->info->status.arbitration_lost = 1; 
@@ -1452,8 +1441,17 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
       if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE | ARM_I2C_EVENT_ARBITRATION_LOST | ARM_I2C_EVENT_TRANSFER_INCOMPLETE);
     }
 
+    else if ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED) != 0)
+    {
+      XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED);
+      if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE);
+      
+      // Clear TX busy flag
+      i2c->info->status.busy = 0;
+    }
+
     // Transmitter (ACK event)
-    if (i2c->info->status.direction == I2C_DIR_WRITE)
+    else if (i2c->info->status.direction == I2C_DIR_WRITE)
     {
       if ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) != 0)
       {
@@ -1467,12 +1465,10 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
           }
           else
           {
-            XMC_I2C_CH_DisableDataTransmission(i2c->i2c);
-
             /* Write to FIFO till Fifo is full */
             while (XMC_USIC_CH_TXFIFO_IsFull(i2c->i2c) == false)
             { 
-              if (i2c->info->xfer.tx_num > i2c->info->xfer.tx_cnt) 
+              if (i2c->info->xfer.tx_cnt < i2c->info->xfer.tx_num) 
               { 
                 i2c->info->xfer.tx_cnt++;         
                 XMC_USIC_CH_TXFIFO_PutData(i2c->i2c, *(i2c->info->xfer.tx_buf++));
@@ -1482,8 +1478,6 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
                 break;
               }
             }
-
-            XMC_I2C_CH_EnableDataTransmission(i2c->i2c);
           }
         }
     
@@ -1495,18 +1489,17 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
       
           if(i2c->info->pending == false)
           {
-            XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED);
             XMC_I2C_CH_MasterStop(i2c->i2c); 
-            while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & (uint32_t)XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED) == 0);
           }
-      
-          if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE);
-      
-          // Clear TX busy flag
-          i2c->info->status.busy = 0;
+          else
+		  {
+            i2c->info->status.busy = 0;
+            if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE);      
+		  }
         }
       }
     }
+    
     // Receiver (standard/alternate receive event)
     else
     {
@@ -1530,14 +1523,14 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
             if(i2c->info->pending == false)
             {
               XMC_I2C_CH_MasterStop(i2c->i2c); 
-            } 
+            }
+            else
+            {							
+              i2c->info->status.busy = 0;
+              if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE);          
+            }       
         
-            // Clear RX busy flag and set receive transfer complete event
-            i2c->info->status.busy = 0; 
-        
-            XMC_I2C_CH_DisableEvent(i2c->i2c, XMC_USIC_CH_EVENT_STANDARD_RECEIVE | XMC_USIC_CH_EVENT_ALTERNATIVE_RECEIVE);
-        
-            if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE);          
+            XMC_I2C_CH_DisableEvent(i2c->i2c, XMC_USIC_CH_EVENT_STANDARD_RECEIVE | XMC_USIC_CH_EVENT_ALTERNATIVE_RECEIVE);       
           }   
         }
       }
@@ -1547,12 +1540,14 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
         {
           XMC_USIC_CH_RXFIFO_ClearEvent(i2c->i2c, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
 
+          uint32_t rx_remaining = i2c->info->xfer.rx_num - i2c->info->xfer.rx_cnt;
           while ((XMC_USIC_CH_RXFIFO_IsEmpty(i2c->i2c) == false))
           { 
-            if (i2c->info->xfer.rx_cnt < i2c->info->xfer.rx_num)
+            if (rx_remaining > 0)
             { 
               /* Read the data from FIFO buffer */
               i2c->info->xfer.rx_cnt++;
+              rx_remaining--;
               *(i2c->info->xfer.rx_buf++) = XMC_I2C_CH_GetReceivedData(i2c->i2c);
             }
             else
@@ -1561,11 +1556,11 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
             } 
           }
           
-          if (i2c->info->xfer.rx_num > i2c->info->xfer.rx_cnt)
+          if (rx_remaining > 0)
           {
-            if ((i2c->info->xfer.rx_num - i2c->info->xfer.rx_cnt) < i2c->rx_fifo_size_num)
+            if (rx_remaining < i2c->rx_fifo_size_num)
             {
-              XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(i2c->i2c, (XMC_USIC_CH_FIFO_SIZE_t)i2c->rx_fifo_size_reg, i2c->info->xfer.rx_num - i2c->info->xfer.rx_cnt - 1U); 
+              XMC_USIC_CH_RXFIFO_SetTriggerLimit(i2c->i2c, rx_remaining - 1U); 
             }
           }
           else
@@ -1573,18 +1568,21 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
             XMC_USIC_CH_RXFIFO_DisableEvent(i2c->i2c,XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE);
             if(i2c->info->pending == false)
             {
-                XMC_I2C_CH_MasterStop(i2c->i2c);
+              XMC_I2C_CH_MasterStop(i2c->i2c);
             }
-            i2c->info->status.busy = 0;
-            if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE);
+            else
+            {
+              i2c->info->status.busy = 0;
+              if (i2c->info->cb_event) i2c->info->cb_event(ARM_I2C_EVENT_TRANSFER_DONE);
+            }
           }
 
-          if (i2c->info->xfer.tx_cnt < i2c->info->xfer.tx_num)
+          uint32_t tx_remaining = i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt;
+          if (tx_remaining > 0)
           {           
-            /* Write to FIFO till Fifo is full */
-            while (XMC_USIC_CH_TXFIFO_IsFull(i2c->i2c) == false)
+            for (uint32_t i = 0; i < i2c->tx_fifo_size_num; ++i)
             {         
-              if (i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt == 1)
+              if (tx_remaining == 1)
               {
                 XMC_I2C_CH_MasterReceiveNack(i2c->i2c);
               }
@@ -1593,24 +1591,27 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
                 XMC_I2C_CH_MasterReceiveAck(i2c->i2c);
               } 
               i2c->info->xfer.tx_cnt++;   
-            
-              if ((i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt) == 0)
+              tx_remaining--;
+
+              if (tx_remaining == 0)
               {       
                 break;
               }
             }
-         } 
+          } 
         }
       } // (XMC_I2C_CH_GetStatusFlag(i2c->i2c) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) != 0
 
       if ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) != 0)
       {
         XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
-        if(i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt != 0)
+
+        uint32_t tx_remaining = i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt;
+        if(tx_remaining > 0)
         {
           if(i2c->tx_fifo_size_reg==NO_FIFO)
           {
-            if(i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt == 1)
+            if(tx_remaining == 1)
             {
               XMC_I2C_CH_MasterReceiveNack(i2c->i2c);
             }
@@ -1622,10 +1623,9 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
           }
           else
           {
-            /* Write to FIFO till Fifo is full */
-            while((XMC_USIC_CH_TXFIFO_IsFull(i2c->i2c) == false))
+            for (uint32_t i = 0; i < i2c->tx_fifo_size_num; ++i)
             {         
-              if(i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt == 1)
+              if(tx_remaining == 1)
               {
                 XMC_I2C_CH_MasterReceiveNack(i2c->i2c);
               }
@@ -1633,9 +1633,10 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
               {
                 XMC_I2C_CH_MasterReceiveAck(i2c->i2c);
               } 
-              i2c->info->xfer.tx_cnt++;   
+              i2c->info->xfer.tx_cnt++;
+              tx_remaining--;   
       
-              if(i2c->info->xfer.tx_num - i2c->info->xfer.tx_cnt == 0)
+              if (tx_remaining == 0)
               {
                 break;
               }
@@ -1658,13 +1659,7 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
       i2c->info->status.busy=0;
       i2c->info->status.bus_error=1;      
     }
-  
-    if ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST) != 0U)
-    {
-      i2c->info->status.busy=0; 
-      i2c->info->status.arbitration_lost=1;    
-    }
-  
+   
     if(i2c->info->status.direction == I2C_DIR_READ) // receiver
     {
       if ((XMC_USIC_CH_RXFIFO_GetEvent(i2c->i2c) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0)
@@ -1685,13 +1680,10 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
           }
         }
       
-        if((i2c->info->xfer.rx_num - i2c->info->xfer.rx_cnt) < i2c->rx_fifo_size_num)
+        uint32_t rx_remaining = i2c->info->xfer.rx_num - i2c->info->xfer.rx_cnt;
+        if (rx_remaining < i2c->rx_fifo_size_num)
         {
-          XMC_USIC_CH_RXFIFO_Configure(i2c->i2c,i2c->info->rx_fifo_pointer,(XMC_USIC_CH_FIFO_SIZE_t)i2c->rx_fifo_size_reg,(i2c->info->xfer.rx_num - i2c->info->xfer.rx_cnt)- 1U); 
-        }
-        else
-        {       
-          XMC_USIC_CH_RXFIFO_Configure(i2c->i2c,i2c->info->rx_fifo_pointer,(XMC_USIC_CH_FIFO_SIZE_t)i2c->rx_fifo_size_reg,i2c->rx_fifo_size_num - 1U); 
+          XMC_USIC_CH_RXFIFO_SetTriggerLimit(i2c->i2c, rx_remaining - 1U);
         }
       }
     }
@@ -1734,42 +1726,42 @@ static void I2C_IRQHandler(I2C_RESOURCES *const i2c)
 #if (RTE_I2C0 != 0)
 void I2C0_ISR(void) 
 {
-  I2C_IRQHandler(i2c[0]);
+  I2C_IRQHandler(i2c_resources[0]);
 }
 #endif
 
 #if (RTE_I2C1 != 0)
 void I2C1_ISR(void) 
 {
-  I2C_IRQHandler(i2c[1]);
+  I2C_IRQHandler(i2c_resources[1]);
 }
 #endif
 
 #if (RTE_I2C2 != 0)
 void I2C2_ISR(void) 
 {
-  I2C_IRQHandler(i2c[2]);
+  I2C_IRQHandler(i2c_resources[2]);
 }
 #endif
 
 #if (RTE_I2C3 != 0)
 void I2C3_ISR(void) 
 {
-  I2C_IRQHandler(i2c[3]);
+  I2C_IRQHandler(i2c_resources[3]);
 }
 #endif
 
 #if (RTE_I2C4 != 0)
 void I2C4_ISR(void) 
 {
-  I2C_IRQHandler(i2c[4]);
+  I2C_IRQHandler(i2c_resources[4]);
 }
 #endif
 
 #if (RTE_I2C5 != 0)
 void I2C5_ISR(void) 
 {
-  I2C_IRQHandler(i2c[5]);
+  I2C_IRQHandler(i2c_resources[5]);
 }
 #endif
 

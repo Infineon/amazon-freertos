@@ -96,30 +96,19 @@
 // UART Transfer Information (Run-Time)
 typedef struct UART_TRANSFER_INFO 
 {
-  volatile uint32_t                rx_num;        // Total number of data to be received
-  volatile uint32_t                tx_num;        // Total number of data to be send
-  volatile uint8_t                 *rx_buf;       // Pointer to in data buffer
-  volatile uint8_t                 *tx_buf;       // Pointer to out data buffer
-  volatile uint32_t                rx_cnt;        // Number of data received
-  volatile uint32_t                tx_cnt;        // Number of data sent
+  uint32_t                rx_num;        // Total number of data to be received
+  uint32_t                tx_num;        // Total number of data to be send
+  uint8_t                 *rx_buf;       // Pointer to in data buffer
+  uint8_t                 *tx_buf;       // Pointer to out data buffer
+  uint32_t                rx_cnt;        // Number of data received
+  uint32_t                tx_cnt;        // Number of data sent
 } UART_TRANSFER_INFO_t ;
-
-typedef struct _UART_STATUS 
-{
-  volatile uint8_t tx_busy;                      // Transmitter busy flag
-  volatile uint8_t rx_busy;                      // Receiver busy flag
-  uint8_t tx_underflow;                 // Transmit data underflow detected (cleared on start of next send operation)
-  uint8_t rx_overflow;                  // Receive data overflow detected (cleared on start of next receive operation)
-  uint8_t rx_break;                     // Break detected on receive (cleared on start of next receive operation)
-  uint8_t rx_framing_error;             // Framing error detected on receive (cleared on start of next receive operation)
-  uint8_t rx_parity_error;              // Parity error detected on receive (cleared on start of next receive operation)
-} UART_STATUS_t;
 
 // UART Information (Run-Time)
 typedef struct 
 {
   ARM_USART_SignalEvent_t cb_event;           // Event callback
-  UART_STATUS_t           status;             // Status flags
+  ARM_USART_STATUS        status;             // Status flags
   UART_TRANSFER_INFO_t    xfer;               // Transfer information
   uint8_t                 flags;              // UART driver flags
   uint32_t                mode;               // UART driver flags
@@ -143,15 +132,15 @@ typedef struct
   uint32_t               pin_tx_alternate_function;  // TX  pin alternate function              
   XMC_GPIO_t             pin_rx;                     // RX  Pin identifier
   XMC_GPIO_CONFIG_t      *pin_rx_config;             // RX  Pin configuration
-  uint32_t               input;                      // Input for RX  Pin
+  uint8_t                input;                      // Input for RX  Pin
   XMC_USIC_CH_t          *uart;                      // Pointer to UART peripheral
   IRQn_Type              irq_num;                    // UART TX IRQ Number
   uint32_t               irq_priority;               // UART IRQ priority
-  volatile uint32_t      tx_fifo_size_reg;           // FIFO tx size register
-  volatile uint32_t      tx_fifo_size_num;           // FIFO tx size register num
-  volatile uint32_t      rx_fifo_size_reg;           // FIFO rx size register 
-  volatile uint32_t      rx_fifo_size_num;           // FIFO rx size register num
-  UART_INFO              *info;                      // Run-Time Information
+  uint32_t               tx_fifo_size_reg;           // FIFO tx size register
+  uint32_t               tx_fifo_size_num;           // FIFO tx size register num
+  uint32_t               rx_fifo_size_reg;           // FIFO rx size register 
+  uint32_t               rx_fifo_size_num;           // FIFO rx size register num
+  volatile UART_INFO     *info;                      // Run-Time Information
 } const UART_RESOURCES;
 
 

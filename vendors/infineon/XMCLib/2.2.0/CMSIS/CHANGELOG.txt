@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.6.0-p2] - 2017-06-20
-Based on CMSIS 5.6.0 with Infineon specific files
-See https://github.com/ARM-software/CMSIS_5/releases for changes on CMSIS 5.6.0
+## [5.7.0-p1] - 2020-04-20
+Based on CMSIS 5.7.0 with Infineon specific files
+See https://github.com/ARM-software/CMSIS_5/releases for changes on CMSIS 5.7.0
 
 ### Changed
 - Infineon specific files uses now the Boost Software License, https://www.boost.org/users/license.html
@@ -16,6 +16,8 @@ See https://github.com/ARM-software/CMSIS_5/releases for changes on CMSIS 5.6.0
 - system_XMC4200.c
   Fix EXTCLKDIV macro definition
   Fix code for condition EXTCLK_PIN == EXTCLK_PIN_P1_15
+### Added
+- CMSIS Driver implementation
 
 ## [5.6.0-p1] - 2019-08-01
 Based on CMSIS 5.6.0 with Infineon specific files

@@ -62,6 +62,11 @@
 
 
 #if (UC_SERIES == XMC14)
+void IRQ9_Handler(void);
+void IRQ10_Handler(void);
+void IRQ11_Handler(void);
+void IRQ12_Handler(void);
+
 #define USIC0_0_IRQn 9
 #define I2C0_ISR     IRQ9_Handler
 
@@ -74,6 +79,13 @@
 #define USIC1_1_IRQn 12U
 #define I2C3_ISR     IRQ12_Handler
 #else
+
+void USIC0_0_IRQHandler(void);
+void USIC0_1_IRQHandler(void);
+void USIC1_0_IRQHandler(void);
+void USIC1_1_IRQHandler(void);
+void USIC2_0_IRQHandler(void);
+void USIC2_1_IRQHandler(void);
 
 #define I2C0_ISR USIC0_0_IRQHandler
 #define I2C1_ISR USIC0_1_IRQHandler
@@ -95,24 +107,11 @@ typedef struct I2C_TRANSFER_INFO
   uint32_t                tx_cnt;        // Number of data sent
 } I2C_TRANSFER_INFO_t ;
 
-
-//I2C Status
-typedef struct I2C_STATUS 
-{
-  uint32_t busy;             // Busy flag
-  uint32_t mode;             // Mode: 0=Slave, 1=Master
-  uint32_t direction;        // Direction: 0=Transmitter, 1=Receiver
-  uint32_t general_call;     // General Call indication (cleared on start of next Slave operation)
-  uint32_t arbitration_lost; // Master lost arbitration (cleared on start of next Master operation)
-  uint32_t bus_error;        // Bus error detected (cleared on start of next Master/Slave operation)
-} I2C_STATUS_t;
-
-
 // I2C Information (Run-Time)
 typedef struct 
 {
   ARM_I2C_SignalEvent_t cb_event;          // Event callback
-  I2C_STATUS_t          status;            // Status flags
+  ARM_I2C_STATUS        status;            // Status flags
   uint8_t               flags;             // Control and state flags
   uint8_t               sla;               // Slave address 
   bool                  pending;           // Transfer pending (no STOP)
@@ -135,12 +134,12 @@ typedef struct
   uint32_t                sda_pin_af_output;  // SDA Tx Pin alternate function
   XMC_GPIO_t              sda_rx_port;        // SDA Rx Pin identifier
   XMC_GPIO_CONFIG_t       *pin_sda_config;    // SDA  Pin configuration
-  uint32_t                sda_pin_input;      // SDA Rx input
+  uint8_t                 sda_pin_input;      // SDA Rx input
   XMC_GPIO_t              scl_output_port;    // SCL Pin identifier
   uint32_t                scl_pin_af_output;  // SCL Pin alternate function
   XMC_GPIO_t              scl_input_port;     // SCL Pin identifier
   XMC_GPIO_CONFIG_t       *pin_scl_config;    // SCL  Pin configuration
-  uint32_t                scl_pin_input;      // SCL  Pin input
+  uint8_t                 scl_pin_input;      // SCL  Pin input
   XMC_USIC_CH_t           *i2c;               // Pointer to the i2c peripheral
   IRQn_Type               irq_num;            // I2C MASTER IRQ Number
   uint32_t                irq_priority;       // I2C MASTER IRQ priority
@@ -149,5 +148,5 @@ typedef struct
   uint32_t                tx_fifo_size_reg;   // FIFO tx size register
   uint32_t                rx_fifo_size_num;   // FIFO rx size register num
   uint32_t                rx_fifo_size_reg;   // FIFO rx size register
-  I2C_INFO                *info;              // Run-Time Information
+  volatile I2C_INFO       *info;              // Run-Time Information
 } const I2C_RESOURCES;

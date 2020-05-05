@@ -99,7 +99,7 @@ typedef struct CAN_RESOURCES
   XMC_GPIO_t                     tx_port;                   // TX pin identifier
   uint32_t                       tx_alternate_function;     // TX pin alternate function
   XMC_GPIO_t                     rx_port;                   // RX pin identifier
-  uint32_t                       rx_input;                  // RX pin input configuration
+  XMC_CAN_NODE_RECEIVE_INPUT_t   rx_input;                  // RX pin input configuration
   IRQn_Type                      irq_num;                   // CAN IRQ Number
   uint32_t                       irq_priority;              // CAN IRQ priority
   const uint8_t                  current_node_index;        // Currently used CAN node index
@@ -108,4 +108,4 @@ typedef struct CAN_RESOURCES
   XMC_CAN_t                      *can;                      // Pointer to CAN peripheral
   XMC_CAN_NODE_t                 *can_node;                 // Pointer to CAN Node
   XMC_CAN_MO_t                   *can_mo;                   // Pointer to Message Object
-} CAN_RESOURCES_t;
+} const CAN_RESOURCES_t;

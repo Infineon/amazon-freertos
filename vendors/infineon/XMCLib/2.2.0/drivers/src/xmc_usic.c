@@ -75,6 +75,10 @@
  * 2019-09-25:
  *     - Fixed XMC_USIC_CH_SetBaudrate() which under certain circumtances, i.e. if fPERI == baudrate * oversampling, delivers wrong calculations
  * 
+ * 2020-04-30:
+ *     - Fixed XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit() and  XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(), avoid disabling the FIFO while the channel is active.
+ *       For new projects please use XMC_USIC_CH_TXFIFO_SetTriggerLimit() and XMC_USIC_CH_RXFIFO_SetTriggerLimit()
+ * 
  * @endcond
  *
  */
@@ -411,27 +415,19 @@ void XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
                                             const XMC_USIC_CH_FIFO_SIZE_t size,
                                             const uint32_t limit)
 {
-  /* Disable FIFO */
-  channel->TBCTR &= (uint32_t)~USIC_CH_TBCTR_SIZE_Msk;
-
   /* STBTEN = 0, the trigger of the standard transmit buffer event is based on the transition of the fill level
    *  from equal to below the limit, not the fact being below
    */
   channel->TBCTR = (uint32_t)((uint32_t)(channel->TBCTR & (uint32_t)~USIC_CH_TBCTR_LIMIT_Msk) |
-                   (limit << USIC_CH_TBCTR_LIMIT_Pos) |
-                   ((uint32_t)size << USIC_CH_TBCTR_SIZE_Pos));
+                   (limit << USIC_CH_TBCTR_LIMIT_Pos));
 }
 
 void XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(XMC_USIC_CH_t *const channel,
                                             const XMC_USIC_CH_FIFO_SIZE_t size,
                                             const uint32_t limit)
 {
-  /* Disable FIFO */
-  channel->RBCTR &= (uint32_t)~USIC_CH_RBCTR_SIZE_Msk;
-
   channel->RBCTR = (uint32_t)((uint32_t)(channel->RBCTR & (uint32_t)~USIC_CH_RBCTR_LIMIT_Msk) |
-                   (limit << USIC_CH_RBCTR_LIMIT_Pos) |
-                   ((uint32_t)size << USIC_CH_RBCTR_SIZE_Pos));
+                   (limit << USIC_CH_RBCTR_LIMIT_Pos));
 }
 
 void XMC_USIC_CH_SetInterruptNodePointer(XMC_USIC_CH_t *const channel,

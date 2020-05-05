@@ -126,10 +126,10 @@ static bool global_can_initialized = false;
 /* CAN0 */
 #if (RTE_CAN0 != 0)
 
-static CAN_INFO_t CAN0_INFO;
+static volatile CAN_INFO_t CAN0_INFO;
 static XMC_CAN_MO_t CAN0_MO;
 
-static const CAN_RESOURCES_t CAN0_Resources = 
+static CAN_RESOURCES_t CAN0_Resources = 
 {
   {RTE_CAN0_TX_PORT},
   RTE_CAN0_TX_AF,
@@ -149,10 +149,10 @@ static const CAN_RESOURCES_t CAN0_Resources =
 /* CAN1 */
 #if (RTE_CAN1 != 0)
 
-static CAN_INFO_t CAN1_INFO;
+static volatile CAN_INFO_t CAN1_INFO;
 static XMC_CAN_MO_t CAN1_MO;
 
-static const CAN_RESOURCES_t CAN1_Resources = 
+static CAN_RESOURCES_t CAN1_Resources = 
 {
   {RTE_CAN1_TX_PORT},
   RTE_CAN1_TX_AF,
@@ -172,10 +172,10 @@ static const CAN_RESOURCES_t CAN1_Resources =
 /* CAN2 */
 #if (RTE_CAN2 != 0)
 
-static CAN_INFO_t CAN2_INFO;
+static volatile CAN_INFO_t CAN2_INFO;
 static XMC_CAN_MO_t CAN2_MO;
 
-static const CAN_RESOURCES_t CAN2_Resources = 
+static CAN_RESOURCES_t CAN2_Resources = 
 {
   {RTE_CAN2_TX_PORT},
   RTE_CAN2_TX_AF,
@@ -195,10 +195,10 @@ static const CAN_RESOURCES_t CAN2_Resources =
 /* CAN3 */
 #if (RTE_CAN3 != 0)
 
-static CAN_INFO_t CAN3_INFO;
+static volatile CAN_INFO_t CAN3_INFO;
 static XMC_CAN_MO_t CAN3_MO;
 
-static const CAN_RESOURCES_t CAN3_Resources = 
+static CAN_RESOURCES_t CAN3_Resources = 
 {
   {RTE_CAN3_TX_PORT},
   RTE_CAN3_TX_AF,
@@ -218,10 +218,10 @@ static const CAN_RESOURCES_t CAN3_Resources =
 /* CAN4 */
 #if (RTE_CAN4 != 0)
 
-static CAN_INFO_t CAN4_INFO;
+static volatile CAN_INFO_t CAN4_INFO;
 static XMC_CAN_MO_t CAN4_MO;
 
-static const CAN_RESOURCES_t CAN4_Resources = 
+static CAN_RESOURCES_t CAN4_Resources = 
 {
   {RTE_CAN4_TX_PORT},
   RTE_CAN4_TX_AF,
@@ -241,10 +241,10 @@ static const CAN_RESOURCES_t CAN4_Resources =
 /* CAN5 */
 #if (RTE_CAN5 != 0)
 
-static CAN_INFO_t CAN5_INFO;
+static volatile CAN_INFO_t CAN5_INFO;
 static XMC_CAN_MO_t CAN5_MO;
 
-static const CAN_RESOURCES_t CAN5_Resources = 
+static CAN_RESOURCES_t CAN5_Resources = 
 {
   {RTE_CAN5_TX_PORT},
   RTE_CAN5_TX_AF,
@@ -262,7 +262,7 @@ static const CAN_RESOURCES_t CAN5_Resources =
 #endif
 
 /* CAN Resources */
-static const CAN_RESOURCES_t *can[6] = 
+static CAN_RESOURCES_t *const can_resources[6] = 
 {
 #if (RTE_CAN0 != 0)
   &CAN0_Resources,
@@ -312,7 +312,7 @@ static ARM_DRIVER_VERSION CANX_GetVersion(void)
   \param[in]   can    Pointer to CAN resources
   \return      \ref ARM_CAN_CAPABILITIES
 ***********************************************************************************************************************/
-static ARM_CAN_CAPABILITIES CAN_GetCapabilities(CAN_RESOURCES_t *can)
+__STATIC_INLINE ARM_CAN_CAPABILITIES CAN_GetCapabilities(CAN_RESOURCES_t *can)
 {
   return can_driver_capabilities;
 }
@@ -320,42 +320,42 @@ static ARM_CAN_CAPABILITIES CAN_GetCapabilities(CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 static ARM_CAN_CAPABILITIES CAN0_GetCapabilities(void)
 {
-  return CAN_GetCapabilities(can[0]);
+  return CAN_GetCapabilities(can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static ARM_CAN_CAPABILITIES CAN1_GetCapabilities(void)
 {
-  return CAN_GetCapabilities(can[1]);
+  return CAN_GetCapabilities(can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static ARM_CAN_CAPABILITIES CAN2_GetCapabilities(void)
 {
-  return CAN_GetCapabilities(can[2]);
+  return CAN_GetCapabilities(can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static ARM_CAN_CAPABILITIES CAN3_GetCapabilities(void)
 {
-  return CAN_GetCapabilities(can[3]);
+  return CAN_GetCapabilities(can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static ARM_CAN_CAPABILITIES CAN4_GetCapabilities(void)
 {
-  return CAN_GetCapabilities(can[4]);
+  return CAN_GetCapabilities(can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static ARM_CAN_CAPABILITIES CAN5_GetCapabilities(void)
 {
-  return CAN_GetCapabilities(can[5]);
+  return CAN_GetCapabilities(can_resources[5]);
 }
 #endif
 
@@ -393,7 +393,7 @@ static int32_t CAN_Initialize(ARM_CAN_SignalUnitEvent_t   cb_unit_event,
 static int32_t CAN0_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
                                ARM_CAN_SignalObjectEvent_t cb_object_event)
 {
-  return CAN_Initialize(cb_unit_event, cb_object_event, can[0]);
+  return CAN_Initialize(cb_unit_event, cb_object_event, can_resources[0]);
 }
 #endif
 
@@ -401,7 +401,7 @@ static int32_t CAN0_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
 static int32_t CAN1_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
                                ARM_CAN_SignalObjectEvent_t cb_object_event)
 {
-  return CAN_Initialize(cb_unit_event, cb_object_event, can[1]);
+  return CAN_Initialize(cb_unit_event, cb_object_event, can_resources[1]);
 }
 #endif
 
@@ -409,7 +409,7 @@ static int32_t CAN1_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
 static int32_t CAN2_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
                                ARM_CAN_SignalObjectEvent_t cb_object_event)
 {
-  return CAN_Initialize(cb_unit_event, cb_object_event, can[2]);
+  return CAN_Initialize(cb_unit_event, cb_object_event, can_resources[2]);
 }
 #endif
 
@@ -417,7 +417,7 @@ static int32_t CAN2_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
 static int32_t CAN3_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
                                ARM_CAN_SignalObjectEvent_t cb_object_event)
 {
-  return CAN_Initialize(cb_unit_event, cb_object_event, can[3]);
+  return CAN_Initialize(cb_unit_event, cb_object_event, can_resources[3]);
 }
 #endif
 
@@ -425,7 +425,7 @@ static int32_t CAN3_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
 static int32_t CAN4_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
                                ARM_CAN_SignalObjectEvent_t cb_object_event)
 {
-  return CAN_Initialize(cb_unit_event, cb_object_event, can[4]);
+  return CAN_Initialize(cb_unit_event, cb_object_event, can_resources[4]);
 }
 #endif
 
@@ -433,7 +433,7 @@ static int32_t CAN4_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
 static int32_t CAN5_Initialize(ARM_CAN_SignalUnitEvent_t cb_unit_event,
                                ARM_CAN_SignalObjectEvent_t cb_object_event)
 {
-  return CAN_Initialize(cb_unit_event, cb_object_event, can[5]);
+  return CAN_Initialize(cb_unit_event, cb_object_event, can_resources[5]);
 }
 #endif
 
@@ -453,42 +453,42 @@ __STATIC_INLINE int32_t CAN_Uninitialize(CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_Uninitialize(void)
 {
-  return CAN_Uninitialize(can[0]);
+  return CAN_Uninitialize(can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_Uninitialize(void)
 {
-  return CAN_Uninitialize(can[1]);
+  return CAN_Uninitialize(can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_Uninitialize(void)
 {
-  return CAN_Uninitialize(can[2]);
+  return CAN_Uninitialize(can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_Uninitialize(void)
 {
-  return CAN_Uninitialize(can[3]);
+  return CAN_Uninitialize(can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_Uninitialize(void)
 {
-  return CAN_Uninitialize(can[4]);
+  return CAN_Uninitialize(can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_Uninitialize(void)
 {
-  return CAN_Uninitialize(can[5]);
+  return CAN_Uninitialize(can_resources[5]);
 }
 #endif
 
@@ -546,7 +546,7 @@ static int32_t CAN_PowerControl(ARM_POWER_STATE state, CAN_RESOURCES_t *can)
       XMC_GPIO_Init(can->tx_port.port, can->tx_port.pin, &pin_config);
       
       XMC_CAN_NODE_EnableConfigurationChange(can->can_node); 
-      XMC_CAN_NODE_SetReceiveInput(can->can_node, (XMC_CAN_NODE_RECEIVE_INPUT_t)can->rx_input);
+      XMC_CAN_NODE_SetReceiveInput(can->can_node, can->rx_input);
       XMC_CAN_NODE_DisableConfigurationChange(can->can_node);
       
       NVIC_ClearPendingIRQ(can->irq_num);
@@ -576,42 +576,42 @@ static int32_t CAN_PowerControl(ARM_POWER_STATE state, CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_PowerControl(ARM_POWER_STATE state)
 {
-  return CAN_PowerControl(state, can[0]);
+  return CAN_PowerControl(state, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_PowerControl(ARM_POWER_STATE state)
 {
-  return CAN_PowerControl(state, can[1]);
+  return CAN_PowerControl(state, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_PowerControl(ARM_POWER_STATE state)
 {
-  return CAN_PowerControl(state, can[2]);
+  return CAN_PowerControl(state, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_PowerControl(ARM_POWER_STATE state)
 {
-  return CAN_PowerControl(state, can[3]);
+  return CAN_PowerControl(state, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_PowerControl(ARM_POWER_STATE state)
 {
-  return CAN_PowerControl(state, can[4]);
+  return CAN_PowerControl(state, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_PowerControl(ARM_POWER_STATE state)
 {
-  return CAN_PowerControl(state, can[5]);
+  return CAN_PowerControl(state, can_resources[5]);
 }
 #endif
 
@@ -629,42 +629,42 @@ __STATIC_INLINE uint32_t CAN_GetClock(CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 static uint32_t CAN0_GetClock(void)
 {
-  return CAN_GetClock(can[0]);
+  return CAN_GetClock(can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static uint32_t CAN1_GetClock(void)
 {
-  return CAN_GetClock(can[1]);
+  return CAN_GetClock(can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static uint32_t CAN2_GetClock(void)
 {
-  return CAN_GetClock(can[2]);
+  return CAN_GetClock(can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static uint32_t CAN3_GetClock(void)
 {
-  return CAN_GetClock(can[3]);
+  return CAN_GetClock(can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static uint32_t CAN4_GetClock(void)
 {
-  return CAN_GetClock(can[4]);
+  return CAN_GetClock(can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static uint32_t CAN5_GetClock(void)
 {
-  return CAN_GetClock(can[5]);
+  return CAN_GetClock(can_resources[5]);
 }
 #endif
 
@@ -754,42 +754,42 @@ static int32_t CAN_SetBitrate (ARM_CAN_BITRATE_SELECT select,
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_SetBitrate(ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments)
 {
-  return CAN_SetBitrate(select, bitrate, bit_segments, can[0]);
+  return CAN_SetBitrate(select, bitrate, bit_segments, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_SetBitrate(ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments)
 {
-  return CAN_SetBitrate(select, bitrate, bit_segments, can[1]);
+  return CAN_SetBitrate(select, bitrate, bit_segments, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_SetBitrate(ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments)
 {
-  return CAN_SetBitrate(select, bitrate, bit_segments, can[2]);
+  return CAN_SetBitrate(select, bitrate, bit_segments, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_SetBitrate(ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments)
 {
-  return CAN_SetBitrate(select, bitrate, bit_segments, can[3]);
+  return CAN_SetBitrate(select, bitrate, bit_segments, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_SetBitrate(ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments)
 {
-  return CAN_SetBitrate(select, bitrate, bit_segments, can[4]);
+  return CAN_SetBitrate(select, bitrate, bit_segments, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_SetBitrate(ARM_CAN_BITRATE_SELECT select, uint32_t bitrate, uint32_t bit_segments)
 {
-  return CAN_SetBitrate(select, bitrate, bit_segments, can[5]);
+  return CAN_SetBitrate(select, bitrate, bit_segments, can_resources[5]);
 }
 #endif
 
@@ -872,42 +872,42 @@ static int32_t CAN_SetMode(ARM_CAN_MODE mode, CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_SetMode(ARM_CAN_MODE mode)
 {
-  return CAN_SetMode(mode, can[0]);
+  return CAN_SetMode(mode, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_SetMode(ARM_CAN_MODE mode)
 {
-  return CAN_SetMode(mode, can[1]);
+  return CAN_SetMode(mode, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_SetMode(ARM_CAN_MODE mode)
 {
-  return CAN_SetMode(mode, can[2]);
+  return CAN_SetMode(mode, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_SetMode(ARM_CAN_MODE mode)
 {
-  return CAN_SetMode(mode, can[3]);
+  return CAN_SetMode(mode, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_SetMode(ARM_CAN_MODE mode)
 {
-  return CAN_SetMode(mode, can[4]);
+  return CAN_SetMode(mode, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_SetMode(ARM_CAN_MODE mode)
 {
-  return CAN_SetMode(mode, can[5]);
+  return CAN_SetMode(mode, can_resources[5]);
 }
 #endif
 
@@ -1008,42 +1008,42 @@ static int32_t CAN_ObjectSetFilter(uint32_t obj_idx,
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_ObjectSetFilter(uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg)
 {
-  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can[0]);
+  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_ObjectSetFilter(uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg)
 {
-  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can[1]);
+  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_ObjectSetFilter(uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg)
 {
-  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can[2]);
+  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_ObjectSetFilter(uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg)
 {
-  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can[3]);
+  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_ObjectSetFilter(uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg)
 {
-  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can[4]);
+  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_ObjectSetFilter(uint32_t obj_idx, ARM_CAN_FILTER_OPERATION operation, uint32_t id, uint32_t arg)
 {
-  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can[5]);
+  return CAN_ObjectSetFilter(obj_idx, operation, id, arg, can_resources[5]);
 }
 #endif
 
@@ -1127,42 +1127,42 @@ static int32_t CAN_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg,
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg)
 {
-  return CAN_ObjectConfigure(obj_idx, obj_cfg, can[0]);
+  return CAN_ObjectConfigure(obj_idx, obj_cfg, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg)
 {
-  return CAN_ObjectConfigure(obj_idx, obj_cfg, can[1]);
+  return CAN_ObjectConfigure(obj_idx, obj_cfg, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg)
 {
-  return CAN_ObjectConfigure(obj_idx, obj_cfg, can[2]);
+  return CAN_ObjectConfigure(obj_idx, obj_cfg, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg)
 {
-  return CAN_ObjectConfigure(obj_idx, obj_cfg, can[3]);
+  return CAN_ObjectConfigure(obj_idx, obj_cfg, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg)
 {
-  return CAN_ObjectConfigure(obj_idx, obj_cfg, can[4]);
+  return CAN_ObjectConfigure(obj_idx, obj_cfg, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg)
 {
-  return CAN_ObjectConfigure(obj_idx, obj_cfg, can[5]);
+  return CAN_ObjectConfigure(obj_idx, obj_cfg, can_resources[5]);
 }
 #endif
 
@@ -1255,42 +1255,42 @@ static int32_t CAN_MessageSend(uint32_t obj_idx,
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_MessageSend(uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size)
 {
-  return CAN_MessageSend(obj_idx, msg_info, data, size, can[0]);
+  return CAN_MessageSend(obj_idx, msg_info, data, size, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_MessageSend(uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size)
 {
-  return CAN_MessageSend(obj_idx, msg_info, data, size, can[1]);
+  return CAN_MessageSend(obj_idx, msg_info, data, size, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_MessageSend(uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size)
 {
-  return CAN_MessageSend(obj_idx, msg_info, data, size, can[2]);
+  return CAN_MessageSend(obj_idx, msg_info, data, size, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_MessageSend(uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size)
 {
-  return CAN_MessageSend(obj_idx, msg_info, data, size, can[3]);
+  return CAN_MessageSend(obj_idx, msg_info, data, size, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_MessageSend(uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size)
 {
-  return CAN_MessageSend(obj_idx, msg_info, data, size, can[4]);
+  return CAN_MessageSend(obj_idx, msg_info, data, size, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_MessageSend(uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, const uint8_t *data, uint8_t size)
 {
-  return CAN_MessageSend(obj_idx, msg_info, data, size, can[5]);
+  return CAN_MessageSend(obj_idx, msg_info, data, size, can_resources[5]);
 }
 #endif
 
@@ -1370,42 +1370,42 @@ static int32_t CAN_MessageRead(uint32_t obj_idx,
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size)
 {
-  return CAN_MessageRead(obj_idx, msg_info, data, size, can[0]);
+  return CAN_MessageRead(obj_idx, msg_info, data, size, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size)
 {
-  return CAN_MessageRead(obj_idx, msg_info, data, size, can[1]);
+  return CAN_MessageRead(obj_idx, msg_info, data, size, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size)
 {
-  return CAN_MessageRead(obj_idx, msg_info, data, size, can[2]);
+  return CAN_MessageRead(obj_idx, msg_info, data, size, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size)
 {
-  return CAN_MessageRead(obj_idx, msg_info, data, size, can[3]);
+  return CAN_MessageRead(obj_idx, msg_info, data, size, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size)
 {
-  return CAN_MessageRead(obj_idx, msg_info, data, size, can[4]);
+  return CAN_MessageRead(obj_idx, msg_info, data, size, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_MessageRead (uint32_t obj_idx, ARM_CAN_MSG_INFO *msg_info, uint8_t *data, uint8_t size)
 {
-  return CAN_MessageRead(obj_idx, msg_info, data, size, can[5]);
+  return CAN_MessageRead(obj_idx, msg_info, data, size, can_resources[5]);
 }
 #endif
 
@@ -1461,42 +1461,42 @@ static int32_t CAN_Control(uint32_t control, uint32_t arg, CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 static int32_t CAN0_Control(uint32_t control, uint32_t arg)
 {
-  return CAN_Control(control, arg, can[0]);
+  return CAN_Control(control, arg, can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static int32_t CAN1_Control(uint32_t control, uint32_t arg)
 {
-  return CAN_Control(control, arg, can[1]);
+  return CAN_Control(control, arg, can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static int32_t CAN2_Control(uint32_t control, uint32_t arg)
 {
-  return CAN_Control(control, arg, can[2]);
+  return CAN_Control(control, arg, can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static int32_t CAN3_Control(uint32_t control, uint32_t arg)
 {
-  return CAN_Control(control, arg, can[3]);
+  return CAN_Control(control, arg, can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static int32_t CAN4_Control(uint32_t control, uint32_t arg)
 {
-  return CAN_Control(control, arg, can[4]);
+  return CAN_Control(control, arg, can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static int32_t CAN5_Control(uint32_t control, uint32_t arg)
 {
-  return CAN_Control(control, arg, can[5]);
+  return CAN_Control(control, arg, can_resources[5]);
 }
 #endif
 
@@ -1566,42 +1566,42 @@ static ARM_CAN_STATUS CAN_GetStatus(CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 static ARM_CAN_STATUS CAN0_GetStatus(void)
 {
-  return CAN_GetStatus(can[0]);
+  return CAN_GetStatus(can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 static ARM_CAN_STATUS CAN1_GetStatus(void)
 {
-  return CAN_GetStatus(can[1]);
+  return CAN_GetStatus(can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 static ARM_CAN_STATUS CAN2_GetStatus(void)
 {
-  return CAN_GetStatus(can[2]);
+  return CAN_GetStatus(can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 static ARM_CAN_STATUS CAN3_GetStatus(void)
 {
-  return CAN_GetStatus(can[3]);
+  return CAN_GetStatus(can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 static ARM_CAN_STATUS CAN4_GetStatus(void)
 {
-  return CAN_GetStatus(can[4]);
+  return CAN_GetStatus(can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 static ARM_CAN_STATUS CAN5_GetStatus(void)
 {
-  return CAN_GetStatus(can[5]);
+  return CAN_GetStatus(can_resources[5]);
 }
 #endif
 
@@ -1658,42 +1658,42 @@ static void CAN_IRQHandler(CAN_RESOURCES_t *can)
 #if (RTE_CAN0 != 0)
 void CAN0_ISR(void)
 {
-  CAN_IRQHandler(can[0]);
+  CAN_IRQHandler(can_resources[0]);
 }
 #endif
 
 #if (RTE_CAN1 != 0)
 void CAN1_ISR(void)
 {
-  CAN_IRQHandler(can[1]);
+  CAN_IRQHandler(can_resources[1]);
 }
 #endif
 
 #if (RTE_CAN2 != 0)
 void CAN2_ISR(void)
 {
-  CAN_IRQHandler(can[2]);
+  CAN_IRQHandler(can_resources[2]);
 }
 #endif
 
 #if (RTE_CAN3 != 0)
 void CAN3_ISR(void)
 {
-  CAN_IRQHandler(can[3]);
+  CAN_IRQHandler(can_resources[3]);
 }
 #endif
 
 #if (RTE_CAN4 != 0)
 void CAN4_ISR(void)
 {
-  CAN_IRQHandler(can[4]);
+  CAN_IRQHandler(can_resources[4]);
 }
 #endif
 
 #if (RTE_CAN5 != 0)
 void CAN5_ISR(void)
 {
-  CAN_IRQHandler(can[5]);
+  CAN_IRQHandler(can_resources[5]);
 }
 #endif
 

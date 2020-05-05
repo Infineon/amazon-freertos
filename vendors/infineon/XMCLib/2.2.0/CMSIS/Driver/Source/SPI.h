@@ -57,6 +57,11 @@
 #define SPI_POWERED           (1 << 1)
 
 #if (UC_SERIES == XMC14)
+void IRQ9_Handler(void);
+void IRQ10_Handler(void);
+void IRQ11_Handler(void);
+void IRQ12_Handler(void);
+
 /*!< USIC SR0 Interrupt */
 #define USIC0_0_IRQn 9U
 #define SPI0_ISR IRQ9_Handler
@@ -74,6 +79,13 @@
 #define SPI3_ISR IRQ12_Handler
 
 #else
+
+void USIC0_0_IRQHandler(void);
+void USIC0_1_IRQHandler(void);
+void USIC1_0_IRQHandler(void);
+void USIC1_1_IRQHandler(void);
+void USIC2_0_IRQHandler(void);
+void USIC2_1_IRQHandler(void);
 
 #define SPI0_ISR USIC0_0_IRQHandler
 #define SPI1_ISR USIC0_1_IRQHandler
@@ -106,18 +118,11 @@ typedef struct SPI_TRANSFER_INFO
   volatile uint8_t                 bit_order;      // Bit order (MSB to LSB or LSB to MSB)
 } SPI_TRANSFER_INFO_t ;
 
-typedef struct SPI_STATUS 
-{
-  uint8_t busy;              // Transmitter/Receiver busy flag
-  uint8_t data_lost;         // Data lost: Receive overflow / Transmit underflow (cleared on start of transfer operation)
-  uint8_t mode_fault;        // Mode fault detected; optional (cleared on start of transfer operation)
-} SPI_STATUS_t;
-
 // SPI Information (Run-Time)
 typedef struct 
 {
   ARM_SPI_SignalEvent_t          cb_event;                  // Event callback
-  SPI_STATUS_t                   status;                    // Status flags
+  ARM_SPI_STATUS                 status;                    // Status flags
   volatile SPI_TRANSFER_INFO_t   xfer;                      // Transfer information
   uint32_t                       mode;                      // SPI mode
   uint8_t                        flags;                     // SPI driver flags
@@ -132,7 +137,7 @@ typedef struct
 {
   XMC_GPIO_t               miso_mosi_port;                            // MISO(master) MOSI(slave)  Pin identifier
   XMC_GPIO_CONFIG_t       *pin_miso_mosi_config;                      // MISO(master) MOSI(slave)  Pin configuration
-  uint32_t                 miso_mosi_input;                           // MISO(master) MOSI(slave)  Input configuration
+  uint8_t                  miso_mosi_input;                           // MISO(master) MOSI(slave)  Input configuration
   XMC_GPIO_t               mosi_miso_port;                            // MOSI(master) MISO(slave) Pin identifier
   XMC_GPIO_CONFIG_t       *pin_mosi_miso_config;                      // MOSI(master) MISO(slave)  Pin configuration
   uint32_t                 pin_mosi_miso_alternate_function;          // MOSI(master) MISO(slave) pin alternate function
@@ -141,13 +146,13 @@ typedef struct
   uint32_t                 pin_output_clck_alternate_function;        // Output CLCK pin alternate function
   XMC_GPIO_t               input_clck_port;                           // Input CLCK  Pin identifier
   XMC_GPIO_CONFIG_t       *pin_input_clck_config;                     // Input CLCK  Pin configuration
-  uint32_t                 clck_input;                                // Input CLCK  Input configuration
+  uint8_t                  clck_input;                                // Input CLCK  Input configuration
   XMC_GPIO_t               slave_select_output_port;                  // SELO  Pin identifier
   XMC_GPIO_CONFIG_t       *pin_slave_select_output_config;            // SELO  Pin configuration
   uint32_t                 pin_slave_select_output_alternate_function;// Output CLCK pin alternate function
   XMC_GPIO_t               slave_select_input_port;                   // SELI  Pin identifier
   XMC_GPIO_CONFIG_t       *pin_slave_select_input_config;             // SELI  Pin configuration
-  uint32_t                 slave_select_input;                        // SELI  Input
+  uint8_t                  slave_select_input;                        // SELI  Input
   XMC_USIC_CH_t           *spi;                                       // Pointer to SPI peripheral
   IRQn_Type                irq_rx_num;                                // SPI RX IRQ Number
   uint32_t                 irq_priority;                              // SPI RX IRQ priority

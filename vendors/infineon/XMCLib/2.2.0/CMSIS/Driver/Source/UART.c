@@ -66,6 +66,7 @@
  * Version 2.13 Fix compiler warnings
  *
  * Version 2.14 Added interrupt priority
+ *              Fix Receive functionality if FIFO enabled
  */
 
 #include "UART.h"
@@ -105,8 +106,7 @@ static const XMC_UART_CH_CONFIG_t uart_default_config =
   .data_bits = 8U,
   .frame_length = 8U,
   .stop_bits = 1U,
-  .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE,
-  .normal_divider_mode = true
+  .parity_mode = XMC_USIC_CH_PARITY_MODE_NONE
 };
 
 
@@ -120,12 +120,12 @@ static const ARM_USART_CAPABILITIES DriverCapabilities =
 /* UART0 */
 #if (RTE_UART0 != 0)
 
-static UART_INFO UART0_Info;
+static volatile UART_INFO UART0_Info;
 static XMC_GPIO_CONFIG_t UART0_rx_conf; 
 static XMC_GPIO_CONFIG_t UART0_tx_conf; 
 
 /* UART0 Resources */
-static const UART_RESOURCES UART0_Resources = 
+static UART_RESOURCES UART0_Resources = 
 {
   {RTE_UART0_TX_PORT},
   &UART0_tx_conf,
@@ -147,12 +147,12 @@ static const UART_RESOURCES UART0_Resources =
 /* UART1 */
 #if (RTE_UART1 != 0)
 
-static UART_INFO UART1_Info;
+static volatile UART_INFO UART1_Info;
 static XMC_GPIO_CONFIG_t UART1_rx_conf; 
 static XMC_GPIO_CONFIG_t UART1_tx_conf; 
 
 /* UART1 Resources */
-static const UART_RESOURCES UART1_Resources = 
+static UART_RESOURCES UART1_Resources = 
 {
   {RTE_UART1_TX_PORT},
   &UART1_tx_conf,
@@ -174,12 +174,12 @@ static const UART_RESOURCES UART1_Resources =
 /* UART2 */
 #if (RTE_UART2 != 0)
 
-static UART_INFO UART2_Info;
+static volatile UART_INFO UART2_Info;
 static XMC_GPIO_CONFIG_t UART2_rx_conf; 
 static XMC_GPIO_CONFIG_t UART2_tx_conf; 
 
 /* UART2 Resources */
-static const UART_RESOURCES UART2_Resources = 
+static UART_RESOURCES UART2_Resources = 
 {
   {RTE_UART2_TX_PORT},
   &UART2_tx_conf,
@@ -202,12 +202,12 @@ static const UART_RESOURCES UART2_Resources =
 /* UART3 */
 #if (RTE_UART3 != 0)
 
-static UART_INFO UART3_Info;
+static volatile UART_INFO UART3_Info;
 static XMC_GPIO_CONFIG_t UART3_rx_conf; 
 static XMC_GPIO_CONFIG_t UART3_tx_conf; 
 
 /* UART3 Resources */
-static const UART_RESOURCES UART3_Resources = 
+static UART_RESOURCES UART3_Resources = 
 {
   {RTE_UART3_TX_PORT},
   &UART3_tx_conf,
@@ -230,12 +230,12 @@ static const UART_RESOURCES UART3_Resources =
 /* UART4 */
 #if (RTE_UART4 != 0)
 
-static UART_INFO UART4_Info;
+static volatile UART_INFO UART4_Info;
 static XMC_GPIO_CONFIG_t UART4_rx_conf; 
 static XMC_GPIO_CONFIG_t UART4_tx_conf; 
 
 /* UART4 Resources */
-static const UART_RESOURCES UART4_Resources = 
+static UART_RESOURCES UART4_Resources = 
 {
   {RTE_UART4_TX_PORT},
   &UART4_tx_conf,
@@ -258,12 +258,12 @@ static const UART_RESOURCES UART4_Resources =
 /* UART5 */
 #if (RTE_UART5 != 0)
 
-static UART_INFO UART5_Info;
+static volatile UART_INFO UART5_Info;
 static XMC_GPIO_CONFIG_t UART5_rx_conf; 
 static XMC_GPIO_CONFIG_t UART5_tx_conf; 
 
 /* UART5 Resources */
-static const UART_RESOURCES UART5_Resources = 
+static UART_RESOURCES UART5_Resources = 
 {
   {RTE_UART5_TX_PORT},
   &UART5_tx_conf,
@@ -285,7 +285,7 @@ static const UART_RESOURCES UART5_Resources =
 
 
 /* UART Resources */
-static const UART_RESOURCES  *uart[6] = 
+static UART_RESOURCES *const uart_resources[6] = 
 {
 #if (RTE_UART0 != 0)
   &UART0_Resources,
@@ -348,42 +348,42 @@ __STATIC_INLINE ARM_USART_CAPABILITIES UART_GetCapabilities(UART_RESOURCES *cons
 #if (RTE_UART0 != 0)
 static ARM_USART_CAPABILITIES UART0_GetCapabilities(void)
 {
-  return UART_GetCapabilities(uart[0]);
+  return UART_GetCapabilities(uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static ARM_USART_CAPABILITIES UART1_GetCapabilities(void)
 {
-  return UART_GetCapabilities(uart[1]);
+  return UART_GetCapabilities(uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static ARM_USART_CAPABILITIES UART2_GetCapabilities(void)
 {
-  return UART_GetCapabilities(uart[2]);
+  return UART_GetCapabilities(uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static ARM_USART_CAPABILITIES UART3_GetCapabilities(void)
 {
-  return UART_GetCapabilities(uart[3]);
+  return UART_GetCapabilities(uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static ARM_USART_CAPABILITIES UART4_GetCapabilities(void)
 {
-  return UART_GetCapabilities(uart[4]);
+  return UART_GetCapabilities(uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static ARM_USART_CAPABILITIES UART5_GetCapabilities(void)
 {
-  return UART_GetCapabilities(uart[5]);
+  return UART_GetCapabilities(uart_resources[5]);
 }
 #endif
 
@@ -418,42 +418,42 @@ static int32_t UART_Initialize(ARM_USART_SignalEvent_t cb_event, UART_RESOURCES 
 #if (RTE_UART0 != 0)
 static int32_t UART0_Initialize(ARM_USART_SignalEvent_t cb_event) 
 {
-  return UART_Initialize(cb_event, uart[0]);
+  return UART_Initialize(cb_event, uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_Initialize(ARM_USART_SignalEvent_t cb_event) 
 {
-  return UART_Initialize(cb_event, uart[1]);
+  return UART_Initialize(cb_event, uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_Initialize(ARM_USART_SignalEvent_t cb_event) 
 {
-  return UART_Initialize(cb_event, uart[2]);
+  return UART_Initialize(cb_event, uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static int32_t UART3_Initialize(ARM_USART_SignalEvent_t cb_event) 
 {
-  return UART_Initialize(cb_event, uart[3]);
+  return UART_Initialize(cb_event, uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static int32_t UART4_Initialize(ARM_USART_SignalEvent_t cb_event) 
 {
-  return UART_Initialize(cb_event, uart[4]);
+  return UART_Initialize(cb_event, uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_Initialize(ARM_USART_SignalEvent_t cb_event) 
 {
-  return UART_Initialize(cb_event, uart[5]);
+  return UART_Initialize(cb_event, uart_resources[5]);
 }
 #endif
 
@@ -464,7 +464,7 @@ static int32_t UART5_Initialize(ARM_USART_SignalEvent_t cb_event)
   \param[in]   uart  Pointer to USART resources
   \return      \ref execution_status
 */
-static int32_t UART_Uninitialize(UART_RESOURCES *const uart) 
+__STATIC_INLINE int32_t UART_Uninitialize(UART_RESOURCES *const uart) 
 {
   
   // Reset UART status flags
@@ -476,42 +476,42 @@ static int32_t UART_Uninitialize(UART_RESOURCES *const uart)
 #if (RTE_UART0 != 0)
 static int32_t UART0_Uninitialize (void) 
 {
-  return UART_Uninitialize(uart[0]);
+  return UART_Uninitialize(uart_resources[0]);
 }
 #endif  
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_Uninitialize (void) 
 {
-  return UART_Uninitialize(uart[1]);
+  return UART_Uninitialize(uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_Uninitialize (void) 
 {
-  return UART_Uninitialize(uart[2]);
+  return UART_Uninitialize(uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static int32_t UART3_Uninitialize (void) 
 {
-  return UART_Uninitialize(uart[3]);
+  return UART_Uninitialize(uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static int32_t UART4_Uninitialize (void) 
 {
-  return UART_Uninitialize(uart[4]);
+  return UART_Uninitialize(uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_Uninitialize (void) 
 {
-  return UART_Uninitialize(uart[5]);
+  return UART_Uninitialize(uart_resources[5]);
 }
 #endif
 
@@ -606,42 +606,42 @@ static int32_t UART_PowerControl(ARM_POWER_STATE state, UART_RESOURCES *const ua
 #if (RTE_UART0 != 0)
 static int32_t UART0_PowerControl(ARM_POWER_STATE state)
 {
-  return UART_PowerControl(state, uart[0]);
+  return UART_PowerControl(state, uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_PowerControl(ARM_POWER_STATE state)
 {
-  return UART_PowerControl(state, uart[1]);
+  return UART_PowerControl(state, uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_PowerControl(ARM_POWER_STATE state)
 {
-  return UART_PowerControl(state, uart[2]);
+  return UART_PowerControl(state, uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static int32_t UART3_PowerControl(ARM_POWER_STATE state)
 {
-  return UART_PowerControl(state, uart[3]);
+  return UART_PowerControl(state, uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static int32_t UART4_PowerControl(ARM_POWER_STATE state)
 {
-  return UART_PowerControl(state, uart[4]);
+  return UART_PowerControl(state, uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_PowerControl(ARM_POWER_STATE state)
 {
-  return UART_PowerControl(state, uart[5]);
+  return UART_PowerControl(state, uart_resources[5]);
 }
 #endif
 
@@ -710,42 +710,42 @@ static int32_t UART_Send(const void *data, uint32_t num, UART_RESOURCES *const u
 #if (RTE_UART0 != 0)
 static int32_t UART0_Send(const void *data, uint32_t num)
 {
-  return UART_Send(data, num, uart[0]);
+  return UART_Send(data, num, uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_Send(const void *data, uint32_t num)
 {
-  return UART_Send(data, num, uart[1]);
+  return UART_Send(data, num, uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_Send(const void *data, uint32_t num)
 {
-  return UART_Send(data, num, uart[2]);
+  return UART_Send(data, num, uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static int32_t UART3_Send(const void *data, uint32_t num) 
 {
-  return UART_Send(data, num, uart[3]);
+  return UART_Send(data, num, uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static int32_t UART4_Send(const void *data, uint32_t num) 
 {
-  return UART_Send(data, num, uart[4]);
+  return UART_Send(data, num, uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_Send(const void *data, uint32_t num) 
 {
-  return UART_Send(data, num, uart[5]);
+  return UART_Send(data, num, uart_resources[5]);
 }
 #endif
 
@@ -820,7 +820,7 @@ static int32_t UART_Receive(void *data, uint32_t num, UART_RESOURCES *const uart
     }
     else
     {
-      XMC_USIC_CH_RXFIFO_Configure(uart->uart, uart->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)uart->rx_fifo_size_reg, uart->rx_fifo_size_num >> 1); 
+      XMC_USIC_CH_RXFIFO_Configure(uart->uart, uart->info->rx_fifo_pointer, (XMC_USIC_CH_FIFO_SIZE_t)uart->rx_fifo_size_reg, uart->rx_fifo_size_num - 1); 
     }
   }
   return ARM_DRIVER_OK;
@@ -829,42 +829,42 @@ static int32_t UART_Receive(void *data, uint32_t num, UART_RESOURCES *const uart
 #if (RTE_UART0 != 0)
 static int32_t UART0_Receive(void *data, uint32_t num) 
 {
-  return UART_Receive(data, num, uart[0]);
+  return UART_Receive(data, num, uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_Receive(void *data, uint32_t num) 
 {
-  return UART_Receive(data, num, uart[1]);
+  return UART_Receive(data, num, uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_Receive(void *data, uint32_t num) 
 {
-  return UART_Receive(data, num, uart[2]);
+  return UART_Receive(data, num, uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static int32_t UART3_Receive(void *data, uint32_t num) 
 {
-  return UART_Receive(data, num, uart[3]);
+  return UART_Receive(data, num, uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static int32_t UART4_Receive(void *data, uint32_t num) 
 {
-  return UART_Receive(data, num, uart[4]);
+  return UART_Receive(data, num, uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_Receive(void *data, uint32_t num) 
 {
-  return UART_Receive(data, num, uart[5]);
+  return UART_Receive(data, num, uart_resources[5]);
 }
 #endif
 
@@ -895,42 +895,42 @@ __STATIC_INLINE int32_t UART_Transfer(const void  *data_out,
 #if (RTE_UART0 != 0)
 static int32_t UART0_Transfer(const void *data_out,void  *data_in,uint32_t num) 
 {
-  return UART_Transfer(data_out, data_in, num, uart[0]);
+  return UART_Transfer(data_out, data_in, num, uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_Transfer(const void *data_out,void  *data_in,uint32_t num) 
 {
-  return UART_Transfer (data_out, data_in, num, uart[1]);
+  return UART_Transfer (data_out, data_in, num, uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_Transfer(const void *data_out,void  *data_in,uint32_t num) 
 {
-  return UART_Transfer (data_out, data_in, num, uart[2]);
+  return UART_Transfer (data_out, data_in, num, uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static int32_t UART3_Transfer(const void *data_out,void  *data_in,uint32_t num) 
 {
-  return UART_Transfer(data_out, data_in, num, uart[3]);
+  return UART_Transfer(data_out, data_in, num, uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static int32_t UART4_Transfer(const void *data_out,void  *data_in,uint32_t num) 
 {
-  return UART_Transfer(data_out, data_in, num, uart[4]);
+  return UART_Transfer(data_out, data_in, num, uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_Transfer(const void *data_out,void  *data_in,uint32_t num) 
 {
-  return UART_Transfer(data_out, data_in, num, uart[5]);
+  return UART_Transfer(data_out, data_in, num, uart_resources[5]);
 }
 #endif
   
@@ -948,42 +948,42 @@ __STATIC_INLINE uint32_t UART_GetTxCount(UART_RESOURCES *const uart)
 #if (RTE_UART0 != 0)
 static uint32_t UART0_GetTxCount(void) 
 {
-  return UART_GetTxCount(uart[0]);
+  return UART_GetTxCount(uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static uint32_t UART1_GetTxCount(void) 
 {
-  return UART_GetTxCount(uart[1]);
+  return UART_GetTxCount(uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static uint32_t UART2_GetTxCount(void) 
 {
-  return UART_GetTxCount(uart[2]);
+  return UART_GetTxCount(uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static uint32_t UART3_GetTxCount(void) 
 {
-  return UART_GetTxCount(uart[3]);
+  return UART_GetTxCount(uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static uint32_t UART4_GetTxCount(void) 
 {
-  return UART_GetTxCount(uart[4]);
+  return UART_GetTxCount(uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static uint32_t UART5_GetTxCount(void) 
 {
-  return UART_GetTxCount(uart[5]);
+  return UART_GetTxCount(uart_resources[5]);
 }
 #endif
 
@@ -1001,42 +1001,42 @@ __STATIC_INLINE uint32_t UART_GetRxCount(UART_RESOURCES *const uart)
 #if (RTE_UART0 != 0)
 static uint32_t UART0_GetRxCount(void) 
 {
-  return UART_GetRxCount(uart[0]);
+  return UART_GetRxCount(uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static uint32_t UART1_GetRxCount(void) 
 {
-  return UART_GetRxCount(uart[1]);
+  return UART_GetRxCount(uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static uint32_t UART2_GetRxCount(void) 
 {
-  return UART_GetRxCount(uart[2]);
+  return UART_GetRxCount(uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static uint32_t UART3_GetRxCount(void) 
 {
-  return UART_GetRxCount(uart[3]);
+  return UART_GetRxCount(uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static uint32_t UART4_GetRxCount(void) 
 {
-  return UART_GetRxCount(uart[4]);
+  return UART_GetRxCount(uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static uint32_t UART5_GetRxCount(void) 
 {
-  return UART_GetRxCount(uart[0]);
+  return UART_GetRxCount(uart_resources[0]);
 }
 #endif
 
@@ -1046,59 +1046,50 @@ static uint32_t UART5_GetRxCount(void)
   \param[in]   uart     Pointer to USART resources
   \return      UART status \ref ARM_USART_STATUS
 */
-static ARM_USART_STATUS UART_GetStatus(UART_RESOURCES *const usart)
+__STATIC_INLINE ARM_USART_STATUS UART_GetStatus(UART_RESOURCES *const usart)
 {
-  ARM_USART_STATUS status;
-
-  status.tx_busy          = usart->info->status.tx_busy;;
-  status.rx_busy          = usart->info->status.rx_busy;
-  status.tx_underflow     = usart->info->status.tx_underflow;
-  status.rx_overflow      = usart->info->status.rx_overflow;
-  status.rx_break         = usart->info->status.rx_break;
-  status.rx_framing_error = usart->info->status.rx_framing_error;
-  status.rx_parity_error  = usart->info->status.rx_parity_error;
-  return status;
+  return usart->info->status;
 }
 
 #if (RTE_UART0 != 0)
 static ARM_USART_STATUS UART0_GetStatus(void) 
 {
-  return UART_GetStatus(uart[0]);
+  return UART_GetStatus(uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static ARM_USART_STATUS UART1_GetStatus(void) 
 {
-  return UART_GetStatus(uart[1]);
+  return UART_GetStatus(uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static ARM_USART_STATUS UART2_GetStatus(void) 
 {
-  return UART_GetStatus(uart[2]);
+  return UART_GetStatus(uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static ARM_USART_STATUS UART3_GetStatus(void) 
 {
-  return UART_GetStatus(uart[3]);
+  return UART_GetStatus(uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static ARM_USART_STATUS UART4_GetStatus(void) 
 {
-  return UART_GetStatus(uart[4]);
+  return UART_GetStatus(uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static ARM_USART_STATUS UART5_GetStatus(void) 
 {
-  return UART_GetStatus(uart[5]);
+  return UART_GetStatus(uart_resources[5]);
 }
 #endif
 
@@ -1121,42 +1112,42 @@ __STATIC_INLINE int32_t UART_SetModemControl(ARM_USART_MODEM_CONTROL control,
 #if (RTE_UART0 != 0)
 static int32_t UART0_SetModemControl(ARM_USART_MODEM_CONTROL control) 
 {
-  return UART_SetModemControl(control, uart[0]);
+  return UART_SetModemControl(control, uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_SetModemControl(ARM_USART_MODEM_CONTROL control) 
 {
-  return UART_SetModemControl(control, uart[1]);
+  return UART_SetModemControl(control, uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_SetModemControl(ARM_USART_MODEM_CONTROL control) 
 {
-  return UART_SetModemControl(control, uart[2]);
+  return UART_SetModemControl(control, uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static int32_t UART3_SetModemControl(ARM_USART_MODEM_CONTROL control) 
 {
-  return UART_SetModemControl(control, uart[3]);
+  return UART_SetModemControl(control, uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static int32_t UART4_SetModemControl(ARM_USART_MODEM_CONTROL control) 
 {
-  return UART_SetModemControl(control, uart[4]);
+  return UART_SetModemControl(control, uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_SetModemControl(ARM_USART_MODEM_CONTROL control) 
 {
-  return UART_SetModemControl(control, uart[5]);
+  return UART_SetModemControl(control, uart_resources[5]);
 }
 #endif
 
@@ -1178,42 +1169,42 @@ static ARM_USART_MODEM_STATUS UART_GetModemStatus(UART_RESOURCES *const uart)
 #if (RTE_UART0 != 0)
 static ARM_USART_MODEM_STATUS UART0_GetModemStatus(void) 
 {
-  return UART_GetModemStatus(uart[0]);
+  return UART_GetModemStatus(uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static ARM_USART_MODEM_STATUS UART1_GetModemStatus(void) 
 {
-  return UART_GetModemStatus(uart[1]);
+  return UART_GetModemStatus(uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static ARM_USART_MODEM_STATUS UART2_GetModemStatus(void) 
 {
-  return UART_GetModemStatus(uart[2]);
+  return UART_GetModemStatus(uart_resources[2]);
 }
 #endif
 
 #if (RTE_UART3 != 0)
 static ARM_USART_MODEM_STATUS UART3_GetModemStatus(void) 
 {
-  return UART_GetModemStatus(uart[3]);
+  return UART_GetModemStatus(uart_resources[3]);
 }
 #endif
 
 #if (RTE_UART4 != 0)
 static ARM_USART_MODEM_STATUS UART4_GetModemStatus(void) 
 {
-  return UART_GetModemStatus(uart[4]);
+  return UART_GetModemStatus(uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static ARM_USART_MODEM_STATUS UART5_GetModemStatus(void) 
 {
-  return UART_GetModemStatus(uart[5]);
+  return UART_GetModemStatus(uart_resources[5]);
 }
 #endif
 
@@ -1423,42 +1414,42 @@ static int32_t UART_Control(uint32_t control, uint32_t arg, UART_RESOURCES *cons
 #if (RTE_UART0 != 0)
 static int32_t UART0_Control(uint32_t control, uint32_t arg) 
 {
-  return UART_Control(control, arg, uart[0]);
+  return UART_Control(control, arg, uart_resources[0]);
 }
 #endif
 
 #if (RTE_UART1 != 0)
 static int32_t UART1_Control(uint32_t control, uint32_t arg) 
 {
-  return UART_Control(control, arg, uart[1]);
+  return UART_Control(control, arg, uart_resources[1]);
 }
 #endif
 
 #if (RTE_UART2 != 0)
 static int32_t UART2_Control(uint32_t control, uint32_t arg) 
 {
-  return UART_Control(control, arg, uart[2]);
+  return UART_Control(control, arg, uart_resources[2]);
 }
 #endif
                                 
 #if (RTE_UART3 != 0)
 static int32_t UART3_Control(uint32_t control, uint32_t arg) 
 {
-  return UART_Control(control, arg, uart[3]);
+  return UART_Control(control, arg, uart_resources[3]);
 }
 #endif
                                 
 #if (RTE_UART4 != 0)
 static int32_t UART4_Control(uint32_t control, uint32_t arg) 
 {
-  return UART_Control(control, arg, uart[4]);
+  return UART_Control(control, arg, uart_resources[4]);
 }
 #endif
 
 #if (RTE_UART5 != 0)
 static int32_t UART5_Control(uint32_t control, uint32_t arg) 
 {
-  return UART_Control(control, arg, uart[5]);
+  return UART_Control(control, arg, uart_resources[5]);
 }
 #endif
   
@@ -1535,24 +1526,34 @@ static void UART_RX_ISR(UART_RESOURCES *const uart)
   }
   else
   {
-    while((XMC_USIC_CH_RXFIFO_IsEmpty(uart->uart) == false) && (uart->info->xfer.rx_cnt < uart->info->xfer.rx_num))
+    while(XMC_USIC_CH_RXFIFO_IsEmpty(uart->uart) == false)
     { 
-      /* Read the data from FIFO buffer */
-      uart->info->xfer.rx_cnt++;
-      *(uart->info->xfer.rx_buf++) = (uint8_t)XMC_USIC_CH_RXFIFO_GetData(uart->uart);
-      
-      if(uart->info->xfer.rx_cnt == uart->info->xfer.rx_num)
-      {  
-        XMC_USIC_CH_RXFIFO_DisableEvent(uart->uart,XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE);
-        // Clear RX busy flag and set receive transfer complete event
-        uart->info->status.rx_busy = 0;
-        if (uart->info->cb_event) uart->info->cb_event(ARM_USART_EVENT_RECEIVE_COMPLETE); 
-      }         
+      if(uart->info->xfer.rx_cnt < uart->info->xfer.rx_num)
+      { 
+        /* Read the data from FIFO buffer */
+        uart->info->xfer.rx_cnt++;
+        *(uart->info->xfer.rx_buf++) = (uint8_t)XMC_USIC_CH_RXFIFO_GetData(uart->uart);
+      }
+      else
+      {
+        break;
+      }
     }
 
-    if ((uart->info->xfer.rx_num - uart->info->xfer.rx_cnt) <= (uart->rx_fifo_size_num >> 1))
+    uint32_t remaining = uart->info->xfer.rx_num - uart->info->xfer.rx_cnt;
+    if (remaining == 0)
     {
-      XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(uart->uart, (XMC_USIC_CH_FIFO_SIZE_t)uart->rx_fifo_size_reg, uart->info->xfer.rx_num - uart->info->xfer.rx_cnt - 1U);
+      XMC_USIC_CH_RXFIFO_DisableEvent(uart->uart,XMC_USIC_CH_RXFIFO_EVENT_CONF_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE);
+      // Clear RX busy flag and set receive transfer complete event
+      uart->info->status.rx_busy = 0;
+      if (uart->info->cb_event) uart->info->cb_event(ARM_USART_EVENT_RECEIVE_COMPLETE); 
+    }
+	else
+    {
+      if (remaining <= uart->rx_fifo_size_num)
+      {
+        XMC_USIC_CH_RXFIFO_SetTriggerLimit(uart->uart, remaining - 1U);
+      }
     }
   }
 }
@@ -1561,30 +1562,30 @@ static void UART_RX_ISR(UART_RESOURCES *const uart)
 void UART0_ISR(void) 
 {
 #if RTE_UART0_RX_FIFO_SIZE == NO_FIFO
-  if (uart[0]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart[0]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
+  if (uart_resources[0]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[0]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[0]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
-    UART_RX_ISR(uart[0]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[0]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
+    UART_RX_ISR(uart_resources[0]);
   }
 #else
-  if (uart[0]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart[0]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
+  if (uart_resources[0]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart_resources[0]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(uart[0]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    UART_RX_ISR(uart[0]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(uart_resources[0]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    UART_RX_ISR(uart_resources[0]);
   }
 #endif
 
 #if RTE_UART0_TX_FIFO_SIZE == NO_FIFO
-  if (uart[0]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart[0]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (uart_resources[0]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[0]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[0]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-    UART_TX_ISR(uart[0]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[0]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    UART_TX_ISR(uart_resources[0]);
   }
 #else
-  if (uart[0]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart[0]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (uart_resources[0]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart_resources[0]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(uart[0]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    UART_TX_ISR(uart[0]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(uart_resources[0]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    UART_TX_ISR(uart_resources[0]);
   }
 #endif
 }
@@ -1594,30 +1595,30 @@ void UART0_ISR(void)
 void UART1_ISR(void) 
 {
 #if RTE_UART1_RX_FIFO_SIZE == NO_FIFO
-  if (uart[1]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart[1]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
+  if (uart_resources[1]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[1]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[1]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
-    UART_RX_ISR(uart[1]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[1]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
+    UART_RX_ISR(uart_resources[1]);
   }
 #else
-  if (uart[1]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart[1]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
+  if (uart_resources[1]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart_resources[1]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(uart[1]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    UART_RX_ISR(uart[1]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(uart_resources[1]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    UART_RX_ISR(uart_resources[1]);
   }
 #endif
 
 #if RTE_UART1_TX_FIFO_SIZE == NO_FIFO
-  if (uart[1]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart[1]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (uart_resources[1]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[1]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[1]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-    UART_TX_ISR(uart[1]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[1]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    UART_TX_ISR(uart_resources[1]);
   }
 #else
-  if (uart[1]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart[1]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (uart_resources[1]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart_resources[1]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(uart[1]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    UART_TX_ISR(uart[1]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(uart_resources[1]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    UART_TX_ISR(uart_resources[1]);
   }
 #endif
 }
@@ -1627,30 +1628,30 @@ void UART1_ISR(void)
 void UART2_ISR(void) 
 {
 #if RTE_UART2_RX_FIFO_SIZE == NO_FIFO
-  if (uart[2]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart[2]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
+  if (uart_resources[2]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[2]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[2]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
-    UART_RX_ISR(uart[2]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[2]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
+    UART_RX_ISR(uart_resources[2]);
   }
 #else
-  if (uart[2]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart[2]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
+  if (uart_resources[2]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart_resources[2]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(uart[2]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    UART_RX_ISR(uart[2]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(uart_resources[2]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    UART_RX_ISR(uart_resources[2]);
   }
 #endif
 
 #if RTE_UART2_TX_FIFO_SIZE == NO_FIFO
-  if (uart[2]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart[2]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (uart_resources[2]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[2]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[2]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-    UART_TX_ISR(uart[2]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[2]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    UART_TX_ISR(uart_resources[2]);
   }
 #else
-  if (uart[2]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart[2]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (uart_resources[2]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart_resources[2]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(uart[2]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    UART_TX_ISR(uart[2]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(uart_resources[2]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    UART_TX_ISR(uart_resources[2]);
   }
 #endif
 }
@@ -1660,30 +1661,30 @@ void UART2_ISR(void)
 void UART3_ISR(void) 
 {
 #if RTE_UART3_RX_FIFO_SIZE == NO_FIFO
-  if (uart[3]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart[3]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
+  if (uart_resources[3]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[3]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[3]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
-    UART_RX_ISR(uart[3]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[3]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
+    UART_RX_ISR(uart_resources[3]);
   }
 #else
-  if (uart[3]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart[3]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
+  if (uart_resources[3]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart_resources[3]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(uart[3]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    UART_RX_ISR(uart[3]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(uart_resources[3]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    UART_RX_ISR(uart_resources[3]);
   }
 #endif
 
 #if RTE_UART3_TX_FIFO_SIZE == NO_FIFO
-  if (uart[3]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart[3]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (uart_resources[3]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[3]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[3]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-    UART_TX_ISR(uart[3]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[3]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    UART_TX_ISR(uart_resources[3]);
   }
 #else
-  if (uart[3]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart[3]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (uart_resources[3]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart_resources[3]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(uart[3]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    UART_TX_ISR(uart[3]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(uart_resources[3]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    UART_TX_ISR(uart_resources[3]);
   }
 #endif
 }
@@ -1693,30 +1694,30 @@ void UART3_ISR(void)
 void UART4_ISR(void) 
 {
 #if RTE_UART4_RX_FIFO_SIZE == NO_FIFO
-  if (uart[4]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart[4]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
+  if (uart_resources[4]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[4]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[4]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
-    UART_RX_ISR(uart[4]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[4]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
+    UART_RX_ISR(uart_resources[4]);
   }
 #else
-  if (uart[4]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart[4]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
+  if (uart_resources[4]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart_resources[4]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(uart[4]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    UART_RX_ISR(uart[4]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(uart_resources[4]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    UART_RX_ISR(uart_resources[4]);
   }
 #endif
 
 #if RTE_UART4_TX_FIFO_SIZE == NO_FIFO
-  if (uart[4]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart[4]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (uart_resources[4]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[4]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[4]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-    UART_TX_ISR(uart[4]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[4]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    UART_TX_ISR(uart_resources[4]);
   }
 #else
-  if (uart[4]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart[4]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (uart_resources[4]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart_resources[4]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(uart[4]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    UART_TX_ISR(uart[4]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(uart_resources[4]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    UART_TX_ISR(uart_resources[4]);
   }
 #endif
 }
@@ -1726,30 +1727,30 @@ void UART4_ISR(void)
 void UART5_ISR(void) 
 {
 #if RTE_UART5_RX_FIFO_SIZE == NO_FIFO
-  if (uart[5]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart[5]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
+  if (uart_resources[5]->info->status.rx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[5]->uart) & (XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE)) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[5]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
-    UART_RX_ISR(uart[5]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[5]->uart, XMC_UART_CH_EVENT_STANDARD_RECEIVE | XMC_UART_CH_EVENT_ALTERNATIVE_RECEIVE);
+    UART_RX_ISR(uart_resources[5]);
   }
 #else
-  if (uart[5]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart[5]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
+  if (uart_resources[5]->info->status.rx_busy && ((XMC_USIC_CH_RXFIFO_GetEvent(uart_resources[5]->uart) & (XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE)) != 0))
   {
-    XMC_USIC_CH_RXFIFO_ClearEvent(uart[5]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
-    UART_RX_ISR(uart[5]);
+    XMC_USIC_CH_RXFIFO_ClearEvent(uart_resources[5]->uart, XMC_USIC_CH_RXFIFO_EVENT_STANDARD | XMC_USIC_CH_RXFIFO_EVENT_ALTERNATE);
+    UART_RX_ISR(uart_resources[5]);
   }
 #endif
 
 #if RTE_UART5_TX_FIFO_SIZE == NO_FIFO
-  if (uart[5]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart[5]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
+  if (uart_resources[5]->info->status.tx_busy && ((XMC_UART_CH_GetStatusFlag(uart_resources[5]->uart) & XMC_UART_CH_EVENT_TRANSMIT_BUFFER) != 0))
   {
-    XMC_UART_CH_ClearStatusFlag(uart[5]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
-    UART_TX_ISR(uart[5]);
+    XMC_UART_CH_ClearStatusFlag(uart_resources[5]->uart, XMC_UART_CH_EVENT_TRANSMIT_BUFFER);
+    UART_TX_ISR(uart_resources[5]);
   }
 #else
-  if (uart[5]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart[5]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
+  if (uart_resources[5]->info->status.tx_busy && ((XMC_USIC_CH_TXFIFO_GetEvent(uart_resources[5]->uart) & XMC_USIC_CH_TXFIFO_EVENT_STANDARD) != 0))
   {
-    XMC_USIC_CH_TXFIFO_ClearEvent(uart[5]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
-    UART_TX_ISR(uart[5]);
+    XMC_USIC_CH_TXFIFO_ClearEvent(uart_resources[5]->uart, XMC_USIC_CH_TXFIFO_EVENT_STANDARD);
+    UART_TX_ISR(uart_resources[5]);
   }
 #endif
 }

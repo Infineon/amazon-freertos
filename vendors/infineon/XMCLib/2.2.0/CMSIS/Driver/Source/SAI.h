@@ -56,6 +56,10 @@
 #define I2S_CONFIGURED      (1U << 2U)
 
 #if (UC_SERIES == XMC14)
+void IRQ9_Handler(void);
+void IRQ10_Handler(void);
+void IRQ11_Handler(void);
+void IRQ12_Handler(void);
 
 /*!< USIC0 SR0 Interrupt */
 #define  USIC0_0_IRQn      9U
@@ -74,6 +78,13 @@
 #define  I2S3_ISR          IRQ12_Handler
 
 #else
+
+void USIC0_0_IRQHandler(void);
+void USIC0_1_IRQHandler(void);
+void USIC1_0_IRQHandler(void);
+void USIC1_1_IRQHandler(void);
+void USIC2_0_IRQHandler(void);
+void USIC2_1_IRQHandler(void);
 
 #define I2S0_ISR USIC0_0_IRQHandler
 #define I2S1_ISR USIC0_1_IRQHandler
@@ -94,32 +105,23 @@ typedef struct XMC_GPIO
 // I2S transfer related information (Run-Time)
 typedef struct _I2S_TRANSFER_INFO 
 {
-  volatile uint32_t         tx_num;                         // Total number of data to be transmitted
-  volatile uint32_t         rx_num;                         // Total number of data to be received
-  volatile uint8_t         *tx_buf;                         // Pointer to out data buffer
-  volatile uint8_t         *rx_buf;                         // Pointer to in data buffer
-  volatile uint32_t         tx_cnt;                         // Number of transmitted data
-  volatile uint32_t         rx_cnt;                         // Number of received data
-  volatile uint8_t          data_bits;                      // Number of data bits
-  volatile uint8_t          master;                         // Master flag
-  volatile uint32_t         baudrate;                       // Baudrate value
-  volatile uint8_t          mono_mode;                      // Mono mode
+  uint32_t         tx_num;                         // Total number of data to be transmitted
+  uint32_t         rx_num;                         // Total number of data to be received
+  uint8_t         *tx_buf;                         // Pointer to out data buffer
+  uint8_t         *rx_buf;                         // Pointer to in data buffer
+  uint32_t         tx_cnt;                         // Number of transmitted data
+  uint32_t         rx_cnt;                         // Number of received data
+  uint8_t          data_bits;                      // Number of data bits
+  uint8_t          master;                         // Master flag
+  uint32_t         baudrate;                       // Baudrate value
+  uint8_t          mono_mode;                      // Mono mode
 } I2S_TRANSFER_INFO;
-
-typedef struct _I2S_STATUS 
-{
-  uint32_t tx_busy          : 1;        ///< Transmitter busy flag
-  uint32_t rx_busy          : 1;        ///< Receiver busy flag
-  uint32_t tx_underflow     : 1;        ///< Transmit data underflow detected (cleared on start of next send operation)
-  uint32_t rx_overflow      : 1;        ///< Receive data overflow detected (cleared on start of next receive operation)
-  uint32_t frame_error      : 1;        ///< Sync Frame error detected (cleared on start of next send/receive operation)
-} I2S_STATUS;
 
 // Run-time I2S information
 typedef struct _I2S_INFO
 {
   ARM_SAI_SignalEvent_t     cb_event;                       // Event callback
-  I2S_STATUS                status;                         // Status flags
+  ARM_SAI_STATUS            status;                         // Status flags
   uint32_t                  tx_fifo_pointer;                // FIFO TX pointer
   uint32_t                  rx_fifo_pointer;                // FIFO RX pointer
   I2S_TRANSFER_INFO         xfer;                           // Transfer (transmit/receive) information
@@ -133,15 +135,15 @@ typedef struct
   XMC_GPIO_t                sd_tx_port;                     // SD TX pin identifier
   uint32_t                  sd_tx_alternate_function;       // SD TX pin alternate function
   XMC_GPIO_t                sd_rx_port;                     // SD RX pin identifier
-  uint32_t                  sd_rx_input;                    // SD RX pin input configuration
+  uint8_t                   sd_rx_input;                    // SD RX pin input configuration
   XMC_GPIO_t                clk_output_port;                // CLK OUTPUT pin identifier
   uint32_t                  clk_output_alternate_function;  // CLK OUTPUT pin alternate function
   XMC_GPIO_t                clk_input_port;                 // CLK INPUT pin identifier
-  uint32_t                  clk_input_input;                // CLK INPUT pin input configuration
+  uint8_t                   clk_input_input;                // CLK INPUT pin input configuration
   XMC_GPIO_t                ws_output_port;                 // Word select OUTPUT pin identifier
   uint32_t                  ws_output_alternate_function;   // Word select OUTPUT pin alternate function
   XMC_GPIO_t                ws_input_port;                  // Word select INPUT pin identifier
-  uint32_t                  ws_input_input;                 // Word select INPUT pin input configuration
+  uint8_t                   ws_input_input;                 // Word select INPUT pin input configuration
   XMC_GPIO_t                mclk_output_port;               // MCLK (Master Clock) OUTPUT pin identifier
   uint32_t                  mclk_output_alternate_function; // MCLK (Master Clock) OUTPUT pin alternate function
   IRQn_Type                 irq_num;                        // I2S transmit IRQ Number
@@ -153,4 +155,4 @@ typedef struct
   uint8_t                   mute_mode_enabled;              // Mute mode selected
   volatile I2S_INFO        *info;                           // Pointer to run-time information
   XMC_USIC_CH_t            *i2s;                            // Pointer to I2S peripheral
-} I2S_RESOURCES;
+} const I2S_RESOURCES;
