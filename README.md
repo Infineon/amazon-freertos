@@ -42,7 +42,6 @@ The following MCU boards are supported for FreeRTOS:
 1. **Infineon** - [Infineon XMC4800 IoT Connectivity Kit](https://www.infineon.com/connectivitykit)
     * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_infineon.html)
     * [Getting Started Guide for Trust X](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_infineon_trust_x.html)
-    * [Getting Started Guide for Trust M rev.1](https://github.com/Infineon/amazon-freertos-optiga-trust/tree/feature/trustm/vendors/infineon/boards/xmc4800_plus_optiga_trust_m)
     * IDE: [DAVE](https://infineoncommunity.com/dave-download_ID645)
 1. **Infineon** - [Infineon OPTIGA™ Trust M evaluation kit](https://www.infineon.com/cms/en/product/evaluation-boards/optiga-trust-m-eval-kit/)
     * [Getting Started Guide](https://github.com/Infineon/amazon-freertos-optiga-trust/tree/feature/trustm/vendors/infineon/boards/xmc4800_plus_optiga_trust_m)
