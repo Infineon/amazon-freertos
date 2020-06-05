@@ -6,9 +6,14 @@ You need the following hardware:
 
 1. OPTIGA Trust M Eval Kit. Visit the AWS Partner Device Catalog to purchase it from our [ partner](https://devices.amazonaws.com/detail/a3G0h000000TePnEAK/OPTIGA%E2%84%A2-Trust-X-Security-Solution)\.
 
-To follow the steps here, you must open a serial connection with the board to view logging and debugging information\. \(One of the steps requires you to copy a public key from the serial debugging output from the board and paste it to a file\.\) To do this, you need a 3\.3V USB/Serial converter in addition to the XMC4800 IoT Connectivity Kit\. The [ JBtek EL\-PN\-47310126](https://www.amazon.com/gp/product/B00QT7LQ88) USB/Serial converter is known to work for this demo\. You also need three male\-to\-male [jumper wires](https://www.amazon.com/gp/product/B077N6HFCX/) \(for receive \(RX\), transmit \(TX\), and ground \(GND\)\) to connect the serial cable to the Infineon MyIoT Adapter board\.  
+One of blocking points in this application point might be the provisiining topic, in other words how to register your certificate from the Trust M with AWS IoT Cloud. Below are two options:
 
-Before you begin, you must configure AWS IoT and your FreeRTOS download to connect your device to the AWS Cloud\. For instructions, see [Option \#2: Onboard Private Key Generation](dev-mode-key-provisioning.md#dev-mode-key-provisioning-option2)\. In this tutorial, the path to the FreeRTOS download directory is referred to as `<freertos>`\.
+1. Request from AWS a new certificate
+ To follow the steps here, you must open a serial connection with the board to view logging and debugging information\. \(One of the steps requires you to copy a public key from the serial debugging output from the board and paste it to a file\.\) To do this, you need a 3\.3V USB/Serial converter in addition to the XMC4800 IoT Connectivity Kit\. The [ JBtek EL\-PN\-47310126](https://www.amazon.com/gp/product/B00QT7LQ88) USB/Serial converter is known to work for this demo\. You also need three male\-to\-male [jumper wires](https://www.amazon.com/gp/product/B077N6HFCX/) \(for receive \(RX\), transmit \(TX\), and ground \(GND\)\) to connect the serial cable to the Infineon MyIoT Adapter board\.
+ Before you begin, you must configure AWS IoT and your FreeRTOS download to connect your device to the AWS Cloud\. For instructions, see [Option \#2: Onboard Private Key Generation](dev-mode-key-provisioning.md#dev-mode-key-provisioning-option2)\. In this tutorial, the path to the FreeRTOS download directory is referred to as `<freertos>`\.
+
+2. Use pre-provisioned in Trust M certificate and AWS IoT Multi-Account Registration
+ More on this you can find [here](https://github.com/Infineon/personalize-optiga-trust/blob/master/register-s2go/aws-iot.md)
 
 ## Overview<a name="getting_started_infineon_trust_m_overview"></a>
 
