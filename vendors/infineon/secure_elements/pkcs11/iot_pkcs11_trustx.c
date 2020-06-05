@@ -158,6 +158,10 @@ enum eObjectHandles
     eAwsCodeSigningKey
 };
 
+extern void pal_gpio_init(const pal_gpio_t* p_gpio_context);
+extern void pal_os_lock_init(void);
+
+extern pal_gpio_t optiga_reset_0;
 
 /* The communication context `ifx_i2c_context_0` is declared in the header file ifx_i2c_config.h */
 optiga_comms_t optiga_comms = { ( void * ) &ifx_i2c_context_0, NULL, NULL, OPTIGA_COMMS_SUCCESS };
@@ -602,25 +606,29 @@ BaseType_t PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
             break;
     }
 
-    /* We need to allocate a buffer for a certificate/certificate chain */
-    /* This data is later should be freed with PKCS11_PAL_GetObjectValueCleanup */
-    *ppucData = pvPortMalloc( pkcs11OBJECT_CERTIFICATE_MAX_SIZE );
-
-    if( NULL != *ppucData )
+    if (ulReturn == CKR_OK)
     {
-        *pulDataSize = pkcs11OBJECT_CERTIFICATE_MAX_SIZE;
+    	// We need to allocate a buffer for a certificate/certificate chain
+	    // This data is later should be freed with PKCS11_PAL_GetObjectValueCleanup
+	    *ppucData = pvPortMalloc( pkcs11OBJECT_CERTIFICATE_MAX_SIZE );
 
-        if( ( 0 != lOptigaOid ) && ( USHRT_MAX > lOptigaOid ) && ( NULL != pulDataSize ) )
-        {
-            xReturn = optiga_util_read_data( lOptigaOid, xOffset, *ppucData, ( uint16_t * ) pulDataSize );
+    	if( NULL != *ppucData )
+	    {
+    	    *pulDataSize = pkcs11OBJECT_CERTIFICATE_MAX_SIZE;
 
-            if( OPTIGA_LIB_SUCCESS != xReturn )
-            {
-                *ppucData = NULL;
-                *pulDataSize = 0;
-                ulReturn = CKR_KEY_HANDLE_INVALID;
-            }
-        }
+        	if( ( 0 != lOptigaOid ) && ( USHRT_MAX > lOptigaOid ) && ( NULL != pulDataSize ) )
+	        {
+    	        xReturn = optiga_util_read_data( lOptigaOid, xOffset, *ppucData, ( uint16_t * ) pulDataSize );
+
+        	    if( OPTIGA_LIB_SUCCESS != xReturn )
+            	{
+                	vPortFree(*ppucData);
+	                *ppucData = NULL;
+	                *pulDataSize = 0;
+    	            ulReturn = CKR_KEY_HANDLE_INVALID;
+        	    }
+	        }
+    	}
     }
 
     return ulReturn;
@@ -754,10 +762,11 @@ CK_RV prvOPTIGATrustX_Initialize( void )
 
     if( xResult == CKR_OK )
     {
-        memset( &xP11Context, 0, sizeof( xP11Context ) );
-        xP11Context.xObjectList.xMutex = xSemaphoreCreateMutex();
 
 /*        CRYPTO_Init(); */
+
+        pal_gpio_init(&optiga_reset_0);
+        pal_os_lock_init();
 
         pal_os_event_init();
 
@@ -767,6 +776,8 @@ CK_RV prvOPTIGATrustX_Initialize( void )
 
         if( OPTIGA_LIB_SUCCESS == xResult )
         {
+            memset( &xP11Context, 0, sizeof( xP11Context ) );
+            xP11Context.xObjectList.xMutex = xSemaphoreCreateMutex();
             xP11Context.xIsInitialized = CK_TRUE;
             xResult = CKR_OK;
 
@@ -1213,6 +1224,8 @@ CK_DEFINE_FUNCTION( CK_RV, C_Finalize )( CK_VOID_PTR pvReserved )
 
     if( xResult == CKR_OK )
     {
+    	optiga_comms_close(&optiga_comms);
+
         vSemaphoreDelete( xP11Context.xObjectList.xMutex );
 
         xP11Context.xIsInitialized = CK_FALSE;
