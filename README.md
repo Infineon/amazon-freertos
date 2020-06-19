@@ -8,11 +8,11 @@ Note: If you download the ZIP file provided by GitHub UI, you will not get the c
 
 To clone using HTTPS:
 ```
-git clone https://github.com/aws/amazon-freertos.git --recurse-submodules
+git clone https://github.com/Infineon/amazon-freertos.git --recurse-submodules
 ```
 Using SSH:
 ```
-git clone git@github.com:aws/amazon-freertos.git --recurse-submodules
+git clone git@github.com:Infineon/amazon-freertos.git --recurse-submodules
 ```
 
 If you have downloaded the repo without using the `--recurse-submodules` argument, you need to run:
