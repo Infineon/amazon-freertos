@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @file     startup_XMC4700.S
  * @brief    CMSIS Core Device Startup File for Infineon XMC4700 Device Series
- * @version  V1.1
- * @date     05 Jan 2016
+ * @version  V1.2
+ * @date     15 Mai 2020
  *
  * @cond
  *********************************************************************************************************************
@@ -41,6 +41,7 @@
  **************************** Change history ********************************
  * V1.0,Sep, 03, 2015 JFT:Initial version
  * V1.1,Jan, 05, 2016 JFT:Fix .reset section attributes
+ * V1.2,Mai, 15, 2020 JFT:Added option (ENABLE_OWN_HANDLER) to generate a individual interrupt handlers for unhandled vectors
  *
  * @endcond 
  */
@@ -53,7 +54,15 @@
 
 .macro Insert_ExceptionHandler Handler_Func 
     .weak \Handler_Func
+#if defined(ENABLE_OWN_HANDLER)
+    .thumb_func
+    .type \Handler_Func, %function
+\Handler_Func:
+    b .
+    .size \Handler_Func, . - \Handler_Func
+#else
     .thumb_set \Handler_Func, Default_Handler
+#endif 
 .endm
 
 /* =============END : MACRO DEFINITION MACRO DEFINITION ================== */

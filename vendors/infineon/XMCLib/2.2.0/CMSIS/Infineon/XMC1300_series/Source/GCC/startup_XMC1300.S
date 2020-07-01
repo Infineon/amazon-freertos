@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @file     startup_XMC1300.S
  * @brief    CMSIS Core Device Startup File for Infineon XMC1300 Device Series
- * @version  V1.15
- * @date     05 Jan 2016
+ * @version  V1.20
+ * @date     15 Mai 2020
  *
  * @cond
  *********************************************************************************************************************
@@ -60,6 +60,7 @@
  * V1.13, Dec, 11,2014 JFT:Default clocking changed, MCLK=32MHz and PCLK=64MHz
  * V1.14, Sep, 03,2015 JFT:SSW default clocking changed, MCLK=8MHz and PCLK=16MHz avoid problems with BMI tool timeout
  * V1.15, Jan, 05,2016 JFT:Fix .reset section attributes
+ * V1.20, Mai, 15,2020 JFT:Added option (ENABLE_OWN_HANDLER) to generate a individual interrupt handlers for unhandled vectors
  *
  * @endcond 
  */
@@ -123,7 +124,15 @@
 /* A couple of macros to ease definition of the various handlers */
 .macro Insert_ExceptionHandler Handler_Func 
     .weak \Handler_Func
+#if defined(ENABLE_OWN_HANDLER)
+    .thumb_func
+    .type \Handler_Func, %function
+\Handler_Func:
+    b .
+    .size \Handler_Func, . - \Handler_Func
+#else
     .thumb_set \Handler_Func, Default_handler
+#endif 
 .endm    
 
 /* ================== START OF VECTOR TABLE DEFINITION ====================== */

@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @file     startup_XMC1400.S
  * @brief    CMSIS Core Device Startup File for Infineon XMC1400 Device Series
- * @version  V1.2
- * @date     15 Sep 2017
+ * @version  V1.3
+ * @date     15 Mai 2020
  *
  * @cond
  *********************************************************************************************************************
@@ -43,6 +43,7 @@
  *                         MCLK=8MHz, PCLK=16MHz
  * V1.1, Jan, 05, 2016 JFT:Fix .reset section attributes
  * V1.2, Sep, 15, 2017 JFT:Added option to select wait time before ASC BSL channel selection (WAIT_ASCBSL_ENTRY_SSW)
+ * V1.3, Mai, 15, 2020 JFT:Added option (ENABLE_OWN_HANDLER) to generate a individual interrupt handlers for unhandled vectors
  *
  * @endcond 
  */
@@ -108,7 +109,15 @@
 /* A couple of macros to ease definition of the various handlers */
 .macro Insert_InterruptHandler Interrupt
     .weak \Interrupt\()_Handler
+#if defined(ENABLE_OWN_HANDLER)
+    .thumb_func
+    .type \Interrupt\()_Handler, %function
+\Interrupt\()_Handler:
+    b .
+    .size \Interrupt\()_Handler, . - \Interrupt\()_Handler
+#else
     .thumb_set \Interrupt\()_Handler, Default_Handler
+#endif 
 .endm
 
 .macro Insert_InterruptVeener Interrupt

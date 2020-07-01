@@ -68,13 +68,13 @@ target_compile_definitions(
 set( compiler_debug_options "-g" "-gdwarf-2")
 
 #Set compiler warnings level
-set( compiler_warnings "-Wall" )
+set( compiler_warnings "-Wall -Wextra" )
 
 #Set compiler optimization level
-set( compiler_optimization_options "-O2" "-ffunction-sections" "-fdata-sections")
+set( compiler_optimization_options "-O2" "-fomit-frame-pointer" "-ffunction-sections" "-fdata-sections" "-ffreestanding" "-fno-builtin" "-fno-common")
 
 #Set ARM GCC options
-set( compiler_arm_options "-mfloat-abi=softfp" "-mcpu=cortex-m4" "-mfpu=fpv4-sp-d16" "-mthumb")
+set( compiler_arm_options "-mfloat-abi=hard" "-mcpu=cortex-m4" "-mfpu=fpv4-sp-d16" "-mthumb")
 
 #Set other compiler options and flags
 set( compiler_misc_options

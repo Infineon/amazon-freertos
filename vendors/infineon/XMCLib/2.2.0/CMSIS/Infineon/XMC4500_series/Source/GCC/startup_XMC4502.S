@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @file     startup_XMC4502.S
  * @brief    CMSIS Core Device Startup File for Infineon XMC4502 Device Series
- * @version  V1.21
- * @date     01 June 2016
+ * @version  V1.30
+ * @date     15 Mai 2020
  *
  * @cond
  *********************************************************************************************************************
@@ -66,6 +66,7 @@
  *                         Only relevant for AA and AB step, which needs ENABLE_PMU_CM_001_WORKAROUND 
  * V1.21,June ,01,2016 JFT:Rename ENABLE_CPU_CM_001_WORKAROUND to ENABLE_PMU_CM_001_WORKAROUND
  *                         Action required: If using AA/AB step, use ENABLE_PMU_CM_001_WORKAROUND instead of ENABLE_CPU_CM_001_WORKAROUND 
+ * V1.30,Mai, 15, 2020 JFT:Added option (ENABLE_OWN_HANDLER) to generate a individual interrupt handlers for unhandled vectors
  * @endcond 
  */
 
@@ -81,7 +82,15 @@
 
 .macro Insert_ExceptionHandler Handler_Func 
     .weak \Handler_Func
+#if defined(ENABLE_OWN_HANDLER)
+    .thumb_func
+    .type \Handler_Func, %function
+\Handler_Func:
+    b .
+    .size \Handler_Func, . - \Handler_Func
+#else
     .thumb_set \Handler_Func, Default_Handler
+#endif 
 
 #if defined(ENABLE_PMU_CM_001_WORKAROUND)  
     .weak \Handler_Func\()_Veneer

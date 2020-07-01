@@ -135,7 +135,7 @@ static XMC_ETH_LINK_STATUS_t link_status = XMC_ETH_LINK_STATUS_DOWN;
 
 /* xTXDescriptorSemaphore is a counting semaphore with
    a maximum count of TX_DESC_CNT, which is the number of
-	DMA TX descriptors. */
+  DMA TX descriptors. */
 static SemaphoreHandle_t xTXDescriptorSemaphore = NULL;
 
 static uint32_t ulTxDescriptorToClear = 0;
@@ -151,21 +151,21 @@ void ETH0_0_IRQHandler(void)
   if (netif_task_handler != 0)
   {
     /* xHigherPriorityTaskWoken must be initialised to pdFALSE.  If calling
-	   xTaskNotifyFromISR() unblocks the handling task, and the priority of
-	   the handling task is higher than the priority of the currently running task,
-	   then xHigherPriorityTaskWoken will automatically get set to pdTRUE. */
-	xHigherPriorityTaskWoken = pdFALSE;
+       xTaskNotifyFromISR() unblocks the handling task, and the priority of
+       the handling task is higher than the priority of the currently running task,
+       then xHigherPriorityTaskWoken will automatically get set to pdTRUE. */
+    xHigherPriorityTaskWoken = pdFALSE;
 
-	/* Unblock the handling task so the task can perform any processing necessitated
-	    by the interrupt.  xHandlingTask is the task's handle, which was obtained
-	    when the task was created.  The handling task's notification value
-	    is bitwise ORed with the interrupt status - ensuring bits that are already
-	    set are not overwritten. */
-	xTaskNotifyFromISR(netif_task_handler, ulStatusRegister, eSetBits, &xHigherPriorityTaskWoken );
+    /* Unblock the handling task so the task can perform any processing necessitated
+       by the interrupt.  xHandlingTask is the task's handle, which was obtained
+       when the task was created.  The handling task's notification value
+       is bitwise ORed with the interrupt status - ensuring bits that are already
+       set are not overwritten. */
+    xTaskNotifyFromISR(netif_task_handler, ulStatusRegister, eSetBits, &xHigherPriorityTaskWoken );
 
-	/* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
-	    The macro used to do this is dependent on the port and may be called
-	    portEND_SWITCHING_ISR. */
+    /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+       The macro used to do this is dependent on the port and may be called
+       portEND_SWITCHING_ISR. */
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
   }
 }
@@ -187,25 +187,25 @@ static void prvNetworkInterfaceInput(void)
 
     if (ipCONSIDER_FRAME_FOR_PROCESSING(pucBuffer))
     {
-	  pxDescriptor = pxGetNetworkBufferWithDescriptor(xReceivedLength, xDescriptorWaitTime);
-	  if (pxDescriptor != NULL)
-	  {
- 		memcpy(pxDescriptor->pucEthernetBuffer, pucBuffer, xReceivedLength);
+      pxDescriptor = pxGetNetworkBufferWithDescriptor(xReceivedLength, xDescriptorWaitTime);
+      if (pxDescriptor != NULL)
+      {
+        memcpy(pxDescriptor->pucEthernetBuffer, pucBuffer, xReceivedLength);
 
-		pxDescriptor->xDataLength = xReceivedLength;
-		xRxEvent.pvData = ( void * )pxDescriptor;
+        pxDescriptor->xDataLength = xReceivedLength;
+        xRxEvent.pvData = ( void * )pxDescriptor;
 
-		/* Pass the data to the TCP/IP task for processing. */
-		if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
-		{
-		  /* Could not send the descriptor into the TCP/IP stack, it must be released. */
-		  vReleaseNetworkBufferAndDescriptor(pxDescriptor);
-		  iptraceETHERNET_RX_EVENT_LOST();
-		}
-		else
-		{
-		  iptraceNETWORK_INTERFACE_RECEIVE();
-		}
+        /* Pass the data to the TCP/IP task for processing. */
+        if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
+        {
+          /* Could not send the descriptor into the TCP/IP stack, it must be released. */
+          vReleaseNetworkBufferAndDescriptor(pxDescriptor);
+          iptraceETHERNET_RX_EVENT_LOST();
+        }
+        else
+        {
+          iptraceNETWORK_INTERFACE_RECEIVE();
+        }
       }
     }
   }
@@ -226,46 +226,46 @@ static void prvNetworkInterfaceInput(void)
   xReceivedLength = XMC_ETH_MAC_GetRxFrameSize(&eth_mac);
   if ((xReceivedLength > 0) && (xReceivedLength <= ipTOTAL_ETHERNET_FRAME_SIZE))
   {
-	pucBuffer = XMC_ETH_MAC_GetRxBuffer(&eth_mac);
+    pucBuffer = XMC_ETH_MAC_GetRxBuffer(&eth_mac);
 
-	if (ipCONSIDER_FRAME_FOR_PROCESSING(pucBuffer))
-	{
-	  /* Allocate a new network buffer descriptor that references an Ethernet
-		 frame large enough to hold the maximum network packet size (as defined
-		 in the FreeRTOSIPConfig.h header file). */
-	  pxDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, xDescriptorWaitTime);
-	  if (pxDescriptor != NULL)
-	  {
-		XMC_ETH_MAC_SetRxBuffer(&eth_mac, pxDescriptor->pucEthernetBuffer);
+    if (ipCONSIDER_FRAME_FOR_PROCESSING(pucBuffer))
+    {
+      /* Allocate a new network buffer descriptor that references an Ethernet
+         frame large enough to hold the maximum network packet size (as defined
+         in the FreeRTOSIPConfig.h header file). */
+      pxDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, xDescriptorWaitTime);
+      if (pxDescriptor != NULL)
+      {
+        XMC_ETH_MAC_SetRxBuffer(&eth_mac, pxDescriptor->pucEthernetBuffer);
 
-		pxDescriptor->pucEthernetBuffer = pucBuffer;
-		pxDescriptor->xDataLength = xReceivedLength;
+        pxDescriptor->pucEthernetBuffer = pucBuffer;
+        pxDescriptor->xDataLength = xReceivedLength;
 
-		*( ( NetworkBufferDescriptor_t ** )
-		         ( pxDescriptor->pucEthernetBuffer - ipBUFFER_PADDING ) ) = pxDescriptor;
+        *( ( NetworkBufferDescriptor_t ** )
+          ( pxDescriptor->pucEthernetBuffer - ipBUFFER_PADDING ) ) = pxDescriptor;
 
-		/*
-		 * The network buffer descriptor now points to the Ethernet buffer that
-		 * contains the received data, and the Ethernet DMA descriptor now points
-		 * to a newly allocated (and empty) Ethernet buffer ready to receive more
-		 * data.  No data was copied.  Only pointers to data were swapped.
-		 */
+        /*
+         * The network buffer descriptor now points to the Ethernet buffer that
+         * contains the received data, and the Ethernet DMA descriptor now points
+         * to a newly allocated (and empty) Ethernet buffer ready to receive more
+         * data.  No data was copied.  Only pointers to data were swapped.
+         */
 
-		xRxEvent.pvData = ( void * )pxDescriptor;
+        xRxEvent.pvData = ( void * )pxDescriptor;
 
-		/* Pass the data to the TCP/IP task for processing. */
-		if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
-		{
-		  /* Could not send the descriptor into the TCP/IP stack, it must be released. */
-		  vReleaseNetworkBufferAndDescriptor(pxDescriptor);
-		  iptraceETHERNET_RX_EVENT_LOST();
-		}
-		else
-		{
-		  iptraceNETWORK_INTERFACE_RECEIVE();
-		}
+        /* Pass the data to the TCP/IP task for processing. */
+        if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
+        {
+          /* Could not send the descriptor into the TCP/IP stack, it must be released. */
+          vReleaseNetworkBufferAndDescriptor(pxDescriptor);
+          iptraceETHERNET_RX_EVENT_LOST();
+        }
+        else
+        {
+          iptraceNETWORK_INTERFACE_RECEIVE();
+        }
       }
-	}
+    }
   }
 
   XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
@@ -278,35 +278,35 @@ static void vClearTXBuffers()
   size_t uxCount = (( UBaseType_t)configNUM_TX_DESCRIPTORS) - uxSemaphoreGetCount(xTXDescriptorSemaphore);
 
   /* This function is called after a TX-completion interrupt.
-	 It will release each Network Buffer used in xNetworkInterfaceOutput().
-  	 'uxCount' represents the number of descriptors given to DMA for transmission.
-	 After sending a packet, the DMA will clear the 'ETH_DMATXDESC_OWN' bit. */
+     It will release each Network Buffer used in xNetworkInterfaceOutput().
+     'uxCount' represents the number of descriptors given to DMA for transmission.
+     After sending a packet, the DMA will clear the 'ETH_DMATXDESC_OWN' bit. */
   while ((uxCount > 0) && (XMC_ETH_MAC_IsTxDescriptorOwnedByDmaEx(&eth_mac, ulTxDescriptorToClear) == pdFALSE))
   {
 #if( ipconfigZERO_COPY_TX_DRIVER != 0 )
-	uint8_t *ucPayLoad = XMC_ETH_MAC_GetTxBufferEx(&eth_mac, ulTxDescriptorToClear);
-	if( ucPayLoad != NULL )
-	{
+    uint8_t *ucPayLoad = XMC_ETH_MAC_GetTxBufferEx(&eth_mac, ulTxDescriptorToClear);
+    if( ucPayLoad != NULL )
+    {
       NetworkBufferDescriptor_t *pxDescriptor = pxPacketBuffer_to_NetworkBuffer(ucPayLoad);
       if (pxDescriptor != NULL)
       {
-	    vReleaseNetworkBufferAndDescriptor(pxDescriptor);
+      vReleaseNetworkBufferAndDescriptor(pxDescriptor);
       }
       XMC_ETH_MAC_SetTxBufferEx(&eth_mac, ulTxDescriptorToClear, 0);
-	}
+    }
 #endif
 
-	/* Move onto the next descriptor, wrapping if necessary. */
-	ulTxDescriptorToClear++;
-	if (ulTxDescriptorToClear >= configNUM_TX_DESCRIPTORS )
-	{
-	  ulTxDescriptorToClear = 0;
-	}
+    /* Move onto the next descriptor, wrapping if necessary. */
+    ulTxDescriptorToClear++;
+    if (ulTxDescriptorToClear >= configNUM_TX_DESCRIPTORS )
+    {
+      ulTxDescriptorToClear = 0;
+    }
 
-	uxCount--;
+    uxCount--;
 
-	/* Tell the counting semaphore that one more TX descriptor is available. */
-	xSemaphoreGive( xTXDescriptorSemaphore );
+    /* Tell the counting semaphore that one more TX descriptor is available. */
+    xSemaphoreGive( xTXDescriptorSemaphore );
   }
 }
 
@@ -351,29 +351,29 @@ static void netif_task(void *arg)
   while (1)
   {
     /* Block indefinitely (without a timeout, so no need to check the function's
-	   return value) to wait for a notification.  NOTE!  Real applications
-	   should not block indefinitely, but instead time out occasionally in order
-	   to handle error conditions that may prevent the interrupt from sending
-	   any more notifications. */
-	 xTaskNotifyWait(0,                  /* Don't clear any bits on entry. */
-	                 UINT_MAX,           /* Clear all bits on exit. */
-	                 &ulInterruptStatus, /* Receives the notification value. */
-	                 portMAX_DELAY);     /* Block indefinitely. */
+     return value) to wait for a notification.  NOTE!  Real applications
+     should not block indefinitely, but instead time out occasionally in order
+     to handle error conditions that may prevent the interrupt from sending
+     any more notifications. */
+    xTaskNotifyWait(0,                  /* Don't clear any bits on entry. */
+                    UINT_MAX,           /* Clear all bits on exit. */
+                    &ulInterruptStatus, /* Receives the notification value. */
+                    portMAX_DELAY);     /* Block indefinitely. */
 
-	if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_RECEIVE) != 0)
+    if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_RECEIVE) != 0)
     {
       /* Go through the application owned descriptors */
       while (XMC_ETH_MAC_IsRxDescriptorOwnedByDma(&eth_mac) == pdFALSE)
       {
-		prvNetworkInterfaceInput();
+        prvNetworkInterfaceInput();
       }
     }
 
-	if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_TRANSMIT) != 0 )
-	{
-	  /* Check if DMA packets have been delivered. */
+    if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_TRANSMIT) != 0 )
+    {
+      /* Check if DMA packets have been delivered. */
       vClearTXBuffers();
-	}
+    }
   }
 }
 
@@ -382,11 +382,11 @@ BaseType_t xNetworkInterfaceInitialise( void )
 {
   if (netif_task_handler == NULL)
   {
-	if( xTXDescriptorSemaphore == NULL )
-	{
-	  xTXDescriptorSemaphore = xSemaphoreCreateCounting( ( UBaseType_t ) configNUM_TX_DESCRIPTORS, ( UBaseType_t ) configNUM_TX_DESCRIPTORS );
-	  configASSERT( xTXDescriptorSemaphore );
-	}
+    if( xTXDescriptorSemaphore == NULL )
+    {
+      xTXDescriptorSemaphore = xSemaphoreCreateCounting( ( UBaseType_t ) configNUM_TX_DESCRIPTORS, ( UBaseType_t ) configNUM_TX_DESCRIPTORS );
+      configASSERT( xTXDescriptorSemaphore );
+    }
 
     /* Initialize network interfaces */
     if (xTaskCreate(netif_task, "netif_task", configMINIMAL_STACK_SIZE, NULL, configMAX_PRIORITIES - 1, &netif_task_handler) != pdPASS)
@@ -395,41 +395,41 @@ BaseType_t xNetworkInterfaceInitialise( void )
     }
 
     // Configure ethernet port
-	eth_mac.rx_desc = eth_rx_desc;
-	eth_mac.tx_desc = eth_tx_desc;
+    eth_mac.rx_desc = eth_rx_desc;
+    eth_mac.tx_desc = eth_tx_desc;
 #if( ipconfigZERO_COPY_RX_DRIVER == 0 )
-	eth_mac.rx_buf = &eth_rx_buf[0][0];
+    eth_mac.rx_buf = &eth_rx_buf[0][0];
 #else
-	eth_mac.rx_buf = NULL;
+    eth_mac.rx_buf = NULL;
 #endif
 #if( ipconfigZERO_COPY_TX_DRIVER == 0 )
-	eth_mac.tx_buf = &eth_tx_buf[0][0];
+    eth_mac.tx_buf = &eth_tx_buf[0][0];
 #else
-	eth_mac.tx_buf = NULL;
+    eth_mac.tx_buf = NULL;
 #endif
-	eth_mac.num_rx_buf = configNUM_RX_DESCRIPTORS;
-	eth_mac.num_tx_buf = configNUM_TX_DESCRIPTORS;
-	eth_mac.address = MAC_ADDR;
+    eth_mac.num_rx_buf = configNUM_RX_DESCRIPTORS;
+    eth_mac.num_tx_buf = configNUM_TX_DESCRIPTORS;
+    eth_mac.address = MAC_ADDR;
 
     XMC_ETH_MAC_InitEx(&eth_mac);
-	XMC_ETH_MAC_DisableJumboFrame(&eth_mac);
-	XMC_ETH_MAC_SetAddress(&eth_mac, eth_mac.address);
+    XMC_ETH_MAC_DisableJumboFrame(&eth_mac);
+    XMC_ETH_MAC_SetAddress(&eth_mac, eth_mac.address);
 
 #if( ipconfigZERO_COPY_RX_DRIVER != 0 )
-	for (int32_t index = 0; index < configNUM_RX_DESCRIPTORS; ++index)
-	{
+    for (int32_t index = 0; index < configNUM_RX_DESCRIPTORS; ++index)
+    {
       NetworkBufferDescriptor_t *pxDescriptor = pxGetNetworkBufferWithDescriptor( ipTOTAL_ETHERNET_FRAME_SIZE, 0 );
-	  /* During start-up there should be enough Network Buffers available,
-		 so it is safe to use configASSERT().
-		 In case this assert fails, please check: configNUM_RX_DESCRIPTORS,
-		 ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS, and in case BufferAllocation_2.c
-		 is included, check the amount of available heap. */
-	  configASSERT( pxDescriptor != NULL );
+      
+      /* During start-up there should be enough Network Buffers available,
+         so it is safe to use configASSERT().
+         In case this assert fails, please check: configNUM_RX_DESCRIPTORS,
+         ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS, and in case BufferAllocation_2.c
+         is included, check the amount of available heap. */
+      configASSERT( pxDescriptor != NULL );
 
-	  XMC_ETH_MAC_SetRxBufferEx(&eth_mac, index, pxDescriptor->pucEthernetBuffer);
-	}
+      XMC_ETH_MAC_SetRxBufferEx(&eth_mac, index, pxDescriptor->pucEthernetBuffer);
+    }
 #endif
-
   }
 
   if (xGetPhyLinkStatus() == pdFALSE)
@@ -448,7 +448,7 @@ BaseType_t xNetworkInterfaceInitialise( void )
 
       /* When returning non-zero, the stack will become active and
          start DHCP (if configured) */
-	    return pdPASS;
+      return pdPASS;
     }
   }
 
@@ -470,23 +470,23 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxNetworkB
       break;
     }
 
-	if (xTXDescriptorSemaphore == NULL)
-	{
-		break;
-	}
+    if (xTXDescriptorSemaphore == NULL)
+    {
+      break;
+    }
 
     if (xSemaphoreTake(xTXDescriptorSemaphore, xBlockTimeTicks) != pdPASS)
     {
-  	  /* Time-out waiting for a free TX descriptor. */
-	  break;
+      /* Time-out waiting for a free TX descriptor. */
+      break;
     }
 
-	/* If the descriptor is still owned by the DMA it can't be used. */
+    /* If the descriptor is still owned by the DMA it can't be used. */
     if (XMC_ETH_MAC_IsTxDescriptorOwnedByDma(&eth_mac))
     {
-  	  /* The semaphore was taken, the TX DMA-descriptor is still not available.
-		 Actually that should not occur, the 'TDES_OWN' was already confirmed low in vClearTXBuffers(). */
-	  xSemaphoreGive( xTXDescriptorSemaphore );
+      /* The semaphore was taken, the TX DMA-descriptor is still not available.
+         Actually that should not occur, the 'TDES_OWN' was already confirmed low in vClearTXBuffers(). */
+      xSemaphoreGive( xTXDescriptorSemaphore );
     }
     else
     {
@@ -503,11 +503,10 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxNetworkB
     }
   } while( 0 );
 
-
   /* The buffer has been sent so can be released. */
   if (xReleaseAfterSend != pdFALSE)
   {
-	vReleaseNetworkBufferAndDescriptor( pxNetworkBuffer );
+    vReleaseNetworkBufferAndDescriptor( pxNetworkBuffer );
   }
 
   return xReturn;
@@ -522,22 +521,23 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxDescript
 
   do
   {
-	if (xTXDescriptorSemaphore == NULL)
-	{
-  	  break;
-	}
+    if (xTXDescriptorSemaphore == NULL)
+    {
+      break;
+    }
 
     if (xSemaphoreTake(xTXDescriptorSemaphore, xBlockTimeTicks) != pdPASS)
     {
-   	  /* Time-out waiting for a free TX descriptor. */
+      /* Time-out waiting for a free TX descriptor. */
       break;
     }
-	/* If the descriptor is still owned by the DMA it can't be used. */
+    
+    /* If the descriptor is still owned by the DMA it can't be used. */
     if (XMC_ETH_MAC_IsTxDescriptorOwnedByDma(&eth_mac))
     {
-  	  /* The semaphore was taken, the TX DMA-descriptor is still not available.
-		 Actually that should not occur, the 'TDES_OWN' was already confirmed low in vClearTXBuffers(). */
-	  xSemaphoreGive( xTXDescriptorSemaphore );
+      /* The semaphore was taken, the TX DMA-descriptor is still not available.
+         Actually that should not occur, the 'TDES_OWN' was already confirmed low in vClearTXBuffers(). */
+      xSemaphoreGive( xTXDescriptorSemaphore );
     }
     else
     {
@@ -585,7 +585,7 @@ void vNetworkInterfaceAllocateRAMToBuffers(
   {
     /* pucEthernetBuffer is set to point ipBUFFER_PADDING bytes in from the
        beginning of the allocated buffer. */
-	pxDescriptor[ x ].pucEthernetBuffer = &( ucBuffers[ x ][ ipBUFFER_PADDING ] );
+    pxDescriptor[ x ].pucEthernetBuffer = &( ucBuffers[ x ][ ipBUFFER_PADDING ] );
 
     /* The following line is also required, but will not be required in
        future versions. */
@@ -597,7 +597,7 @@ BaseType_t xGetPhyLinkStatus(void)
 {
   if (XMC_ETH_PHY_GetLinkStatus(&eth_mac, ETH_PHY_ADDR) != XMC_ETH_LINK_STATUS_DOWN)
   {
-	return pdTRUE;
+    return pdTRUE;
   }
 
   return pdFALSE;
