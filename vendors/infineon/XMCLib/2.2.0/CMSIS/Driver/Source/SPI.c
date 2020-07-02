@@ -166,7 +166,7 @@ static XMC_GPIO_CONFIG_t SPI0_seli_conf;
 #endif
 
 /* SPI0 Resources */
-static SPI_RESOURCES SPI0_Resources = 
+static const SPI_RESOURCES SPI0_Resources = 
 {
   {RTE_SPI0_RX_PORT},
   &SPI0_miso_conf,
@@ -254,7 +254,7 @@ static XMC_GPIO_CONFIG_t SPI1_seli_conf;
 #endif
 
 /* SPI1 Resources */
-static SPI_RESOURCES SPI1_Resources = 
+static const SPI_RESOURCES SPI1_Resources = 
 {
   {RTE_SPI1_RX_PORT},
   &SPI1_miso_conf,
@@ -348,7 +348,7 @@ static XMC_GPIO_CONFIG_t SPI2_seli_conf;
 #endif
 
 /* SPI2 Resources */
-static SPI_RESOURCES SPI2_Resources = 
+static const SPI_RESOURCES SPI2_Resources = 
 {
   {RTE_SPI2_RX_PORT},
   &SPI2_miso_conf,
@@ -437,7 +437,7 @@ static XMC_GPIO_CONFIG_t SPI3_seli_conf;
 #endif
 
 /* SPI3 Resources */
-static SPI_RESOURCES SPI3_Resources = 
+static const SPI_RESOURCES SPI3_Resources = 
 {
   {RTE_SPI3_RX_PORT},
   &SPI3_miso_conf,
@@ -530,7 +530,7 @@ static XMC_GPIO_CONFIG_t SPI4_seli_conf;
 #endif
 
 /* SPI4 Resources */
-static SPI_RESOURCES SPI4_Resources = 
+static const SPI_RESOURCES SPI4_Resources = 
 {
   {RTE_SPI4_RX_PORT},
   &SPI4_miso_conf,
@@ -616,7 +616,7 @@ static XMC_GPIO_CONFIG_t SPI5_seli_conf;
 #endif
 
 /* SPI5 Resources */
-static SPI_RESOURCES SPI5_Resources = 
+static const SPI_RESOURCES SPI5_Resources = 
 {
   {RTE_SPI5_RX_PORT},
   &SPI5_miso_conf,
@@ -668,7 +668,7 @@ static SPI_RESOURCES SPI5_Resources =
 
 
 /* SPI Resources */
-static SPI_RESOURCES *const spi_resources[6] = 
+static const SPI_RESOURCES *const spi_resources[6] = 
 {
 #if (RTE_SPI0 != 0)
   &SPI0_Resources,
