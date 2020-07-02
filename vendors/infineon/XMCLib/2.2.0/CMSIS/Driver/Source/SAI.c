@@ -110,7 +110,7 @@ static const ARM_SAI_CAPABILITIES i2s0_driver_capabilities =
 
 static volatile I2S_INFO I2S0_INFO;
 
-static I2S_RESOURCES I2S0_Resources = 
+static const I2S_RESOURCES I2S0_Resources = 
 {
   {RTE_I2S0_TX_PORT},
   RTE_I2S0_TX_AF,
@@ -163,7 +163,7 @@ static const ARM_SAI_CAPABILITIES i2s1_driver_capabilities =
 
 static volatile I2S_INFO I2S1_INFO;
 
-static I2S_RESOURCES I2S1_Resources = {
+static const I2S_RESOURCES I2S1_Resources = {
   {RTE_I2S1_TX_PORT},
   RTE_I2S1_TX_AF,
   {RTE_I2S1_RX_PORT},
@@ -215,7 +215,7 @@ static const ARM_SAI_CAPABILITIES i2s2_driver_capabilities =
 
 static volatile I2S_INFO I2S2_INFO;
 
-static I2S_RESOURCES I2S2_Resources = 
+static const I2S_RESOURCES I2S2_Resources = 
 {
   {RTE_I2S2_TX_PORT},
   RTE_I2S2_TX_AF,
@@ -268,7 +268,7 @@ static const ARM_SAI_CAPABILITIES i2s3_driver_capabilities =
 
 static volatile I2S_INFO I2S3_INFO;
 
-static I2S_RESOURCES I2S3_Resources = 
+static const I2S_RESOURCES I2S3_Resources = 
 {
   {RTE_I2S3_TX_PORT},
   RTE_I2S3_TX_AF,
@@ -321,7 +321,7 @@ static const ARM_SAI_CAPABILITIES i2s4_driver_capabilities =
 
 static volatile I2S_INFO I2S4_INFO;
 
-static I2S_RESOURCES I2S4_Resources = {
+static const I2S_RESOURCES I2S4_Resources = {
   {RTE_I2S4_TX_PORT},
   RTE_I2S4_TX_AF,
   {RTE_I2S4_RX_PORT},
@@ -374,7 +374,7 @@ static const ARM_SAI_CAPABILITIES i2s5_driver_capabilities =
 
 static volatile I2S_INFO I2S5_INFO;
 
-static I2S_RESOURCES I2S5_Resources = {
+static const I2S_RESOURCES I2S5_Resources = {
   {RTE_I2S5_TX_PORT},
   RTE_I2S5_TX_AF,
   {RTE_I2S5_RX_PORT},
@@ -406,7 +406,7 @@ static I2S_RESOURCES I2S5_Resources = {
 #endif
 
 /* I2S Resources */
-static I2S_RESOURCES *const i2s_resources[6] = {
+static const I2S_RESOURCES *const i2s_resources[6] = {
 #if (RTE_I2S0 != 0)
   &I2S0_Resources,
 #else
