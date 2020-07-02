@@ -127,7 +127,7 @@ static XMC_GPIO_CONFIG_t I2C0_sda_conf;
 static XMC_GPIO_CONFIG_t I2C0_scl_conf; 
 
 /* I2C0 Resources */
-static I2C_RESOURCES I2C0_Resources = 
+static const I2C_RESOURCES I2C0_Resources = 
 {
   {RTE_I2C0_TX_PORT},
   RTE_I2C0_TX_AF,
@@ -159,7 +159,7 @@ static XMC_GPIO_CONFIG_t I2C1_sda_conf;
 static XMC_GPIO_CONFIG_t I2C1_scl_conf; 
 
 /* I2C1 Resources */
-static I2C_RESOURCES I2C1_Resources = 
+static const I2C_RESOURCES I2C1_Resources = 
 {
   {RTE_I2C1_TX_PORT},
   RTE_I2C1_TX_AF,
@@ -191,7 +191,7 @@ static XMC_GPIO_CONFIG_t I2C2_sda_conf;
 static XMC_GPIO_CONFIG_t I2C2_scl_conf; 
 
 /* I2C2 Resources */
-static I2C_RESOURCES I2C2_Resources = 
+static const I2C_RESOURCES I2C2_Resources = 
 {
   {RTE_I2C2_TX_PORT},
   RTE_I2C2_TX_AF,
@@ -223,7 +223,7 @@ static XMC_GPIO_CONFIG_t I2C3_sda_conf;
 static XMC_GPIO_CONFIG_t I2C3_scl_conf; 
 
 /* I2C3 Resources */
-static I2C_RESOURCES I2C3_Resources = 
+static const I2C_RESOURCES I2C3_Resources = 
 {
   {RTE_I2C3_TX_PORT},
   RTE_I2C3_TX_AF,
@@ -256,7 +256,7 @@ static XMC_GPIO_CONFIG_t I2C4_sda_conf;
 static XMC_GPIO_CONFIG_t I2C4_scl_conf; 
 
 /* I2C4 Resources */
-static I2C_RESOURCES I2C4_Resources = 
+static const I2C_RESOURCES I2C4_Resources = 
 {
   {RTE_I2C4_TX_PORT},
   RTE_I2C4_TX_AF,
@@ -289,7 +289,7 @@ static XMC_GPIO_CONFIG_t I2C5_sda_conf;
 static XMC_GPIO_CONFIG_t I2C5_scl_conf; 
 
 /* I2C4 Resources */
-static I2C_RESOURCES I2C5_Resources = 
+static const I2C_RESOURCES I2C5_Resources = 
 {
   {RTE_I2C5_TX_PORT},
   RTE_I2C5_TX_AF,
@@ -316,7 +316,7 @@ static I2C_RESOURCES I2C5_Resources =
 
 
 /* I2C Resources */
-static I2C_RESOURCES *const i2c_resources[6] = 
+static const I2C_RESOURCES *const i2c_resources[6] = 
 {
 #if (RTE_I2C0 != 0)
   &I2C0_Resources,
@@ -709,6 +709,7 @@ static int32_t I2C_MasterTransmit(uint32_t addr, const uint8_t *data, uint32_t n
   }
  
   XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_ERROR |
+                                       XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED |
                                        XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED |
                                        XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST |
                                        XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
@@ -841,6 +842,7 @@ static int32_t I2C_MasterReceive(uint32_t addr, uint8_t *data, uint32_t num, boo
 #endif
 
   XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_ERROR |
+                                       XMC_I2C_CH_STATUS_FLAG_STOP_CONDITION_RECEIVED |
                                        XMC_I2C_CH_STATUS_FLAG_NACK_RECEIVED |
                                        XMC_I2C_CH_STATUS_FLAG_ARBITRATION_LOST |
                                        XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
