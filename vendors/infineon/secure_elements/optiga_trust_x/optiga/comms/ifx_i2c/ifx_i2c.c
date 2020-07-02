@@ -138,7 +138,7 @@ host_lib_status_t ifx_i2c_open(ifx_i2c_context_t *p_ctx)
     if ((IFX_I2C_STATUS_BUSY != p_ctx->status))
     {
         p_ctx->p_pal_i2c_ctx->upper_layer_ctx = p_ctx;      
-        p_ctx->reset_type = (uint8_t)IFX_I2C_SOFT_RESET;
+        p_ctx->reset_type = (uint8_t)IFX_I2C_WARM_RESET;
         p_ctx->reset_state = IFX_I2C_STATE_RESET_PIN_LOW;
         p_ctx->do_pal_init = TRUE;
         p_ctx->state = IFX_I2C_STATE_UNINIT;
