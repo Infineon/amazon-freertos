@@ -8,7 +8,7 @@ You need the following hardware:
 2. [Infineon MyIoT Adapter](https://www.infineon.com/cms/en/product/evaluation-boards/my-iot-adapter/)
 3. [Shield2Go Security OPTIGA™ Trust X](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-x/)
 
-Before you begin, you must configure AWS IoT and your FreeRTOS download to connect your device to the AWS Cloud\. For instructions, see [Option \#2: Onboard Private Key Generation](dev-mode-key-provisioning.md#dev-mode-key-provisioning-option2)\. In this tutorial, the path to the FreeRTOS download directory is referred to as `<freertos>`\.
+Before you begin, you must configure AWS IoT and your FreeRTOS download to connect your device to the AWS Cloud\. For instructions, see [Option \#2: Onboard Private Key Generation](https://docs.aws.amazon.com/freertos/latest/userguide/dev-mode-key-provisioning.html)\. In this tutorial, the path to the FreeRTOS download directory is referred to as `<freertos>`\.
 
 ## Overview<a name="getting_started_infineon_trust_m_overview"></a>
 
@@ -95,7 +95,7 @@ For more information about installing a terminal and setting up a serial connect
 
    The `aws_demos` project should be imported into your workspace and activated\.
 
-1. Follow the **Initial Configuration** and **Demo Project Configuration** steps in [Option \#2: Onboard Private Key Generation](dev-mode-key-provisioning.md#dev-mode-key-provisioning-option2)\.
+1. Follow the **Initial Configuration** and **Demo Project Configuration** steps in [Option \#2: Onboard Private Key Generation](https://docs.aws.amazon.com/freertos/latest/userguide/dev-mode-key-provisioning.html)\.
 
 1. From the **Project** menu, choose **Build Active Project**\. 
 
@@ -107,7 +107,7 @@ For more information about installing a terminal and setting up a serial connect
 
 1. When the debugger stops at the breakpoint in `main()`, from the **Run** menu, choose **Resume**\.
 
-1. In the serial terminal you should see something similar to below snapshot. Follow now the remaining steps in [Option \#2: Onboard Private Key Generation](dev-mode-key-provisioning.md#dev-mode-key-provisioning-option2)\.
+1. In the serial terminal you should see something similar to below snapshot. Follow now the remaining steps in [Option \#2: Onboard Private Key Generation](https://docs.aws.amazon.com/freertos/latest/userguide/dev-mode-key-provisioning.html)\.
 
 ```
 0 313 [] Warning: the client certificate should be updated. Please see https://aws.amazon.com/freertos/getting-started/.
@@ -235,7 +235,7 @@ Due to [a bug reported](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1810274
 
 ### Troubleshooting<a name="infineon_trust_m_troubleshooting"></a>
 
-For general troubleshooting information, see [Troubleshooting Getting Started](gsg-troubleshooting.md)\.
+For general troubleshooting information, see [Troubleshooting Getting Started](https://github.com/awsdocs/aws-freertos-docs/blob/master/doc_source/userguide/gsg-troubleshooting.md)\.
 
 
 ## Monitoring MQTT Messages on the Cloud<a name="infineon_trust_m_monitoring"></a>
