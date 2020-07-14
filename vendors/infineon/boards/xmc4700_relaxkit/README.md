@@ -178,7 +178,7 @@ Through the device's serial connection, you should see something like this on th
 
 #### Build the FreeRTOS Demo with CMake<a name="infineon_trust_m_cmake"></a>
 
-This section covers using CMake on Windows with MingW as the native build system\. For more information about using CMake with other operating systems and options, see [Using CMake with FreeRTOS](getting-started-cmake.md)\.
+This section covers using CMake on Windows with MingW as the native build system\. For more information about using CMake with other operating systems and options, see [Using CMake with FreeRTOS](https://docs.aws.amazon.com/freertos/latest/userguide/getting-started-cmake.html)\.
 
 If you prefer not to use an IDE for FreeRTOS development, you can use CMake to build and run the demo applications or applications that you have developed using third\-party code editors and debugging tools\.
 
@@ -196,14 +196,14 @@ Due to [a bug reported](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1810274
 
 1. Install CMake and MingW\.
 
-   For instructions, see [CMake Prerequisites](building-cmake-prereqs.md)\.
+   For instructions, see [CMake Prerequisites](https://docs.aws.amazon.com/freertos/latest/qualificationguide/building-cmake-prereqs.html)\.
 
 1. Create a folder to contain the generated build files \(*<BUILD\_FOLDER>*\)\. 
 
 1. Change directories to your FreeRTOS download directory \(`<freertos>`\), and use the following command to generate the build files:
 
    ```
-   cmake -DVENDOR=infineon -DBOARD=xmc4700_relax_kit -DCOMPILER=arm-gcc -S . -B <BUILD_FOLDER> -G "MinGW Makefiles" -DAFR_ENABLE_TESTS=0
+   cmake -DVENDOR=infineon -DBOARD=xmc4700_relaxkit -DCOMPILER=arm-gcc -S . -B <BUILD_FOLDER> -G "MinGW Makefiles" -DAFR_ENABLE_TESTS=0
    ```
 
 1. Change directories to the build directory \(*<BUILD\_FOLDER>*\), and use the following command to build the binary:
@@ -214,7 +214,7 @@ Due to [a bug reported](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1810274
 
    This command builds the output binary `aws_demos.hex` to the build directory\.
 
-1. Flash and run the image with [JLINK](getting_started_infineon.md#install-jlink)\.
+1. Flash and run the image with [JLINK](https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack)\.
 
    1. From the build directory \(*<BUILD\_FOLDER>*\), use the following commands to create a flash script:
 
@@ -231,7 +231,7 @@ Due to [a bug reported](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1810274
       <JLINK_PATH>\JLink.exe  -device XMC4700-2048 -if SWD -speed auto -CommanderScript flash.jlink
       ```
 
-      The application logs should be visible through [ the serial connection](getting_started_infineon.md#install-serial-connection) that you established with the board\. Continue to the public key extraction step in [Option \#2: Onboard Private Key Generation](dev-mode-key-provisioning.md#dev-mode-key-provisioning-option2)\. After all the steps are complete, go to the AWS IoT console\. The MQTT client you set up previously should display the MQTT messages sent by your device\. 
+      The application logs should be visible through [ the serial connection](#establishing-a-serial-connection) that you established with the board\. Continue to the public key extraction step in [Option \#2: Onboard Private Key Generation](https://docs.aws.amazon.com/freertos/latest/userguide/dev-mode-key-provisioning.html)\. After all the steps are complete, go to the AWS IoT console\. The MQTT client you set up previously should display the MQTT messages sent by your device\. 
 
 ### Troubleshooting<a name="infineon_trust_m_troubleshooting"></a>
 
