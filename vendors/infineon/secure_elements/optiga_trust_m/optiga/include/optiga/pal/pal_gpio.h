@@ -44,7 +44,6 @@ extern "C" {
 
 #include "pal.h"
 
-
 /**
  * \brief Structure defines the PAL GPIO configuration.
  */

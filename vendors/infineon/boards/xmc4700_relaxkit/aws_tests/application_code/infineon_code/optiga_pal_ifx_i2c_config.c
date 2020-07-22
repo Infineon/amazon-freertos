@@ -33,8 +33,11 @@
 /**********************************************************************************************************************
  * HEADER FILES
  *********************************************************************************************************************/
-#include "stdlib.h"
-#include "stdio.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#if defined(CONFIG_USE_OPTIGA)
+
 #include "optiga/pal/pal_gpio.h"
 #include "optiga/pal/pal_i2c.h"
 #include "optiga/ifx_i2c/ifx_i2c_config.h"
@@ -113,6 +116,7 @@ pal_gpio_t optiga_reset_0 =
     &optiga_reset
 };
 
+#endif
 
 /**
 * @}

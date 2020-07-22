@@ -35,18 +35,13 @@
  *********************************************************************************************************************/
 
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "FreeRTOS.h"
 #include "timers.h"
 
 #include "optiga/pal/pal_os_event.h"
 #include "optiga/pal/pal.h"
-
-typedef struct event_cb
-{
-  register_callback callback;
-  void* callback_args;
-} event_cb_t;
 
 /**********************************************************************************************************************
  * MACROS
@@ -57,72 +52,83 @@ typedef struct event_cb
  *********************************************************************************************************************/
 /// @cond hidden 
 
-static TimerHandle_t xTimer = NULL;
-
 static void vTimerCallback(TimerHandle_t xTimer)
 {
   /* Optionally do something if the pxTimer parameter is NULL. */
   configASSERT(xTimer);
 
-  event_cb_t *event_cb = (event_cb_t *)pvTimerGetTimerID( xTimer );
-
-  event_cb->callback(event_cb->callback_args);
-
-  vPortFree(event_cb);
+  pal_os_event_t *p_pal_os_event = (pal_os_event_t *)pvTimerGetTimerID( xTimer );
+  p_pal_os_event->callback_registered(p_pal_os_event->callback_ctx);
 }
 
 
 /// @endcond
 
-/**
-* Platform specific event init function.
-* <br>
-*
-* <b>API Details:</b>
-*         This function initialise all required event related variables.<br>
-*
-*
-*/
-pal_status_t pal_os_event_init(void)
+
+pal_os_event_t *pal_os_event_create(register_callback callback, void * callback_args)
 {
-  return PAL_STATUS_SUCCESS;
+  TimerHandle_t xTimer;
+
+  pal_os_event_t *p_pal_os_event = pvPortMalloc(sizeof(pal_os_event_t));
+  if (p_pal_os_event != NULL)
+  {
+	p_pal_os_event->callback_registered = callback;
+	p_pal_os_event->callback_ctx = callback_args;
+    p_pal_os_event->is_event_triggered = false;
+
+    xTimer = xTimerCreate(NULL, 1, pdFALSE, p_pal_os_event, vTimerCallback);
+    if (xTimer != NULL)
+    {
+      p_pal_os_event->os_timer = xTimer;
+    }
+    else
+    {
+      return NULL;
+    }
+
+    if ((callback != NULL) && (callback_args != NULL))
+    {
+      pal_os_event_start(p_pal_os_event, callback, callback_args);
+    }
+  }
+
+  return p_pal_os_event;
 }
-/**
-* Platform specific event call back registration function to trigger once when timer expires.
-* <br>
-*
-* <b>API Details:</b>
-*         This function registers the callback function supplied by the caller.<br>
-*         It triggers a timer with the supplied time interval in microseconds.<br>
-*         Once the timer expires, the registered callback function gets called.<br>
-* 
-* \param[in] callback              Callback function pointer
-* \param[in] callback_args         Callback arguments
-* \param[in] time_us               time in micro seconds to trigger the call back
-*
-*/
-void pal_os_event_register_callback_oneshot(register_callback callback, 
-                                            void* callback_args, 
+
+void pal_os_event_destroy(pal_os_event_t *p_pal_os_event)
+{
+  vPortFree(p_pal_os_event);
+}
+
+void pal_os_event_register_callback_oneshot(pal_os_event_t * p_pal_os_event,
+                                            register_callback callback,
+                                            void * callback_args,
                                             uint32_t time_us)
 {
-
-  event_cb_t *event_cb = pvPortMalloc(sizeof(event_cb_t));
-  if (event_cb != NULL)
+  if (p_pal_os_event != NULL)
   {
-    event_cb->callback = callback;
-    event_cb->callback_args = callback_args;
+	p_pal_os_event->callback_registered = callback;
+	p_pal_os_event->callback_ctx = callback_args;
 
-    if (xTimer != NULL)
-    {
-      xTimerDelete(xTimer, 0);
-    }
+	TickType_t ticks = ((time_us / 1000) / portTICK_PERIOD_MS);
+    xTimerChangePeriod((TimerHandle_t)p_pal_os_event->os_timer, pdMS_TO_TICKS(10), 0);
+  }
+}
 
-    TickType_t ticks = ((time_us / 1000) / portTICK_PERIOD_MS);
-    xTimer = xTimerCreate(NULL, (ticks > 0) ? ticks : 1, pdFALSE, event_cb, vTimerCallback);
-    if (xTimer != NULL)
-    {
-	  xTimerStart(xTimer, 0);
-    }
+void pal_os_event_start(pal_os_event_t * p_pal_os_event, register_callback callback, void *callback_args)
+{
+  if ((p_pal_os_event != NULL) && (p_pal_os_event->is_event_triggered == false))
+  {
+	p_pal_os_event->is_event_triggered = true;
+	pal_os_event_register_callback_oneshot(p_pal_os_event, callback, callback_args, 1000);
+  }
+}
+
+void pal_os_event_stop(pal_os_event_t * p_pal_os_event)
+{
+  if (p_pal_os_event != NULL)
+  {
+	p_pal_os_event->is_event_triggered = false;
   }
 }
 

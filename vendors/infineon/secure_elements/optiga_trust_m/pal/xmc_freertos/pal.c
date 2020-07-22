@@ -1,7 +1,8 @@
 /**
+* \copyright
 * MIT License
 *
-* Copyright (c) 2018 Infineon Technologies AG
+* Copyright (c) 2019 Infineon Technologies AG
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,62 +22,47 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE
 *
+* \endcopyright
 *
-* \file pal_os_lock.c
+* \author Infineon Technologies AG
 *
-* \brief   This file implements the platform abstraction layer APIs for os locks (e.g. semaphore).
+* \file pal.c
+*
+* \brief    This file implements the platform abstraction layer APIs.
 *
 * \ingroup  grPAL
+*
 * @{
 */
 
+
+#include "optiga/pal/pal_gpio.h"
 #include "optiga/pal/pal_os_lock.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
 
-SemaphoreHandle_t xSemaphore;
+extern pal_gpio_t optiga_reset_0;
+extern SemaphoreHandle_t xSemaphore;
 
-void pal_os_lock_create(pal_os_lock_t * p_lock, uint8_t lock_type)
+pal_status_t pal_init(void)
 {
-    p_lock->type = lock_type;
-    p_lock->lock = 0;
+  pal_gpio_init(&optiga_reset_0);
+  xSemaphore = xSemaphoreCreateRecursiveMutex();
+
+  if (xSemaphore != NULL)
+  {
+    return PAL_STATUS_SUCCESS;
+  }
+
+  return PAL_STATUS_FAILURE;
 }
 
-//lint --e{715} suppress "p_lock is not used here as it is placeholder for future."
-//lint --e{818} suppress "Not declared as pointer as nothing needs to be updated in the pointer."
-void pal_os_lock_destroy(pal_os_lock_t * p_lock)
+
+pal_status_t pal_deinit(void)
 {
-
-}
-
-
-pal_status_t pal_os_lock_acquire(pal_os_lock_t * p_lock)
-{
-	  if (xSemaphoreTakeRecursive(xSemaphore, portMAX_DELAY) == pdTRUE)
-	  {
-		return PAL_STATUS_SUCCESS;
-	  }
-
-	  return PAL_STATUS_FAILURE;
-}
-
-void pal_os_lock_release(pal_os_lock_t * p_lock)
-{
-	(void) p_lock;
-
-	  xSemaphoreGiveRecursive(xSemaphore);
-}
-
-void pal_os_lock_enter_critical_section(void)
-{
-  taskENTER_CRITICAL();
-}
-
-void pal_os_lock_exit_critical_section(void)
-{
-  taskEXIT_CRITICAL();
+  return PAL_STATUS_SUCCESS;
 }
 
 /**

@@ -157,8 +157,9 @@ static void prvMiscInitialization( void )
 		while(1);
 	}
 
-    /* FIX ME: If NOT using Optiga HSM uncomment following line. */
-	//ENTROPY_HARDWARE_Init();
+#if !defined(CONFIG_USE_OPTIGA)
+    ENTROPY_HARDWARE_Init();
+#endif
 }
 /*-----------------------------------------------------------*/
 
@@ -284,3 +285,17 @@ void vAssertCalled(const char * pcFile,
 }
 /*-----------------------------------------------------------*/
 
+/**
+ * @brief User defined application hook need by the FreeRTOS-Plus-TCP library.
+ */
+#if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 ) || ( ipconfigDHCP_REGISTER_HOSTNAME == 1 )
+    const char * pcApplicationHostnameHook(void)
+    {
+        /* FIX ME: If necessary, update to applicable registration name. */
+
+        /* This function will be called during the DHCP: the machine will be registered 
+         * with an IP address plus this name. */
+        return clientcredentialIOT_THING_NAME;
+    }
+
+#endif

@@ -1306,6 +1306,8 @@ __STATIC_INLINE void XMC_SCU_POWER_DisableMonitor(void)
  *             \ref XMC_SCU_BMI_HWCFG_ASC_BSLTO<br>
  *             \ref XMC_SCU_BMI_HWCFG_SSC_BSLTO<br>
  *             \ref XMC_SCU_BMI_HWCFG_SBSL<br><br>
+ *        optionally OR'd together with any of (only available for XMC1400 series): <br>
+ *             \ref XMC_SCU_BMI_HWCFG_PINDIS 
  *        optionally OR'd together with any of: <br>
  *             \ref XMC_SCU_BMI_DAPTYP_SWD<br>
  *             \ref XMC_SCU_BMI_DAPTYP_SPD<br><br>

@@ -48,6 +48,7 @@
  *                       Fixed include files
  * V3.1.5, 29. Oct 2018, Fix variable location of SystemCoreClock and g_chipid for ARMCC compiler
  * V3.1.6, 02. Dec 2019, Fix including device header file following the convention: angle brackets are used for standard includes and double quotes for everything else.
+ *                       Fix external clock monitoring pin settings
  ******************************************************************************
  * @endcond
  */
@@ -625,7 +626,7 @@ __WEAK void SystemCoreClockSetup(void)
 #if EXTCLK_PIN == EXTCLK_PIN_P1_15
   /* P1.15 */
   PORT1->PDR1 &= ~PORT1_PDR1_PD15_Msk;
-  PORT1->IOCR12 = (PORT1->IOCR12 & ~PORT0_IOCR12_PC15_Msk) | (0x11U << PORT0_IOCR12_PC15_Pos);
+  PORT1->IOCR12 = (PORT1->IOCR12 & ~PORT1_IOCR12_PC15_Msk) | (0x11U << PORT1_IOCR12_PC15_Pos);
 #else
   /* P0.8 */
   PORT0->HWSEL &= ~PORT0_HWSEL_HW8_Msk;

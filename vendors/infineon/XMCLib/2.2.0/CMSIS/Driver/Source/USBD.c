@@ -42,6 +42,7 @@
  * History
  *
  * Version 2.8 Added interrupt priority
+ *             Fix enumeration issue
  * Version 2.7 Conditional compiling based on RTE_Drivers_USBD
  *             Move function prototypes to USBD.c from USBD.h
  * Version 2.6 Fix compiler portability 
@@ -520,15 +521,7 @@ void XMC_HandleUSBReset() {
     xmc_device.ep[0].outInUse = 0;
 
 	xmc_device.DeviceEvent_cb(ARM_USBD_EVENT_RESET);
-		
-	usbd_flags &= ~USB_INITIALIZED;	
-		usbd_flags &= ~USB_POWERED;
-		usbd_flags &= ~USB_CONNECTED;
-		XMC_Initialize (xmc_device.DeviceEvent_cb ,xmc_device.EndpountEvent_cb);
-		XMC_PowerControl(ARM_POWER_FULL);
-		XMC_DeviceConnect ();
-		xmc_device.IsPowered = 1;
-		
+			
 	/* clear reset intr */
 	gintsts_data_t gintsts = { .d32 = 0 };
 	gintsts.b.usbreset = 1;
@@ -786,17 +779,11 @@ void XMC_HandleIrq() {
 #ifdef ARM_USBD_VBUS_DETECT
 	if (data.b.sessreqintr) {
 
-		usbd_flags &= ~USB_INITIALIZED;	
-		usbd_flags &= ~USB_POWERED;
-		usbd_flags &= ~USB_CONNECTED;
-		XMC_Initialize (xmc_device.DeviceEvent_cb ,xmc_device.EndpountEvent_cb);
-		XMC_PowerControl(ARM_POWER_FULL);
-		XMC_DeviceConnect ();
 		xmc_device.IsPowered = 1;
+		xmc_device.DeviceEvent_cb(ARM_USBD_EVENT_VBUS_ON);
 		clear.d32 = 0;
 		clear.b.sessreqintr = 1;
 		xmc_device.global_register->gintsts = clear.d32;
-		xmc_device.DeviceEvent_cb(ARM_USBD_EVENT_VBUS_ON);
 	}
 #endif
 	if (data.b.usbreset)

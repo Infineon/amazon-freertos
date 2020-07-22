@@ -157,10 +157,6 @@ void vApplicationDaemonTaskStartupHook( void );
  */
 void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent );
 
-/**
- * @brief Connects to Wi-Fi.
- */
-static void prvWifiConnect( void );
 
 /**
  * @brief Initializes the board.
@@ -218,8 +214,9 @@ static void prvMiscInitialization( void )
 		while(1);
 	}
 
-    /* FIX ME: If NOT using Optiga HSM uncomment following line. */
-	//ENTROPY_HARDWARE_Init();
+#if !defined(CONFIG_USE_OPTIGA)
+    ENTROPY_HARDWARE_Init();
+#endif	
 }
 /*-----------------------------------------------------------*/
 
@@ -227,26 +224,6 @@ void vApplicationDaemonTaskStartupHook( void )
 {
     /* FIX ME: Perform any hardware initialization, that require the RTOS to be
      * running, here. */
-
-    /* FIX ME: If your MCU is using Wi-Fi, delete surrounding compiler directives to 
-     * enable the unit tests and after MQTT, Bufferpool, and Secure Sockets libraries 
-     * have been imported into the project. If you are not using Wi-Fi, see the 
-     * vApplicationIPNetworkEventHook function. */
-    #if 0
-        if( SYSTEM_Init() == pdPASS )
-        {
-            /* Connect to the Wi-Fi before running the tests. */
-            prvWifiConnect();
-
-            /* Create the task to run unit tests. */
-            xTaskCreate( TEST_RUNNER_RunTests_task,
-                         "RunTests_task",
-                         mainTEST_RUNNER_TASK_STACK_SIZE,
-                         NULL,
-                         tskIDLE_PRIORITY,
-                         NULL );
-        }
-    #endif        
 }
 /*-----------------------------------------------------------*/
 
@@ -279,70 +256,6 @@ void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
             xTasksAlreadyCreated = pdTRUE;
         }
     }
-}
-/*-----------------------------------------------------------*/
-
-void prvWifiConnect( void )
-{
-    /* FIX ME: Delete surrounding compiler directives when the Wi-Fi library is ported. */
-    #if 0
-        WIFINetworkParams_t xNetworkParams;
-        WIFIReturnCode_t xWifiStatus;
-        uint8_t ucTempIp[4] = { 0 };
-
-        xWifiStatus = WIFI_On();
-
-        if( xWifiStatus == eWiFiSuccess )
-        {
-            configPRINTF( ( "Wi-Fi module initialized. Connecting to AP...\r\n" ) );
-        }
-        else
-        {
-            configPRINTF( ( "Wi-Fi module failed to initialize.\r\n" ) );
-
-            /* Delay to allow the lower priority logging task to print the above status. 
-             * The while loop below will block the above printing. */
-            vTaskDelay( mainLOGGING_WIFI_STATUS_DELAY );
-
-            while( 1 )
-            {
-            }
-        }
-
-        /* Setup parameters. */
-        xNetworkParams.pcSSID = clientcredentialWIFI_SSID;
-        xNetworkParams.ucSSIDLength = sizeof( clientcredentialWIFI_SSID );
-        xNetworkParams.pcPassword = clientcredentialWIFI_PASSWORD;
-        xNetworkParams.ucPasswordLength = sizeof( clientcredentialWIFI_PASSWORD );
-        xNetworkParams.xSecurity = clientcredentialWIFI_SECURITY;
-        xNetworkParams.cChannel = 0;
-
-        xWifiStatus = WIFI_ConnectAP( &( xNetworkParams ) );
-
-        if( xWifiStatus == eWiFiSuccess )
-        {
-            configPRINTF( ( "Wi-Fi Connected to AP. Creating tasks which use network...\r\n" ) );
-            
-            xWifiStatus = WIFI_GetIP( ucTempIp );
-            if ( eWiFiSuccess == xWifiStatus ) 
-            {
-                configPRINTF( ( "IP Address acquired %d.%d.%d.%d\r\n",
-                                ucTempIp[ 0 ], ucTempIp[ 1 ], ucTempIp[ 2 ], ucTempIp[ 3 ] ) );
-            }
-        }
-        else
-        {
-            configPRINTF( ( "Wi-Fi failed to connect to AP.\r\n" ) );
-
-            /* Delay to allow the lower priority logging task to print the above status. 
-             * The while loop below will block the above printing. */
-            vTaskDelay( mainLOGGING_WIFI_STATUS_DELAY );
-
-            while( 1 )
-            {
-            }
-        }
-    #endif        
 }
 /*-----------------------------------------------------------*/
 

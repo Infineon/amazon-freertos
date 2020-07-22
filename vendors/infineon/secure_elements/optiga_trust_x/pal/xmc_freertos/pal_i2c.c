@@ -157,7 +157,10 @@ pal_status_t pal_i2c_deinit(const pal_i2c_t* p_i2c_context)
 {
   if ((p_i2c_context != NULL) && (p_i2c_context->p_i2c_hw_config != NULL))
   {
-    vTaskDelete(i2c_taskhandle);
+    if (i2c_taskhandle != NULL)
+	{
+	  vTaskDelete(i2c_taskhandle);
+	}
 
 	ARM_DRIVER_I2C *I2Cdrv = (ARM_DRIVER_I2C *)p_i2c_context->p_i2c_hw_config;
     I2Cdrv->PowerControl(ARM_POWER_OFF);

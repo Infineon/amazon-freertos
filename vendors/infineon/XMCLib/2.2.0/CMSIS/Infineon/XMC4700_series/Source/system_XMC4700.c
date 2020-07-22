@@ -48,6 +48,7 @@
  * V1.0.5, 26. Sep 2017, Disable FPU if FPU_USED is zero    
  * V1.0.6, 29. Oct 2018, Fix variable location of SystemCoreClock and g_chipid for ARMCC compiler
  * V1.0,7, 02. Dec 2019, Fix including device header file following the convention: angle brackets are used for standard includes and double quotes for everything else.
+ *                       Fix external clock monitoring pin settings
  ******************************************************************************
  * @endcond
  */
@@ -266,7 +267,7 @@
 //                                      <1=> fPLL
 //             <i> Default: fPLL
 //        </e>
-//        <e8> Enable external clock
+//        <h> External Clock Control
 //             <o8.0..1> External Clock Source Selection
 //                  <0=> fSYS
 //                  <2=> fUSB
@@ -280,7 +281,7 @@
 //                  <1=> P0.8
 //                  <2=> P1.15
 //                  <i> Default: Disabled
-//        </e>
+//        </h>
 //    </h>
 */
 #define __CLKSET    (0x00000000UL)
@@ -291,8 +292,7 @@
 #define __WDTCLKCR  (0x00000000UL)
 #define __EBUCLKCR  (0x00000003UL)
 #define __USBCLKCR  (0x00010000UL)
-
-#define __EXTCLKCR (0x01200003UL)
+#define __EXTCLKCR  (0x01200003UL)
 #define __EXTCLKPIN (0U)
 
 /*

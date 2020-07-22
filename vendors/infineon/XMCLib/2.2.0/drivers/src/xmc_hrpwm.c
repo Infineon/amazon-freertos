@@ -67,6 +67,9 @@
  * 2020-05-28:
  *     - Fix: Use CSG trimming values only if the values are properly initialized
  *
+ * 2020-07-07:
+ *     - Fix XMC_HRPWM_HRC_ConfigSourceSelect1()
+ * 
  * @endcond
  *
  */
@@ -345,9 +348,9 @@ void XMC_HRPWM_HRC_ConfigSourceSelect0(XMC_HRPWM_HRC_t *const hrc, const XMC_HRP
   /*****************************************************************************
    * HRCy timer selection (HRCyTSEL)
    ****************************************************************************/
-  reg = (uint32_t)config->timer_sel;
+  reg = (uint32_t)config->timer_sel << HRPWM0_HRC_TSEL_TSEL0_Pos;
   reg |= ((uint32_t)config->src_trap_enable) << HRPWM0_HRC_TSEL_TS0E_Pos;
-  hrc->TSEL &= (uint32_t)0xFFFEFFF8;
+  hrc->TSEL &= (uint32_t)~(HRPWM0_HRC_TSEL_TSEL0_Msk | HRPWM0_HRC_TSEL_TS0E_Msk);
   hrc->TSEL |= reg;
 }
 
@@ -387,9 +390,9 @@ void XMC_HRPWM_HRC_ConfigSourceSelect1(XMC_HRPWM_HRC_t *const hrc, const XMC_HRP
   /*****************************************************************************
    * HRCy timer selection (HRCyTSEL)
    ****************************************************************************/
-  reg = (uint32_t)config->timer_sel;
+  reg = (uint32_t)config->timer_sel << HRPWM0_HRC_TSEL_TSEL1_Pos;
   reg |= ((uint32_t)config->src_trap_enable) << HRPWM0_HRC_TSEL_TS1E_Pos;
-  hrc->TSEL &= (uint32_t)0xFFFDFFC7;
+  hrc->TSEL &= (uint32_t)~(HRPWM0_HRC_TSEL_TSEL1_Msk | HRPWM0_HRC_TSEL_TS1E_Msk);
   hrc->TSEL |= reg;
 }
 

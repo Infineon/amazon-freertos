@@ -108,4 +108,4 @@ typedef struct CAN_RESOURCES
   XMC_CAN_t                      *can;                      // Pointer to CAN peripheral
   XMC_CAN_NODE_t                 *can_node;                 // Pointer to CAN Node
   XMC_CAN_MO_t                   *can_mo;                   // Pointer to Message Object
-} const CAN_RESOURCES_t;
+} CAN_RESOURCES_t;

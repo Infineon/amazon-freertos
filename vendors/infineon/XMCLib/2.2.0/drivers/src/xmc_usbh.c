@@ -1566,7 +1566,7 @@ void XMC_USBH_TurnOffResumeBit(void)
 
 
 /*USB host driver assembling all the implementation into a single CMSIS compliant structure type*/
-static const XMC_USBH_DRIVER_t Driver_USBH0 =
+const XMC_USBH_DRIVER_t Driver_USBH0 =
 {
   XMC_USBH_GetVersion,
   XMC_USBH_GetCapabilities,

@@ -2,8 +2,13 @@
 set(xmc4700_dir "${AFR_VENDORS_DIR}/infineon/boards/xmc4700_relaxkit")
 set(xmc4700_ports_dir "${xmc4700_dir}/ports")
 set(xmclib_dir "${AFR_VENDORS_DIR}/infineon/XMCLib/2.2.0")
-set(trustx_dir "${AFR_VENDORS_DIR}/infineon/secure_elements/optiga_trust_x")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+if(CONFIG_USE_OPTIGA_TRUST_X)
+    set(optiga_dir "${AFR_VENDORS_DIR}/infineon/secure_elements/optiga_trust_x")
+elif(CONFIG_USE_OPTIGA_TRUST_M)
+    set(optiga_dir "${AFR_VENDORS_DIR}/infineon/secure_elements/optiga_trust_m")
+endif()
 
 if(AFR_IS_TESTING)
     set(xmc4700_aws_dir "${xmc4700_dir}/aws_tests")
@@ -56,6 +61,10 @@ set( defined_symbols
      MBEDTLS_ECDH_GEN_PUBLIC_ALT
      PAL_OS_HAS_EVENT_INIT
 )
+
+if (CONFIG_USE_OPTIGA_TRUST_X || CONFIG_USE_OPTIGA_TRUST_M)
+    append(defined_symbols CONFIG_USE_OPTIGA)
+endif()
 
 # Compiler defined symbols.
 target_compile_definitions(
@@ -158,10 +167,13 @@ afr_mcu_port(kernel)
 afr_glob_src(driver_src DIRECTORY "${xmclib_dir}/drivers/src")
 afr_glob_src(cmsis_driver_src DIRECTORY "${xmclib_dir}/CMSIS/Driver/Source")
 
-#Trust X source files
-afr_glob_src(trustx_src DIRECTORY "${trustx_dir}/optiga" RECURSE)
-afr_glob_src(trustx_utils_src DIRECTORY "${trustx_dir}/examples" RECURSE)
-afr_glob_src(trustx_pal_src DIRECTORY "${trustx_dir}/pal/xmc_freertos" RECURSE)
+#Trust X/M source files
+afr_glob_src(trustx_src DIRECTORY "${optiga_dir}/optiga" RECURSE)
+afr_glob_src(trustx_utils_src DIRECTORY "${optiga_dir}/examples" RECURSE)
+afr_glob_src(trustx_pal_src DIRECTORY "${optiga_dir}/pal/xmc_freertos" RECURSE)
+if(CONFIG_USE_OPTIGA_TRUST_M)
+append(trustx_pal_src "${optiga_dir}/pal/pal_crypt_mbedtls.c")
+endif()
 
 #Source files specific to compiler
 set(compiler_src
@@ -193,10 +205,10 @@ set( board_includes
      "${xmclib_dir}/CMSIS/Infineon/XMC4700_series/Include"
      "${xmclib_dir}/CMSIS/Driver/Include"
      "${xmc4700_aws_dir}/application_code/infineon_code"
-     "${trustx_dir}/examples/ecdsa_utils"
-     "${trustx_dir}/examples/authenticate_chip"
-     "${trustx_dir}/optiga/include"
-     "${trustx_dir}/pal/xmc_freertos"
+     "${optiga_dir}/examples/ecdsa_utils"
+     "${optiga_dir}/examples/authenticate_chip"
+     "${optiga_dir}/optiga/include"
+     "${optiga_dir}/pal/xmc_freertos"
      "${AFR_VENDORS_DIR}/infineon/secure_elements/pkcs11"
 )
 set(kernel_includes
@@ -231,6 +243,7 @@ target_link_libraries(
     INTERFACE AFR::freertos_plus_posix
 )
 
+if (CONFIG_USE_OPTIGA_TRUST_X || CONFIG_USE_OPTIGA_TRUST_M)
 # PKCS11
 afr_mcu_port(pkcs11_implementation)
 target_sources(
@@ -238,6 +251,15 @@ target_sources(
     INTERFACE
         "${AFR_VENDORS_DIR}/infineon/secure_elements/pkcs11/iot_pkcs11_trustx.c"
 )
+else()
+# PKCS11
+afr_mcu_port(pkcs11_implementation DEPENDS AFR::pkcs11_mbedtls)
+target_sources(
+    AFR::pkcs11_implementation::mcu_port
+    INTERFACE
+        "${xmc4700_ports_dir}/pkcs11/iot_pkcs11_pal.c"
+)
+endif()
 
 # FreeRTOS Plus TCP
 afr_mcu_port(freertos_plus_tcp)

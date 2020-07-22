@@ -55,13 +55,17 @@
  * API IMPLEMENTATION
  *********************************************************************************************************************/
 
-void pal_gpio_init(const pal_gpio_t* p_gpio_context)
+pal_status_t pal_gpio_init(const pal_gpio_t* p_gpio_context)
 {
   if ((p_gpio_context != NULL) && (p_gpio_context->p_gpio_hw != NULL))
   {
     pal_platform_gpio_t *const gpio = (pal_platform_gpio_t *const)p_gpio_context->p_gpio_hw;
     gpio->gpio_init();
+
+    return PAL_STATUS_SUCCESS;
   }
+
+  return PAL_STATUS_FAILURE;
 }
 
 /**

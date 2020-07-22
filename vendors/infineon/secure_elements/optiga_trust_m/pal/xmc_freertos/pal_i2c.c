@@ -51,24 +51,24 @@ static TaskHandle_t i2c_taskhandle = NULL;
 
 static void i2c_task(void *pvParameters)
 {
-  app_event_handler_t upper_layer_handler;
+  upper_layer_callback_t upper_layer_handler;
   uint32_t event = 0;
 
   while(1)
   {
 	xTaskNotifyWait(0, UINT_MAX, &event, portMAX_DELAY);
 
-	upper_layer_handler = (app_event_handler_t)gp_pal_i2c_current_ctx->upper_layer_event_handler;
+	upper_layer_handler = (upper_layer_callback_t)gp_pal_i2c_current_ctx->upper_layer_event_handler;
 
     if (event & ARM_I2C_EVENT_TRANSFER_DONE)
 	{
 	  if (event & (ARM_I2C_EVENT_ADDRESS_NACK | ARM_I2C_EVENT_ARBITRATION_LOST | ARM_I2C_EVENT_BUS_ERROR | ARM_I2C_EVENT_TRANSFER_INCOMPLETE))
 	  {
-	    upper_layer_handler(gp_pal_i2c_current_ctx->upper_layer_ctx, PAL_I2C_EVENT_ERROR);
+	    upper_layer_handler(gp_pal_i2c_current_ctx->p_upper_layer_ctx, PAL_I2C_EVENT_ERROR);
 	  }
 	  else
 	  {
-	    upper_layer_handler(gp_pal_i2c_current_ctx->upper_layer_ctx, PAL_I2C_EVENT_SUCCESS);
+	    upper_layer_handler(gp_pal_i2c_current_ctx->p_upper_layer_ctx, PAL_I2C_EVENT_SUCCESS);
 	  }
 	}
   }
@@ -157,7 +157,10 @@ pal_status_t pal_i2c_deinit(const pal_i2c_t* p_i2c_context)
 {
   if ((p_i2c_context != NULL) && (p_i2c_context->p_i2c_hw_config != NULL))
   {
-    vTaskDelete(i2c_taskhandle);
+    if (i2c_taskhandle != NULL)
+	{
+	  vTaskDelete(i2c_taskhandle);
+	}
 
 	ARM_DRIVER_I2C *I2Cdrv = (ARM_DRIVER_I2C *)p_i2c_context->p_i2c_hw_config;
     I2Cdrv->PowerControl(ARM_POWER_OFF);
@@ -217,12 +220,20 @@ pal_status_t pal_i2c_write(pal_i2c_t *p_i2c_context, uint8_t *p_data, uint16_t l
 	else if (status == ARM_DRIVER_ERROR_BUSY)
 	{
 	  pal_status = PAL_STATUS_I2C_BUSY;
-      ((app_event_handler_t)(p_i2c_context->upper_layer_event_handler))(p_i2c_context->upper_layer_ctx , PAL_I2C_EVENT_BUSY);
+  	  callback_handler_t upper_layer_event_handler = (callback_handler_t)p_i2c_context->upper_layer_event_handler;
+ 	  if (upper_layer_event_handler)
+ 	  {
+  	    upper_layer_event_handler(p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_BUSY);
+ 	  }
 	}
 	else
 	{
       pal_status = PAL_STATUS_FAILURE;
-      ((app_event_handler_t)(p_i2c_context->upper_layer_event_handler))(p_i2c_context->upper_layer_ctx , PAL_I2C_EVENT_ERROR);
+  	  callback_handler_t upper_layer_event_handler = (callback_handler_t)p_i2c_context->upper_layer_event_handler;
+ 	  if (upper_layer_event_handler)
+ 	  {
+  	    upper_layer_event_handler(p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_ERROR);
+ 	  }
 	}
   }
 
@@ -277,12 +288,20 @@ pal_status_t pal_i2c_read(pal_i2c_t* p_i2c_context , uint8_t* p_data , uint16_t 
 	else if (status == ARM_DRIVER_ERROR_BUSY)
 	{
 	  pal_status = PAL_STATUS_I2C_BUSY;
-      ((app_event_handler_t)(p_i2c_context->upper_layer_event_handler))(p_i2c_context->upper_layer_ctx , PAL_I2C_EVENT_BUSY);
+  	  callback_handler_t upper_layer_event_handler = (callback_handler_t)p_i2c_context->upper_layer_event_handler;
+ 	  if (upper_layer_event_handler)
+ 	  {
+  	    upper_layer_event_handler(p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_BUSY);
+ 	  }
 	}
 	else
 	{
 	  pal_status = PAL_STATUS_FAILURE;
-      ((app_event_handler_t)(p_i2c_context->upper_layer_event_handler))(p_i2c_context->upper_layer_ctx , PAL_I2C_EVENT_ERROR);
+  	  callback_handler_t upper_layer_event_handler = (callback_handler_t)p_i2c_context->upper_layer_event_handler;
+ 	  if (upper_layer_event_handler)
+ 	  {
+  	    upper_layer_event_handler(p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_ERROR);
+ 	  }
 	}
   }
 
@@ -334,7 +353,7 @@ pal_status_t pal_i2c_set_bitrate(const pal_i2c_t* p_i2c_context , uint16_t bitra
 	  arg = ARM_I2C_BUS_SPEED_STANDARD;
 	}
 
-	app_event_handler_t upper_layer_event_handler = (app_event_handler_t)p_i2c_context->upper_layer_event_handler;
+	callback_handler_t upper_layer_event_handler = (callback_handler_t)p_i2c_context->upper_layer_event_handler;
 
 	int32_t status = I2Cdrv->Control(ARM_I2C_BUS_SPEED, arg);
 
@@ -342,7 +361,7 @@ pal_status_t pal_i2c_set_bitrate(const pal_i2c_t* p_i2c_context , uint16_t bitra
 	{
  	  if (upper_layer_event_handler)
 	  {
-		upper_layer_event_handler(p_i2c_context->upper_layer_ctx , PAL_I2C_EVENT_SUCCESS);
+		upper_layer_event_handler(p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_SUCCESS);
 	  }
       return PAL_STATUS_SUCCESS;
 	}
@@ -350,7 +369,7 @@ pal_status_t pal_i2c_set_bitrate(const pal_i2c_t* p_i2c_context , uint16_t bitra
 	{
  	  if (upper_layer_event_handler)
 	  {
-		upper_layer_event_handler(p_i2c_context->upper_layer_ctx , PAL_I2C_EVENT_BUSY);
+		upper_layer_event_handler(p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_BUSY);
 	  }
 	  pal_status = PAL_STATUS_I2C_BUSY;
 	}
@@ -358,7 +377,7 @@ pal_status_t pal_i2c_set_bitrate(const pal_i2c_t* p_i2c_context , uint16_t bitra
 	{
  	  if (upper_layer_event_handler)
 	  {
-		upper_layer_event_handler(p_i2c_context->upper_layer_ctx , PAL_I2C_EVENT_ERROR);
+		upper_layer_event_handler(p_i2c_context->p_upper_layer_ctx , PAL_I2C_EVENT_ERROR);
 	  }
 	}
   }

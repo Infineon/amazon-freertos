@@ -283,6 +283,15 @@
 			</matcher>
 		</filter>
 		<filter>
+			<id>1595454852833</id>
+			<name>vendors/infineon/secure_elements/optiga_trust_m/pal</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-xmc_freertos</arguments>
+			</matcher>
+		</filter>
+		<filter>
 			<id>1585616790357</id>
 			<name>vendors/infineon/secure_elements/optiga_trust_x/pal</name>
 			<type>9</type>

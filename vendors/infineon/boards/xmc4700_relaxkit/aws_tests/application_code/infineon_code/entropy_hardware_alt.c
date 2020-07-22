@@ -14,11 +14,13 @@
  *
  */
 
+#define _XOPEN_SOURCE 
 #include <stdlib.h>
 
 #include "xmc_common.h"
 #include "mbedtls/entropy_poll.h"
 
+#if !defined(CONFIG_USE_OPTIGA)
 int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t *olen)
 {
   (void)data;
@@ -41,3 +43,4 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
 
   return 0;
 }
+#endif

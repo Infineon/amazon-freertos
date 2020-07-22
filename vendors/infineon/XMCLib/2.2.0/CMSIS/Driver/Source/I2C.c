@@ -1311,6 +1311,8 @@ static ARM_I2C_STATUS I2C5_GetStatus(void)
 */
 static int32_t I2C_Control(uint32_t control, uint32_t arg, I2C_RESOURCES *const i2c) 
 {
+  uint32_t sda_pin_state;
+
   if ((i2c->info->flags & I2C_FLAG_POWERED) == 0U) 
   {
     return ARM_DRIVER_ERROR;
@@ -1329,18 +1331,44 @@ static int32_t I2C_Control(uint32_t control, uint32_t arg, I2C_RESOURCES *const 
       }
       break;
 
-    case ARM_I2C_BUS_CLEAR:
-      XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
+    case ARM_I2C_BUS_CLEAR:     
+      // Loop back mode
+#if(UC_FAMILY == XMC1)
+      XMC_I2C_CH_SetInputSource(i2c->i2c, XMC_I2C_CH_INPUT_SDA1, USIC0_C0_DX3_DOUT0);
+      XMC_I2C_CH_SetInputSource(i2c->i2c, XMC_I2C_CH_INPUT_SDA, USIC0_C0_DX0_DX3INS);
+#endif
+#if(UC_FAMILY == XMC4)
+      XMC_I2C_CH_SetInputSource(i2c->i2c, XMC_I2C_CH_INPUT_SDA, USIC0_C0_DX0_DOUT0);
+#endif
+
       // Clear the bus by sending nine clock pulses
+      XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
       XMC_I2C_CH_MasterStart(i2c->i2c, 0xff, XMC_I2C_CH_CMD_READ);
-  	  while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U)
-      ;
+      while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U);
 
-  	  XMC_I2C_CH_ClearStatusFlag(i2c->i2c, XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION);
-  	  XMC_I2C_CH_MasterStop(i2c->i2c);
-  	  while ((XMC_I2C_CH_GetStatusFlag(i2c->i2c) & XMC_I2C_CH_STATUS_FLAG_TRANSMIT_SHIFT_INDICATION) == 0U)
-      ;
+      // Not Acknowledge software recovery since operating in Loop Back Mode
+      if (i2c->tx_fifo_size_reg != NO_FIFO)
+      {
+    	  XMC_USIC_CH_TXFIFO_Flush(i2c->i2c);
+      }
+      if (i2c->rx_fifo_size_reg != NO_FIFO)
+      {
+    	  XMC_USIC_CH_RXFIFO_Flush(i2c->i2c);
+      }
+      XMC_USIC_CH_SetTransmitBufferStatus(i2c->i2c, XMC_USIC_CH_TBUF_STATUS_SET_IDLE);
+      XMC_I2C_CH_ClearStatusFlag(i2c->i2c, 0x1ffff);
 
+      XMC_I2C_CH_SetInputSource(i2c->i2c, XMC_I2C_CH_INPUT_SDA, i2c->sda_pin_input);
+      sda_pin_state = XMC_GPIO_GetInput(i2c->sda_rx_port.port, i2c->sda_rx_port.pin);
+
+      if (i2c->info->cb_event != NULL) 
+      {
+        /* Control operation has finished */
+        i2c->info->cb_event (ARM_I2C_EVENT_BUS_CLEAR);
+      }
+
+      return (sda_pin_state == 0) ? ARM_DRIVER_ERROR : ARM_DRIVER_OK;
+      
       break;
   
     case ARM_I2C_ABORT_TRANSFER:

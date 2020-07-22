@@ -70,6 +70,15 @@ uint32_t pal_os_timer_get_time_in_milliseconds(void)
   return (xTaskGetTickCount() * portTICK_PERIOD_MS);
 }
 
+uint32_t pal_os_timer_get_time_in_microseconds(void)
+{
+  // !!!OPTIGA_LIB_PORTING_REQUIRED
+  // This API is needed to support optiga cmd scheduler.
+  static uint32_t count = 0;
+  // The implementation must ensure that every invocation of this API returns a unique value.
+  return (count++);
+}
+
 /**
 * Waits or delays until the given milliseconds time
 * 
@@ -81,6 +90,17 @@ void pal_os_timer_delay_in_milliseconds(uint16_t milliseconds)
   const TickType_t xDelay = milliseconds / portTICK_PERIOD_MS;
   vTaskDelay( xDelay );
 }
+
+pal_status_t pal_timer_init(void)
+{
+  return PAL_STATUS_SUCCESS;
+}
+
+pal_status_t pal_timer_deinit(void)
+{
+  return PAL_STATUS_SUCCESS;
+}
+
 
 /**
 * @}
