@@ -75,7 +75,7 @@
 #include "entropy_hardware.h"
 
 /* Logging Task Defines. */
-#define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 15 )
+#define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 16 )
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 8 )
 
 /* Unit test defines. */
@@ -229,20 +229,32 @@ void vApplicationDaemonTaskStartupHook( void )
 
 void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
 {
-	  uint32_t ulIPAddress, ulNetMask, ulGatewayAddress, ulDNSServerAddress;
-	  char cBuffer[ 16 ];
+    uint32_t ulIPAddress, ulNetMask, ulGatewayAddress, ulDNSServerAddress;
+	char cBuffer[ 16 ];
 
     static BaseType_t xTasksAlreadyCreated = pdFALSE;
 
     /* If the network has just come up...*/
     if( eNetworkEvent == eNetworkUp )
     {
-    	configPRINT("Network connection successful. \n\r");
+        /* Print out the network configuration, which may have come from a DHCP
+        * server. */
+        FreeRTOS_GetAddressConfiguration(
+            &ulIPAddress,
+            &ulNetMask,
+            &ulGatewayAddress,
+            &ulDNSServerAddress );
+        FreeRTOS_inet_ntoa( ulIPAddress, cBuffer );
+        FreeRTOS_printf( ( "\r\n\r\nIP Address: %s\r\n", cBuffer ) );
 
-    	/* Print out the network configuration, which may have come from a DHCP server. */
-    	FreeRTOS_GetAddressConfiguration( &ulIPAddress, &ulNetMask, &ulGatewayAddress, &ulDNSServerAddress );
-    	FreeRTOS_inet_ntoa( ulIPAddress, cBuffer );
-    	configPRINTF( ("\r\n\r\nIP Address: %s\r\n", cBuffer) );
+        FreeRTOS_inet_ntoa( ulNetMask, cBuffer );
+        FreeRTOS_printf( ( "Subnet Mask: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulGatewayAddress, cBuffer );
+        FreeRTOS_printf( ( "Gateway Address: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulDNSServerAddress, cBuffer );
+        FreeRTOS_printf( ( "DNS Server Address: %s\r\n\r\n\r\n", cBuffer ) );
 
         if( ( xTasksAlreadyCreated == pdFALSE ) && ( SYSTEM_Init() == pdPASS ) )
         {
@@ -282,37 +294,6 @@ void vApplicationIdleHook( void )
 }
 /*-----------------------------------------------------------*/
 
-/**
-* @brief User defined application hook to process names returned by the DNS server.
-*/
-#if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 )
-    BaseType_t xApplicationDNSQueryHook( const char * pcName )
-    {
-        /* FIX ME. If necessary, update to applicable DNS name lookup actions. */
-
-        BaseType_t xReturn;
-
-        /* Determine if a name lookup is for this node.  Two names are given
-         * to this node: that returned by pcApplicationHostnameHook() and that set
-         * by mainDEVICE_NICK_NAME. */
-        if( strcmp( pcName, pcApplicationHostnameHook() ) == 0 )
-        {
-            xReturn = pdPASS;
-        }
-        else if( strcmp( pcName, mainDEVICE_NICK_NAME ) == 0 )
-        {
-            xReturn = pdPASS;
-        }
-        else
-        {
-            xReturn = pdFAIL;
-        }
-
-        return xReturn;
-    }
-	
-#endif /* if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 ) */
-/*-----------------------------------------------------------*/
 
 /**
  * @brief User defined assertion call. This function is plugged into configASSERT.
@@ -332,7 +313,6 @@ void vAssertCalled(const char * pcFile,
 	(void)ulLineNumber;
 
 	printf("vAssertCalled %s, %ld\n", pcFile, (long)ulLine);
-	fflush(stdout);
 
 	/* Setting ulBlockVariable to a non-zero value in the debugger will allow
 	* this function to be exited. */
@@ -361,3 +341,33 @@ void vAssertCalled(const char * pcFile,
     }
 
 #endif
+/*-----------------------------------------------------------*/
+
+#if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 )
+
+    BaseType_t xApplicationDNSQueryHook( const char * pcName )
+    {
+        BaseType_t xReturn;
+
+        /* Determine if a name lookup is for this node.  Two names are given
+         * to this node: that returned by pcApplicationHostnameHook() and that set
+         * by mainDEVICE_NICK_NAME. */
+        if( strcmp( pcName, pcApplicationHostnameHook() ) == 0 )
+        {
+            xReturn = pdPASS;
+        }
+        else if( strcmp( pcName, mainDEVICE_NICK_NAME ) == 0 )
+        {
+            xReturn = pdPASS;
+        }
+        else
+        {
+            xReturn = pdFAIL;
+        }
+
+        return xReturn;
+    }
+
+#endif /* if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 ) */
+/*-----------------------------------------------------------*/
+

@@ -197,8 +197,8 @@ extern void vLoggingPrint( const char * pcMessage );
 #define configPRINT( X )     vLoggingPrint( X )
 
 /* Map the logging task's printf to the board specific output function. */
-#include <stdio.h>
-#define configPRINT_STRING( x )    fprintf( stderr, x )
+#include "printf.h"
+#define configPRINT_STRING( x )    printf(x)
 /* Sets the length of the buffers into which logging messages are written - so
  * also defines the maximum length of each log message. */ 
 #define configLOGGING_MAX_MESSAGE_LENGTH            256

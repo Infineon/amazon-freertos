@@ -75,15 +75,8 @@
 #include "entropy_hardware.h"
 
 /* Logging Task Defines. */
-#define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 15 )
+#define mainLOGGING_MESSAGE_QUEUE_LENGTH    ( 16 )
 #define mainLOGGING_TASK_STACK_SIZE         ( configMINIMAL_STACK_SIZE * 8 )
-
-/* Unit test defines. */
-#define mainTEST_RUNNER_TASK_STACK_SIZE     ( configMINIMAL_STACK_SIZE * 16 )
-
-/* The task delay for allowing the lower priority logging task to print out Wi-Fi 
- * failure status before blocking indefinitely. */
-#define mainLOGGING_WIFI_STATUS_DELAY       pdMS_TO_TICKS( 1000 )
 
 /* The name of the devices for xApplicationDNSQueryHook. */
 #define mainDEVICE_NICK_NAME                "XMC4700_RELAXKIT_DEMO"
@@ -180,19 +173,32 @@ void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
     /* If the network has just come up...*/
     if( eNetworkEvent == eNetworkUp )
     {
-    	configPRINT("Network connection successful. \n\r");
-
-    	/* Print out the network configuration, which may have come from a DHCP server. */
-    	FreeRTOS_GetAddressConfiguration( &ulIPAddress, &ulNetMask, &ulGatewayAddress, &ulDNSServerAddress );
-    	FreeRTOS_inet_ntoa( ulIPAddress, cBuffer );
-    	configPRINTF( ("\r\n\r\nIP Address: %s\r\n", cBuffer) );
-
         if( ( xTasksAlreadyCreated == pdFALSE ) && ( SYSTEM_Init() == pdPASS ) )
         {		                
 		    DEMO_RUNNER_RunDemos();
 
             xTasksAlreadyCreated = pdTRUE;
         }
+
+        /* Print out the network configuration, which may have come from a DHCP
+         * server. */
+        FreeRTOS_GetAddressConfiguration(
+            &ulIPAddress,
+            &ulNetMask,
+            &ulGatewayAddress,
+            &ulDNSServerAddress );
+        FreeRTOS_inet_ntoa( ulIPAddress, cBuffer );
+        FreeRTOS_printf( ( "\r\n\r\nIP Address: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulNetMask, cBuffer );
+        FreeRTOS_printf( ( "Subnet Mask: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulGatewayAddress, cBuffer );
+        FreeRTOS_printf( ( "Gateway Address: %s\r\n", cBuffer ) );
+
+        FreeRTOS_inet_ntoa( ulDNSServerAddress, cBuffer );
+        FreeRTOS_printf( ( "DNS Server Address: %s\r\n\r\n\r\n", cBuffer ) );
+
     }
 }
 /*-----------------------------------------------------------*/
@@ -217,6 +223,38 @@ void vApplicationIdleHook( void )
         configPRINT( "." );
         xLastPrint = xTimeNow;
     }
+}
+/*-----------------------------------------------------------*/
+
+/**
+ * @brief User defined assertion call. This function is plugged into configASSERT.
+ * See FreeRTOSConfig.h to define configASSERT to something different.
+ */
+void vAssertCalled(const char * pcFile,
+	uint32_t ulLine)
+{
+    /* FIX ME. If necessary, update to applicable assertion routine actions. */
+
+	const uint32_t ulLongSleep = 1000UL;
+	volatile uint32_t ulBlockVariable = 0UL;
+	volatile char * pcFileName = (volatile char *)pcFile;
+	volatile uint32_t ulLineNumber = ulLine;
+
+	(void)pcFileName;
+	(void)ulLineNumber;
+
+	printf("vAssertCalled %s, %ld\n", pcFile, (long)ulLine);
+
+	/* Setting ulBlockVariable to a non-zero value in the debugger will allow
+	* this function to be exited. */
+	taskDISABLE_INTERRUPTS();
+	{
+		while (ulBlockVariable == 0UL)
+		{
+			vTaskDelay( pdMS_TO_TICKS( ulLongSleep ) );
+		}
+	}
+	taskENABLE_INTERRUPTS();
 }
 /*-----------------------------------------------------------*/
 
@@ -252,50 +290,3 @@ void vApplicationIdleHook( void )
 #endif /* if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 ) */
 /*-----------------------------------------------------------*/
 
-/**
- * @brief User defined assertion call. This function is plugged into configASSERT.
- * See FreeRTOSConfig.h to define configASSERT to something different.
- */
-void vAssertCalled(const char * pcFile,
-	uint32_t ulLine)
-{
-    /* FIX ME. If necessary, update to applicable assertion routine actions. */
-
-	const uint32_t ulLongSleep = 1000UL;
-	volatile uint32_t ulBlockVariable = 0UL;
-	volatile char * pcFileName = (volatile char *)pcFile;
-	volatile uint32_t ulLineNumber = ulLine;
-
-	(void)pcFileName;
-	(void)ulLineNumber;
-
-	printf("vAssertCalled %s, %ld\n", pcFile, (long)ulLine);
-	fflush(stdout);
-
-	/* Setting ulBlockVariable to a non-zero value in the debugger will allow
-	* this function to be exited. */
-	taskDISABLE_INTERRUPTS();
-	{
-		while (ulBlockVariable == 0UL)
-		{
-			vTaskDelay( pdMS_TO_TICKS( ulLongSleep ) );
-		}
-	}
-	taskENABLE_INTERRUPTS();
-}
-/*-----------------------------------------------------------*/
-
-/**
- * @brief User defined application hook need by the FreeRTOS-Plus-TCP library.
- */
-#if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 ) || ( ipconfigDHCP_REGISTER_HOSTNAME == 1 )
-    const char * pcApplicationHostnameHook(void)
-    {
-        /* FIX ME: If necessary, update to applicable registration name. */
-
-        /* This function will be called during the DHCP: the machine will be registered 
-         * with an IP address plus this name. */
-        return clientcredentialIOT_THING_NAME;
-    }
-
-#endif

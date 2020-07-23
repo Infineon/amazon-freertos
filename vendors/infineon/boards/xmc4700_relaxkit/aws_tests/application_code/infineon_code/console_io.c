@@ -64,11 +64,17 @@ int _read(int fd, void *buf, size_t count)
   return char_cnt;
 }
 
+void _putchar(char c)
+{
+  XMC_UART_CH_Transmit(CONSOLE_IO_UART_CH, c);
+}
+
+
 void CONSOLE_IO_Init(void)
 {
   XMC_UART_CH_Init(CONSOLE_IO_UART_CH, &uart_config);
 
-  XMC_GPIO_SetMode(CONSOLE_IO_UART_RX_PIN, XMC_GPIO_MODE_INPUT_TRISTATE);
+  XMC_GPIO_SetMode(CONSOLE_IO_UART_RX_PIN, XMC_GPIO_MODE_INPUT_PULL_UP);
   XMC_UART_CH_SetInputSource(CONSOLE_IO_UART_CH, XMC_UART_CH_INPUT_RXD, CONSOLE_IO_UART_INPUT);
 
   XMC_UART_CH_Start(CONSOLE_IO_UART_CH);

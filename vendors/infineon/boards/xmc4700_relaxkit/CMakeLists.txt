@@ -39,7 +39,11 @@ afr_set_board_metadata(SUPPORTED_IDE "DAVE")
 afr_set_board_metadata(RECOMMENDED_IDE "DAVE")
 afr_set_board_metadata(IDE_DAVE_NAME "DAVE")
 afr_set_board_metadata(IDE_DAVE_COMPILER "GCC")
+if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
 afr_set_board_metadata(KEY_IMPORT_PROVISIONING "FALSE")
+else()
+afr_set_board_metadata(KEY_IMPORT_PROVISIONING "TRUE")
+endif()
 afr_set_board_metadata(IS_ACTIVE "TRUE")
 afr_set_board_metadata(IDE_DAVE_PROJECT_LOCATION "${AFR_ROOT_DIR}/projects/infineon/xmc4700_relaxkit/dave4/aws_demos")
 afr_set_board_metadata(AWS_DEMOS_CONFIG_FILES_LOCATION "${AFR_ROOT_DIR}/vendors/infineon/boards/xmc4700_relaxkit/aws_demos/config_files")
@@ -54,17 +58,32 @@ afr_mcu_port(compiler)
 set( defined_symbols
      XMC4700_F144x2048
      XMC_ETH_PHY_KSZ8081RNB
+     PRINTF_INCLUDE_CONFIG_H
+)
+
+if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
+append(defined_symbols 
      USE_CMDLIB_WITH_RTOS
      MBEDTLS_ECDSA_SIGN_ALT
      MBEDTLS_ECDSA_VERIFY_ALT
      MBEDTLS_ECDH_COMPUTE_SHARED_ALT
      MBEDTLS_ECDH_GEN_PUBLIC_ALT
      PAL_OS_HAS_EVENT_INIT
+     CONFIG_USE_OPTIGA
 )
-
-if (CONFIG_USE_OPTIGA_TRUST_X || CONFIG_USE_OPTIGA_TRUST_M)
-    append(defined_symbols CONFIG_USE_OPTIGA)
 endif()
+
+if (CONFIG_USE_OPTIGA_TRUST_X)
+append(defined_symbols 
+     CONFIG_USE_OPTIGA_TRUSTX
+)
+elseif(CONFIG_USE_OPTIGA_TRUST_M)
+append(defined_symbols 
+     CONFIG_USE_OPTIGA_TRUSTM
+)
+endif()
+
+
 
 # Compiler defined symbols.
 target_compile_definitions(
@@ -125,7 +144,11 @@ target_compile_options(
 
 
 #Linker script path
+if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
 set( linker_script "${xmc4700_dir}/XMC4700x2048.ld" )
+else()
+set( linker_script "${xmc4700_dir}/XMC4700x2048_EEPROM.ld" )
+endif()
 
 #All linker options
 set( linker_flags
@@ -167,12 +190,16 @@ afr_mcu_port(kernel)
 afr_glob_src(driver_src DIRECTORY "${xmclib_dir}/drivers/src")
 afr_glob_src(cmsis_driver_src DIRECTORY "${xmclib_dir}/CMSIS/Driver/Source")
 
+if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
 #Trust X/M source files
 afr_glob_src(trustx_src DIRECTORY "${optiga_dir}/optiga" RECURSE)
 afr_glob_src(trustx_utils_src DIRECTORY "${optiga_dir}/examples" RECURSE)
 afr_glob_src(trustx_pal_src DIRECTORY "${optiga_dir}/pal/xmc_freertos" RECURSE)
+
 if(CONFIG_USE_OPTIGA_TRUST_M)
 append(trustx_pal_src "${optiga_dir}/pal/pal_crypt_mbedtls.c")
+endif()
+
 endif()
 
 #Source files specific to compiler
@@ -204,13 +231,20 @@ set( board_includes
      "${xmclib_dir}/drivers/inc"
      "${xmclib_dir}/CMSIS/Infineon/XMC4700_series/Include"
      "${xmclib_dir}/CMSIS/Driver/Include"
+     "${xmclib_dir}/third_party/printf"
      "${xmc4700_aws_dir}/application_code/infineon_code"
+)
+
+if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
+append(board_includes
      "${optiga_dir}/examples/ecdsa_utils"
      "${optiga_dir}/examples/authenticate_chip"
      "${optiga_dir}/optiga/include"
      "${optiga_dir}/pal/xmc_freertos"
      "${AFR_VENDORS_DIR}/infineon/secure_elements/pkcs11"
 )
+endif()
+
 set(kernel_includes
     ${board_includes}
     ${compiler_includes}
@@ -243,13 +277,21 @@ target_link_libraries(
     INTERFACE AFR::freertos_plus_posix
 )
 
-if (CONFIG_USE_OPTIGA_TRUST_X || CONFIG_USE_OPTIGA_TRUST_M)
+if (CONFIG_USE_OPTIGA_TRUST_X)
 # PKCS11
 afr_mcu_port(pkcs11_implementation)
 target_sources(
     AFR::pkcs11_implementation::mcu_port
     INTERFACE
         "${AFR_VENDORS_DIR}/infineon/secure_elements/pkcs11/iot_pkcs11_trustx.c"
+)
+elseif (CONFIG_USE_OPTIGA_TRUST_M)
+# PKCS11
+afr_mcu_port(pkcs11_implementation)
+target_sources(
+    AFR::pkcs11_implementation::mcu_port
+    INTERFACE
+        "${AFR_VENDORS_DIR}/infineon/secure_elements/pkcs11/iot_pkcs11_trustm.c"
 )
 else()
 # PKCS11
@@ -296,6 +338,7 @@ endif()
 
 afr_glob_src(board_src DIRECTORY "${xmc4700_aws_dir}/application_code/infineon_code")
 afr_glob_src(newlib DIRECTORY "${xmclib_dir}/Newlib")
+afr_glob_src(printf DIRECTORY "${xmclib_dir}/third_party/printf")
 afr_glob_src(config_src DIRECTORY "${xmc4700_aws_dir}/config_files")
 
 # Do not add demos or tests if they're turned off.
@@ -305,6 +348,7 @@ if(AFR_ENABLE_DEMOS OR AFR_ENABLE_TESTS)
         ${board_src}
         ${config_src}
         ${newlib}
+        ${printf}
         ${linker_script}
         "${xmc4700_aws_dir}/application_code/main.c"
     )
