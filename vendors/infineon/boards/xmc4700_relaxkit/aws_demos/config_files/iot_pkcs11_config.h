@@ -63,7 +63,11 @@
 * If set to 0, no PAL destroy object is implemented, and this functionality
 * is implemented in the common PKCS #11 layer.
 */
+#if defined(CONFIG_USE_OPTIGA_TRUSTM)
+#define pkcs11configPAL_DESTROY_SUPPORTED                  1
+#else
 #define pkcs11configPAL_DESTROY_SUPPORTED                  0
+#endif
 
 /**
 * @brief Set to 1 if OTA image verification via PKCS #11 module is supported.
