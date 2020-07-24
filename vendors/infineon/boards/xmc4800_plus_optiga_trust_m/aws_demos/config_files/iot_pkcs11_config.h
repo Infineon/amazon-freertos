@@ -116,7 +116,7 @@
  * (pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS) when using the JITR or
  * JITP flow.
  */
-#define pkcs11configLABEL_JITP_CERTIFICATE                 "0xE0E8"
+#define pkcs11configLABEL_JITP_CERTIFICATE                 "0xE0E1"
 
 /**
  * @brief The PKCS #11 label for the AWS Trusted Root Certificate.
