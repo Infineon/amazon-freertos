@@ -89,7 +89,7 @@
 #define configMAX_PRIORITIES                       ( 7 )
 #define configTICK_RATE_HZ                         ( 1000 )                  
 #define configMINIMAL_STACK_SIZE                   ( ( unsigned short ) 256 )
-#define configTOTAL_HEAP_SIZE                      ( ( size_t ) ( 256 * 1024 ) )
+#define configTOTAL_HEAP_SIZE                      ( ( size_t ) ( 192 * 1024 ) )
 #define configAPPLICATION_ALLOCATED_HEAP           0
 #define configMAX_TASK_NAME_LEN                    ( 15 )
 #define configUSE_TRACE_FACILITY                   1
@@ -101,6 +101,7 @@
 #define configQUEUE_REGISTRY_SIZE                  8
 #define configUSE_APPLICATION_TASK_TAG             1
 #define configUSE_COUNTING_SEMAPHORES              1
+#define configUSE_TASK_NOTIFICATIONS               1
 #define configUSE_QUEUE_SETS				       1
 #define configUSE_ALTERNATIVE_API                  0
 #define configNUM_THREAD_LOCAL_STORAGE_POINTERS    3      /* FreeRTOS+FAT requires 2 pointers if a CWD is supported. */

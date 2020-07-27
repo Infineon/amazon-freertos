@@ -173,13 +173,6 @@ void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
     /* If the network has just come up...*/
     if( eNetworkEvent == eNetworkUp )
     {
-        if( ( xTasksAlreadyCreated == pdFALSE ) && ( SYSTEM_Init() == pdPASS ) )
-        {		                
-		    DEMO_RUNNER_RunDemos();
-
-            xTasksAlreadyCreated = pdTRUE;
-        }
-
         /* Print out the network configuration, which may have come from a DHCP
          * server. */
         FreeRTOS_GetAddressConfiguration(
@@ -190,14 +183,12 @@ void vApplicationIPNetworkEventHook( eIPCallbackEvent_t eNetworkEvent )
         FreeRTOS_inet_ntoa( ulIPAddress, cBuffer );
         FreeRTOS_printf( ( "\r\n\r\nIP Address: %s\r\n", cBuffer ) );
 
-        FreeRTOS_inet_ntoa( ulNetMask, cBuffer );
-        FreeRTOS_printf( ( "Subnet Mask: %s\r\n", cBuffer ) );
+        if( ( xTasksAlreadyCreated == pdFALSE ) && ( SYSTEM_Init() == pdPASS ) )
+        {		                
+		    DEMO_RUNNER_RunDemos();
 
-        FreeRTOS_inet_ntoa( ulGatewayAddress, cBuffer );
-        FreeRTOS_printf( ( "Gateway Address: %s\r\n", cBuffer ) );
-
-        FreeRTOS_inet_ntoa( ulDNSServerAddress, cBuffer );
-        FreeRTOS_printf( ( "DNS Server Address: %s\r\n\r\n\r\n", cBuffer ) );
+            xTasksAlreadyCreated = pdTRUE;
+        }
 
     }
 }

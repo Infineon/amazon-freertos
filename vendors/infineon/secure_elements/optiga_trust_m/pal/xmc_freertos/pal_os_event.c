@@ -107,11 +107,15 @@ void pal_os_event_register_callback_oneshot(pal_os_event_t * p_pal_os_event,
 {
   if (p_pal_os_event != NULL)
   {
-	p_pal_os_event->callback_registered = callback;
-	p_pal_os_event->callback_ctx = callback_args;
+    p_pal_os_event->callback_registered = callback;
+    p_pal_os_event->callback_ctx = callback_args;
 
-	TickType_t ticks = ((time_us / 1000) / portTICK_PERIOD_MS);
-    xTimerChangePeriod((TimerHandle_t)p_pal_os_event->os_timer, pdMS_TO_TICKS(10), 0);
+    if (time_us < 1000)
+    {
+      time_us = 1000;
+    }
+
+    xTimerChangePeriod((TimerHandle_t)p_pal_os_event->os_timer, pdMS_TO_TICKS(time_us / 1000), 0);
   }
 }
 

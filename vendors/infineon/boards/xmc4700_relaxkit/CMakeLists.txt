@@ -4,9 +4,9 @@ set(xmc4700_ports_dir "${xmc4700_dir}/ports")
 set(xmclib_dir "${AFR_VENDORS_DIR}/infineon/XMCLib/2.2.0")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(CONFIG_USE_OPTIGA_TRUST_X)
+if(CONFIG_USE_OPTIGA STREQUAL "TRUST_X")
     set(optiga_dir "${AFR_VENDORS_DIR}/infineon/secure_elements/optiga_trust_x")
-elif(CONFIG_USE_OPTIGA_TRUST_M)
+elseif(CONFIG_USE_OPTIGA STREQUAL "TRUST_M")
     set(optiga_dir "${AFR_VENDORS_DIR}/infineon/secure_elements/optiga_trust_m")
 endif()
 
@@ -39,7 +39,7 @@ afr_set_board_metadata(SUPPORTED_IDE "DAVE")
 afr_set_board_metadata(RECOMMENDED_IDE "DAVE")
 afr_set_board_metadata(IDE_DAVE_NAME "DAVE")
 afr_set_board_metadata(IDE_DAVE_COMPILER "GCC")
-if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
+if ((CONFIG_USE_OPTIGA STREQUAL "TRUST_X") OR (CONFIG_USE_OPTIGA STREQUAL "TRUST_M"))
 afr_set_board_metadata(KEY_IMPORT_PROVISIONING "FALSE")
 else()
 afr_set_board_metadata(KEY_IMPORT_PROVISIONING "TRUE")
@@ -61,8 +61,9 @@ set( defined_symbols
      PRINTF_INCLUDE_CONFIG_H
 )
 
-if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
-append(defined_symbols 
+if ((CONFIG_USE_OPTIGA STREQUAL "TRUST_X") OR (CONFIG_USE_OPTIGA STREQUAL "TRUST_M"))
+set( defined_symbols 
+     ${defined_symbols}
      USE_CMDLIB_WITH_RTOS
      MBEDTLS_ECDSA_SIGN_ALT
      MBEDTLS_ECDSA_VERIFY_ALT
@@ -73,12 +74,14 @@ append(defined_symbols
 )
 endif()
 
-if (CONFIG_USE_OPTIGA_TRUST_X)
-append(defined_symbols 
+if (CONFIG_USE_OPTIGA STREQUAL "TRUST_X")
+set( defined_symbols 
+     ${defined_symbols}
      CONFIG_USE_OPTIGA_TRUSTX
 )
-elseif(CONFIG_USE_OPTIGA_TRUST_M)
-append(defined_symbols 
+elseif(CONFIG_USE_OPTIGA STREQUAL "TRUST_M")
+set( defined_symbols 
+     ${defined_symbols}
      CONFIG_USE_OPTIGA_TRUSTM
 )
 endif()
@@ -99,10 +102,10 @@ set( compiler_debug_options "-g" "-gdwarf-2")
 set( compiler_warnings "-Wall" )
 
 #Set compiler optimization level
-set( compiler_optimization_options "-Os" "-fomit-frame-pointer" "-ffunction-sections" "-fdata-sections" "-ffreestanding" "-fno-builtin" "-fno-common")
+set( compiler_optimization_options "-O2" "-fomit-frame-pointer" "-ffunction-sections" "-fdata-sections" "-ffreestanding" "-fno-builtin" "-fno-common")
 
 #Set ARM GCC options
-set( compiler_arm_options "-mfloat-abi=hard" "-mcpu=cortex-m4" "-mfpu=fpv4-sp-d16" "-mthumb")
+set( compiler_arm_options "-mfloat-abi=softfp" "-mcpu=cortex-m4" "-mfpu=fpv4-sp-d16" "-mthumb")
 
 #Set other compiler options and flags
 set( compiler_misc_options
@@ -144,7 +147,7 @@ target_compile_options(
 
 
 #Linker script path
-if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
+if ((CONFIG_USE_OPTIGA STREQUAL "TRUST_X") OR (CONFIG_USE_OPTIGA STREQUAL "TRUST_M"))
 set( linker_script "${xmc4700_dir}/XMC4700x2048.ld" )
 else()
 set( linker_script "${xmc4700_dir}/XMC4700x2048_EEPROM.ld" )
@@ -190,14 +193,23 @@ afr_mcu_port(kernel)
 afr_glob_src(driver_src DIRECTORY "${xmclib_dir}/drivers/src")
 afr_glob_src(cmsis_driver_src DIRECTORY "${xmclib_dir}/CMSIS/Driver/Source")
 
-if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
+if ((CONFIG_USE_OPTIGA STREQUAL "TRUST_X") OR (CONFIG_USE_OPTIGA STREQUAL "TRUST_M"))
 #Trust X/M source files
 afr_glob_src(trustx_src DIRECTORY "${optiga_dir}/optiga" RECURSE)
-afr_glob_src(trustx_utils_src DIRECTORY "${optiga_dir}/examples" RECURSE)
 afr_glob_src(trustx_pal_src DIRECTORY "${optiga_dir}/pal/xmc_freertos" RECURSE)
 
-if(CONFIG_USE_OPTIGA_TRUST_M)
-append(trustx_pal_src "${optiga_dir}/pal/pal_crypt_mbedtls.c")
+if (CONFIG_USE_OPTIGA STREQUAL "TRUST_X")
+afr_glob_src(trustx_utils_src DIRECTORY "${optiga_dir}/examples" RECURSE)
+endif()
+
+if (CONFIG_USE_OPTIGA STREQUAL "TRUST_M")
+afr_glob_src(trustx_mbedtls_port_src DIRECTORY "${optiga_dir}/examples/mbedtls_port" RECURSE)
+afr_glob_src(trustx_utils_src DIRECTORY "${optiga_dir}/examples/utilities")
+
+set( trustx_pal_src
+     ${trustx_pal_src} 
+     "${optiga_dir}/pal/pal_crypt_mbedtls.c"
+)
 endif()
 
 endif()
@@ -219,6 +231,7 @@ target_sources(
         ${cmsis_driver_src}
 	${trustx_src}
 	${trustx_utils_src}
+    ${trustx_mbedtls_port_src}
 	${trustx_pal_src}
 )
 
@@ -235,14 +248,27 @@ set( board_includes
      "${xmc4700_aws_dir}/application_code/infineon_code"
 )
 
-if (CONFIG_USE_OPTIGA_TRUST_X OR CONFIG_USE_OPTIGA_TRUST_M)
-append(board_includes
-     "${optiga_dir}/examples/ecdsa_utils"
-     "${optiga_dir}/examples/authenticate_chip"
+if ((CONFIG_USE_OPTIGA STREQUAL "TRUST_X") OR (CONFIG_USE_OPTIGA STREQUAL "TRUST_M"))
+set( board_includes
+     ${board_includes}
      "${optiga_dir}/optiga/include"
      "${optiga_dir}/pal/xmc_freertos"
      "${AFR_VENDORS_DIR}/infineon/secure_elements/pkcs11"
 )
+endif()
+
+if (CONFIG_USE_OPTIGA STREQUAL "TRUST_X")
+set( board_includes
+     ${board_includes}
+     "${optiga_dir}/examples/authenticate_chip"
+     "${optiga_dir}/examples/ecdsa_utils"
+)
+elseif (CONFIG_USE_OPTIGA STREQUAL "TRUST_M")
+set( board_includes
+     ${board_includes}
+     "${optiga_dir}/examples/utilities"
+)
+
 endif()
 
 set(kernel_includes
@@ -277,7 +303,7 @@ target_link_libraries(
     INTERFACE AFR::freertos_plus_posix
 )
 
-if (CONFIG_USE_OPTIGA_TRUST_X)
+if (CONFIG_USE_OPTIGA STREQUAL "TRUST_X")
 # PKCS11
 afr_mcu_port(pkcs11_implementation)
 target_sources(
@@ -285,7 +311,7 @@ target_sources(
     INTERFACE
         "${AFR_VENDORS_DIR}/infineon/secure_elements/pkcs11/iot_pkcs11_trustx.c"
 )
-elseif (CONFIG_USE_OPTIGA_TRUST_M)
+elseif (CONFIG_USE_OPTIGA STREQUAL "TRUST_M")
 # PKCS11
 afr_mcu_port(pkcs11_implementation)
 target_sources(

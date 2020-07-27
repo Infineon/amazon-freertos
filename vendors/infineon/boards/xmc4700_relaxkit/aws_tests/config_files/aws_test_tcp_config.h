@@ -31,12 +31,6 @@
  * @brief Port-specific variables for TCP tests. */
 
 /**
- * @brief The number of sockets that can be open at one time on a port.
- *
- */
-#define         integrationtestportableMAX_NUM_UNSECURE_SOCKETS    5
-
-/**
  * @brief Indicates how much longer than the specified timeout is acceptable for
  * RCVTIMEO tests.
  *
@@ -59,13 +53,15 @@
  *  @brief Indicates how long  receive needs to wait for data before Timeout happens.
  *
  */
-#define         integrationtestportableRECEIVE_TIMEOUT             20000
+#define         integrationtestportableRECEIVE_TIMEOUT             30000
 
 /**
  * @brief Indicates how long  send needs to wait before Timeout happens.
  *
  */
-#define         integrationtestportableSEND_TIMEOUT                20000
+#define         integrationtestportableSEND_TIMEOUT                30000
 
+#define         tcptestTCP_ECHO_TASKS_PRIORITY                     ( configMAX_PRIORITIES - 1 )
+#define         tcptestECHO_TEST_RXTX_TIMEOUT                      10000    
 
 #endif /*AWS_INTEGRATION_TEST_TCP_CONFIG_H */

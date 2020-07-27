@@ -69,7 +69,6 @@ void _putchar(char c)
   XMC_UART_CH_Transmit(CONSOLE_IO_UART_CH, c);
 }
 
-
 void CONSOLE_IO_Init(void)
 {
   XMC_UART_CH_Init(CONSOLE_IO_UART_CH, &uart_config);

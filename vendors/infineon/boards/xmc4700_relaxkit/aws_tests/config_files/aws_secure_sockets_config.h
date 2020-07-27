@@ -41,16 +41,16 @@
 /**
  * @brief Default socket send timeout.
  */
-#define socketsconfigDEFAULT_SEND_TIMEOUT         ( 10000 )
+#define socketsconfigDEFAULT_SEND_TIMEOUT         ( 20000 )
 
 /**
  * @brief Default socket receive timeout.
  */
-#define socketsconfigDEFAULT_RECV_TIMEOUT         ( 10000 )
+#define socketsconfigDEFAULT_RECV_TIMEOUT         ( 20000 )
 
 /**
  * @brief Enable metrics of secure socket.
  */
-#define AWS_IOT_SECURE_SOCKETS_METRICS_ENABLED    ( 1 )
+#define AWS_IOT_SECURE_SOCKETS_METRICS_ENABLED    ( 0 )
 
 #endif /* _AWS_SECURE_SOCKETS_CONFIG_H_ */
