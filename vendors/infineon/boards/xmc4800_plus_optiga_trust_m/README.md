@@ -15,7 +15,7 @@ One of blocking points in this application point might be the provisiining topic
 2. Use pre-provisioned in Trust M certificate and AWS IoT Multi-Account Registration
  More on this you can find [here](https://github.com/Infineon/personalize-optiga-trust/blob/master/register-s2go/aws-iot.md)
  
- **Note: Make sure that keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM, keyCLIENT_CERTIFICATE_PEM, keyCLIENT_PRIVATE_KEY_PEM defines in the [demos configuration file](https://github.com/Infineon/amazon-freertos/blob/feature/trustm/demos/include/aws_clientcredential_keys.h) are defined to ""**
+ **Note: Make sure that keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM, keyCLIENT_CERTIFICATE_PEM, and keyCLIENT_PRIVATE_KEY_PEM macros in the [demos configuration file](https://github.com/Infineon/amazon-freertos/blob/feature/trustm/demos/include/aws_clientcredential_keys.h) are defined to ""**
 
 ## Overview<a name="getting_started_infineon_trust_m_overview"></a>
 
