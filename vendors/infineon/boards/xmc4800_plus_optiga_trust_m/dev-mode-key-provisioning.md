@@ -69,6 +69,14 @@ Even though the CSR was signed with a temporary private key, the issued certific
 Certificate Import  
 With the certificate issued, the next step is to import it into your device\. You will also need to import your Certificate Authority \(CA\) certificate, since it is required in order for first\-time authentication to AWS IoT to succeed when using JITP\. In the `aws_clientcredential_keys.h` file in your project, set the `keyCLIENT_CERTIFICATE_PEM` macro to be the contents of deviceCert\.pem and set the `keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM` macro to be the contents of `rootCA.pem`\.
 
+__Important Note: the result of the step mentioned above is that after one succesfully run you will provision the resulting certificate to the secure element, this is a one-time action. Once this is done, you should not do the provisioning every time you boot the system, thus in the project, open the file `aws_dev_mode_key_provisioning.c` and change the definition of `keyprovisioningFORCE_GENERATE_NEW_KEY_PAIR`, to **zero**:__
+
+```
+#define keyprovisioningFORCE_GENERATE_NEW_KEY_PAIR 0
+```
+
+__Also make sure that keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM, keyCLIENT_CERTIFICATE_PEM, and keyCLIENT_PRIVATE_KEY_PEM macros in the configuration file for keys are defined to ""__
+
 Device Authorization  
 Import `deviceCert.pem` into the AWS IoT registry as described in [ Use Your Own Certificate](https://docs.aws.amazon.com/iot/latest/developerguide/device-certs-your-own.html#manual-cert-registration)\. You must create a new AWS IoT thing, attach the PENDING certificate and a policy to your thing, then mark the certificate as ACTIVE\. All of these steps can be performed manually in the AWS IoT console\.  
 Once the new client certificate is ACTIVE and associated with a thing and a policy, run the MQTT Hello World demo again\. This time, the connection to the AWS IoT MQTT broker will succeed\.
