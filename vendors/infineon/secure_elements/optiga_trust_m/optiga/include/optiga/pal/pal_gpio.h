@@ -43,7 +43,6 @@ extern "C" {
 #endif
 
 #include "pal.h"
-
 /**
  * \brief Structure defines the PAL GPIO configuration.
  */
