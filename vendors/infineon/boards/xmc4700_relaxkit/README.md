@@ -40,7 +40,10 @@ For a description of key components, jumper settings, LED descriptions and power
 Additional hardware documentation packages can be found on the [Infineon XMC4700 Relax Kit product page](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/#!documents).
 
 # 4:	Setting up the Development Environment
-Developers can choose to use either the Infineon DAVE IDE or use CMAKE with command-line or other third party tools and IDEs. Additionally, users will need to install SEGGER JLink tools to access the onboard debugger and flash the device.
+Developers can choose to use either the Infineon DAVE IDE or use CMAKE with command-line or other third party tools and IDEs. DAVE is only supported on Windows, and CMAKE is supported on Windows, Linux and MacOS. Additionally, users will need to install SEGGER JLink tools to access the onboard debugger and flash the device.
+
+If you choose to use DAVE, follow the steps in **Section 4.1** to install DAVE.
+If you are using CMAKE, follow **Section 4.2**.
 
 ## 4.1:	Install DAVE
 Note that DAVE is supported on Windows platforms.
@@ -55,6 +58,8 @@ Some Windows users have reported problems using Windows Explorer to unzip the fi
 
 1. To launch DAVE, run the executable file found in the unzipped `DAVE_version_os_date.zip` folder\.
 
+1. Go to **Section 4.3** to install JLink
+
 ## 4.2:	Install CMAKE
 
 1. Set up the GNU Arm Embedded Toolchain\.
@@ -68,6 +73,8 @@ Due to [a bug reported](https://bugs.launchpad.net/gcc-arm-embedded/+bug/1810274
 1. Install CMake and MingW\.
 
    For instructions, see [CMake Prerequisites](https://docs.aws.amazon.com/freertos/latest/qualificationguide/building-cmake-prereqs.html)\.
+   
+1. Go to **Section 4.3** to install JLink
 
 ## 4.3: Install SEGGER J-Link
 
