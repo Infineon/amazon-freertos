@@ -24,7 +24,7 @@
  */
 
 /**
- * @file aws_test_pkcs11_config.h
+ * @file aws_test_pkcs11_trustm_config.h
  * @brief Port-specific variables for PKCS11 tests.
  */
 #ifndef _AWS_TEST_PKCS11_TRUSTM_CONFIG_H_

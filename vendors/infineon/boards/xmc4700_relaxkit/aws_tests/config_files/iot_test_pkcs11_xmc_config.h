@@ -24,7 +24,7 @@
  */
 
 /**
- * @file iot_test_pkcs11_config.h
+ * @file iot_test_pkcs11_xmc_config.h
  * @brief Port-specific variables for PKCS11 tests. 
  */
 #ifndef _AWS_TEST_PKCS11_XMC_CONFIG_H_
