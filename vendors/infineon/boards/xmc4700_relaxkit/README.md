@@ -12,28 +12,27 @@ The XMC4700 can be paired with either the OPTIGA™ Trust X or OPTIGA™ Trust M
 # 3: Hardware Description
 
 ## 3.1:	Data Sheets
-[XMC4700 Relax Kit](https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf)
+[XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 
 [Shield2Go Cloud Security OPTIGA™ Trust M](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-cloud-optiga-m/)
 
 [Shield2Go Security OPTIGA™ Trust X](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-x/)
 
 ## 3.2:	Schematic
-For PCB schematics, see **Section 3** of the [User Manual](https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf).
+For PCB schematics, see **Section 3** of the [User Manual](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/). You can find the User Manual by scrolling down to **Documents** and then **User Manual**.
 
 ## 3.3:	Key Components 
 ![XMC4700 Relax Kit](images/XMC4700Relax.png)
 
-For a description of key components, jumper settings, LED descriptions and power requirements, see **Section 2** in the [User Manual](https://www.infineon.com/dgdl/Infineon-Board_User_Manual_XMC4700_XMC4800_Relax_Kit_Series-UM-v01_02-EN.pdf).
+For a description of key components, jumper settings, LED descriptions and power requirements, see **Section 2** in the [User Manual](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/). You can find the User Manual by scrolling down to **Documents** and then **User Manual**.
 
 ## 3.4:	Hardware requirements to run FreeRTOS demo
 
 * [XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 * [Sheild2Go My IoT Adapter](https://www.infineon.com/cms/en/product/evaluation-boards/my-iot-adapter/) is required to use with the OPTIGA™ Trust X or OPTIGA™ Trust M evaluation boards
 * To enable secure element support, ONE of the following is required:
- * * [Shield2Go Cloud Security OPTIGA™ Trust M](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-cloud-optiga-m/)
-
-* * [Shield2Go Security OPTIGA™ Trust X](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-x/)
+  * [Shield2Go Cloud Security OPTIGA™ Trust M](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-cloud-optiga-m/)
+  * [Shield2Go Security OPTIGA™ Trust X](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-x/)
 
 
 ## 3.5:	Additional Hardware References
@@ -310,7 +309,7 @@ For a device without a secure element, you can download the certificate and priv
 
 1. In the navigation pane for AWS IoT console, choose **Secure** and then choose **Certificates**\.
 
-1. On the **Certificates** page, choose **Create a certficiate** 
+1. On the **Certificates** page, choose **Create a certficate** 
 
 1. Next to **One\-click certificate creation**, choose **Create certificate**\.
 
@@ -353,7 +352,7 @@ The OPTIGA™  Trust M supports 2 modes for device provisioning.
 
 If you want to use your own certificate authority, you can follow the instructions described in [Dev Mode Key Provisioning](https://docs.aws.amazon.com/freertos/latest/userguide/dev-mode-key-provisioning.html) **Option #2: onboard private key generation** to generate a private key on your device, a self signed X.509 certificate, and a Certificate Authority.
 
-The OPTIGA Trust M comes pre-provisioned with a certificate signed with Infineon's OPTIGA(TM) Trust M CA and a private key, and can make use of the [AWS IoT Multi-Account Registration](https://aws.amazon.com/about-aws/whats-new/2020/04/simplify-iot-device-registration-and-easily-move-devices-between-aws-accounts-with-aws-iot-core-multi-account-registration/) feature. To retrieve the certificate from the OPTIGA Trust M, and register it wtih AWS IoT using Multi-Account Registration, follow the instructions below.
+The OPTIGA Trust M comes pre-provisioned with a certificate signed with Infineon's OPTIGA(TM) Trust M CA and a private key, and can make use of the [AWS IoT Multi-Account Registration](https://aws.amazon.com/about-aws/whats-new/2020/04/simplify-iot-device-registration-and-easily-move-devices-between-aws-accounts-with-aws-iot-core-multi-account-registration/) feature. To retrieve the certificate from the OPTIGA Trust M, and register it with AWS IoT using Multi-Account Registration, follow the instructions below.
 
 **Download the certificate from the OPTIGA™ Trust M with Infineon Toolbox**
 
@@ -365,7 +364,7 @@ If you have the [Shield2Go Cloud Security OPTIGA™ Trust M](https://www.infineo
 
 1. After inputting your serial number or QR code, the Shield2Go Cloud Security OPTIGA™ Trust M should appear in the browser. Choose **View Details**.
 
-1. The public X.509 certificate that is present on your device should be displayed. Copy or download this certificate to your local machine.
+1. The public X.509 certificate that is present on your device should be displayed. Copy or download this certificate to your local environment.
 
 ![Infineon Toolbox Certificate](images/InfineonToolboxCertificate.jpg)
 
@@ -373,7 +372,7 @@ If you have the [Shield2Go Cloud Security OPTIGA™ Trust M](https://www.infineo
 
 1. In the navigation pane for AWS IoT console, choose **Secure** and then choose **Certificates**\.
 
-1. On the **Certificates** page, choose **Create a certficiate** 
+1. On the **Certificates** page, choose **Create a certificate** 
 
 1. Next to **Use my certificate**, choose **Get started**\.
 
@@ -429,6 +428,10 @@ You need to provide FreeRTOS with your AWS IoT endpoint so the application runni
 Building FreeRTOS can be accomplished with DAVE IDE or with CMAKE. If you are using DAVE IDE, please follow **Section 11.1**, if you're using CMAKE follow section **11.2**.
 
 ## 11.1: Build and run with DAVE
+
+1. First, you will need to set the secure element configuration for your board. Right click the Project and navigate to **Build Configurations** and then **Set Active**. 
+
+1. In the **Set Active** menu, choose **build_standard** if you are not using a secure element, **build_optiga_trustm** with the OPTIGA™ Trust M, or **build_optiga_trustx** with the OPTIGA™ Trust X.
 
 1. From the **Project** menu, choose **Build Active Project**\. 
 
@@ -539,7 +542,7 @@ Building FreeRTOS can be accomplished with DAVE IDE or with CMAKE. If you are us
       echo q >> flash.jlink
       ```
 
-4. Flash the image using the JLNIK executable\.
+4. Flash the image using the JLink executable\.
 
    ```
    <JLINK_PATH>\JLink.exe  -device XMC4700-2048 -if SWD -speed auto -CommanderScript flash.jlink
@@ -588,6 +591,17 @@ A successful run of the FreeRTOS MQTT Demo should have an output similar to the 
 .37 122068 [MQTTEcho] MQTT echo demo finished.
 38 122068 [MQTTEcho] ----Demo finished----
 ```
+
+
+You can use the MQTT client in the AWS IoT console to monitor the messages that your device sends to the AWS Cloud\. You might want to set this up before the device runs the demo project\.
+
+**To subscribe to the MQTT topic with the AWS IoT MQTT client**
+
+1. Sign in to the [AWS IoT console](https://console.aws.amazon.com/iotv2/)\.
+
+1. In the navigation pane, choose **Test** to open the MQTT client\.
+
+1. In **Subscription topic**, enter **iotdemo/\#**, and then choose **Subscribe to topic**\.
 
 # 12: Troubleshooting
 For general troubleshooting information, see [Troubleshooting Getting Started](https://github.com/awsdocs/aws-freertos-docs/blob/master/doc_source/userguide/gsg-troubleshooting.md)\.
