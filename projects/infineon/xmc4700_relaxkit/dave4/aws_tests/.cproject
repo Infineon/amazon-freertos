@@ -113,7 +113,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Driver/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Infineon/XMC4700_series/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/third_party/printf}&quot;"/>									
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/third_party/printf}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Dave/Generated}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries}&quot;"/>
@@ -340,7 +340,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Driver/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Infineon/XMC4700_series/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/third_party/printf}&quot;"/>									
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/third_party/printf}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Dave/Generated}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries}&quot;"/>
@@ -418,7 +418,7 @@
 								<option id="com.ifx.xmc4000.appLinker.option.misc.fpu.1350586065" name="Fpu (-mfpu)" superClass="com.ifx.xmc4000.appLinker.option.misc.fpu" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.mfpu.fpv4-sp-d16" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.misc.mfloat.1889274072" name="Floating point" superClass="com.ifx.xmc4000.appLinker.option.misc.mfloat" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.other.mfloat.hard" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.nosys.specs.2031960946" name="Provide default newlib system calls (-specs=nosys.specs)" superClass="com.ifx.xmc4000.appLinker.option.nosys.specs" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.312779830" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048_EEPROM.ld" valueType="string"/>
+								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.312779830" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048.ld" valueType="string"/>
 								<inputType id="com.ifx.xmc4000.appLinker.inputType.2040025534" name="ARM-GCC for XMC Linker Input Type" superClass="com.ifx.xmc4000.appLinker.inputType">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -567,7 +567,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Driver/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/CMSIS/Infineon/XMC4700_series/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/third_party/printf}&quot;"/>									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/third_party/printf}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Dave/Generated}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Libraries}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/freertos_kernel/include}&quot;"/>
@@ -644,7 +645,7 @@
 								<option id="com.ifx.xmc4000.appLinker.option.misc.fpu.1029783340" name="Fpu (-mfpu)" superClass="com.ifx.xmc4000.appLinker.option.misc.fpu" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.mfpu.fpv4-sp-d16" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.misc.mfloat.357598009" name="Floating point" superClass="com.ifx.xmc4000.appLinker.option.misc.mfloat" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.other.mfloat.hard" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.nosys.specs.1680956373" name="Provide default newlib system calls (-specs=nosys.specs)" superClass="com.ifx.xmc4000.appLinker.option.nosys.specs" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.336262473" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048_EEPROM.ld" valueType="string"/>
+								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.336262473" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048.ld" valueType="string"/>
 								<inputType id="com.ifx.xmc4000.appLinker.inputType.518060963" name="ARM-GCC for XMC Linker Input Type" superClass="com.ifx.xmc4000.appLinker.inputType">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

@@ -386,7 +386,7 @@
 								<option id="com.ifx.xmc4000.appLinker.option.misc.fpu.936157618" name="Fpu (-mfpu)" superClass="com.ifx.xmc4000.appLinker.option.misc.fpu" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.mfpu.fpv4-sp-d16" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.misc.mfloat.2076871396" name="Floating point" superClass="com.ifx.xmc4000.appLinker.option.misc.mfloat" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.other.mfloat.softfp" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.nosys.specs.1009667243" name="Provide default newlib system calls (-specs=nosys.specs)" superClass="com.ifx.xmc4000.appLinker.option.nosys.specs" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.1726720747" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048_EEPROM.ld" valueType="string"/>
+								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.1726720747" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048.ld" valueType="string"/>
 								<inputType id="com.ifx.xmc4000.appLinker.inputType.1939743587" name="ARM-GCC for XMC Linker Input Type" superClass="com.ifx.xmc4000.appLinker.inputType">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -413,9 +413,14 @@
 							<option id="com.ifx.xmc4000.option.targetPath.640078795.1595783122" name="Target Path" superClass="com.ifx.xmc4000.option.targetPath.640078795"/>
 							<option id="com.ifx.xmc4000.option.target.fpu.323832660.103168792" name="Fpu (-mfpu)" superClass="com.ifx.xmc4000.option.target.fpu.323832660"/>
 							<option id="com.ifx.xmc4000.option.targetName.806817580.282463447" name="Target Name" superClass="com.ifx.xmc4000.option.targetName.806817580"/>
-							<tool id="com.ifx.xmc4000.appRelease.compiler.131678953" name="ARM-GCC C Compiler" superClass="com.ifx.xmc4000.appRelease.compiler.435252996"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="com.ifx.xmc4000.targetPlatform" isAbstract="false" name="Windows Platform" osList="win32" superClass="com.ifx.xmc4000.targetPlatform"/>
+							<tool id="com.ifx.xmc4000.appRelease.compiler.131678953" name="ARM-GCC C Compiler" superClass="com.ifx.xmc4000.appRelease.compiler.435252996">
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input.383930772" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.c.compiler.base.input"/>
+							</tool>
 							<tool id="com.ifx.xmc4000.appRelease.cppcompiler.2136375706" name="ARM-GCC C++ Compiler" superClass="com.ifx.xmc4000.appRelease.cppcompiler.1624838845"/>
-							<tool id="com.ifx.xmc4000.appRelease.assembler.1079410723" name="ARM-GCC Assembler" superClass="com.ifx.xmc4000.appRelease.assembler.1747620929"/>
+							<tool id="com.ifx.xmc4000.appRelease.assembler.1079410723" name="ARM-GCC Assembler" superClass="com.ifx.xmc4000.appRelease.assembler.1747620929">
+								<inputType id="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input.1505036976" superClass="org.eclipse.cdt.cross.arm.gnu.sourcery.windows.assembler.base.input"/>
+							</tool>
 							<tool id="com.ifx.xmc4000.appRelease.linker.852163408" name="ARM-GCC C Linker" superClass="com.ifx.xmc4000.appRelease.linker.213220799"/>
 							<tool id="com.ifx.xmc4000.appRelease.cpplinker.1102369704" name="ARM-GCC C++ Linker" superClass="com.ifx.xmc4000.appRelease.cpplinker.534679463"/>
 							<tool id="com.ifx.xmc4000.libLinker.366159175" name="ARM-GCC Archiver" superClass="com.ifx.xmc4000.libLinker.1651264205"/>
@@ -620,7 +625,7 @@
 								<option id="com.ifx.xmc4000.appLinker.option.misc.fpu.2116260406" name="Fpu (-mfpu)" superClass="com.ifx.xmc4000.appLinker.option.misc.fpu" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.mfpu.fpv4-sp-d16" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.misc.mfloat.1775627218" name="Floating point" superClass="com.ifx.xmc4000.appLinker.option.misc.mfloat" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.other.mfloat.softfp" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.appLinker.option.nosys.specs.1997263349" name="Provide default newlib system calls (-specs=nosys.specs)" superClass="com.ifx.xmc4000.appLinker.option.nosys.specs" useByScannerDiscovery="false" value="true" valueType="boolean"/>
-								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.1495052692" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048_EEPROM.ld" valueType="string"/>
+								<option id="com.ifx.xmc4000.appLinker.option.scriptfile.1495052692" name="Script file (-T)" superClass="com.ifx.xmc4000.appLinker.option.scriptfile" useByScannerDiscovery="false" value="../../../../../../vendors/infineon/boards/xmc4700_relaxkit/XMC4700x2048.ld" valueType="string"/>
 								<inputType id="com.ifx.xmc4000.appLinker.inputType.990584429" name="ARM-GCC for XMC Linker Input Type" superClass="com.ifx.xmc4000.appLinker.inputType">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -647,6 +652,7 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="ilg.gnuarmeclipse.managedbuild.packs"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
