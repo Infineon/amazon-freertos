@@ -434,6 +434,33 @@
 			</matcher>
 		</filter>
 		<filter>
+			<id>1600678441619</id>
+			<name>vendors/infineon/secure_elements/optiga_trust_m/examples</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-tools</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1600678441636</id>
+			<name>vendors/infineon/secure_elements/optiga_trust_m/examples</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-optiga</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1600678238236</id>
+			<name>vendors/infineon/secure_elements/optiga_trust_m/pal</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-xmc_freertos</arguments>
+			</matcher>
+		</filter>
+		<filter>
 			<id>1575249337115</id>
 			<name>vendors/infineon/secure_elements/optiga_trust_x/pal</name>
 			<type>9</type>
@@ -449,6 +476,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-XMC4700_series</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1600675934700</id>
+			<name>vendors/infineon/XMCLib/2.2.0/third_party/printf</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-test</arguments>
 			</matcher>
 		</filter>
 		<filter>

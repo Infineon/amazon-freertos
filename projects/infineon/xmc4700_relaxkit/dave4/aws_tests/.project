@@ -256,15 +256,6 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1585616851461</id>
-			<name>vendors/infineon/XMCLib/2.2.0</name>
-			<type>10</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-third_party</arguments>
-			</matcher>
-		</filter>
-		<filter>
 			<id>1585620079801</id>
 			<name>vendors/infineon/boards/xmc4700_relaxkit</name>
 			<type>9</type>
@@ -280,6 +271,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-src</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1600673870398</id>
+			<name>vendors/infineon/XMCLib/2.2.0/third_party</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-ESP_AT_Lib</arguments>
 			</matcher>
 		</filter>
 		<filter>
@@ -316,6 +316,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-XMC4700_series</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1600673895268</id>
+			<name>vendors/infineon/XMCLib/2.2.0/third_party/printf</name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-test</arguments>
 			</matcher>
 		</filter>
 		<filter>
