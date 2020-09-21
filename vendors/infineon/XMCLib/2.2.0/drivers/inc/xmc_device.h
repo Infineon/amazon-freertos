@@ -106,13 +106,11 @@
 #define    XMC1402    (1402)
 #define    XMC1403    (1403)
 #define    XMC1404    (1404)
-#define    XMC1300    (1300)
 #define    XMC1301    (1301)
 #define    XMC1302    (1302)
 #define    XMC1200    (1200)
 #define    XMC1201    (1201)
 #define    XMC1202    (1202)
-#define    XMC1203    (1203)
 #define    XMC1100    (1100)
 
 /* Package definitions */
@@ -1534,12 +1532,25 @@
 #endif
 
 #if UC_SERIES == XMC45
+#if UC_DEVICE == XMC4500
 #include "XMC4500.h"
+#endif
+#if UC_DEVICE == XMC4502
+#include "XMC4502.h"
+#endif
+#if UC_DEVICE == XMC4504
+#include "XMC4504.h"
+#endif
 #define PERIPHERAL_RESET_SUPPORTED
 #define USB_OTG_SUPPORTED
 
 #elif UC_SERIES == XMC44
+#if UC_DEVICE == XMC4400
 #include "XMC4400.h"
+#endif
+#if UC_DEVICE == XMC4402
+#include "XMC4402.h"
+#endif
 #define CLOCK_GATING_SUPPORTED
 #define PERIPHERAL_RESET_SUPPORTED
 #define USB_OTG_SUPPORTED
@@ -1556,7 +1567,15 @@
 #define PERIPHERAL_RESET_SUPPORTED
 
 #elif UC_SERIES == XMC41
+#if UC_DEVICE == XMC4100
 #include "XMC4100.h"
+#endif
+#if UC_DEVICE == XMC4104
+#include "XMC4104.h"
+#endif
+#if UC_DEVICE == XMC4108
+#include "XMC4108.h"
+#endif
 #define CLOCK_GATING_SUPPORTED
 #define PERIPHERAL_RESET_SUPPORTED
 
@@ -1577,15 +1596,39 @@
 #define CLOCK_GATING_SUPPORTED
 
 #elif UC_SERIES == XMC12
+#if UC_DEVICE == XMC1200
 #include "XMC1200.h"
+#endif
+#if UC_DEVICE == XMC1201
+#include "XMC1201.h"
+#endif
+#if UC_DEVICE == XMC1202
+#include "XMC1202.h"
+#endif
 #define CLOCK_GATING_SUPPORTED
 
 #elif UC_SERIES == XMC13
-#include "XMC1300.h"
+#if UC_DEVICE == XMC1301
+#include "XMC1301.h"
+#endif
+#if UC_DEVICE == XMC1302
+#include "XMC1302.h"
+#endif
 #define CLOCK_GATING_SUPPORTED
 
 #elif UC_SERIES == XMC14
-#include "XMC1400.h"
+#if UC_DEVICE == XMC1401
+#include "XMC1401.h"
+#endif
+#if UC_DEVICE == XMC1402
+#include "XMC1402.h"
+#endif
+#if UC_DEVICE == XMC1403
+#include "XMC1403.h"
+#endif
+#if UC_DEVICE == XMC1404
+#include "XMC1404.h"
+#endif
 #define CLOCK_GATING_SUPPORTED
 #endif
 

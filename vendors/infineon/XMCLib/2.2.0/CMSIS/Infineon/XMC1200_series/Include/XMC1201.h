@@ -33,10 +33,10 @@
 
 
 /****************************************************************************************************//**
- * @file     XMC1200.h
+ * @file     XMC1201.h
  *
  * @brief    CMSIS Cortex-M0 Peripheral Access Layer Header File for
- *           XMC1200 from Infineon.
+ *           XMC1201 from Infineon.
  *
  * @version  V1.3.2 (Reference Manual v1.3)
  * @date     01. September 2020
@@ -52,12 +52,12 @@
   * @{
   */
 
-/** @addtogroup XMC1200
+/** @addtogroup XMC1201
   * @{
   */
 
-#ifndef XMC1200_H
-#define XMC1200_H
+#ifndef XMC1201_H
+#define XMC1201_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,7 +74,7 @@ typedef enum {
   SVCall_IRQn                   =  -5,              /*!<  11  System Service Call via SVC instruction                          */
   PendSV_IRQn                   =  -2,              /*!<  14  Pendable request for system service                              */
   SysTick_IRQn                  =  -1,              /*!<  15  System Tick Timer                                                */
-/* ---------------------  XMC1200 Specific Interrupt Numbers  --------------------- */
+/* ---------------------  XMC1201 Specific Interrupt Numbers  --------------------- */
   SCU_0_IRQn          =   0,   /*!< SCU SR0 Interrupt                        */
   SCU_1_IRQn          =   1,   /*!< SCU SR1 Interrupt                        */
   SCU_2_IRQn          =   2,   /*!< SCU SR2 Interrupt                        */
@@ -104,8 +104,6 @@ typedef enum {
   
   LEDTS0_0_IRQn       =  29,   /*!< LEDTS0 SR0 Interrupt                     */
   LEDTS1_0_IRQn       =  30,   /*!< LEDTS1 SR0 Interrupt                     */
-  
-  BCCU0_0_IRQn        =  31,   /*!< BCCU0 SR0 Interrupt                      */
 } IRQn_Type;
 
 
@@ -5900,7 +5898,6 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_POWER                       ((SCU_POWER_Type          *) SCU_POWER_BASE)
 #define SCU_CLK                         ((SCU_CLK_TypeDef            *) SCU_CLK_BASE)
 #define SCU_RESET                       ((SCU_RESET_Type          *) SCU_RESET_BASE)
-#define COMPARATOR                      ((COMPARATOR_Type         *) COMPARATOR_BASE)
 #define SCU_ANALOG                      ((SCU_ANALOG_Type         *) SCU_ANALOG_BASE)
 #define CCU40                           ((CCU4_GLOBAL_TypeDef               *) CCU40_BASE)
 #define CCU40_CC40                      ((CCU4_CC4_TypeDef           *) CCU40_CC40_BASE)
@@ -5911,25 +5908,12 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define VADC_G0                         ((VADC_G_TypeDef             *) VADC_G0_BASE)
 #define VADC_G1                         ((VADC_G_TypeDef             *) VADC_G1_BASE)
 #define SHS0                            ((SHS_Type                *) SHS0_BASE)
-#define BCCU0                           ((BCCU_Type               *) BCCU0_BASE)
-#define BCCU0_CH0                       ((BCCU_CH_Type            *) BCCU0_CH0_BASE)
-#define BCCU0_CH1                       ((BCCU_CH_Type            *) BCCU0_CH1_BASE)
-#define BCCU0_CH2                       ((BCCU_CH_Type            *) BCCU0_CH2_BASE)
-#define BCCU0_CH3                       ((BCCU_CH_Type            *) BCCU0_CH3_BASE)
-#define BCCU0_CH4                       ((BCCU_CH_Type            *) BCCU0_CH4_BASE)
-#define BCCU0_CH5                       ((BCCU_CH_Type            *) BCCU0_CH5_BASE)
-#define BCCU0_CH6                       ((BCCU_CH_Type            *) BCCU0_CH6_BASE)
-#define BCCU0_CH7                       ((BCCU_CH_Type            *) BCCU0_CH7_BASE)
-#define BCCU0_CH8                       ((BCCU_CH_Type            *) BCCU0_CH8_BASE)
-#define BCCU0_DE0                       ((BCCU_DE_Type            *) BCCU0_DE0_BASE)
-#define BCCU0_DE1                       ((BCCU_DE_Type            *) BCCU0_DE1_BASE)
-#define BCCU0_DE2                       ((BCCU_DE_Type            *) BCCU0_DE2_BASE)
 #define PORT0                           ((PORT0_Type              *) PORT0_BASE)
 #define PORT1                           ((PORT1_Type              *) PORT1_BASE)
 #define PORT2                           ((PORT2_Type              *) PORT2_BASE)
 
 /** @} */ /* End of group Device_Peripheral_Registers */
-/** @} */ /* End of group XMC1200 */
+/** @} */ /* End of group XMC1201 */
 /** @} */ /* End of group Infineon */
 
 #ifdef __cplusplus
@@ -5937,5 +5921,5 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #endif
 
 
-#endif  /* XMC1200_H */
+#endif  /* XMC1201_H */
 

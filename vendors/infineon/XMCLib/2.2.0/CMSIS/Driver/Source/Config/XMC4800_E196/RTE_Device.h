@@ -1901,7 +1901,7 @@
 // <e> SLAVE SELECT LINE 4
 // <i> Enable slave select line 4
 #define RTE_SPI4_SLAVE_SELECT_LINE4 0
-//   <o> SPI4_SLAVE SELECT LINE 4 Pin <0=>P2_6 <1>P9_7
+//   <o> SPI4_SLAVE SELECT LINE 4 Pin <0=>P2_6 <1=>P9_7
 #define RTE_SPI4_SLAVE_SELECT_LINE_4_ID                0
 #if    (RTE_SPI4_SLAVE_SELECT_LINE_4_ID == 0)
 #define RTE_SPI4_SLAVE_SELECT_LINE_4_PORT              P2_6
@@ -2024,7 +2024,7 @@
 #elif  (RTE_SPI5_RX_ID == 1)
 #define RTE_SPI5_RX_PORT              P3_5
 #define RTE_SPI5_RX_INPUT             USIC2_C1_DX0_P3_5
-#elif  (RTE_SPI5_RX_ID == 3)
+#elif  (RTE_SPI5_RX_ID == 2)
 #define RTE_SPI5_RX_PORT              P3_12
 #define RTE_SPI5_RX_INPUT             USIC2_C1_DX0_P3_12
 #elif  (RTE_SPI5_RX_ID == 3)

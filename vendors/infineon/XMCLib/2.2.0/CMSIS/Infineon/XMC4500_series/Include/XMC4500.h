@@ -38,8 +38,8 @@
  * @brief    CMSIS Cortex-M4 Peripheral Access Layer Header File for
  *           XMC4500 from Infineon.
  *
- * @version  V1.6.1 (Reference Manual v1.6)
- * @date     19. June 2017
+ * @version  V1.6.2 (Reference Manual v1.6)
+ * @date     01. September 2020
  *
  * @note     Generated with SVDConv V2.87l 
  *           from CMSIS SVD File 'XMC4500_Processed_SVD.xml' Version 1.6.0 (Reference Manual v1.6),
@@ -16333,11 +16333,8 @@ typedef struct {                                    /*!< (@ 0x48028F00) PORT15 S
 #define LEDTS0                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS0_BASE)
 #define SDMMC                           ((SDMMC_GLOBAL_TypeDef              *) SDMMC_BASE)
 #define EBU                             ((EBU_Type                *) EBU_BASE)
-#if UC_DEVICE == XMC4500
 #define ETH0_CON                        ((ETH0_CON_GLOBAL_TypeDef           *) ETH0_CON_BASE)
 #define ETH0                            ((ETH_GLOBAL_TypeDef                *) ETH0_BASE)
-#endif
-#if UC_DEVICE == XMC4500 || UC_DEVICE == XMC4502
 #define USB0                            ((USB0_GLOBAL_TypeDef                *) USB0_BASE)
 #define USB0_EP0                        ((USB0_EP0_TypeDef           *) USB_EP_BASE)
 #define USB0_EP1                        ((USB0_EP_TypeDef             *) USB0_EP1_BASE)
@@ -16360,7 +16357,6 @@ typedef struct {                                    /*!< (@ 0x48028F00) PORT15 S
 #define USB0_CH11                       ((USB0_CH_TypeDef             *) USB0_CH11_BASE)
 #define USB0_CH12                       ((USB0_CH_TypeDef             *) USB0_CH12_BASE)
 #define USB0_CH13                       ((USB0_CH_TypeDef             *) USB0_CH13_BASE)
-#endif
 #define USIC0                           ((USIC_GLOBAL_TypeDef               *) USIC0_BASE)
 #define USIC1                           ((USIC_GLOBAL_TypeDef               *) USIC1_BASE)
 #define USIC2                           ((USIC_GLOBAL_TypeDef               *) USIC2_BASE)
@@ -16370,7 +16366,6 @@ typedef struct {                                    /*!< (@ 0x48028F00) PORT15 S
 #define USIC1_CH1                       ((USIC_CH_TypeDef            *) USIC1_CH1_BASE)
 #define USIC2_CH0                       ((USIC_CH_TypeDef            *) USIC2_CH0_BASE)
 #define USIC2_CH1                       ((USIC_CH_TypeDef            *) USIC2_CH1_BASE)
-#if UC_DEVICE == XMC4500 || UC_DEVICE == XMC4502
 #define CAN                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
 #define CAN_NODE0                       ((CAN_NODE_TypeDef           *) CAN_NODE0_BASE)
 #define CAN_NODE1                       ((CAN_NODE_TypeDef           *) CAN_NODE1_BASE)
@@ -16439,7 +16434,6 @@ typedef struct {                                    /*!< (@ 0x48028F00) PORT15 S
 #define CAN_MO61                        ((CAN_MO_TypeDef             *) CAN_MO61_BASE)
 #define CAN_MO62                        ((CAN_MO_TypeDef             *) CAN_MO62_BASE)
 #define CAN_MO63                        ((CAN_MO_TypeDef             *) CAN_MO63_BASE)
-#endif /* UC_DEVICE == XMC4500 || UC_DEVICE == XMC4502 */
 #define VADC                            ((VADC_GLOBAL_TypeDef               *) VADC_BASE)
 #define VADC_G0                         ((VADC_G_TypeDef             *) VADC_G0_BASE)
 #define VADC_G1                         ((VADC_G_TypeDef             *) VADC_G1_BASE)

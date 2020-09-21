@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @file     system_XMC4800.c
  * @brief    CMSIS Cortex-M4 Device Peripheral Access Layer Header File for the Infineon XMC4800 Device Series
- * @version  V1.0.7
- * @date     02. Dec 2019
+ * @version  V1.0.8
+ * @date     27. Aug 2020
  *
  * @cond
  *********************************************************************************************************************
@@ -48,6 +48,9 @@
  * V1.0.6, 29. Oct 2018, Fix variable location of SystemCoreClock and g_chipid for ARMCC compiler
  * V1.0.7, 02. Dec 2019, Fix including device header file following the convention: angle brackets are used for standard includes and double quotes for everything else.
  *                       Fix external clock monitoring pin settings
+ * V1.0.8, 27. Aug 2020. Fix K1 divider input clock for PLL in prescaler mode
+ *                       Added compiler checks for input VCO and VCO frequencies
+ *                       Added wait for K2 divider ready after updating the K2 divider in the PLL ramp up 
  ******************************************************************************
 * @endcond
 */
@@ -91,6 +94,11 @@
 #define DELAY_CNT_50US_120MHZ (6000UL)
 #define DELAY_CNT_50US_144MHZ (7200UL)
 
+#define VCO_INPUT_MIN         (4000000UL)
+#define VCO_INPUT_MAX         (16000000UL)
+#define VCO_MIN               (260000000UL)
+#define VCO_MAX               (520000000UL)
+
 #define SCU_PLL_PLLSTAT_OSC_USABLE  (SCU_PLL_PLLSTAT_PLLHV_Msk | \
                                      SCU_PLL_PLLSTAT_PLLLV_Msk | \
                                      SCU_PLL_PLLSTAT_PLLSP_Msk)
@@ -131,6 +139,9 @@
 #error "External crystal frequency not supported"
 
 #endif
+
+#define USB_VCO ((OSCHP_FREQUENCY / (USB_PDIV + 1UL)) * (USB_NDIV + 1UL))
+#define USB_VCO_INPUT (OSCHP_FREQUENCY / (USB_PDIV + 1UL))
 
 /*
 //    <o> Backup clock calibration mode
@@ -185,6 +196,7 @@
 #endif
 
 #define VCO ((OSCHP_FREQUENCY / (PLL_PDIV + 1UL)) * (PLL_NDIV + 1UL))
+#define VCO_INPUT (OSCHP_FREQUENCY / (PLL_PDIV + 1UL))
 
 #else /* PLL_CLOCK_SRC == PLL_CLOCK_SRC_EXT_XTAL */
 #define PLL_PDIV (1U)
@@ -192,8 +204,25 @@
 #define PLL_K2DIV (0U)
 
 #define VCO ((OFI_FREQUENCY / (PLL_PDIV + 1UL)) * (PLL_NDIV + 1UL))
+#define VCO_INPUT (OFI_FREQUENCY / (PLL_PDIV + 1UL))
 
 #endif /* PLL_CLOCK_SRC == PLL_CLOCK_SRC_OFI */
+
+#if (VCO_INPUT < VCO_INPUT_MIN) || (VCO_INPUT > VCO_INPUT_MAX)
+#error VCO_INPUT frequency out of range.
+#endif
+
+#if (VCO < VCO_MIN) || (VCO > VCO_MAX)
+#error VCO frequency out of range.
+#endif
+
+#if (USB_VCO_INPUT < VCO_INPUT_MIN) || (USB_VCO_INPUT > VCO_INPUT_MAX)
+#error USB_VCO_INPUT frequency out of range.
+#endif
+
+#if (USB_VCO < VCO_MIN) || (USB_VCO > VCO_MAX)
+#error USB_VCO frequency out of range.
+#endif
 
 #define PLL_K2DIV_24MHZ  ((VCO / OFI_FREQUENCY) - 1UL)
 #define PLL_K2DIV_48MHZ  ((VCO / 48000000U) - 1UL)
@@ -536,7 +565,7 @@ __WEAK void SystemCoreClockSetup(void)
     SCU_OSC->OSCHPCTRL |= ((OSCHP_GetFrequency() / FOSCREF) - 1UL) << SCU_OSC_OSCHPCTRL_OSCVAL_Pos;
 
     /* select OSC_HP clock as PLL input */
-    SCU_PLL->PLLCON2 &= ~SCU_PLL_PLLCON2_PINSEL_Msk;
+    SCU_PLL->PLLCON2 = 0;
 
     /* restart OSC Watchdog */
     SCU_PLL->PLLCON0 &= ~SCU_PLL_PLLCON0_OSCRES_Msk;
@@ -549,11 +578,15 @@ __WEAK void SystemCoreClockSetup(void)
 #else /* PLL_CLOCK_SRC != PLL_CLOCK_SRC_OFI */
 
   /* select backup clock as PLL input */
-  SCU_PLL->PLLCON2 |= SCU_PLL_PLLCON2_PINSEL_Msk;
+  SCU_PLL->PLLCON2 = SCU_PLL_PLLCON2_PINSEL_Msk | SCU_PLL_PLLCON2_K1INSEL_Msk;
 #endif
 
   /* Go to bypass the Main PLL */
   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_VCOBYP_Msk;
+  while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOBYST_Msk) == 0U)
+  {
+    /* wait for prescaler mode */
+  }
 
   /* disconnect Oscillator from PLL */
   SCU_PLL->PLLCON0 |= SCU_PLL_PLLCON0_FINDIS_Msk;
@@ -606,11 +639,21 @@ __WEAK void SystemCoreClockSetup(void)
 	                  (PLL_K2DIV_48MHZ << SCU_PLL_PLLCON1_K2DIV_Pos) |
 	                  (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
 
+  while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_K2RDY_Msk) == 0U)
+  {
+    /* wait until K2-divider operates on the configured value  */
+  }
+
   delay(DELAY_CNT_50US_48MHZ);
 
   SCU_PLL->PLLCON1 = ((PLL_NDIV << SCU_PLL_PLLCON1_NDIV_Pos) |
 	                  (PLL_K2DIV_72MHZ << SCU_PLL_PLLCON1_K2DIV_Pos) |
 	                  (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
+
+  while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_K2RDY_Msk) == 0U)
+  {
+    /* wait until K2-divider operates on the configured value  */
+  }
 
   delay(DELAY_CNT_50US_72MHZ);
 
@@ -618,11 +661,21 @@ __WEAK void SystemCoreClockSetup(void)
 	                  (PLL_K2DIV_96MHZ << SCU_PLL_PLLCON1_K2DIV_Pos) |
 	                  (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
 
+  while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_K2RDY_Msk) == 0U)
+  {
+    /* wait until K2-divider operates on the configured value  */
+  }
+
   delay(DELAY_CNT_50US_96MHZ);
 
   SCU_PLL->PLLCON1 = ((PLL_NDIV << SCU_PLL_PLLCON1_NDIV_Pos) |
 	                  (PLL_K2DIV_120MHZ << SCU_PLL_PLLCON1_K2DIV_Pos) |
 	                  (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
+
+  while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_K2RDY_Msk) == 0U)
+  {
+    /* wait until K2-divider operates on the configured value  */
+  }
 
   delay(DELAY_CNT_50US_120MHZ);
 
@@ -630,8 +683,14 @@ __WEAK void SystemCoreClockSetup(void)
 	                  (PLL_K2DIV << SCU_PLL_PLLCON1_K2DIV_Pos) |
 	                  (PLL_PDIV << SCU_PLL_PLLCON1_PDIV_Pos));
 
+  while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_K2RDY_Msk) == 0U)
+  {
+    /* wait until K2-divider operates on the configured value  */
+  }
+
   delay(DELAY_CNT_50US_144MHZ);
 
+  SCU_TRAP->TRAPCLR = SCU_TRAP_TRAPCLR_SOSCWDGT_Msk | SCU_TRAP_TRAPCLR_SVCOLCKT_Msk;
 #endif /* ENABLE_PLL */
 
 #if ENABLE_USBPLL
@@ -664,6 +723,10 @@ __WEAK void SystemCoreClockSetup(void)
   /* Setup USB PLL */
   /* Go to bypass the USB PLL */
   SCU_PLL->USBPLLCON |= SCU_PLL_USBPLLCON_VCOBYP_Msk;
+  while ((SCU_PLL->USBPLLSTAT & SCU_PLL_USBPLLSTAT_VCOBYST_Msk) == 0U)
+  {
+    /* wait for prescaler mode */
+  }
 
   /* disconnect Oscillator from USB PLL */
   SCU_PLL->USBPLLCON |= SCU_PLL_USBPLLCON_FINDIS_Msk;
@@ -685,6 +748,18 @@ __WEAK void SystemCoreClockSetup(void)
   {
     /* wait for PLL Lock */
   }
+
+  /* Disable bypass- put PLL clock back */
+  SCU_PLL->USBPLLCON &= ~SCU_PLL_USBPLLCON_VCOBYP_Msk;
+  while ((SCU_PLL->USBPLLSTAT & SCU_PLL_USBPLLSTAT_VCOBYST_Msk) != 0U)
+  {
+    /* wait for normal mode */
+  }
+
+  /* Reset OSCDISCDIS */
+  SCU_PLL->USBPLLCON &= ~SCU_PLL_USBPLLCON_OSCDISCDIS_Msk;
+
+  SCU_TRAP->TRAPCLR = SCU_TRAP_TRAPCLR_UVCOLCKT_Msk;
 #endif
 
   /* Enable selected clocks */

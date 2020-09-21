@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Copyright (c) 2012-2020, Infineon Technologies AG
+ * Copyright (c) 2015-2020, Infineon Technologies AG
  * All rights reserved.                        
  *                                             
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -31,19 +31,18 @@
  * at XMCSupport@infineon.com.
  *********************************************************************************************************************/
 
-
 /****************************************************************************************************//**
- * @file     XMC1200.h
+ * @file     XMC1402.h
  *
  * @brief    CMSIS Cortex-M0 Peripheral Access Layer Header File for
- *           XMC1200 from Infineon.
+ *           XMC1402 from Infineon.
  *
- * @version  V1.3.2 (Reference Manual v1.3)
+ * @version  V1.1.2 (Reference Manual v1.1)
  * @date     01. September 2020
  *
- * @note     Generated with SVDConv V2.86c 
- *           from CMSIS SVD File 'XMC1200_Processed_SVD.xml' Version 1.3.0 (Reference Manual v1.3),
- *           added support for ARM Compiler 6 (armclang)   
+ * @note     Generated with SVDConv V2.87l 
+ *           from CMSIS SVD File 'XMC1400_Processed_SVD.xml' Version 1.1.0 (Reference Manual v1.1),
+ *           added support for ARM Compiler 6 (armclang)  
  *******************************************************************************************************/
 
 
@@ -52,12 +51,12 @@
   * @{
   */
 
-/** @addtogroup XMC1200
+/** @addtogroup XMC1402
   * @{
   */
 
-#ifndef XMC1200_H
-#define XMC1200_H
+#ifndef XMC1402_H
+#define XMC1402_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,38 +73,40 @@ typedef enum {
   SVCall_IRQn                   =  -5,              /*!<  11  System Service Call via SVC instruction                          */
   PendSV_IRQn                   =  -2,              /*!<  14  Pendable request for system service                              */
   SysTick_IRQn                  =  -1,              /*!<  15  System Tick Timer                                                */
-/* ---------------------  XMC1200 Specific Interrupt Numbers  --------------------- */
-  SCU_0_IRQn          =   0,   /*!< SCU SR0 Interrupt                        */
-  SCU_1_IRQn          =   1,   /*!< SCU SR1 Interrupt                        */
-  SCU_2_IRQn          =   2,   /*!< SCU SR2 Interrupt                        */
-  ERU0_0_IRQn         =   3,   /*!< ERU0 SR0 Interrupt                       */
-  ERU0_1_IRQn         =   4,   /*!< ERU0 SR1 Interrupt                       */
-  ERU0_2_IRQn         =   5,   /*!< ERU0 SR2 Interrupt                       */
-  ERU0_3_IRQn         =   6,   /*!< ERU0 SR3 Interrupt                       */
+/* ---------------------  XMC1402 Specific Interrupt Numbers  --------------------- */
+  IRQ0_IRQn                     =   0,   
+  IRQ1_IRQn                     =   1,   
+  IRQ2_IRQn                     =   2,   
+  IRQ3_IRQn                     =   3,   
+  IRQ4_IRQn                     =   4,   
+  IRQ5_IRQn                     =   5,   
+  IRQ6_IRQn                     =   6,   
+  IRQ7_IRQn                     =   7,   
+  IRQ8_IRQn                     =   8,   
+  IRQ9_IRQn                     =   9,   
+  IRQ10_IRQn                    =  10,  
+  IRQ11_IRQn                    =  11,  
+  IRQ12_IRQn                    =  12,  
+  IRQ13_IRQn                    =  13,  
+  IRQ14_IRQn                    =  14,  
+  IRQ15_IRQn                    =  15,  
+  IRQ16_IRQn                    =  16,  
+  IRQ17_IRQn                    =  17,  
+  IRQ18_IRQn                    =  18,  
+  IRQ19_IRQn                    =  19,  
+  IRQ20_IRQn                    =  20,  
+  IRQ21_IRQn                    =  21,  
+  IRQ22_IRQn                    =  22,  
+  IRQ23_IRQn                    =  23,  
+  IRQ24_IRQn                    =  24,  
+  IRQ25_IRQn                    =  25,  
+  IRQ26_IRQn                    =  26,  
+  IRQ27_IRQn                    =  27,  
+  IRQ28_IRQn                    =  28,  
+  IRQ29_IRQn                    =  29,  
+  IRQ30_IRQn                    =  30,  
+  IRQ31_IRQn                    =  31 
   
-  USIC0_0_IRQn        =   9,   /*!< USIC SR0 Interrupt                       */
-  USIC0_1_IRQn        =  10,   /*!< USIC SR1 Interrupt                       */
-  USIC0_2_IRQn        =  11,   /*!< USIC SR2 Interrupt                       */
-  USIC0_3_IRQn        =  12,   /*!< USIC SR3 Interrupt                       */
-  USIC0_4_IRQn        =  13,   /*!< USIC SR4 Interrupt                       */
-  USIC0_5_IRQn        =  14,   /*!< USIC SR5 Interrupt                       */
-  
-  VADC0_C0_0_IRQn     =  15,   /*!< VADC SR0 Interrupt                       */
-  VADC0_C0_1_IRQn     =  16,   /*!< VADC SR1 Interrupt                       */
-  VADC0_G0_0_IRQn     =  17,   /*!< VADC SR2 Interrupt                       */
-  VADC0_G0_1_IRQn     =  18,   /*!< VADC SR3 Interrupt                       */
-  VADC0_G1_0_IRQn     =  19,   /*!< VADC SR4 Interrupt                       */
-  VADC0_G1_1_IRQn     =  20,   /*!< VADC SR5 Interrupt                       */
-  
-  CCU40_0_IRQn        =  21,   /*!< CCU40 SR0 Interrupt                      */
-  CCU40_1_IRQn        =  22,   /*!< CCU40 SR1 Interrupt                      */
-  CCU40_2_IRQn        =  23,   /*!< CCU40 SR2 Interrupt                      */
-  CCU40_3_IRQn        =  24,   /*!< CCU40 SR3 Interrupt                      */
-  
-  LEDTS0_0_IRQn       =  29,   /*!< LEDTS0 SR0 Interrupt                     */
-  LEDTS1_0_IRQn       =  30,   /*!< LEDTS1 SR0 Interrupt                     */
-  
-  BCCU0_0_IRQn        =  31,   /*!< BCCU0 SR0 Interrupt                      */
 } IRQn_Type;
 
 
@@ -126,7 +127,7 @@ typedef enum {
 /** @} */ /* End of group Configuration_of_CMSIS */
 
 #include "core_cm0.h"                               /*!< Cortex-M0 processor and core peripherals                              */
-#include "system_XMC1200.h"                         /*!< XMC1200 System                                                        */
+#include "system_XMC1400.h"                         /*!< XMC1400 System                                                        */
 
 
 /* ================================================================================ */
@@ -163,33 +164,38 @@ reg = (uint##size##_t) (VAL2 | VAL4);\
 * ---------- Interrupt Handler Definition ----------------------------------
 * ==========================================================================
 */
-#define IRQ_Hdlr_0   SCU_0_IRQHandler
-#define IRQ_Hdlr_1   SCU_1_IRQHandler
-#define IRQ_Hdlr_2   SCU_2_IRQHandler
-#define IRQ_Hdlr_3   ERU0_0_IRQHandler
-#define IRQ_Hdlr_4   ERU0_1_IRQHandler
-#define IRQ_Hdlr_5   ERU0_2_IRQHandler
-#define IRQ_Hdlr_6   ERU0_3_IRQHandler
-
-#define IRQ_Hdlr_9   USIC0_0_IRQHandler
-#define IRQ_Hdlr_10  USIC0_1_IRQHandler
-#define IRQ_Hdlr_11  USIC0_2_IRQHandler
-#define IRQ_Hdlr_12  USIC0_3_IRQHandler
-#define IRQ_Hdlr_13  USIC0_4_IRQHandler
-#define IRQ_Hdlr_14  USIC0_5_IRQHandler
-#define IRQ_Hdlr_15  VADC0_C0_0_IRQHandler
-#define IRQ_Hdlr_16  VADC0_C0_1_IRQHandler
-#define IRQ_Hdlr_17  VADC0_G0_0_IRQHandler
-#define IRQ_Hdlr_18  VADC0_G0_1_IRQHandler
-#define IRQ_Hdlr_19  VADC0_G1_0_IRQHandler
-#define IRQ_Hdlr_20  VADC0_G1_1_IRQHandler
-#define IRQ_Hdlr_21  CCU40_0_IRQHandler
-#define IRQ_Hdlr_22  CCU40_1_IRQHandler
-#define IRQ_Hdlr_23  CCU40_2_IRQHandler
-#define IRQ_Hdlr_24  CCU40_3_IRQHandler
-#define IRQ_Hdlr_29  LEDTS0_0_IRQHandler
-#define IRQ_Hdlr_30  LEDTS1_0_IRQHandler
-#define IRQ_Hdlr_31  BCCU0_0_IRQHandler
+#define IRQ_Hdlr_0   IRQ0_Handler
+#define IRQ_Hdlr_1   IRQ1_Handler
+#define IRQ_Hdlr_2   IRQ2_Handler
+#define IRQ_Hdlr_3   IRQ3_Handler
+#define IRQ_Hdlr_4   IRQ4_Handler
+#define IRQ_Hdlr_5   IRQ5_Handler
+#define IRQ_Hdlr_6   IRQ6_Handler
+#define IRQ_Hdlr_7   IRQ7_Handler
+#define IRQ_Hdlr_8   IRQ8_Handler
+#define IRQ_Hdlr_9   IRQ9_Handler
+#define IRQ_Hdlr_10  IRQ10_Handler
+#define IRQ_Hdlr_11  IRQ11_Handler
+#define IRQ_Hdlr_12  IRQ12_Handler
+#define IRQ_Hdlr_13  IRQ13_Handler
+#define IRQ_Hdlr_14  IRQ14_Handler
+#define IRQ_Hdlr_15  IRQ15_Handler
+#define IRQ_Hdlr_16  IRQ16_Handler
+#define IRQ_Hdlr_17  IRQ17_Handler
+#define IRQ_Hdlr_18  IRQ18_Handler
+#define IRQ_Hdlr_19  IRQ19_Handler
+#define IRQ_Hdlr_20  IRQ20_Handler
+#define IRQ_Hdlr_21  IRQ21_Handler
+#define IRQ_Hdlr_22  IRQ22_Handler
+#define IRQ_Hdlr_23  IRQ23_Handler
+#define IRQ_Hdlr_24  IRQ24_Handler
+#define IRQ_Hdlr_25  IRQ25_Handler
+#define IRQ_Hdlr_26  IRQ26_Handler
+#define IRQ_Hdlr_27  IRQ27_Handler
+#define IRQ_Hdlr_28  IRQ28_Handler
+#define IRQ_Hdlr_29  IRQ29_Handler
+#define IRQ_Hdlr_30  IRQ30_Handler
+#define IRQ_Hdlr_31  IRQ31_Handler
 
 /*
 * ==========================================================================
@@ -224,6 +230,21 @@ reg = (uint##size##_t) (VAL2 | VAL4);\
   #warning Not supported compiler type
 #endif
 
+
+typedef struct {
+  __IO uint32_t  MOFCR;                             /*!< (@ 0x50041000) Message Object Function Control Register               */
+  __IO uint32_t  MOFGPR;                            /*!< (@ 0x50041004) Message Object FIFO/Gateway Pointer Register           */
+  __IO uint32_t  MOIPR;                             /*!< (@ 0x50041008) Message Object Interrupt Pointer Register              */
+  __IO uint32_t  MOAMR;                             /*!< (@ 0x5004100C) Message Object Acceptance Mask Register                */
+  __IO uint32_t  MODATAL;                           /*!< (@ 0x50041010) Message Object Data Register Low                       */
+  __IO uint32_t  MODATAH;                           /*!< (@ 0x50041014) Message Object Data Register High                      */
+  __IO uint32_t  MOAR;                              /*!< (@ 0x50041018) Message Object Arbitration Register                    */
+  
+  union {
+    __I  uint32_t  MOSTAT;                          /*!< (@ 0x5004101C) Message Object Status Register                         */
+    __O  uint32_t  MOCTR;                           /*!< (@ 0x5004101C) Message Object Control Register                        */
+  };
+} CAN_MO_TypeDef;                                      /*!< (@ 0x50041020) Cluster End. Size = 32 (0x20)                          */
 
 
 /* ================================================================================ */
@@ -290,6 +311,42 @@ typedef struct {                                    /*!< (@ 0x40010600) ERU Stru
 
 
 /* ================================================================================ */
+/* ================                      MATH                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief MATH Unit (MATH)
+  */
+
+typedef struct {                                    /*!< (@ 0x40030000) MATH Structure                                         */
+  __I  uint32_t  RESERVED;
+  __IO uint32_t  GLBCON;                            /*!< (@ 0x40030004) Global Control Register                                */
+  __I  uint32_t  ID;                                /*!< (@ 0x40030008) Module Identification Register                         */
+  __IO uint32_t  EVIER;                             /*!< (@ 0x4003000C) Event Interrupt Enable Register                        */
+  __I  uint32_t  EVFR;                              /*!< (@ 0x40030010) Event Flag Register                                    */
+  __O  uint32_t  EVFSR;                             /*!< (@ 0x40030014) Event Flag Set Register                                */
+  __O  uint32_t  EVFCR;                             /*!< (@ 0x40030018) Event Flag Clear Register                              */
+  __I  uint32_t  RESERVED1;
+  __IO uint32_t  DVD;                               /*!< (@ 0x40030020) Dividend Register                                      */
+  __IO uint32_t  DVS;                               /*!< (@ 0x40030024) Divisor Register                                       */
+  __I  uint32_t  QUOT;                              /*!< (@ 0x40030028) Quotient Register                                      */
+  __I  uint32_t  RMD;                               /*!< (@ 0x4003002C) Remainder Register                                     */
+  __I  uint32_t  DIVST;                             /*!< (@ 0x40030030) Divider Status Register                                */
+  __IO uint32_t  DIVCON;                            /*!< (@ 0x40030034) Divider Control Register                               */
+  __I  uint32_t  RESERVED2[2];
+  __IO uint32_t  STATC;                             /*!< (@ 0x40030040) CORDIC Status and Data Control Register                */
+  __IO uint32_t  CON;                               /*!< (@ 0x40030044) CORDIC Control Register                                */
+  __IO uint32_t  CORDX;                             /*!< (@ 0x40030048) CORDIC X Data Register                                 */
+  __IO uint32_t  CORDY;                             /*!< (@ 0x4003004C) CORDIC Y Data Register                                 */
+  __IO uint32_t  CORDZ;                             /*!< (@ 0x40030050) CORDIC Z Data Register                                 */
+  __I  uint32_t  CORRX;                             /*!< (@ 0x40030054) CORDIC X Result Register                               */
+  __I  uint32_t  CORRY;                             /*!< (@ 0x40030058) CORDIC Y Result Register                               */
+  __I  uint32_t  CORRZ;                             /*!< (@ 0x4003005C) CORDIC Z Result Register                               */
+} MATH_Type;
+
+
+/* ================================================================================ */
 /* ================                       PAU                      ================ */
 /* ================================================================================ */
 
@@ -330,8 +387,6 @@ typedef struct {                                    /*!< (@ 0x40050000) NVM Stru
   __IO uint16_t  NVMPROG;                           /*!< (@ 0x40050004) NVM Programming Control Register                       */
   __I  uint16_t  RESERVED1;
   __IO uint16_t  NVMCONF;                           /*!< (@ 0x40050008) NVM Configuration Register                             */
-  __I  uint16_t  RESERVED2[31];
-  __IO uint16_t  CONFIG1;                           /*!< (@ 0x40050048) Configuration 1 Register                               */
 } NVM_Type;
 
 
@@ -503,6 +558,67 @@ typedef struct {                                    /*!< (@ 0x48000000) USIC_CH 
 
 
 /* ================================================================================ */
+/* ================                       CAN                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Controller Area Networks (CAN)
+  */
+
+typedef struct {                                    /*!< (@ 0x50040000) CAN Structure                                          */
+  __IO uint32_t  CLC;                               /*!< (@ 0x50040000) CAN Clock Control Register                             */
+  __I  uint32_t  RESERVED;
+  __I  uint32_t  ID;                                /*!< (@ 0x50040008) Module Identification Register                         */
+  __IO uint32_t  FDR;                               /*!< (@ 0x5004000C) CAN Fractional Divider Register                        */
+  __I  uint32_t  RESERVED1[60];
+  __I  uint32_t  LIST[16];                          /*!< (@ 0x50040100) List Register                                          */
+  __IO uint32_t  MSPND[8];                          /*!< (@ 0x50040140) Message Pending Register                               */
+  __I  uint32_t  RESERVED2[8];
+  __I  uint32_t  MSID[8];                           /*!< (@ 0x50040180) Message Index Register                                 */
+  __I  uint32_t  RESERVED3[8];
+  __IO uint32_t  MSIMASK;                           /*!< (@ 0x500401C0) Message Index Mask Register                            */
+  __IO uint32_t  PANCTR;                            /*!< (@ 0x500401C4) Panel Control Register                                 */
+  __IO uint32_t  MCR;                               /*!< (@ 0x500401C8) Module Control Register                                */
+  __O  uint32_t  MITR;                              /*!< (@ 0x500401CC) Module Interrupt Trigger Register                      */
+} CAN_GLOBAL_TypeDef;
+
+
+/* ================================================================================ */
+/* ================              CAN_NODE [CAN_NODE0]              ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Controller Area Networks (CAN_NODE)
+  */
+
+typedef struct {                                    /*!< (@ 0x50040200) CAN_NODE Structure                                     */
+  __IO uint32_t  NCR;                               /*!< (@ 0x50040200) Node Control Register                                  */
+  __IO uint32_t  NSR;                               /*!< (@ 0x50040204) Node Status Register                                   */
+  __IO uint32_t  NIPR;                              /*!< (@ 0x50040208) Node Interrupt Pointer Register                        */
+  __IO uint32_t  NPCR;                              /*!< (@ 0x5004020C) Node Port Control Register                             */
+  __IO uint32_t  NBTR;                              /*!< (@ 0x50040210) Node Bit Timing Register                               */
+  __IO uint32_t  NECNT;                             /*!< (@ 0x50040214) Node Error Counter Register                            */
+  __IO uint32_t  NFCR;                              /*!< (@ 0x50040218) Node Frame Counter Register                            */
+} CAN_NODE_TypeDef;
+
+
+/* ================================================================================ */
+/* ================             CAN_MO_CLUSTER [CAN_MO]            ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Controller Area Networks (CAN_MO_CLUSTER)
+  */
+
+typedef struct {                                    /*!< (@ 0x50041000) CAN_MO_CLUSTER Structure                               */
+  CAN_MO_TypeDef MO[32];                               /*!< (@ 0x50041000) Message Object Registers                               */
+} CAN_MO_CLUSTER_Type;
+
+
+/* ================================================================================ */
 /* ================                   SCU_GENERAL                  ================ */
 /* ================================================================================ */
 
@@ -525,6 +641,11 @@ typedef struct {                                    /*!< (@ 0x40010000) SCU_GENE
   __I  uint32_t  MIRRSTS;                           /*!< (@ 0x40010048) Mirror Update Status Register                          */
   __I  uint32_t  RESERVED4[2];
   __IO uint32_t  PMTSR;                             /*!< (@ 0x40010054) Parity Memory Test Select Register                     */
+  __I  uint32_t  RESERVED5[4];
+  __IO uint32_t  PFUCR;                             /*!< (@ 0x40010068) Prefetch Unit Control Register                         */
+  __IO uint32_t  INTCR0;                            /*!< (@ 0x4001006C) Interrupt Control Register 0                           */
+  __IO uint32_t  INTCR1;                            /*!< (@ 0x40010070) Interrupt Control Register 1                           */
+  __I  uint32_t  STSTAT;                            /*!< (@ 0x40010074) Startup Status Register                                */
 } SCU_GENERAL_Type;
 
 
@@ -542,6 +663,11 @@ typedef struct {                                    /*!< (@ 0x40010038) SCU_INTE
   __IO uint32_t  SRMSK;                             /*!< (@ 0x4001003C) SCU Service Request Mask                               */
   __O  uint32_t  SRCLR;                             /*!< (@ 0x40010040) SCU Service Request Clear                              */
   __O  uint32_t  SRSET;                             /*!< (@ 0x40010044) SCU Service Request Set                                */
+  __I  uint32_t  RESERVED[4];
+  __I  uint32_t  SRRAW1;                            /*!< (@ 0x40010058) SCU Raw Service Request Status 1                       */
+  __IO uint32_t  SRMSK1;                            /*!< (@ 0x4001005C) SCU Service Request Mask 1                             */
+  __O  uint32_t  SRCLR1;                            /*!< (@ 0x40010060) SCU Service Request Clear 1                            */
+  __O  uint32_t  SRSET1;                            /*!< (@ 0x40010064) SCU Service Request Set 1                              */
 } SCU_INTERRUPT_TypeDef;
 
 
@@ -575,6 +701,8 @@ typedef struct {                                    /*!< (@ 0x40010300) SCU_CLK 
   __O  uint32_t  CGATSET0;                          /*!< (@ 0x4001030C) Peripheral 0 Clock Gating Set                          */
   __O  uint32_t  CGATCLR0;                          /*!< (@ 0x40010310) Peripheral 0 Clock Gating Clear                        */
   __IO uint32_t  OSCCSR;                            /*!< (@ 0x40010314) Oscillator Control and Status Register                 */
+  __I  uint32_t  RESERVED;
+  __IO uint32_t  CLKCR1;                            /*!< (@ 0x4001031C) Clock Control Register 1                               */
 } SCU_CLK_TypeDef;
 
 
@@ -612,6 +740,8 @@ typedef struct {                                    /*!< (@ 0x40010500) COMPARAT
   __IO uint16_t  ANACMP1;                           /*!< (@ 0x40011060) Analog Comparator 1 Control Register                   */
   __I  uint16_t  RESERVED2;
   __IO uint16_t  ANACMP2;                           /*!< (@ 0x40011064) Analog Comparator 2 Control Register                   */
+  __I  uint16_t  RESERVED3;
+  __IO uint16_t  ANACMP3;                           /*!< (@ 0x40011068) Analog Comparator 3 Control Register                   */
 } COMPARATOR_Type;
 
 
@@ -639,6 +769,14 @@ typedef struct {                                    /*!< (@ 0x40011000) SCU_ANAL
   __IO uint16_t  ANAVDEL;                           /*!< (@ 0x40011050) Voltage Detector Control Register                      */
   __I  uint16_t  RESERVED5[13];
   __IO uint16_t  ANAOFFSET;                         /*!< (@ 0x4001106C) DCO1 Offset Register                                   */
+  __I  uint16_t  RESERVED6[5];
+  __IO uint16_t  ANASYNC1;                          /*!< (@ 0x40011078) DCO1 Sync Control Register 1                           */
+  __I  uint16_t  RESERVED7;
+  __IO uint16_t  ANASYNC2;                          /*!< (@ 0x4001107C) DCO1 Sync Control Register 2                           */
+  __I  uint16_t  RESERVED8[7];
+  __IO uint16_t  ANAOSCLPCTRL;                      /*!< (@ 0x4001108C) OSC_LP Control Register                                */
+  __I  uint16_t  RESERVED9;
+  __IO uint16_t  ANAOSCHPCTRL;                      /*!< (@ 0x40011090) OSC_HP Control Register                                */
 } SCU_ANALOG_Type;
 
 
@@ -674,7 +812,7 @@ typedef struct {                                    /*!< (@ 0x48040000) CCU4 Str
   */
 
 typedef struct {                                    /*!< (@ 0x48040100) CCU4_CC4 Structure                                     */
-  __IO uint32_t  INS;                               /*!< (@ 0x48040100) Input Selector Configuration                           */
+  __IO uint32_t  INS2;                              /*!< (@ 0x48040100) Input Selector Configuration 2                         */
   __IO uint32_t  CMC;                               /*!< (@ 0x48040104) Connection Matrix Control                              */
   __I  uint32_t  TCST;                              /*!< (@ 0x48040108) Slice Timer Status                                     */
   __O  uint32_t  TCSET;                             /*!< (@ 0x4804010C) Slice Timer Run Set                                    */
@@ -699,10 +837,122 @@ typedef struct {                                    /*!< (@ 0x48040100) CCU4_CC4
   __IO uint32_t  SRS;                               /*!< (@ 0x480401A8) Service Request Selector                               */
   __O  uint32_t  SWS;                               /*!< (@ 0x480401AC) Interrupt Status Set                                   */
   __O  uint32_t  SWR;                               /*!< (@ 0x480401B0) Interrupt Status Clear                                 */
-  __I  uint32_t  RESERVED2;
+  __IO uint32_t  STC;                               /*!< (@ 0x480401B4) Shadow transfer control                                */
   __I  uint32_t  ECRD0;                             /*!< (@ 0x480401B8) Extended Read Back 0                                   */
   __I  uint32_t  ECRD1;                             /*!< (@ 0x480401BC) Extended Read Back 1                                   */
+  __I  uint32_t  RESERVED2[6];
+  __IO uint32_t  INS1;                              /*!< (@ 0x480401D8) Input Selector Configuration 1                         */
 } CCU4_CC4_TypeDef;
+
+
+/* ================================================================================ */
+/* ================                  CCU8 [CCU80]                  ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Capture Compare Unit 8 - Unit 0 (CCU8)
+  */
+
+typedef struct {                                    /*!< (@ 0x50000000) CCU8 Structure                                         */
+  __IO uint32_t  GCTRL;                             /*!< (@ 0x50000000) Global Control Register                                */
+  __I  uint32_t  GSTAT;                             /*!< (@ 0x50000004) Global Status Register                                 */
+  __O  uint32_t  GIDLS;                             /*!< (@ 0x50000008) Global Idle Set                                        */
+  __O  uint32_t  GIDLC;                             /*!< (@ 0x5000000C) Global Idle Clear                                      */
+  __O  uint32_t  GCSS;                              /*!< (@ 0x50000010) Global Channel Set                                     */
+  __O  uint32_t  GCSC;                              /*!< (@ 0x50000014) Global Channel Clear                                   */
+  __I  uint32_t  GCST;                              /*!< (@ 0x50000018) Global Channel status                                  */
+  __IO uint32_t  GPCHK;                             /*!< (@ 0x5000001C) Parity Checker Configuration                           */
+  __I  uint32_t  RESERVED[24];
+  __I  uint32_t  MIDR;                              /*!< (@ 0x50000080) Module Identification                                  */
+} CCU8_GLOBAL_TypeDef;
+
+
+/* ================================================================================ */
+/* ================              CCU8_CC8 [CCU80_CC80]             ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Capture Compare Unit 8 - Unit 0 (CCU8_CC8)
+  */
+
+typedef struct {                                    /*!< (@ 0x50000100) CCU8_CC8 Structure                                     */
+  __IO uint32_t  INS2;                              /*!< (@ 0x50000100) Input Selector Configuration 2                         */
+  __IO uint32_t  CMC;                               /*!< (@ 0x50000104) Connection Matrix Control                              */
+  __I  uint32_t  TCST;                              /*!< (@ 0x50000108) Slice Timer Status                                     */
+  __O  uint32_t  TCSET;                             /*!< (@ 0x5000010C) Slice Timer Run Set                                    */
+  __O  uint32_t  TCCLR;                             /*!< (@ 0x50000110) Slice Timer Clear                                      */
+  __IO uint32_t  TC;                                /*!< (@ 0x50000114) Slice Timer Control                                    */
+  __IO uint32_t  PSL;                               /*!< (@ 0x50000118) Passive Level Config                                   */
+  __I  uint32_t  DIT;                               /*!< (@ 0x5000011C) Dither Config                                          */
+  __IO uint32_t  DITS;                              /*!< (@ 0x50000120) Dither Shadow Register                                 */
+  __IO uint32_t  PSC;                               /*!< (@ 0x50000124) Prescaler Control                                      */
+  __IO uint32_t  FPC;                               /*!< (@ 0x50000128) Floating Prescaler Control                             */
+  __IO uint32_t  FPCS;                              /*!< (@ 0x5000012C) Floating Prescaler Shadow                              */
+  __I  uint32_t  PR;                                /*!< (@ 0x50000130) Timer Period Value                                     */
+  __IO uint32_t  PRS;                               /*!< (@ 0x50000134) Timer Shadow Period Value                              */
+  __I  uint32_t  CR1;                               /*!< (@ 0x50000138) Channel 1 Compare Value                                */
+  __IO uint32_t  CR1S;                              /*!< (@ 0x5000013C) Channel 1 Compare Shadow Value                         */
+  __I  uint32_t  CR2;                               /*!< (@ 0x50000140) Channel 2 Compare Value                                */
+  __IO uint32_t  CR2S;                              /*!< (@ 0x50000144) Channel 2 Compare Shadow Value                         */
+  __IO uint32_t  CHC;                               /*!< (@ 0x50000148) Channel Control                                        */
+  __IO uint32_t  DTC;                               /*!< (@ 0x5000014C) Dead Time Control                                      */
+  __IO uint32_t  DC1R;                              /*!< (@ 0x50000150) Channel 1 Dead Time Values                             */
+  __IO uint32_t  DC2R;                              /*!< (@ 0x50000154) Channel 2 Dead Time Values                             */
+  __I  uint32_t  RESERVED[6];
+  __IO uint32_t  TIMER;                             /*!< (@ 0x50000170) Timer Value                                            */
+  __I  uint32_t  CV[4];                             /*!< (@ 0x50000174) Capture Register 0                                     */
+  __I  uint32_t  RESERVED1[7];
+  __I  uint32_t  INTS;                              /*!< (@ 0x500001A0) Interrupt Status                                       */
+  __IO uint32_t  INTE;                              /*!< (@ 0x500001A4) Interrupt Enable Control                               */
+  __IO uint32_t  SRS;                               /*!< (@ 0x500001A8) Service Request Selector                               */
+  __O  uint32_t  SWS;                               /*!< (@ 0x500001AC) Interrupt Status Set                                   */
+  __O  uint32_t  SWR;                               /*!< (@ 0x500001B0) Interrupt Status Clear                                 */
+  __IO uint32_t  STC;                               /*!< (@ 0x500001B4) Shadow transfer control                                */
+  __I  uint32_t  ECRD0;                             /*!< (@ 0x500001B8) Extended Read Back 0                                   */
+  __I  uint32_t  ECRD1;                             /*!< (@ 0x500001BC) Extended Read Back 1                                   */
+  __I  uint32_t  RESERVED2[6];
+  __IO uint32_t  INS1;                              /*!< (@ 0x500001D8) Input Selector Configuration 1                         */
+} CCU8_CC8_TypeDef;
+
+
+/* ================================================================================ */
+/* ================                 POSIF [POSIF0]                 ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Position Interface 0 (POSIF)
+  */
+
+typedef struct {                                    /*!< (@ 0x50010000) POSIF Structure                                        */
+  __IO uint32_t  PCONF;                             /*!< (@ 0x50010000) CORDIC Coprocessor configuration                       */
+  __IO uint32_t  PSUS;                              /*!< (@ 0x50010004) CORDIC Coprocessor Suspend Config                      */
+  __O  uint32_t  PRUNS;                             /*!< (@ 0x50010008) CORDIC Coprocessor Run Bit Set                         */
+  __O  uint32_t  PRUNC;                             /*!< (@ 0x5001000C) CORDIC Coprocessor Run Bit Clear                       */
+  __I  uint32_t  PRUN;                              /*!< (@ 0x50010010) CORDIC Coprocessor Run Bit Status                      */
+  __I  uint32_t  RESERVED[3];
+  __I  uint32_t  MIDR;                              /*!< (@ 0x50010020) Module Identification register                         */
+  __I  uint32_t  RESERVED1[3];
+  __I  uint32_t  HALP;                              /*!< (@ 0x50010030) Hall Sensor Patterns                                   */
+  __IO uint32_t  HALPS;                             /*!< (@ 0x50010034) Hall Sensor Shadow Patterns                            */
+  __I  uint32_t  RESERVED2[2];
+  __I  uint32_t  MCM;                               /*!< (@ 0x50010040) Multi-Channel Pattern                                  */
+  __IO uint32_t  MCSM;                              /*!< (@ 0x50010044) Multi-Channel Shadow Pattern                           */
+  __O  uint32_t  MCMS;                              /*!< (@ 0x50010048) Multi-Channel Pattern Control set                      */
+  __O  uint32_t  MCMC;                              /*!< (@ 0x5001004C) Multi-Channel Pattern Control clear                    */
+  __I  uint32_t  MCMF;                              /*!< (@ 0x50010050) Multi-Channel Pattern Control flag                     */
+  __I  uint32_t  RESERVED3[3];
+  __IO uint32_t  QDC;                               /*!< (@ 0x50010060) Quadrature Decoder Control                             */
+  __I  uint32_t  RESERVED4[3];
+  __I  uint32_t  PFLG;                              /*!< (@ 0x50010070) CORDIC Coprocessor Interrupt Flags                     */
+  __IO uint32_t  PFLGE;                             /*!< (@ 0x50010074) CORDIC Coprocessor Interrupt Enable                    */
+  __O  uint32_t  SPFLG;                             /*!< (@ 0x50010078) CORDIC Coprocessor Interrupt Set                       */
+  __O  uint32_t  RPFLG;                             /*!< (@ 0x5001007C) CORDIC Coprocessor Interrupt Clear                     */
+  __I  uint32_t  RESERVED5[32];
+  __I  uint32_t  PDBG;                              /*!< (@ 0x50010100) CORDIC Coprocessor Debug register                      */
+} POSIF_GLOBAL_TypeDef;
 
 
 /* ================================================================================ */
@@ -968,11 +1218,13 @@ typedef struct {                                    /*!< (@ 0x40040100) PORT1 St
   __I  uint32_t  RESERVED[2];
   __IO uint32_t  IOCR0;                             /*!< (@ 0x40040110) Port 1 Input/Output Control Register 0                 */
   __IO uint32_t  IOCR4;                             /*!< (@ 0x40040114) Port 1 Input/Output Control Register 4                 */
-  __I  uint32_t  RESERVED1[3];
+  __IO uint32_t  IOCR8;                             /*!< (@ 0x40040118) Port 1 Input/Output Control Register 8                 */
+  __I  uint32_t  RESERVED1[2];
   __I  uint32_t  IN;                                /*!< (@ 0x40040124) Port 1 Input Register                                  */
   __I  uint32_t  RESERVED2[6];
   __IO uint32_t  PHCR0;                             /*!< (@ 0x40040140) Port 1 Pad Hysteresis Control Register 0               */
-  __I  uint32_t  RESERVED3[7];
+  __IO uint32_t  PHCR1;                             /*!< (@ 0x40040144) Port 1 Pad Hysteresis Control Register 1               */
+  __I  uint32_t  RESERVED3[6];
   __I  uint32_t  PDISC;                             /*!< (@ 0x40040160) Port 1 Pin Function Decision Control Register          */
   __I  uint32_t  RESERVED4[3];
   __IO uint32_t  PPS;                               /*!< (@ 0x40040170) Port 1 Pin Power Save Register                         */
@@ -996,7 +1248,8 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
   __IO uint32_t  IOCR0;                             /*!< (@ 0x40040210) Port 2 Input/Output Control Register 0                 */
   __IO uint32_t  IOCR4;                             /*!< (@ 0x40040214) Port 2 Input/Output Control Register 4                 */
   __IO uint32_t  IOCR8;                             /*!< (@ 0x40040218) Port 2 Input/Output Control Register 8                 */
-  __I  uint32_t  RESERVED1[2];
+  __IO uint32_t  IOCR12;                            /*!< (@ 0x4004021C) Port 2 Input/Output Control Register 12                */
+  __I  uint32_t  RESERVED1;
   __I  uint32_t  IN;                                /*!< (@ 0x40040224) Port 2 Input Register                                  */
   __I  uint32_t  RESERVED2[6];
   __IO uint32_t  PHCR0;                             /*!< (@ 0x40040240) Port 2 Pad Hysteresis Control Register 0               */
@@ -1007,6 +1260,62 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
   __IO uint32_t  PPS;                               /*!< (@ 0x40040270) Port 2 Pin Power Save Register                         */
   __IO uint32_t  HWSEL;                             /*!< (@ 0x40040274) Port 2 Pin Hardware Select Register                    */
 } PORT2_Type;
+
+
+/* ================================================================================ */
+/* ================                      PORT3                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Port 3 (PORT3)
+  */
+
+typedef struct {                                    /*!< (@ 0x40040300) PORT3 Structure                                        */
+  __IO uint32_t  OUT;                               /*!< (@ 0x40040300) Port 3 Output Register                                 */
+  __O  uint32_t  OMR;                               /*!< (@ 0x40040304) Port 3 Output Modification Register                    */
+  __I  uint32_t  RESERVED[2];
+  __IO uint32_t  IOCR0;                             /*!< (@ 0x40040310) Port 3 Input/Output Control Register 0                 */
+  __IO uint32_t  IOCR4;                             /*!< (@ 0x40040314) Port 3 Input/Output Control Register 4                 */
+  __I  uint32_t  RESERVED1[3];
+  __I  uint32_t  IN;                                /*!< (@ 0x40040324) Port 3 Input Register                                  */
+  __I  uint32_t  RESERVED2[6];
+  __IO uint32_t  PHCR0;                             /*!< (@ 0x40040340) Port 3 Pad Hysteresis Control Register 0               */
+  __I  uint32_t  RESERVED3[7];
+  __I  uint32_t  PDISC;                             /*!< (@ 0x40040360) Port 3 Pin Function Decision Control Register          */
+  __I  uint32_t  RESERVED4[3];
+  __IO uint32_t  PPS;                               /*!< (@ 0x40040370) Port 3 Pin Power Save Register                         */
+  __IO uint32_t  HWSEL;                             /*!< (@ 0x40040374) Port 3 Pin Hardware Select Register                    */
+} PORT3_Type;
+
+
+/* ================================================================================ */
+/* ================                      PORT4                     ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief Port 4 (PORT4)
+  */
+
+typedef struct {                                    /*!< (@ 0x40040400) PORT4 Structure                                        */
+  __IO uint32_t  OUT;                               /*!< (@ 0x40040400) Port 4 Output Register                                 */
+  __O  uint32_t  OMR;                               /*!< (@ 0x40040404) Port 4 Output Modification Register                    */
+  __I  uint32_t  RESERVED[2];
+  __IO uint32_t  IOCR0;                             /*!< (@ 0x40040410) Port 4 Input/Output Control Register 0                 */
+  __IO uint32_t  IOCR4;                             /*!< (@ 0x40040414) Port 4 Input/Output Control Register 4                 */
+  __IO uint32_t  IOCR8;                             /*!< (@ 0x40040418) Port 4 Input/Output Control Register 8                 */
+  __I  uint32_t  RESERVED1[2];
+  __I  uint32_t  IN;                                /*!< (@ 0x40040424) Port 4 Input Register                                  */
+  __I  uint32_t  RESERVED2[6];
+  __IO uint32_t  PHCR0;                             /*!< (@ 0x40040440) Port 4 Pad Hysteresis Control Register 0               */
+  __IO uint32_t  PHCR1;                             /*!< (@ 0x40040444) Port 4 Pad Hysteresis Control Register 1               */
+  __I  uint32_t  RESERVED3[6];
+  __I  uint32_t  PDISC;                             /*!< (@ 0x40040460) Port 4 Pin Function Decision Control Register          */
+  __I  uint32_t  RESERVED4[3];
+  __IO uint32_t  PPS;                               /*!< (@ 0x40040470) Port 4 Pin Power Save Register                         */
+  __IO uint32_t  HWSEL;                             /*!< (@ 0x40040474) Port 4 Pin Hardware Select Register                    */
+} PORT4_Type;
 
 
 /* --------------------  End of section using anonymous unions  ------------------- */
@@ -1283,6 +1592,160 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 
 
 /* ================================================================================ */
+/* ================          struct 'MATH' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  MATH_GLBCON  -------------------------------- */
+#define MATH_GLBCON_DVDRC_Pos                 (0UL)                     /*!< MATH GLBCON: DVDRC (Bit 0)                                  */
+#define MATH_GLBCON_DVDRC_Msk                 (0x7UL)                   /*!< MATH GLBCON: DVDRC (Bitfield-Mask: 0x07)                    */
+#define MATH_GLBCON_DVSRC_Pos                 (3UL)                     /*!< MATH GLBCON: DVSRC (Bit 3)                                  */
+#define MATH_GLBCON_DVSRC_Msk                 (0x38UL)                  /*!< MATH GLBCON: DVSRC (Bitfield-Mask: 0x07)                    */
+#define MATH_GLBCON_CORDXRC_Pos               (6UL)                     /*!< MATH GLBCON: CORDXRC (Bit 6)                                */
+#define MATH_GLBCON_CORDXRC_Msk               (0xc0UL)                  /*!< MATH GLBCON: CORDXRC (Bitfield-Mask: 0x03)                  */
+#define MATH_GLBCON_CORDYRC_Pos               (9UL)                     /*!< MATH GLBCON: CORDYRC (Bit 9)                                */
+#define MATH_GLBCON_CORDYRC_Msk               (0x600UL)                 /*!< MATH GLBCON: CORDYRC (Bitfield-Mask: 0x03)                  */
+#define MATH_GLBCON_CORDZRC_Pos               (12UL)                    /*!< MATH GLBCON: CORDZRC (Bit 12)                               */
+#define MATH_GLBCON_CORDZRC_Msk               (0x3000UL)                /*!< MATH GLBCON: CORDZRC (Bitfield-Mask: 0x03)                  */
+#define MATH_GLBCON_SUSCFG_Pos                (16UL)                    /*!< MATH GLBCON: SUSCFG (Bit 16)                                */
+#define MATH_GLBCON_SUSCFG_Msk                (0x30000UL)               /*!< MATH GLBCON: SUSCFG (Bitfield-Mask: 0x03)                   */
+
+/* -----------------------------------  MATH_ID  ---------------------------------- */
+#define MATH_ID_MOD_REV_Pos                   (0UL)                     /*!< MATH ID: MOD_REV (Bit 0)                                    */
+#define MATH_ID_MOD_REV_Msk                   (0xffUL)                  /*!< MATH ID: MOD_REV (Bitfield-Mask: 0xff)                      */
+#define MATH_ID_MOD_TYPE_Pos                  (8UL)                     /*!< MATH ID: MOD_TYPE (Bit 8)                                   */
+#define MATH_ID_MOD_TYPE_Msk                  (0xff00UL)                /*!< MATH ID: MOD_TYPE (Bitfield-Mask: 0xff)                     */
+#define MATH_ID_MOD_NUMBER_Pos                (16UL)                    /*!< MATH ID: MOD_NUMBER (Bit 16)                                */
+#define MATH_ID_MOD_NUMBER_Msk                (0xffff0000UL)            /*!< MATH ID: MOD_NUMBER (Bitfield-Mask: 0xffff)                 */
+
+/* ---------------------------------  MATH_EVIER  --------------------------------- */
+#define MATH_EVIER_DIVEOCIEN_Pos              (0UL)                     /*!< MATH EVIER: DIVEOCIEN (Bit 0)                               */
+#define MATH_EVIER_DIVEOCIEN_Msk              (0x1UL)                   /*!< MATH EVIER: DIVEOCIEN (Bitfield-Mask: 0x01)                 */
+#define MATH_EVIER_DIVERRIEN_Pos              (1UL)                     /*!< MATH EVIER: DIVERRIEN (Bit 1)                               */
+#define MATH_EVIER_DIVERRIEN_Msk              (0x2UL)                   /*!< MATH EVIER: DIVERRIEN (Bitfield-Mask: 0x01)                 */
+#define MATH_EVIER_CDEOCIEN_Pos               (2UL)                     /*!< MATH EVIER: CDEOCIEN (Bit 2)                                */
+#define MATH_EVIER_CDEOCIEN_Msk               (0x4UL)                   /*!< MATH EVIER: CDEOCIEN (Bitfield-Mask: 0x01)                  */
+#define MATH_EVIER_CDERRIEN_Pos               (3UL)                     /*!< MATH EVIER: CDERRIEN (Bit 3)                                */
+#define MATH_EVIER_CDERRIEN_Msk               (0x8UL)                   /*!< MATH EVIER: CDERRIEN (Bitfield-Mask: 0x01)                  */
+
+/* ----------------------------------  MATH_EVFR  --------------------------------- */
+#define MATH_EVFR_DIVEOC_Pos                  (0UL)                     /*!< MATH EVFR: DIVEOC (Bit 0)                                   */
+#define MATH_EVFR_DIVEOC_Msk                  (0x1UL)                   /*!< MATH EVFR: DIVEOC (Bitfield-Mask: 0x01)                     */
+#define MATH_EVFR_DIVERR_Pos                  (1UL)                     /*!< MATH EVFR: DIVERR (Bit 1)                                   */
+#define MATH_EVFR_DIVERR_Msk                  (0x2UL)                   /*!< MATH EVFR: DIVERR (Bitfield-Mask: 0x01)                     */
+#define MATH_EVFR_CDEOC_Pos                   (2UL)                     /*!< MATH EVFR: CDEOC (Bit 2)                                    */
+#define MATH_EVFR_CDEOC_Msk                   (0x4UL)                   /*!< MATH EVFR: CDEOC (Bitfield-Mask: 0x01)                      */
+#define MATH_EVFR_CDERR_Pos                   (3UL)                     /*!< MATH EVFR: CDERR (Bit 3)                                    */
+#define MATH_EVFR_CDERR_Msk                   (0x8UL)                   /*!< MATH EVFR: CDERR (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  MATH_EVFSR  --------------------------------- */
+#define MATH_EVFSR_DIVEOCS_Pos                (0UL)                     /*!< MATH EVFSR: DIVEOCS (Bit 0)                                 */
+#define MATH_EVFSR_DIVEOCS_Msk                (0x1UL)                   /*!< MATH EVFSR: DIVEOCS (Bitfield-Mask: 0x01)                   */
+#define MATH_EVFSR_DIVERRS_Pos                (1UL)                     /*!< MATH EVFSR: DIVERRS (Bit 1)                                 */
+#define MATH_EVFSR_DIVERRS_Msk                (0x2UL)                   /*!< MATH EVFSR: DIVERRS (Bitfield-Mask: 0x01)                   */
+#define MATH_EVFSR_CDEOCS_Pos                 (2UL)                     /*!< MATH EVFSR: CDEOCS (Bit 2)                                  */
+#define MATH_EVFSR_CDEOCS_Msk                 (0x4UL)                   /*!< MATH EVFSR: CDEOCS (Bitfield-Mask: 0x01)                    */
+#define MATH_EVFSR_CDERRS_Pos                 (3UL)                     /*!< MATH EVFSR: CDERRS (Bit 3)                                  */
+#define MATH_EVFSR_CDERRS_Msk                 (0x8UL)                   /*!< MATH EVFSR: CDERRS (Bitfield-Mask: 0x01)                    */
+
+/* ---------------------------------  MATH_EVFCR  --------------------------------- */
+#define MATH_EVFCR_DIVEOCC_Pos                (0UL)                     /*!< MATH EVFCR: DIVEOCC (Bit 0)                                 */
+#define MATH_EVFCR_DIVEOCC_Msk                (0x1UL)                   /*!< MATH EVFCR: DIVEOCC (Bitfield-Mask: 0x01)                   */
+#define MATH_EVFCR_DIVERRC_Pos                (1UL)                     /*!< MATH EVFCR: DIVERRC (Bit 1)                                 */
+#define MATH_EVFCR_DIVERRC_Msk                (0x2UL)                   /*!< MATH EVFCR: DIVERRC (Bitfield-Mask: 0x01)                   */
+#define MATH_EVFCR_CDEOCC_Pos                 (2UL)                     /*!< MATH EVFCR: CDEOCC (Bit 2)                                  */
+#define MATH_EVFCR_CDEOCC_Msk                 (0x4UL)                   /*!< MATH EVFCR: CDEOCC (Bitfield-Mask: 0x01)                    */
+#define MATH_EVFCR_CDERRC_Pos                 (3UL)                     /*!< MATH EVFCR: CDERRC (Bit 3)                                  */
+#define MATH_EVFCR_CDERRC_Msk                 (0x8UL)                   /*!< MATH EVFCR: CDERRC (Bitfield-Mask: 0x01)                    */
+
+/* ----------------------------------  MATH_DVD  ---------------------------------- */
+#define MATH_DVD_VAL_Pos                      (0UL)                     /*!< MATH DVD: VAL (Bit 0)                                       */
+#define MATH_DVD_VAL_Msk                      (0xffffffffUL)            /*!< MATH DVD: VAL (Bitfield-Mask: 0xffffffff)                   */
+
+/* ----------------------------------  MATH_DVS  ---------------------------------- */
+#define MATH_DVS_VAL_Pos                      (0UL)                     /*!< MATH DVS: VAL (Bit 0)                                       */
+#define MATH_DVS_VAL_Msk                      (0xffffffffUL)            /*!< MATH DVS: VAL (Bitfield-Mask: 0xffffffff)                   */
+
+/* ----------------------------------  MATH_QUOT  --------------------------------- */
+#define MATH_QUOT_VAL_Pos                     (0UL)                     /*!< MATH QUOT: VAL (Bit 0)                                      */
+#define MATH_QUOT_VAL_Msk                     (0xffffffffUL)            /*!< MATH QUOT: VAL (Bitfield-Mask: 0xffffffff)                  */
+
+/* ----------------------------------  MATH_RMD  ---------------------------------- */
+#define MATH_RMD_VAL_Pos                      (0UL)                     /*!< MATH RMD: VAL (Bit 0)                                       */
+#define MATH_RMD_VAL_Msk                      (0xffffffffUL)            /*!< MATH RMD: VAL (Bitfield-Mask: 0xffffffff)                   */
+
+/* ---------------------------------  MATH_DIVST  --------------------------------- */
+#define MATH_DIVST_BSY_Pos                    (0UL)                     /*!< MATH DIVST: BSY (Bit 0)                                     */
+#define MATH_DIVST_BSY_Msk                    (0x1UL)                   /*!< MATH DIVST: BSY (Bitfield-Mask: 0x01)                       */
+
+/* ---------------------------------  MATH_DIVCON  -------------------------------- */
+#define MATH_DIVCON_ST_Pos                    (0UL)                     /*!< MATH DIVCON: ST (Bit 0)                                     */
+#define MATH_DIVCON_ST_Msk                    (0x1UL)                   /*!< MATH DIVCON: ST (Bitfield-Mask: 0x01)                       */
+#define MATH_DIVCON_STMODE_Pos                (1UL)                     /*!< MATH DIVCON: STMODE (Bit 1)                                 */
+#define MATH_DIVCON_STMODE_Msk                (0x2UL)                   /*!< MATH DIVCON: STMODE (Bitfield-Mask: 0x01)                   */
+#define MATH_DIVCON_USIGN_Pos                 (2UL)                     /*!< MATH DIVCON: USIGN (Bit 2)                                  */
+#define MATH_DIVCON_USIGN_Msk                 (0x4UL)                   /*!< MATH DIVCON: USIGN (Bitfield-Mask: 0x01)                    */
+#define MATH_DIVCON_DIVMODE_Pos               (3UL)                     /*!< MATH DIVCON: DIVMODE (Bit 3)                                */
+#define MATH_DIVCON_DIVMODE_Msk               (0x18UL)                  /*!< MATH DIVCON: DIVMODE (Bitfield-Mask: 0x03)                  */
+#define MATH_DIVCON_QSCNT_Pos                 (8UL)                     /*!< MATH DIVCON: QSCNT (Bit 8)                                  */
+#define MATH_DIVCON_QSCNT_Msk                 (0x1f00UL)                /*!< MATH DIVCON: QSCNT (Bitfield-Mask: 0x1f)                    */
+#define MATH_DIVCON_QSDIR_Pos                 (15UL)                    /*!< MATH DIVCON: QSDIR (Bit 15)                                 */
+#define MATH_DIVCON_QSDIR_Msk                 (0x8000UL)                /*!< MATH DIVCON: QSDIR (Bitfield-Mask: 0x01)                    */
+#define MATH_DIVCON_DVDSLC_Pos                (16UL)                    /*!< MATH DIVCON: DVDSLC (Bit 16)                                */
+#define MATH_DIVCON_DVDSLC_Msk                (0x1f0000UL)              /*!< MATH DIVCON: DVDSLC (Bitfield-Mask: 0x1f)                   */
+#define MATH_DIVCON_DVSSRC_Pos                (24UL)                    /*!< MATH DIVCON: DVSSRC (Bit 24)                                */
+#define MATH_DIVCON_DVSSRC_Msk                (0x1f000000UL)            /*!< MATH DIVCON: DVSSRC (Bitfield-Mask: 0x1f)                   */
+
+/* ---------------------------------  MATH_STATC  --------------------------------- */
+#define MATH_STATC_BSY_Pos                    (0UL)                     /*!< MATH STATC: BSY (Bit 0)                                     */
+#define MATH_STATC_BSY_Msk                    (0x1UL)                   /*!< MATH STATC: BSY (Bitfield-Mask: 0x01)                       */
+#define MATH_STATC_KEEPX_Pos                  (5UL)                     /*!< MATH STATC: KEEPX (Bit 5)                                   */
+#define MATH_STATC_KEEPX_Msk                  (0x20UL)                  /*!< MATH STATC: KEEPX (Bitfield-Mask: 0x01)                     */
+#define MATH_STATC_KEEPY_Pos                  (6UL)                     /*!< MATH STATC: KEEPY (Bit 6)                                   */
+#define MATH_STATC_KEEPY_Msk                  (0x40UL)                  /*!< MATH STATC: KEEPY (Bitfield-Mask: 0x01)                     */
+#define MATH_STATC_KEEPZ_Pos                  (7UL)                     /*!< MATH STATC: KEEPZ (Bit 7)                                   */
+#define MATH_STATC_KEEPZ_Msk                  (0x80UL)                  /*!< MATH STATC: KEEPZ (Bitfield-Mask: 0x01)                     */
+
+/* ----------------------------------  MATH_CON  ---------------------------------- */
+#define MATH_CON_ST_Pos                       (0UL)                     /*!< MATH CON: ST (Bit 0)                                        */
+#define MATH_CON_ST_Msk                       (0x1UL)                   /*!< MATH CON: ST (Bitfield-Mask: 0x01)                          */
+#define MATH_CON_MODE_Pos                     (1UL)                     /*!< MATH CON: MODE (Bit 1)                                      */
+#define MATH_CON_MODE_Msk                     (0x6UL)                   /*!< MATH CON: MODE (Bitfield-Mask: 0x03)                        */
+#define MATH_CON_ROTVEC_Pos                   (3UL)                     /*!< MATH CON: ROTVEC (Bit 3)                                    */
+#define MATH_CON_ROTVEC_Msk                   (0x8UL)                   /*!< MATH CON: ROTVEC (Bitfield-Mask: 0x01)                      */
+#define MATH_CON_ST_MODE_Pos                  (4UL)                     /*!< MATH CON: ST_MODE (Bit 4)                                   */
+#define MATH_CON_ST_MODE_Msk                  (0x10UL)                  /*!< MATH CON: ST_MODE (Bitfield-Mask: 0x01)                     */
+#define MATH_CON_X_USIGN_Pos                  (5UL)                     /*!< MATH CON: X_USIGN (Bit 5)                                   */
+#define MATH_CON_X_USIGN_Msk                  (0x20UL)                  /*!< MATH CON: X_USIGN (Bitfield-Mask: 0x01)                     */
+#define MATH_CON_MPS_Pos                      (6UL)                     /*!< MATH CON: MPS (Bit 6)                                       */
+#define MATH_CON_MPS_Msk                      (0xc0UL)                  /*!< MATH CON: MPS (Bitfield-Mask: 0x03)                         */
+
+/* ---------------------------------  MATH_CORDX  --------------------------------- */
+#define MATH_CORDX_DATA_Pos                   (8UL)                     /*!< MATH CORDX: DATA (Bit 8)                                    */
+#define MATH_CORDX_DATA_Msk                   (0xffffff00UL)            /*!< MATH CORDX: DATA (Bitfield-Mask: 0xffffff)                  */
+
+/* ---------------------------------  MATH_CORDY  --------------------------------- */
+#define MATH_CORDY_DATA_Pos                   (8UL)                     /*!< MATH CORDY: DATA (Bit 8)                                    */
+#define MATH_CORDY_DATA_Msk                   (0xffffff00UL)            /*!< MATH CORDY: DATA (Bitfield-Mask: 0xffffff)                  */
+
+/* ---------------------------------  MATH_CORDZ  --------------------------------- */
+#define MATH_CORDZ_DATA_Pos                   (8UL)                     /*!< MATH CORDZ: DATA (Bit 8)                                    */
+#define MATH_CORDZ_DATA_Msk                   (0xffffff00UL)            /*!< MATH CORDZ: DATA (Bitfield-Mask: 0xffffff)                  */
+
+/* ---------------------------------  MATH_CORRX  --------------------------------- */
+#define MATH_CORRX_RESULT_Pos                 (8UL)                     /*!< MATH CORRX: RESULT (Bit 8)                                  */
+#define MATH_CORRX_RESULT_Msk                 (0xffffff00UL)            /*!< MATH CORRX: RESULT (Bitfield-Mask: 0xffffff)                */
+
+/* ---------------------------------  MATH_CORRY  --------------------------------- */
+#define MATH_CORRY_RESULT_Pos                 (8UL)                     /*!< MATH CORRY: RESULT (Bit 8)                                  */
+#define MATH_CORRY_RESULT_Msk                 (0xffffff00UL)            /*!< MATH CORRY: RESULT (Bitfield-Mask: 0xffffff)                */
+
+/* ---------------------------------  MATH_CORRZ  --------------------------------- */
+#define MATH_CORRZ_RESULT_Pos                 (8UL)                     /*!< MATH CORRZ: RESULT (Bit 8)                                  */
+#define MATH_CORRZ_RESULT_Msk                 (0xffffff00UL)            /*!< MATH CORRZ: RESULT (Bitfield-Mask: 0xffffff)                */
+
+
+/* ================================================================================ */
 /* ================          struct 'PAU' Position & Mask          ================ */
 /* ================================================================================ */
 
@@ -1294,12 +1757,20 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PAU_AVAIL0_AVAIL6_Msk                 (0x40UL)                  /*!< PAU AVAIL0: AVAIL6 (Bitfield-Mask: 0x01)                    */
 #define PAU_AVAIL0_AVAIL7_Pos                 (7UL)                     /*!< PAU AVAIL0: AVAIL7 (Bit 7)                                  */
 #define PAU_AVAIL0_AVAIL7_Msk                 (0x80UL)                  /*!< PAU AVAIL0: AVAIL7 (Bitfield-Mask: 0x01)                    */
+#define PAU_AVAIL0_AVAIL20_Pos                (20UL)                    /*!< PAU AVAIL0: AVAIL20 (Bit 20)                                */
+#define PAU_AVAIL0_AVAIL20_Msk                (0x100000UL)              /*!< PAU AVAIL0: AVAIL20 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL0_AVAIL21_Pos                (21UL)                    /*!< PAU AVAIL0: AVAIL21 (Bit 21)                                */
+#define PAU_AVAIL0_AVAIL21_Msk                (0x200000UL)              /*!< PAU AVAIL0: AVAIL21 (Bitfield-Mask: 0x01)                   */
 #define PAU_AVAIL0_AVAIL22_Pos                (22UL)                    /*!< PAU AVAIL0: AVAIL22 (Bit 22)                                */
 #define PAU_AVAIL0_AVAIL22_Msk                (0x400000UL)              /*!< PAU AVAIL0: AVAIL22 (Bitfield-Mask: 0x01)                   */
 #define PAU_AVAIL0_AVAIL23_Pos                (23UL)                    /*!< PAU AVAIL0: AVAIL23 (Bit 23)                                */
 #define PAU_AVAIL0_AVAIL23_Msk                (0x800000UL)              /*!< PAU AVAIL0: AVAIL23 (Bitfield-Mask: 0x01)                   */
 #define PAU_AVAIL0_AVAIL24_Pos                (24UL)                    /*!< PAU AVAIL0: AVAIL24 (Bit 24)                                */
 #define PAU_AVAIL0_AVAIL24_Msk                (0x1000000UL)             /*!< PAU AVAIL0: AVAIL24 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL0_AVAIL25_Pos                (25UL)                    /*!< PAU AVAIL0: AVAIL25 (Bit 25)                                */
+#define PAU_AVAIL0_AVAIL25_Msk                (0x2000000UL)             /*!< PAU AVAIL0: AVAIL25 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL0_AVAIL26_Pos                (26UL)                    /*!< PAU AVAIL0: AVAIL26 (Bit 26)                                */
+#define PAU_AVAIL0_AVAIL26_Msk                (0x4000000UL)             /*!< PAU AVAIL0: AVAIL26 (Bitfield-Mask: 0x01)                   */
 
 /* ---------------------------------  PAU_AVAIL1  --------------------------------- */
 #define PAU_AVAIL1_AVAIL0_Pos                 (0UL)                     /*!< PAU AVAIL1: AVAIL0 (Bit 0)                                  */
@@ -1324,14 +1795,50 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PAU_AVAIL1_AVAIL11_Msk                (0x800UL)                 /*!< PAU AVAIL1: AVAIL11 (Bitfield-Mask: 0x01)                   */
 #define PAU_AVAIL1_AVAIL12_Pos                (12UL)                    /*!< PAU AVAIL1: AVAIL12 (Bit 12)                                */
 #define PAU_AVAIL1_AVAIL12_Msk                (0x1000UL)                /*!< PAU AVAIL1: AVAIL12 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL1_AVAIL16_Pos                (16UL)                    /*!< PAU AVAIL1: AVAIL16 (Bit 16)                                */
+#define PAU_AVAIL1_AVAIL16_Msk                (0x10000UL)               /*!< PAU AVAIL1: AVAIL16 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL1_AVAIL17_Pos                (17UL)                    /*!< PAU AVAIL1: AVAIL17 (Bit 17)                                */
+#define PAU_AVAIL1_AVAIL17_Msk                (0x20000UL)               /*!< PAU AVAIL1: AVAIL17 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL1_AVAIL25_Pos                (25UL)                    /*!< PAU AVAIL1: AVAIL25 (Bit 25)                                */
+#define PAU_AVAIL1_AVAIL25_Msk                (0x2000000UL)             /*!< PAU AVAIL1: AVAIL25 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL1_AVAIL26_Pos                (26UL)                    /*!< PAU AVAIL1: AVAIL26 (Bit 26)                                */
+#define PAU_AVAIL1_AVAIL26_Msk                (0x4000000UL)             /*!< PAU AVAIL1: AVAIL26 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL1_AVAIL27_Pos                (27UL)                    /*!< PAU AVAIL1: AVAIL27 (Bit 27)                                */
+#define PAU_AVAIL1_AVAIL27_Msk                (0x8000000UL)             /*!< PAU AVAIL1: AVAIL27 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL1_AVAIL28_Pos                (28UL)                    /*!< PAU AVAIL1: AVAIL28 (Bit 28)                                */
+#define PAU_AVAIL1_AVAIL28_Msk                (0x10000000UL)            /*!< PAU AVAIL1: AVAIL28 (Bitfield-Mask: 0x01)                   */
 
 /* ---------------------------------  PAU_AVAIL2  --------------------------------- */
-#define PAU_AVAIL2_AVAIL13_Pos                (13UL)                    /*!< PAU AVAIL2: AVAIL13 (Bit 13)                                */
-#define PAU_AVAIL2_AVAIL13_Msk                (0x2000UL)                /*!< PAU AVAIL2: AVAIL13 (Bitfield-Mask: 0x01)                   */
-#define PAU_AVAIL2_AVAIL14_Pos                (14UL)                    /*!< PAU AVAIL2: AVAIL14 (Bit 14)                                */
-#define PAU_AVAIL2_AVAIL14_Msk                (0x4000UL)                /*!< PAU AVAIL2: AVAIL14 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL0_Pos                 (0UL)                     /*!< PAU AVAIL2: AVAIL0 (Bit 0)                                  */
+#define PAU_AVAIL2_AVAIL0_Msk                 (0x1UL)                   /*!< PAU AVAIL2: AVAIL0 (Bitfield-Mask: 0x01)                    */
+#define PAU_AVAIL2_AVAIL1_Pos                 (1UL)                     /*!< PAU AVAIL2: AVAIL1 (Bit 1)                                  */
+#define PAU_AVAIL2_AVAIL1_Msk                 (0x2UL)                   /*!< PAU AVAIL2: AVAIL1 (Bitfield-Mask: 0x01)                    */
+#define PAU_AVAIL2_AVAIL2_Pos                 (2UL)                     /*!< PAU AVAIL2: AVAIL2 (Bit 2)                                  */
+#define PAU_AVAIL2_AVAIL2_Msk                 (0x4UL)                   /*!< PAU AVAIL2: AVAIL2 (Bitfield-Mask: 0x01)                    */
+#define PAU_AVAIL2_AVAIL3_Pos                 (3UL)                     /*!< PAU AVAIL2: AVAIL3 (Bit 3)                                  */
+#define PAU_AVAIL2_AVAIL3_Msk                 (0x8UL)                   /*!< PAU AVAIL2: AVAIL3 (Bitfield-Mask: 0x01)                    */
+#define PAU_AVAIL2_AVAIL12_Pos                (12UL)                    /*!< PAU AVAIL2: AVAIL12 (Bit 12)                                */
+#define PAU_AVAIL2_AVAIL12_Msk                (0x1000UL)                /*!< PAU AVAIL2: AVAIL12 (Bitfield-Mask: 0x01)                   */
 #define PAU_AVAIL2_AVAIL15_Pos                (15UL)                    /*!< PAU AVAIL2: AVAIL15 (Bit 15)                                */
 #define PAU_AVAIL2_AVAIL15_Msk                (0x8000UL)                /*!< PAU AVAIL2: AVAIL15 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL16_Pos                (16UL)                    /*!< PAU AVAIL2: AVAIL16 (Bit 16)                                */
+#define PAU_AVAIL2_AVAIL16_Msk                (0x10000UL)               /*!< PAU AVAIL2: AVAIL16 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL17_Pos                (17UL)                    /*!< PAU AVAIL2: AVAIL17 (Bit 17)                                */
+#define PAU_AVAIL2_AVAIL17_Msk                (0x20000UL)               /*!< PAU AVAIL2: AVAIL17 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL18_Pos                (18UL)                    /*!< PAU AVAIL2: AVAIL18 (Bit 18)                                */
+#define PAU_AVAIL2_AVAIL18_Msk                (0x40000UL)               /*!< PAU AVAIL2: AVAIL18 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL19_Pos                (19UL)                    /*!< PAU AVAIL2: AVAIL19 (Bit 19)                                */
+#define PAU_AVAIL2_AVAIL19_Msk                (0x80000UL)               /*!< PAU AVAIL2: AVAIL19 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL20_Pos                (20UL)                    /*!< PAU AVAIL2: AVAIL20 (Bit 20)                                */
+#define PAU_AVAIL2_AVAIL20_Msk                (0x100000UL)              /*!< PAU AVAIL2: AVAIL20 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL21_Pos                (21UL)                    /*!< PAU AVAIL2: AVAIL21 (Bit 21)                                */
+#define PAU_AVAIL2_AVAIL21_Msk                (0x200000UL)              /*!< PAU AVAIL2: AVAIL21 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL23_Pos                (23UL)                    /*!< PAU AVAIL2: AVAIL23 (Bit 23)                                */
+#define PAU_AVAIL2_AVAIL23_Msk                (0x800000UL)              /*!< PAU AVAIL2: AVAIL23 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL28_Pos                (28UL)                    /*!< PAU AVAIL2: AVAIL28 (Bit 28)                                */
+#define PAU_AVAIL2_AVAIL28_Msk                (0x10000000UL)            /*!< PAU AVAIL2: AVAIL28 (Bitfield-Mask: 0x01)                   */
+#define PAU_AVAIL2_AVAIL29_Pos                (29UL)                    /*!< PAU AVAIL2: AVAIL29 (Bit 29)                                */
+#define PAU_AVAIL2_AVAIL29_Msk                (0x20000000UL)            /*!< PAU AVAIL2: AVAIL29 (Bitfield-Mask: 0x01)                   */
 
 /* --------------------------------  PAU_PRIVDIS0  -------------------------------- */
 #define PAU_PRIVDIS0_PDIS2_Pos                (2UL)                     /*!< PAU PRIVDIS0: PDIS2 (Bit 2)                                 */
@@ -1344,12 +1851,20 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PAU_PRIVDIS0_PDIS7_Msk                (0x80UL)                  /*!< PAU PRIVDIS0: PDIS7 (Bitfield-Mask: 0x01)                   */
 #define PAU_PRIVDIS0_PDIS19_Pos               (19UL)                    /*!< PAU PRIVDIS0: PDIS19 (Bit 19)                               */
 #define PAU_PRIVDIS0_PDIS19_Msk               (0x80000UL)               /*!< PAU PRIVDIS0: PDIS19 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS0_PDIS20_Pos               (20UL)                    /*!< PAU PRIVDIS0: PDIS20 (Bit 20)                               */
+#define PAU_PRIVDIS0_PDIS20_Msk               (0x100000UL)              /*!< PAU PRIVDIS0: PDIS20 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS0_PDIS21_Pos               (21UL)                    /*!< PAU PRIVDIS0: PDIS21 (Bit 21)                               */
+#define PAU_PRIVDIS0_PDIS21_Msk               (0x200000UL)              /*!< PAU PRIVDIS0: PDIS21 (Bitfield-Mask: 0x01)                  */
 #define PAU_PRIVDIS0_PDIS22_Pos               (22UL)                    /*!< PAU PRIVDIS0: PDIS22 (Bit 22)                               */
 #define PAU_PRIVDIS0_PDIS22_Msk               (0x400000UL)              /*!< PAU PRIVDIS0: PDIS22 (Bitfield-Mask: 0x01)                  */
 #define PAU_PRIVDIS0_PDIS23_Pos               (23UL)                    /*!< PAU PRIVDIS0: PDIS23 (Bit 23)                               */
 #define PAU_PRIVDIS0_PDIS23_Msk               (0x800000UL)              /*!< PAU PRIVDIS0: PDIS23 (Bitfield-Mask: 0x01)                  */
 #define PAU_PRIVDIS0_PDIS24_Pos               (24UL)                    /*!< PAU PRIVDIS0: PDIS24 (Bit 24)                               */
 #define PAU_PRIVDIS0_PDIS24_Msk               (0x1000000UL)             /*!< PAU PRIVDIS0: PDIS24 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS0_PDIS25_Pos               (25UL)                    /*!< PAU PRIVDIS0: PDIS25 (Bit 25)                               */
+#define PAU_PRIVDIS0_PDIS25_Msk               (0x2000000UL)             /*!< PAU PRIVDIS0: PDIS25 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS0_PDIS26_Pos               (26UL)                    /*!< PAU PRIVDIS0: PDIS26 (Bit 26)                               */
+#define PAU_PRIVDIS0_PDIS26_Msk               (0x4000000UL)             /*!< PAU PRIVDIS0: PDIS26 (Bitfield-Mask: 0x01)                  */
 
 /* --------------------------------  PAU_PRIVDIS1  -------------------------------- */
 #define PAU_PRIVDIS1_PDIS0_Pos                (0UL)                     /*!< PAU PRIVDIS1: PDIS0 (Bit 0)                                 */
@@ -1372,14 +1887,54 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PAU_PRIVDIS1_PDIS11_Msk               (0x800UL)                 /*!< PAU PRIVDIS1: PDIS11 (Bitfield-Mask: 0x01)                  */
 #define PAU_PRIVDIS1_PDIS12_Pos               (12UL)                    /*!< PAU PRIVDIS1: PDIS12 (Bit 12)                               */
 #define PAU_PRIVDIS1_PDIS12_Msk               (0x1000UL)                /*!< PAU PRIVDIS1: PDIS12 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS1_PDIS16_Pos               (16UL)                    /*!< PAU PRIVDIS1: PDIS16 (Bit 16)                               */
+#define PAU_PRIVDIS1_PDIS16_Msk               (0x10000UL)               /*!< PAU PRIVDIS1: PDIS16 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS1_PDIS17_Pos               (17UL)                    /*!< PAU PRIVDIS1: PDIS17 (Bit 17)                               */
+#define PAU_PRIVDIS1_PDIS17_Msk               (0x20000UL)               /*!< PAU PRIVDIS1: PDIS17 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS1_PDIS25_Pos               (25UL)                    /*!< PAU PRIVDIS1: PDIS25 (Bit 25)                               */
+#define PAU_PRIVDIS1_PDIS25_Msk               (0x2000000UL)             /*!< PAU PRIVDIS1: PDIS25 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS1_PDIS26_Pos               (26UL)                    /*!< PAU PRIVDIS1: PDIS26 (Bit 26)                               */
+#define PAU_PRIVDIS1_PDIS26_Msk               (0x4000000UL)             /*!< PAU PRIVDIS1: PDIS26 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS1_PDIS27_Pos               (27UL)                    /*!< PAU PRIVDIS1: PDIS27 (Bit 27)                               */
+#define PAU_PRIVDIS1_PDIS27_Msk               (0x8000000UL)             /*!< PAU PRIVDIS1: PDIS27 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS1_PDIS28_Pos               (28UL)                    /*!< PAU PRIVDIS1: PDIS28 (Bit 28)                               */
+#define PAU_PRIVDIS1_PDIS28_Msk               (0x10000000UL)            /*!< PAU PRIVDIS1: PDIS28 (Bitfield-Mask: 0x01)                  */
 
 /* --------------------------------  PAU_PRIVDIS2  -------------------------------- */
+#define PAU_PRIVDIS2_PDIS0_Pos                (0UL)                     /*!< PAU PRIVDIS2: PDIS0 (Bit 0)                                 */
+#define PAU_PRIVDIS2_PDIS0_Msk                (0x1UL)                   /*!< PAU PRIVDIS2: PDIS0 (Bitfield-Mask: 0x01)                   */
+#define PAU_PRIVDIS2_PDIS1_Pos                (1UL)                     /*!< PAU PRIVDIS2: PDIS1 (Bit 1)                                 */
+#define PAU_PRIVDIS2_PDIS1_Msk                (0x2UL)                   /*!< PAU PRIVDIS2: PDIS1 (Bitfield-Mask: 0x01)                   */
+#define PAU_PRIVDIS2_PDIS2_Pos                (2UL)                     /*!< PAU PRIVDIS2: PDIS2 (Bit 2)                                 */
+#define PAU_PRIVDIS2_PDIS2_Msk                (0x4UL)                   /*!< PAU PRIVDIS2: PDIS2 (Bitfield-Mask: 0x01)                   */
+#define PAU_PRIVDIS2_PDIS3_Pos                (3UL)                     /*!< PAU PRIVDIS2: PDIS3 (Bit 3)                                 */
+#define PAU_PRIVDIS2_PDIS3_Msk                (0x8UL)                   /*!< PAU PRIVDIS2: PDIS3 (Bitfield-Mask: 0x01)                   */
+#define PAU_PRIVDIS2_PDIS12_Pos               (12UL)                    /*!< PAU PRIVDIS2: PDIS12 (Bit 12)                               */
+#define PAU_PRIVDIS2_PDIS12_Msk               (0x1000UL)                /*!< PAU PRIVDIS2: PDIS12 (Bitfield-Mask: 0x01)                  */
 #define PAU_PRIVDIS2_PDIS13_Pos               (13UL)                    /*!< PAU PRIVDIS2: PDIS13 (Bit 13)                               */
 #define PAU_PRIVDIS2_PDIS13_Msk               (0x2000UL)                /*!< PAU PRIVDIS2: PDIS13 (Bitfield-Mask: 0x01)                  */
 #define PAU_PRIVDIS2_PDIS14_Pos               (14UL)                    /*!< PAU PRIVDIS2: PDIS14 (Bit 14)                               */
 #define PAU_PRIVDIS2_PDIS14_Msk               (0x4000UL)                /*!< PAU PRIVDIS2: PDIS14 (Bitfield-Mask: 0x01)                  */
 #define PAU_PRIVDIS2_PDIS15_Pos               (15UL)                    /*!< PAU PRIVDIS2: PDIS15 (Bit 15)                               */
 #define PAU_PRIVDIS2_PDIS15_Msk               (0x8000UL)                /*!< PAU PRIVDIS2: PDIS15 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS16_Pos               (16UL)                    /*!< PAU PRIVDIS2: PDIS16 (Bit 16)                               */
+#define PAU_PRIVDIS2_PDIS16_Msk               (0x10000UL)               /*!< PAU PRIVDIS2: PDIS16 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS17_Pos               (17UL)                    /*!< PAU PRIVDIS2: PDIS17 (Bit 17)                               */
+#define PAU_PRIVDIS2_PDIS17_Msk               (0x20000UL)               /*!< PAU PRIVDIS2: PDIS17 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS18_Pos               (18UL)                    /*!< PAU PRIVDIS2: PDIS18 (Bit 18)                               */
+#define PAU_PRIVDIS2_PDIS18_Msk               (0x40000UL)               /*!< PAU PRIVDIS2: PDIS18 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS19_Pos               (19UL)                    /*!< PAU PRIVDIS2: PDIS19 (Bit 19)                               */
+#define PAU_PRIVDIS2_PDIS19_Msk               (0x80000UL)               /*!< PAU PRIVDIS2: PDIS19 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS20_Pos               (20UL)                    /*!< PAU PRIVDIS2: PDIS20 (Bit 20)                               */
+#define PAU_PRIVDIS2_PDIS20_Msk               (0x100000UL)              /*!< PAU PRIVDIS2: PDIS20 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS21_Pos               (21UL)                    /*!< PAU PRIVDIS2: PDIS21 (Bit 21)                               */
+#define PAU_PRIVDIS2_PDIS21_Msk               (0x200000UL)              /*!< PAU PRIVDIS2: PDIS21 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS23_Pos               (23UL)                    /*!< PAU PRIVDIS2: PDIS23 (Bit 23)                               */
+#define PAU_PRIVDIS2_PDIS23_Msk               (0x800000UL)              /*!< PAU PRIVDIS2: PDIS23 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS28_Pos               (28UL)                    /*!< PAU PRIVDIS2: PDIS28 (Bit 28)                               */
+#define PAU_PRIVDIS2_PDIS28_Msk               (0x10000000UL)            /*!< PAU PRIVDIS2: PDIS28 (Bitfield-Mask: 0x01)                  */
+#define PAU_PRIVDIS2_PDIS29_Pos               (29UL)                    /*!< PAU PRIVDIS2: PDIS29 (Bit 29)                               */
+#define PAU_PRIVDIS2_PDIS29_Msk               (0x20000000UL)            /*!< PAU PRIVDIS2: PDIS29 (Bitfield-Mask: 0x01)                  */
 
 /* ---------------------------------  PAU_ROMSIZE  -------------------------------- */
 #define PAU_ROMSIZE_ADDR_Pos                  (8UL)                     /*!< PAU ROMSIZE: ADDR (Bit 8)                                   */
@@ -1426,16 +1981,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define NVM_NVMCONF_HRLEV_Msk                 (0x6UL)                   /*!< NVM NVMCONF: HRLEV (Bitfield-Mask: 0x03)                    */
 #define NVM_NVMCONF_SECPROT_Pos               (4UL)                     /*!< NVM NVMCONF: SECPROT (Bit 4)                                */
 #define NVM_NVMCONF_SECPROT_Msk               (0xff0UL)                 /*!< NVM NVMCONF: SECPROT (Bitfield-Mask: 0xff)                  */
-#define NVM_NVMCONF_WS_Pos                    (12UL)                    /*!< NVM NVMCONF: WS (Bit 12)                                    */
-#define NVM_NVMCONF_WS_Msk                    (0x1000UL)                /*!< NVM NVMCONF: WS (Bitfield-Mask: 0x01)                       */
 #define NVM_NVMCONF_INT_ON_Pos                (14UL)                    /*!< NVM NVMCONF: INT_ON (Bit 14)                                */
 #define NVM_NVMCONF_INT_ON_Msk                (0x4000UL)                /*!< NVM NVMCONF: INT_ON (Bitfield-Mask: 0x01)                   */
 #define NVM_NVMCONF_NVM_ON_Pos                (15UL)                    /*!< NVM NVMCONF: NVM_ON (Bit 15)                                */
 #define NVM_NVMCONF_NVM_ON_Msk                (0x8000UL)                /*!< NVM NVMCONF: NVM_ON (Bitfield-Mask: 0x01)                   */
-
-/* ---------------------------------  NVM_CONFIG1  -------------------------------- */
-#define NVM_CONFIG1_FIXWS_Pos                 (11UL)                    /*!< NVM CONFIG1: FIXWS (Bit 11)                                 */
-#define NVM_CONFIG1_FIXWS_Msk                 (0x800UL)                 /*!< NVM CONFIG1: FIXWS (Bitfield-Mask: 0x01)                    */
 
 
 /* ================================================================================ */
@@ -1770,6 +2319,444 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define LEDTS_TSCMP1_CMP_TS6_Msk              (0xff0000UL)              /*!< LEDTS TSCMP1: CMP_TS6 (Bitfield-Mask: 0xff)                 */
 #define LEDTS_TSCMP1_CMP_TS7_Pos              (24UL)                    /*!< LEDTS TSCMP1: CMP_TS7 (Bit 24)                              */
 #define LEDTS_TSCMP1_CMP_TS7_Msk              (0xff000000UL)            /*!< LEDTS TSCMP1: CMP_TS7 (Bitfield-Mask: 0xff)                 */
+
+
+/* ================================================================================ */
+/* ================         struct 'LEDTS0' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  LEDTS0_ID  --------------------------------- */
+#define LEDTS0_ID_MOD_REV_Pos                 (0UL)                     /*!< LEDTS0 ID: MOD_REV (Bit 0)                                  */
+#define LEDTS0_ID_MOD_REV_Msk                 (0xffUL)                  /*!< LEDTS0 ID: MOD_REV (Bitfield-Mask: 0xff)                    */
+#define LEDTS0_ID_MOD_TYPE_Pos                (8UL)                     /*!< LEDTS0 ID: MOD_TYPE (Bit 8)                                 */
+#define LEDTS0_ID_MOD_TYPE_Msk                (0xff00UL)                /*!< LEDTS0 ID: MOD_TYPE (Bitfield-Mask: 0xff)                   */
+#define LEDTS0_ID_MOD_NUMBER_Pos              (16UL)                    /*!< LEDTS0 ID: MOD_NUMBER (Bit 16)                              */
+#define LEDTS0_ID_MOD_NUMBER_Msk              (0xffff0000UL)            /*!< LEDTS0 ID: MOD_NUMBER (Bitfield-Mask: 0xffff)               */
+
+/* -------------------------------  LEDTS0_GLOBCTL  ------------------------------- */
+#define LEDTS0_GLOBCTL_TS_EN_Pos              (0UL)                     /*!< LEDTS0 GLOBCTL: TS_EN (Bit 0)                               */
+#define LEDTS0_GLOBCTL_TS_EN_Msk              (0x1UL)                   /*!< LEDTS0 GLOBCTL: TS_EN (Bitfield-Mask: 0x01)                 */
+#define LEDTS0_GLOBCTL_LD_EN_Pos              (1UL)                     /*!< LEDTS0 GLOBCTL: LD_EN (Bit 1)                               */
+#define LEDTS0_GLOBCTL_LD_EN_Msk              (0x2UL)                   /*!< LEDTS0 GLOBCTL: LD_EN (Bitfield-Mask: 0x01)                 */
+#define LEDTS0_GLOBCTL_CMTR_Pos               (2UL)                     /*!< LEDTS0 GLOBCTL: CMTR (Bit 2)                                */
+#define LEDTS0_GLOBCTL_CMTR_Msk               (0x4UL)                   /*!< LEDTS0 GLOBCTL: CMTR (Bitfield-Mask: 0x01)                  */
+#define LEDTS0_GLOBCTL_ENSYNC_Pos             (3UL)                     /*!< LEDTS0 GLOBCTL: ENSYNC (Bit 3)                              */
+#define LEDTS0_GLOBCTL_ENSYNC_Msk             (0x8UL)                   /*!< LEDTS0 GLOBCTL: ENSYNC (Bitfield-Mask: 0x01)                */
+#define LEDTS0_GLOBCTL_SUSCFG_Pos             (8UL)                     /*!< LEDTS0 GLOBCTL: SUSCFG (Bit 8)                              */
+#define LEDTS0_GLOBCTL_SUSCFG_Msk             (0x100UL)                 /*!< LEDTS0 GLOBCTL: SUSCFG (Bitfield-Mask: 0x01)                */
+#define LEDTS0_GLOBCTL_MASKVAL_Pos            (9UL)                     /*!< LEDTS0 GLOBCTL: MASKVAL (Bit 9)                             */
+#define LEDTS0_GLOBCTL_MASKVAL_Msk            (0xe00UL)                 /*!< LEDTS0 GLOBCTL: MASKVAL (Bitfield-Mask: 0x07)               */
+#define LEDTS0_GLOBCTL_FENVAL_Pos             (12UL)                    /*!< LEDTS0 GLOBCTL: FENVAL (Bit 12)                             */
+#define LEDTS0_GLOBCTL_FENVAL_Msk             (0x1000UL)                /*!< LEDTS0 GLOBCTL: FENVAL (Bitfield-Mask: 0x01)                */
+#define LEDTS0_GLOBCTL_ITS_EN_Pos             (13UL)                    /*!< LEDTS0 GLOBCTL: ITS_EN (Bit 13)                             */
+#define LEDTS0_GLOBCTL_ITS_EN_Msk             (0x2000UL)                /*!< LEDTS0 GLOBCTL: ITS_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS0_GLOBCTL_ITF_EN_Pos             (14UL)                    /*!< LEDTS0 GLOBCTL: ITF_EN (Bit 14)                             */
+#define LEDTS0_GLOBCTL_ITF_EN_Msk             (0x4000UL)                /*!< LEDTS0 GLOBCTL: ITF_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS0_GLOBCTL_ITP_EN_Pos             (15UL)                    /*!< LEDTS0 GLOBCTL: ITP_EN (Bit 15)                             */
+#define LEDTS0_GLOBCTL_ITP_EN_Msk             (0x8000UL)                /*!< LEDTS0 GLOBCTL: ITP_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS0_GLOBCTL_CLK_PS_Pos             (16UL)                    /*!< LEDTS0 GLOBCTL: CLK_PS (Bit 16)                             */
+#define LEDTS0_GLOBCTL_CLK_PS_Msk             (0xffff0000UL)            /*!< LEDTS0 GLOBCTL: CLK_PS (Bitfield-Mask: 0xffff)              */
+
+/* --------------------------------  LEDTS0_FNCTL  -------------------------------- */
+#define LEDTS0_FNCTL_PADT_Pos                 (0UL)                     /*!< LEDTS0 FNCTL: PADT (Bit 0)                                  */
+#define LEDTS0_FNCTL_PADT_Msk                 (0x7UL)                   /*!< LEDTS0 FNCTL: PADT (Bitfield-Mask: 0x07)                    */
+#define LEDTS0_FNCTL_PADTSW_Pos               (3UL)                     /*!< LEDTS0 FNCTL: PADTSW (Bit 3)                                */
+#define LEDTS0_FNCTL_PADTSW_Msk               (0x8UL)                   /*!< LEDTS0 FNCTL: PADTSW (Bitfield-Mask: 0x01)                  */
+#define LEDTS0_FNCTL_EPULL_Pos                (4UL)                     /*!< LEDTS0 FNCTL: EPULL (Bit 4)                                 */
+#define LEDTS0_FNCTL_EPULL_Msk                (0x10UL)                  /*!< LEDTS0 FNCTL: EPULL (Bitfield-Mask: 0x01)                   */
+#define LEDTS0_FNCTL_FNCOL_Pos                (5UL)                     /*!< LEDTS0 FNCTL: FNCOL (Bit 5)                                 */
+#define LEDTS0_FNCTL_FNCOL_Msk                (0xe0UL)                  /*!< LEDTS0 FNCTL: FNCOL (Bitfield-Mask: 0x07)                   */
+#define LEDTS0_FNCTL_ACCCNT_Pos               (16UL)                    /*!< LEDTS0 FNCTL: ACCCNT (Bit 16)                               */
+#define LEDTS0_FNCTL_ACCCNT_Msk               (0xf0000UL)               /*!< LEDTS0 FNCTL: ACCCNT (Bitfield-Mask: 0x0f)                  */
+#define LEDTS0_FNCTL_TSCCMP_Pos               (20UL)                    /*!< LEDTS0 FNCTL: TSCCMP (Bit 20)                               */
+#define LEDTS0_FNCTL_TSCCMP_Msk               (0x100000UL)              /*!< LEDTS0 FNCTL: TSCCMP (Bitfield-Mask: 0x01)                  */
+#define LEDTS0_FNCTL_TSOEXT_Pos               (21UL)                    /*!< LEDTS0 FNCTL: TSOEXT (Bit 21)                               */
+#define LEDTS0_FNCTL_TSOEXT_Msk               (0x600000UL)              /*!< LEDTS0 FNCTL: TSOEXT (Bitfield-Mask: 0x03)                  */
+#define LEDTS0_FNCTL_TSCTRR_Pos               (23UL)                    /*!< LEDTS0 FNCTL: TSCTRR (Bit 23)                               */
+#define LEDTS0_FNCTL_TSCTRR_Msk               (0x800000UL)              /*!< LEDTS0 FNCTL: TSCTRR (Bitfield-Mask: 0x01)                  */
+#define LEDTS0_FNCTL_TSCTRSAT_Pos             (24UL)                    /*!< LEDTS0 FNCTL: TSCTRSAT (Bit 24)                             */
+#define LEDTS0_FNCTL_TSCTRSAT_Msk             (0x1000000UL)             /*!< LEDTS0 FNCTL: TSCTRSAT (Bitfield-Mask: 0x01)                */
+#define LEDTS0_FNCTL_NR_TSIN_Pos              (25UL)                    /*!< LEDTS0 FNCTL: NR_TSIN (Bit 25)                              */
+#define LEDTS0_FNCTL_NR_TSIN_Msk              (0xe000000UL)             /*!< LEDTS0 FNCTL: NR_TSIN (Bitfield-Mask: 0x07)                 */
+#define LEDTS0_FNCTL_COLLEV_Pos               (28UL)                    /*!< LEDTS0 FNCTL: COLLEV (Bit 28)                               */
+#define LEDTS0_FNCTL_COLLEV_Msk               (0x10000000UL)            /*!< LEDTS0 FNCTL: COLLEV (Bitfield-Mask: 0x01)                  */
+#define LEDTS0_FNCTL_NR_LEDCOL_Pos            (29UL)                    /*!< LEDTS0 FNCTL: NR_LEDCOL (Bit 29)                            */
+#define LEDTS0_FNCTL_NR_LEDCOL_Msk            (0xe0000000UL)            /*!< LEDTS0 FNCTL: NR_LEDCOL (Bitfield-Mask: 0x07)               */
+
+/* ---------------------------------  LEDTS0_EVFR  -------------------------------- */
+#define LEDTS0_EVFR_TSF_Pos                   (0UL)                     /*!< LEDTS0 EVFR: TSF (Bit 0)                                    */
+#define LEDTS0_EVFR_TSF_Msk                   (0x1UL)                   /*!< LEDTS0 EVFR: TSF (Bitfield-Mask: 0x01)                      */
+#define LEDTS0_EVFR_TFF_Pos                   (1UL)                     /*!< LEDTS0 EVFR: TFF (Bit 1)                                    */
+#define LEDTS0_EVFR_TFF_Msk                   (0x2UL)                   /*!< LEDTS0 EVFR: TFF (Bitfield-Mask: 0x01)                      */
+#define LEDTS0_EVFR_TPF_Pos                   (2UL)                     /*!< LEDTS0 EVFR: TPF (Bit 2)                                    */
+#define LEDTS0_EVFR_TPF_Msk                   (0x4UL)                   /*!< LEDTS0 EVFR: TPF (Bitfield-Mask: 0x01)                      */
+#define LEDTS0_EVFR_TSCTROVF_Pos              (3UL)                     /*!< LEDTS0 EVFR: TSCTROVF (Bit 3)                               */
+#define LEDTS0_EVFR_TSCTROVF_Msk              (0x8UL)                   /*!< LEDTS0 EVFR: TSCTROVF (Bitfield-Mask: 0x01)                 */
+#define LEDTS0_EVFR_CTSF_Pos                  (16UL)                    /*!< LEDTS0 EVFR: CTSF (Bit 16)                                  */
+#define LEDTS0_EVFR_CTSF_Msk                  (0x10000UL)               /*!< LEDTS0 EVFR: CTSF (Bitfield-Mask: 0x01)                     */
+#define LEDTS0_EVFR_CTFF_Pos                  (17UL)                    /*!< LEDTS0 EVFR: CTFF (Bit 17)                                  */
+#define LEDTS0_EVFR_CTFF_Msk                  (0x20000UL)               /*!< LEDTS0 EVFR: CTFF (Bitfield-Mask: 0x01)                     */
+#define LEDTS0_EVFR_CTPF_Pos                  (18UL)                    /*!< LEDTS0 EVFR: CTPF (Bit 18)                                  */
+#define LEDTS0_EVFR_CTPF_Msk                  (0x40000UL)               /*!< LEDTS0 EVFR: CTPF (Bitfield-Mask: 0x01)                     */
+
+/* --------------------------------  LEDTS0_TSVAL  -------------------------------- */
+#define LEDTS0_TSVAL_TSCTRVALR_Pos            (0UL)                     /*!< LEDTS0 TSVAL: TSCTRVALR (Bit 0)                             */
+#define LEDTS0_TSVAL_TSCTRVALR_Msk            (0xffffUL)                /*!< LEDTS0 TSVAL: TSCTRVALR (Bitfield-Mask: 0xffff)             */
+#define LEDTS0_TSVAL_TSCTRVAL_Pos             (16UL)                    /*!< LEDTS0 TSVAL: TSCTRVAL (Bit 16)                             */
+#define LEDTS0_TSVAL_TSCTRVAL_Msk             (0xffff0000UL)            /*!< LEDTS0 TSVAL: TSCTRVAL (Bitfield-Mask: 0xffff)              */
+
+/* --------------------------------  LEDTS0_LINE0  -------------------------------- */
+#define LEDTS0_LINE0_LINE_0_Pos               (0UL)                     /*!< LEDTS0 LINE0: LINE_0 (Bit 0)                                */
+#define LEDTS0_LINE0_LINE_0_Msk               (0xffUL)                  /*!< LEDTS0 LINE0: LINE_0 (Bitfield-Mask: 0xff)                  */
+#define LEDTS0_LINE0_LINE_1_Pos               (8UL)                     /*!< LEDTS0 LINE0: LINE_1 (Bit 8)                                */
+#define LEDTS0_LINE0_LINE_1_Msk               (0xff00UL)                /*!< LEDTS0 LINE0: LINE_1 (Bitfield-Mask: 0xff)                  */
+#define LEDTS0_LINE0_LINE_2_Pos               (16UL)                    /*!< LEDTS0 LINE0: LINE_2 (Bit 16)                               */
+#define LEDTS0_LINE0_LINE_2_Msk               (0xff0000UL)              /*!< LEDTS0 LINE0: LINE_2 (Bitfield-Mask: 0xff)                  */
+#define LEDTS0_LINE0_LINE_3_Pos               (24UL)                    /*!< LEDTS0 LINE0: LINE_3 (Bit 24)                               */
+#define LEDTS0_LINE0_LINE_3_Msk               (0xff000000UL)            /*!< LEDTS0 LINE0: LINE_3 (Bitfield-Mask: 0xff)                  */
+
+/* --------------------------------  LEDTS0_LINE1  -------------------------------- */
+#define LEDTS0_LINE1_LINE_4_Pos               (0UL)                     /*!< LEDTS0 LINE1: LINE_4 (Bit 0)                                */
+#define LEDTS0_LINE1_LINE_4_Msk               (0xffUL)                  /*!< LEDTS0 LINE1: LINE_4 (Bitfield-Mask: 0xff)                  */
+#define LEDTS0_LINE1_LINE_5_Pos               (8UL)                     /*!< LEDTS0 LINE1: LINE_5 (Bit 8)                                */
+#define LEDTS0_LINE1_LINE_5_Msk               (0xff00UL)                /*!< LEDTS0 LINE1: LINE_5 (Bitfield-Mask: 0xff)                  */
+#define LEDTS0_LINE1_LINE_6_Pos               (16UL)                    /*!< LEDTS0 LINE1: LINE_6 (Bit 16)                               */
+#define LEDTS0_LINE1_LINE_6_Msk               (0xff0000UL)              /*!< LEDTS0 LINE1: LINE_6 (Bitfield-Mask: 0xff)                  */
+#define LEDTS0_LINE1_LINE_A_Pos               (24UL)                    /*!< LEDTS0 LINE1: LINE_A (Bit 24)                               */
+#define LEDTS0_LINE1_LINE_A_Msk               (0xff000000UL)            /*!< LEDTS0 LINE1: LINE_A (Bitfield-Mask: 0xff)                  */
+
+/* --------------------------------  LEDTS0_LDCMP0  ------------------------------- */
+#define LEDTS0_LDCMP0_CMP_LD0_Pos             (0UL)                     /*!< LEDTS0 LDCMP0: CMP_LD0 (Bit 0)                              */
+#define LEDTS0_LDCMP0_CMP_LD0_Msk             (0xffUL)                  /*!< LEDTS0 LDCMP0: CMP_LD0 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_LDCMP0_CMP_LD1_Pos             (8UL)                     /*!< LEDTS0 LDCMP0: CMP_LD1 (Bit 8)                              */
+#define LEDTS0_LDCMP0_CMP_LD1_Msk             (0xff00UL)                /*!< LEDTS0 LDCMP0: CMP_LD1 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_LDCMP0_CMP_LD2_Pos             (16UL)                    /*!< LEDTS0 LDCMP0: CMP_LD2 (Bit 16)                             */
+#define LEDTS0_LDCMP0_CMP_LD2_Msk             (0xff0000UL)              /*!< LEDTS0 LDCMP0: CMP_LD2 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_LDCMP0_CMP_LD3_Pos             (24UL)                    /*!< LEDTS0 LDCMP0: CMP_LD3 (Bit 24)                             */
+#define LEDTS0_LDCMP0_CMP_LD3_Msk             (0xff000000UL)            /*!< LEDTS0 LDCMP0: CMP_LD3 (Bitfield-Mask: 0xff)                */
+
+/* --------------------------------  LEDTS0_LDCMP1  ------------------------------- */
+#define LEDTS0_LDCMP1_CMP_LD4_Pos             (0UL)                     /*!< LEDTS0 LDCMP1: CMP_LD4 (Bit 0)                              */
+#define LEDTS0_LDCMP1_CMP_LD4_Msk             (0xffUL)                  /*!< LEDTS0 LDCMP1: CMP_LD4 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_LDCMP1_CMP_LD5_Pos             (8UL)                     /*!< LEDTS0 LDCMP1: CMP_LD5 (Bit 8)                              */
+#define LEDTS0_LDCMP1_CMP_LD5_Msk             (0xff00UL)                /*!< LEDTS0 LDCMP1: CMP_LD5 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_LDCMP1_CMP_LD6_Pos             (16UL)                    /*!< LEDTS0 LDCMP1: CMP_LD6 (Bit 16)                             */
+#define LEDTS0_LDCMP1_CMP_LD6_Msk             (0xff0000UL)              /*!< LEDTS0 LDCMP1: CMP_LD6 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_LDCMP1_CMP_LDA_TSCOM_Pos       (24UL)                    /*!< LEDTS0 LDCMP1: CMP_LDA_TSCOM (Bit 24)                       */
+#define LEDTS0_LDCMP1_CMP_LDA_TSCOM_Msk       (0xff000000UL)            /*!< LEDTS0 LDCMP1: CMP_LDA_TSCOM (Bitfield-Mask: 0xff)          */
+
+/* --------------------------------  LEDTS0_TSCMP0  ------------------------------- */
+#define LEDTS0_TSCMP0_CMP_TS0_Pos             (0UL)                     /*!< LEDTS0 TSCMP0: CMP_TS0 (Bit 0)                              */
+#define LEDTS0_TSCMP0_CMP_TS0_Msk             (0xffUL)                  /*!< LEDTS0 TSCMP0: CMP_TS0 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_TSCMP0_CMP_TS1_Pos             (8UL)                     /*!< LEDTS0 TSCMP0: CMP_TS1 (Bit 8)                              */
+#define LEDTS0_TSCMP0_CMP_TS1_Msk             (0xff00UL)                /*!< LEDTS0 TSCMP0: CMP_TS1 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_TSCMP0_CMP_TS2_Pos             (16UL)                    /*!< LEDTS0 TSCMP0: CMP_TS2 (Bit 16)                             */
+#define LEDTS0_TSCMP0_CMP_TS2_Msk             (0xff0000UL)              /*!< LEDTS0 TSCMP0: CMP_TS2 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_TSCMP0_CMP_TS3_Pos             (24UL)                    /*!< LEDTS0 TSCMP0: CMP_TS3 (Bit 24)                             */
+#define LEDTS0_TSCMP0_CMP_TS3_Msk             (0xff000000UL)            /*!< LEDTS0 TSCMP0: CMP_TS3 (Bitfield-Mask: 0xff)                */
+
+/* --------------------------------  LEDTS0_TSCMP1  ------------------------------- */
+#define LEDTS0_TSCMP1_CMP_TS4_Pos             (0UL)                     /*!< LEDTS0 TSCMP1: CMP_TS4 (Bit 0)                              */
+#define LEDTS0_TSCMP1_CMP_TS4_Msk             (0xffUL)                  /*!< LEDTS0 TSCMP1: CMP_TS4 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_TSCMP1_CMP_TS5_Pos             (8UL)                     /*!< LEDTS0 TSCMP1: CMP_TS5 (Bit 8)                              */
+#define LEDTS0_TSCMP1_CMP_TS5_Msk             (0xff00UL)                /*!< LEDTS0 TSCMP1: CMP_TS5 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_TSCMP1_CMP_TS6_Pos             (16UL)                    /*!< LEDTS0 TSCMP1: CMP_TS6 (Bit 16)                             */
+#define LEDTS0_TSCMP1_CMP_TS6_Msk             (0xff0000UL)              /*!< LEDTS0 TSCMP1: CMP_TS6 (Bitfield-Mask: 0xff)                */
+#define LEDTS0_TSCMP1_CMP_TS7_Pos             (24UL)                    /*!< LEDTS0 TSCMP1: CMP_TS7 (Bit 24)                             */
+#define LEDTS0_TSCMP1_CMP_TS7_Msk             (0xff000000UL)            /*!< LEDTS0 TSCMP1: CMP_TS7 (Bitfield-Mask: 0xff)                */
+
+
+/* ================================================================================ */
+/* ================         struct 'LEDTS1' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  LEDTS1_ID  --------------------------------- */
+#define LEDTS1_ID_MOD_REV_Pos                 (0UL)                     /*!< LEDTS1 ID: MOD_REV (Bit 0)                                  */
+#define LEDTS1_ID_MOD_REV_Msk                 (0xffUL)                  /*!< LEDTS1 ID: MOD_REV (Bitfield-Mask: 0xff)                    */
+#define LEDTS1_ID_MOD_TYPE_Pos                (8UL)                     /*!< LEDTS1 ID: MOD_TYPE (Bit 8)                                 */
+#define LEDTS1_ID_MOD_TYPE_Msk                (0xff00UL)                /*!< LEDTS1 ID: MOD_TYPE (Bitfield-Mask: 0xff)                   */
+#define LEDTS1_ID_MOD_NUMBER_Pos              (16UL)                    /*!< LEDTS1 ID: MOD_NUMBER (Bit 16)                              */
+#define LEDTS1_ID_MOD_NUMBER_Msk              (0xffff0000UL)            /*!< LEDTS1 ID: MOD_NUMBER (Bitfield-Mask: 0xffff)               */
+
+/* -------------------------------  LEDTS1_GLOBCTL  ------------------------------- */
+#define LEDTS1_GLOBCTL_TS_EN_Pos              (0UL)                     /*!< LEDTS1 GLOBCTL: TS_EN (Bit 0)                               */
+#define LEDTS1_GLOBCTL_TS_EN_Msk              (0x1UL)                   /*!< LEDTS1 GLOBCTL: TS_EN (Bitfield-Mask: 0x01)                 */
+#define LEDTS1_GLOBCTL_LD_EN_Pos              (1UL)                     /*!< LEDTS1 GLOBCTL: LD_EN (Bit 1)                               */
+#define LEDTS1_GLOBCTL_LD_EN_Msk              (0x2UL)                   /*!< LEDTS1 GLOBCTL: LD_EN (Bitfield-Mask: 0x01)                 */
+#define LEDTS1_GLOBCTL_CMTR_Pos               (2UL)                     /*!< LEDTS1 GLOBCTL: CMTR (Bit 2)                                */
+#define LEDTS1_GLOBCTL_CMTR_Msk               (0x4UL)                   /*!< LEDTS1 GLOBCTL: CMTR (Bitfield-Mask: 0x01)                  */
+#define LEDTS1_GLOBCTL_ENSYNC_Pos             (3UL)                     /*!< LEDTS1 GLOBCTL: ENSYNC (Bit 3)                              */
+#define LEDTS1_GLOBCTL_ENSYNC_Msk             (0x8UL)                   /*!< LEDTS1 GLOBCTL: ENSYNC (Bitfield-Mask: 0x01)                */
+#define LEDTS1_GLOBCTL_SUSCFG_Pos             (8UL)                     /*!< LEDTS1 GLOBCTL: SUSCFG (Bit 8)                              */
+#define LEDTS1_GLOBCTL_SUSCFG_Msk             (0x100UL)                 /*!< LEDTS1 GLOBCTL: SUSCFG (Bitfield-Mask: 0x01)                */
+#define LEDTS1_GLOBCTL_MASKVAL_Pos            (9UL)                     /*!< LEDTS1 GLOBCTL: MASKVAL (Bit 9)                             */
+#define LEDTS1_GLOBCTL_MASKVAL_Msk            (0xe00UL)                 /*!< LEDTS1 GLOBCTL: MASKVAL (Bitfield-Mask: 0x07)               */
+#define LEDTS1_GLOBCTL_FENVAL_Pos             (12UL)                    /*!< LEDTS1 GLOBCTL: FENVAL (Bit 12)                             */
+#define LEDTS1_GLOBCTL_FENVAL_Msk             (0x1000UL)                /*!< LEDTS1 GLOBCTL: FENVAL (Bitfield-Mask: 0x01)                */
+#define LEDTS1_GLOBCTL_ITS_EN_Pos             (13UL)                    /*!< LEDTS1 GLOBCTL: ITS_EN (Bit 13)                             */
+#define LEDTS1_GLOBCTL_ITS_EN_Msk             (0x2000UL)                /*!< LEDTS1 GLOBCTL: ITS_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS1_GLOBCTL_ITF_EN_Pos             (14UL)                    /*!< LEDTS1 GLOBCTL: ITF_EN (Bit 14)                             */
+#define LEDTS1_GLOBCTL_ITF_EN_Msk             (0x4000UL)                /*!< LEDTS1 GLOBCTL: ITF_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS1_GLOBCTL_ITP_EN_Pos             (15UL)                    /*!< LEDTS1 GLOBCTL: ITP_EN (Bit 15)                             */
+#define LEDTS1_GLOBCTL_ITP_EN_Msk             (0x8000UL)                /*!< LEDTS1 GLOBCTL: ITP_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS1_GLOBCTL_CLK_PS_Pos             (16UL)                    /*!< LEDTS1 GLOBCTL: CLK_PS (Bit 16)                             */
+#define LEDTS1_GLOBCTL_CLK_PS_Msk             (0xffff0000UL)            /*!< LEDTS1 GLOBCTL: CLK_PS (Bitfield-Mask: 0xffff)              */
+
+/* --------------------------------  LEDTS1_FNCTL  -------------------------------- */
+#define LEDTS1_FNCTL_PADT_Pos                 (0UL)                     /*!< LEDTS1 FNCTL: PADT (Bit 0)                                  */
+#define LEDTS1_FNCTL_PADT_Msk                 (0x7UL)                   /*!< LEDTS1 FNCTL: PADT (Bitfield-Mask: 0x07)                    */
+#define LEDTS1_FNCTL_PADTSW_Pos               (3UL)                     /*!< LEDTS1 FNCTL: PADTSW (Bit 3)                                */
+#define LEDTS1_FNCTL_PADTSW_Msk               (0x8UL)                   /*!< LEDTS1 FNCTL: PADTSW (Bitfield-Mask: 0x01)                  */
+#define LEDTS1_FNCTL_EPULL_Pos                (4UL)                     /*!< LEDTS1 FNCTL: EPULL (Bit 4)                                 */
+#define LEDTS1_FNCTL_EPULL_Msk                (0x10UL)                  /*!< LEDTS1 FNCTL: EPULL (Bitfield-Mask: 0x01)                   */
+#define LEDTS1_FNCTL_FNCOL_Pos                (5UL)                     /*!< LEDTS1 FNCTL: FNCOL (Bit 5)                                 */
+#define LEDTS1_FNCTL_FNCOL_Msk                (0xe0UL)                  /*!< LEDTS1 FNCTL: FNCOL (Bitfield-Mask: 0x07)                   */
+#define LEDTS1_FNCTL_ACCCNT_Pos               (16UL)                    /*!< LEDTS1 FNCTL: ACCCNT (Bit 16)                               */
+#define LEDTS1_FNCTL_ACCCNT_Msk               (0xf0000UL)               /*!< LEDTS1 FNCTL: ACCCNT (Bitfield-Mask: 0x0f)                  */
+#define LEDTS1_FNCTL_TSCCMP_Pos               (20UL)                    /*!< LEDTS1 FNCTL: TSCCMP (Bit 20)                               */
+#define LEDTS1_FNCTL_TSCCMP_Msk               (0x100000UL)              /*!< LEDTS1 FNCTL: TSCCMP (Bitfield-Mask: 0x01)                  */
+#define LEDTS1_FNCTL_TSOEXT_Pos               (21UL)                    /*!< LEDTS1 FNCTL: TSOEXT (Bit 21)                               */
+#define LEDTS1_FNCTL_TSOEXT_Msk               (0x600000UL)              /*!< LEDTS1 FNCTL: TSOEXT (Bitfield-Mask: 0x03)                  */
+#define LEDTS1_FNCTL_TSCTRR_Pos               (23UL)                    /*!< LEDTS1 FNCTL: TSCTRR (Bit 23)                               */
+#define LEDTS1_FNCTL_TSCTRR_Msk               (0x800000UL)              /*!< LEDTS1 FNCTL: TSCTRR (Bitfield-Mask: 0x01)                  */
+#define LEDTS1_FNCTL_TSCTRSAT_Pos             (24UL)                    /*!< LEDTS1 FNCTL: TSCTRSAT (Bit 24)                             */
+#define LEDTS1_FNCTL_TSCTRSAT_Msk             (0x1000000UL)             /*!< LEDTS1 FNCTL: TSCTRSAT (Bitfield-Mask: 0x01)                */
+#define LEDTS1_FNCTL_NR_TSIN_Pos              (25UL)                    /*!< LEDTS1 FNCTL: NR_TSIN (Bit 25)                              */
+#define LEDTS1_FNCTL_NR_TSIN_Msk              (0xe000000UL)             /*!< LEDTS1 FNCTL: NR_TSIN (Bitfield-Mask: 0x07)                 */
+#define LEDTS1_FNCTL_COLLEV_Pos               (28UL)                    /*!< LEDTS1 FNCTL: COLLEV (Bit 28)                               */
+#define LEDTS1_FNCTL_COLLEV_Msk               (0x10000000UL)            /*!< LEDTS1 FNCTL: COLLEV (Bitfield-Mask: 0x01)                  */
+#define LEDTS1_FNCTL_NR_LEDCOL_Pos            (29UL)                    /*!< LEDTS1 FNCTL: NR_LEDCOL (Bit 29)                            */
+#define LEDTS1_FNCTL_NR_LEDCOL_Msk            (0xe0000000UL)            /*!< LEDTS1 FNCTL: NR_LEDCOL (Bitfield-Mask: 0x07)               */
+
+/* ---------------------------------  LEDTS1_EVFR  -------------------------------- */
+#define LEDTS1_EVFR_TSF_Pos                   (0UL)                     /*!< LEDTS1 EVFR: TSF (Bit 0)                                    */
+#define LEDTS1_EVFR_TSF_Msk                   (0x1UL)                   /*!< LEDTS1 EVFR: TSF (Bitfield-Mask: 0x01)                      */
+#define LEDTS1_EVFR_TFF_Pos                   (1UL)                     /*!< LEDTS1 EVFR: TFF (Bit 1)                                    */
+#define LEDTS1_EVFR_TFF_Msk                   (0x2UL)                   /*!< LEDTS1 EVFR: TFF (Bitfield-Mask: 0x01)                      */
+#define LEDTS1_EVFR_TPF_Pos                   (2UL)                     /*!< LEDTS1 EVFR: TPF (Bit 2)                                    */
+#define LEDTS1_EVFR_TPF_Msk                   (0x4UL)                   /*!< LEDTS1 EVFR: TPF (Bitfield-Mask: 0x01)                      */
+#define LEDTS1_EVFR_TSCTROVF_Pos              (3UL)                     /*!< LEDTS1 EVFR: TSCTROVF (Bit 3)                               */
+#define LEDTS1_EVFR_TSCTROVF_Msk              (0x8UL)                   /*!< LEDTS1 EVFR: TSCTROVF (Bitfield-Mask: 0x01)                 */
+#define LEDTS1_EVFR_CTSF_Pos                  (16UL)                    /*!< LEDTS1 EVFR: CTSF (Bit 16)                                  */
+#define LEDTS1_EVFR_CTSF_Msk                  (0x10000UL)               /*!< LEDTS1 EVFR: CTSF (Bitfield-Mask: 0x01)                     */
+#define LEDTS1_EVFR_CTFF_Pos                  (17UL)                    /*!< LEDTS1 EVFR: CTFF (Bit 17)                                  */
+#define LEDTS1_EVFR_CTFF_Msk                  (0x20000UL)               /*!< LEDTS1 EVFR: CTFF (Bitfield-Mask: 0x01)                     */
+#define LEDTS1_EVFR_CTPF_Pos                  (18UL)                    /*!< LEDTS1 EVFR: CTPF (Bit 18)                                  */
+#define LEDTS1_EVFR_CTPF_Msk                  (0x40000UL)               /*!< LEDTS1 EVFR: CTPF (Bitfield-Mask: 0x01)                     */
+
+/* --------------------------------  LEDTS1_TSVAL  -------------------------------- */
+#define LEDTS1_TSVAL_TSCTRVALR_Pos            (0UL)                     /*!< LEDTS1 TSVAL: TSCTRVALR (Bit 0)                             */
+#define LEDTS1_TSVAL_TSCTRVALR_Msk            (0xffffUL)                /*!< LEDTS1 TSVAL: TSCTRVALR (Bitfield-Mask: 0xffff)             */
+#define LEDTS1_TSVAL_TSCTRVAL_Pos             (16UL)                    /*!< LEDTS1 TSVAL: TSCTRVAL (Bit 16)                             */
+#define LEDTS1_TSVAL_TSCTRVAL_Msk             (0xffff0000UL)            /*!< LEDTS1 TSVAL: TSCTRVAL (Bitfield-Mask: 0xffff)              */
+
+/* --------------------------------  LEDTS1_LINE0  -------------------------------- */
+#define LEDTS1_LINE0_LINE_0_Pos               (0UL)                     /*!< LEDTS1 LINE0: LINE_0 (Bit 0)                                */
+#define LEDTS1_LINE0_LINE_0_Msk               (0xffUL)                  /*!< LEDTS1 LINE0: LINE_0 (Bitfield-Mask: 0xff)                  */
+#define LEDTS1_LINE0_LINE_1_Pos               (8UL)                     /*!< LEDTS1 LINE0: LINE_1 (Bit 8)                                */
+#define LEDTS1_LINE0_LINE_1_Msk               (0xff00UL)                /*!< LEDTS1 LINE0: LINE_1 (Bitfield-Mask: 0xff)                  */
+#define LEDTS1_LINE0_LINE_2_Pos               (16UL)                    /*!< LEDTS1 LINE0: LINE_2 (Bit 16)                               */
+#define LEDTS1_LINE0_LINE_2_Msk               (0xff0000UL)              /*!< LEDTS1 LINE0: LINE_2 (Bitfield-Mask: 0xff)                  */
+#define LEDTS1_LINE0_LINE_3_Pos               (24UL)                    /*!< LEDTS1 LINE0: LINE_3 (Bit 24)                               */
+#define LEDTS1_LINE0_LINE_3_Msk               (0xff000000UL)            /*!< LEDTS1 LINE0: LINE_3 (Bitfield-Mask: 0xff)                  */
+
+/* --------------------------------  LEDTS1_LINE1  -------------------------------- */
+#define LEDTS1_LINE1_LINE_4_Pos               (0UL)                     /*!< LEDTS1 LINE1: LINE_4 (Bit 0)                                */
+#define LEDTS1_LINE1_LINE_4_Msk               (0xffUL)                  /*!< LEDTS1 LINE1: LINE_4 (Bitfield-Mask: 0xff)                  */
+#define LEDTS1_LINE1_LINE_5_Pos               (8UL)                     /*!< LEDTS1 LINE1: LINE_5 (Bit 8)                                */
+#define LEDTS1_LINE1_LINE_5_Msk               (0xff00UL)                /*!< LEDTS1 LINE1: LINE_5 (Bitfield-Mask: 0xff)                  */
+#define LEDTS1_LINE1_LINE_6_Pos               (16UL)                    /*!< LEDTS1 LINE1: LINE_6 (Bit 16)                               */
+#define LEDTS1_LINE1_LINE_6_Msk               (0xff0000UL)              /*!< LEDTS1 LINE1: LINE_6 (Bitfield-Mask: 0xff)                  */
+#define LEDTS1_LINE1_LINE_A_Pos               (24UL)                    /*!< LEDTS1 LINE1: LINE_A (Bit 24)                               */
+#define LEDTS1_LINE1_LINE_A_Msk               (0xff000000UL)            /*!< LEDTS1 LINE1: LINE_A (Bitfield-Mask: 0xff)                  */
+
+/* --------------------------------  LEDTS1_LDCMP0  ------------------------------- */
+#define LEDTS1_LDCMP0_CMP_LD0_Pos             (0UL)                     /*!< LEDTS1 LDCMP0: CMP_LD0 (Bit 0)                              */
+#define LEDTS1_LDCMP0_CMP_LD0_Msk             (0xffUL)                  /*!< LEDTS1 LDCMP0: CMP_LD0 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_LDCMP0_CMP_LD1_Pos             (8UL)                     /*!< LEDTS1 LDCMP0: CMP_LD1 (Bit 8)                              */
+#define LEDTS1_LDCMP0_CMP_LD1_Msk             (0xff00UL)                /*!< LEDTS1 LDCMP0: CMP_LD1 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_LDCMP0_CMP_LD2_Pos             (16UL)                    /*!< LEDTS1 LDCMP0: CMP_LD2 (Bit 16)                             */
+#define LEDTS1_LDCMP0_CMP_LD2_Msk             (0xff0000UL)              /*!< LEDTS1 LDCMP0: CMP_LD2 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_LDCMP0_CMP_LD3_Pos             (24UL)                    /*!< LEDTS1 LDCMP0: CMP_LD3 (Bit 24)                             */
+#define LEDTS1_LDCMP0_CMP_LD3_Msk             (0xff000000UL)            /*!< LEDTS1 LDCMP0: CMP_LD3 (Bitfield-Mask: 0xff)                */
+
+/* --------------------------------  LEDTS1_LDCMP1  ------------------------------- */
+#define LEDTS1_LDCMP1_CMP_LD4_Pos             (0UL)                     /*!< LEDTS1 LDCMP1: CMP_LD4 (Bit 0)                              */
+#define LEDTS1_LDCMP1_CMP_LD4_Msk             (0xffUL)                  /*!< LEDTS1 LDCMP1: CMP_LD4 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_LDCMP1_CMP_LD5_Pos             (8UL)                     /*!< LEDTS1 LDCMP1: CMP_LD5 (Bit 8)                              */
+#define LEDTS1_LDCMP1_CMP_LD5_Msk             (0xff00UL)                /*!< LEDTS1 LDCMP1: CMP_LD5 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_LDCMP1_CMP_LD6_Pos             (16UL)                    /*!< LEDTS1 LDCMP1: CMP_LD6 (Bit 16)                             */
+#define LEDTS1_LDCMP1_CMP_LD6_Msk             (0xff0000UL)              /*!< LEDTS1 LDCMP1: CMP_LD6 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_LDCMP1_CMP_LDA_TSCOM_Pos       (24UL)                    /*!< LEDTS1 LDCMP1: CMP_LDA_TSCOM (Bit 24)                       */
+#define LEDTS1_LDCMP1_CMP_LDA_TSCOM_Msk       (0xff000000UL)            /*!< LEDTS1 LDCMP1: CMP_LDA_TSCOM (Bitfield-Mask: 0xff)          */
+
+/* --------------------------------  LEDTS1_TSCMP0  ------------------------------- */
+#define LEDTS1_TSCMP0_CMP_TS0_Pos             (0UL)                     /*!< LEDTS1 TSCMP0: CMP_TS0 (Bit 0)                              */
+#define LEDTS1_TSCMP0_CMP_TS0_Msk             (0xffUL)                  /*!< LEDTS1 TSCMP0: CMP_TS0 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_TSCMP0_CMP_TS1_Pos             (8UL)                     /*!< LEDTS1 TSCMP0: CMP_TS1 (Bit 8)                              */
+#define LEDTS1_TSCMP0_CMP_TS1_Msk             (0xff00UL)                /*!< LEDTS1 TSCMP0: CMP_TS1 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_TSCMP0_CMP_TS2_Pos             (16UL)                    /*!< LEDTS1 TSCMP0: CMP_TS2 (Bit 16)                             */
+#define LEDTS1_TSCMP0_CMP_TS2_Msk             (0xff0000UL)              /*!< LEDTS1 TSCMP0: CMP_TS2 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_TSCMP0_CMP_TS3_Pos             (24UL)                    /*!< LEDTS1 TSCMP0: CMP_TS3 (Bit 24)                             */
+#define LEDTS1_TSCMP0_CMP_TS3_Msk             (0xff000000UL)            /*!< LEDTS1 TSCMP0: CMP_TS3 (Bitfield-Mask: 0xff)                */
+
+/* --------------------------------  LEDTS1_TSCMP1  ------------------------------- */
+#define LEDTS1_TSCMP1_CMP_TS4_Pos             (0UL)                     /*!< LEDTS1 TSCMP1: CMP_TS4 (Bit 0)                              */
+#define LEDTS1_TSCMP1_CMP_TS4_Msk             (0xffUL)                  /*!< LEDTS1 TSCMP1: CMP_TS4 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_TSCMP1_CMP_TS5_Pos             (8UL)                     /*!< LEDTS1 TSCMP1: CMP_TS5 (Bit 8)                              */
+#define LEDTS1_TSCMP1_CMP_TS5_Msk             (0xff00UL)                /*!< LEDTS1 TSCMP1: CMP_TS5 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_TSCMP1_CMP_TS6_Pos             (16UL)                    /*!< LEDTS1 TSCMP1: CMP_TS6 (Bit 16)                             */
+#define LEDTS1_TSCMP1_CMP_TS6_Msk             (0xff0000UL)              /*!< LEDTS1 TSCMP1: CMP_TS6 (Bitfield-Mask: 0xff)                */
+#define LEDTS1_TSCMP1_CMP_TS7_Pos             (24UL)                    /*!< LEDTS1 TSCMP1: CMP_TS7 (Bit 24)                             */
+#define LEDTS1_TSCMP1_CMP_TS7_Msk             (0xff000000UL)            /*!< LEDTS1 TSCMP1: CMP_TS7 (Bitfield-Mask: 0xff)                */
+
+
+/* ================================================================================ */
+/* ================         struct 'LEDTS2' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  LEDTS2_ID  --------------------------------- */
+#define LEDTS2_ID_MOD_REV_Pos                 (0UL)                     /*!< LEDTS2 ID: MOD_REV (Bit 0)                                  */
+#define LEDTS2_ID_MOD_REV_Msk                 (0xffUL)                  /*!< LEDTS2 ID: MOD_REV (Bitfield-Mask: 0xff)                    */
+#define LEDTS2_ID_MOD_TYPE_Pos                (8UL)                     /*!< LEDTS2 ID: MOD_TYPE (Bit 8)                                 */
+#define LEDTS2_ID_MOD_TYPE_Msk                (0xff00UL)                /*!< LEDTS2 ID: MOD_TYPE (Bitfield-Mask: 0xff)                   */
+#define LEDTS2_ID_MOD_NUMBER_Pos              (16UL)                    /*!< LEDTS2 ID: MOD_NUMBER (Bit 16)                              */
+#define LEDTS2_ID_MOD_NUMBER_Msk              (0xffff0000UL)            /*!< LEDTS2 ID: MOD_NUMBER (Bitfield-Mask: 0xffff)               */
+
+/* -------------------------------  LEDTS2_GLOBCTL  ------------------------------- */
+#define LEDTS2_GLOBCTL_TS_EN_Pos              (0UL)                     /*!< LEDTS2 GLOBCTL: TS_EN (Bit 0)                               */
+#define LEDTS2_GLOBCTL_TS_EN_Msk              (0x1UL)                   /*!< LEDTS2 GLOBCTL: TS_EN (Bitfield-Mask: 0x01)                 */
+#define LEDTS2_GLOBCTL_LD_EN_Pos              (1UL)                     /*!< LEDTS2 GLOBCTL: LD_EN (Bit 1)                               */
+#define LEDTS2_GLOBCTL_LD_EN_Msk              (0x2UL)                   /*!< LEDTS2 GLOBCTL: LD_EN (Bitfield-Mask: 0x01)                 */
+#define LEDTS2_GLOBCTL_CMTR_Pos               (2UL)                     /*!< LEDTS2 GLOBCTL: CMTR (Bit 2)                                */
+#define LEDTS2_GLOBCTL_CMTR_Msk               (0x4UL)                   /*!< LEDTS2 GLOBCTL: CMTR (Bitfield-Mask: 0x01)                  */
+#define LEDTS2_GLOBCTL_ENSYNC_Pos             (3UL)                     /*!< LEDTS2 GLOBCTL: ENSYNC (Bit 3)                              */
+#define LEDTS2_GLOBCTL_ENSYNC_Msk             (0x8UL)                   /*!< LEDTS2 GLOBCTL: ENSYNC (Bitfield-Mask: 0x01)                */
+#define LEDTS2_GLOBCTL_SUSCFG_Pos             (8UL)                     /*!< LEDTS2 GLOBCTL: SUSCFG (Bit 8)                              */
+#define LEDTS2_GLOBCTL_SUSCFG_Msk             (0x100UL)                 /*!< LEDTS2 GLOBCTL: SUSCFG (Bitfield-Mask: 0x01)                */
+#define LEDTS2_GLOBCTL_MASKVAL_Pos            (9UL)                     /*!< LEDTS2 GLOBCTL: MASKVAL (Bit 9)                             */
+#define LEDTS2_GLOBCTL_MASKVAL_Msk            (0xe00UL)                 /*!< LEDTS2 GLOBCTL: MASKVAL (Bitfield-Mask: 0x07)               */
+#define LEDTS2_GLOBCTL_FENVAL_Pos             (12UL)                    /*!< LEDTS2 GLOBCTL: FENVAL (Bit 12)                             */
+#define LEDTS2_GLOBCTL_FENVAL_Msk             (0x1000UL)                /*!< LEDTS2 GLOBCTL: FENVAL (Bitfield-Mask: 0x01)                */
+#define LEDTS2_GLOBCTL_ITS_EN_Pos             (13UL)                    /*!< LEDTS2 GLOBCTL: ITS_EN (Bit 13)                             */
+#define LEDTS2_GLOBCTL_ITS_EN_Msk             (0x2000UL)                /*!< LEDTS2 GLOBCTL: ITS_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS2_GLOBCTL_ITF_EN_Pos             (14UL)                    /*!< LEDTS2 GLOBCTL: ITF_EN (Bit 14)                             */
+#define LEDTS2_GLOBCTL_ITF_EN_Msk             (0x4000UL)                /*!< LEDTS2 GLOBCTL: ITF_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS2_GLOBCTL_ITP_EN_Pos             (15UL)                    /*!< LEDTS2 GLOBCTL: ITP_EN (Bit 15)                             */
+#define LEDTS2_GLOBCTL_ITP_EN_Msk             (0x8000UL)                /*!< LEDTS2 GLOBCTL: ITP_EN (Bitfield-Mask: 0x01)                */
+#define LEDTS2_GLOBCTL_CLK_PS_Pos             (16UL)                    /*!< LEDTS2 GLOBCTL: CLK_PS (Bit 16)                             */
+#define LEDTS2_GLOBCTL_CLK_PS_Msk             (0xffff0000UL)            /*!< LEDTS2 GLOBCTL: CLK_PS (Bitfield-Mask: 0xffff)              */
+
+/* --------------------------------  LEDTS2_FNCTL  -------------------------------- */
+#define LEDTS2_FNCTL_PADT_Pos                 (0UL)                     /*!< LEDTS2 FNCTL: PADT (Bit 0)                                  */
+#define LEDTS2_FNCTL_PADT_Msk                 (0x7UL)                   /*!< LEDTS2 FNCTL: PADT (Bitfield-Mask: 0x07)                    */
+#define LEDTS2_FNCTL_PADTSW_Pos               (3UL)                     /*!< LEDTS2 FNCTL: PADTSW (Bit 3)                                */
+#define LEDTS2_FNCTL_PADTSW_Msk               (0x8UL)                   /*!< LEDTS2 FNCTL: PADTSW (Bitfield-Mask: 0x01)                  */
+#define LEDTS2_FNCTL_EPULL_Pos                (4UL)                     /*!< LEDTS2 FNCTL: EPULL (Bit 4)                                 */
+#define LEDTS2_FNCTL_EPULL_Msk                (0x10UL)                  /*!< LEDTS2 FNCTL: EPULL (Bitfield-Mask: 0x01)                   */
+#define LEDTS2_FNCTL_FNCOL_Pos                (5UL)                     /*!< LEDTS2 FNCTL: FNCOL (Bit 5)                                 */
+#define LEDTS2_FNCTL_FNCOL_Msk                (0xe0UL)                  /*!< LEDTS2 FNCTL: FNCOL (Bitfield-Mask: 0x07)                   */
+#define LEDTS2_FNCTL_ACCCNT_Pos               (16UL)                    /*!< LEDTS2 FNCTL: ACCCNT (Bit 16)                               */
+#define LEDTS2_FNCTL_ACCCNT_Msk               (0xf0000UL)               /*!< LEDTS2 FNCTL: ACCCNT (Bitfield-Mask: 0x0f)                  */
+#define LEDTS2_FNCTL_TSCCMP_Pos               (20UL)                    /*!< LEDTS2 FNCTL: TSCCMP (Bit 20)                               */
+#define LEDTS2_FNCTL_TSCCMP_Msk               (0x100000UL)              /*!< LEDTS2 FNCTL: TSCCMP (Bitfield-Mask: 0x01)                  */
+#define LEDTS2_FNCTL_TSOEXT_Pos               (21UL)                    /*!< LEDTS2 FNCTL: TSOEXT (Bit 21)                               */
+#define LEDTS2_FNCTL_TSOEXT_Msk               (0x600000UL)              /*!< LEDTS2 FNCTL: TSOEXT (Bitfield-Mask: 0x03)                  */
+#define LEDTS2_FNCTL_TSCTRR_Pos               (23UL)                    /*!< LEDTS2 FNCTL: TSCTRR (Bit 23)                               */
+#define LEDTS2_FNCTL_TSCTRR_Msk               (0x800000UL)              /*!< LEDTS2 FNCTL: TSCTRR (Bitfield-Mask: 0x01)                  */
+#define LEDTS2_FNCTL_TSCTRSAT_Pos             (24UL)                    /*!< LEDTS2 FNCTL: TSCTRSAT (Bit 24)                             */
+#define LEDTS2_FNCTL_TSCTRSAT_Msk             (0x1000000UL)             /*!< LEDTS2 FNCTL: TSCTRSAT (Bitfield-Mask: 0x01)                */
+#define LEDTS2_FNCTL_NR_TSIN_Pos              (25UL)                    /*!< LEDTS2 FNCTL: NR_TSIN (Bit 25)                              */
+#define LEDTS2_FNCTL_NR_TSIN_Msk              (0xe000000UL)             /*!< LEDTS2 FNCTL: NR_TSIN (Bitfield-Mask: 0x07)                 */
+#define LEDTS2_FNCTL_COLLEV_Pos               (28UL)                    /*!< LEDTS2 FNCTL: COLLEV (Bit 28)                               */
+#define LEDTS2_FNCTL_COLLEV_Msk               (0x10000000UL)            /*!< LEDTS2 FNCTL: COLLEV (Bitfield-Mask: 0x01)                  */
+#define LEDTS2_FNCTL_NR_LEDCOL_Pos            (29UL)                    /*!< LEDTS2 FNCTL: NR_LEDCOL (Bit 29)                            */
+#define LEDTS2_FNCTL_NR_LEDCOL_Msk            (0xe0000000UL)            /*!< LEDTS2 FNCTL: NR_LEDCOL (Bitfield-Mask: 0x07)               */
+
+/* ---------------------------------  LEDTS2_EVFR  -------------------------------- */
+#define LEDTS2_EVFR_TSF_Pos                   (0UL)                     /*!< LEDTS2 EVFR: TSF (Bit 0)                                    */
+#define LEDTS2_EVFR_TSF_Msk                   (0x1UL)                   /*!< LEDTS2 EVFR: TSF (Bitfield-Mask: 0x01)                      */
+#define LEDTS2_EVFR_TFF_Pos                   (1UL)                     /*!< LEDTS2 EVFR: TFF (Bit 1)                                    */
+#define LEDTS2_EVFR_TFF_Msk                   (0x2UL)                   /*!< LEDTS2 EVFR: TFF (Bitfield-Mask: 0x01)                      */
+#define LEDTS2_EVFR_TPF_Pos                   (2UL)                     /*!< LEDTS2 EVFR: TPF (Bit 2)                                    */
+#define LEDTS2_EVFR_TPF_Msk                   (0x4UL)                   /*!< LEDTS2 EVFR: TPF (Bitfield-Mask: 0x01)                      */
+#define LEDTS2_EVFR_TSCTROVF_Pos              (3UL)                     /*!< LEDTS2 EVFR: TSCTROVF (Bit 3)                               */
+#define LEDTS2_EVFR_TSCTROVF_Msk              (0x8UL)                   /*!< LEDTS2 EVFR: TSCTROVF (Bitfield-Mask: 0x01)                 */
+#define LEDTS2_EVFR_CTSF_Pos                  (16UL)                    /*!< LEDTS2 EVFR: CTSF (Bit 16)                                  */
+#define LEDTS2_EVFR_CTSF_Msk                  (0x10000UL)               /*!< LEDTS2 EVFR: CTSF (Bitfield-Mask: 0x01)                     */
+#define LEDTS2_EVFR_CTFF_Pos                  (17UL)                    /*!< LEDTS2 EVFR: CTFF (Bit 17)                                  */
+#define LEDTS2_EVFR_CTFF_Msk                  (0x20000UL)               /*!< LEDTS2 EVFR: CTFF (Bitfield-Mask: 0x01)                     */
+#define LEDTS2_EVFR_CTPF_Pos                  (18UL)                    /*!< LEDTS2 EVFR: CTPF (Bit 18)                                  */
+#define LEDTS2_EVFR_CTPF_Msk                  (0x40000UL)               /*!< LEDTS2 EVFR: CTPF (Bitfield-Mask: 0x01)                     */
+
+/* --------------------------------  LEDTS2_TSVAL  -------------------------------- */
+#define LEDTS2_TSVAL_TSCTRVALR_Pos            (0UL)                     /*!< LEDTS2 TSVAL: TSCTRVALR (Bit 0)                             */
+#define LEDTS2_TSVAL_TSCTRVALR_Msk            (0xffffUL)                /*!< LEDTS2 TSVAL: TSCTRVALR (Bitfield-Mask: 0xffff)             */
+#define LEDTS2_TSVAL_TSCTRVAL_Pos             (16UL)                    /*!< LEDTS2 TSVAL: TSCTRVAL (Bit 16)                             */
+#define LEDTS2_TSVAL_TSCTRVAL_Msk             (0xffff0000UL)            /*!< LEDTS2 TSVAL: TSCTRVAL (Bitfield-Mask: 0xffff)              */
+
+/* --------------------------------  LEDTS2_LINE0  -------------------------------- */
+#define LEDTS2_LINE0_LINE_0_Pos               (0UL)                     /*!< LEDTS2 LINE0: LINE_0 (Bit 0)                                */
+#define LEDTS2_LINE0_LINE_0_Msk               (0xffUL)                  /*!< LEDTS2 LINE0: LINE_0 (Bitfield-Mask: 0xff)                  */
+#define LEDTS2_LINE0_LINE_1_Pos               (8UL)                     /*!< LEDTS2 LINE0: LINE_1 (Bit 8)                                */
+#define LEDTS2_LINE0_LINE_1_Msk               (0xff00UL)                /*!< LEDTS2 LINE0: LINE_1 (Bitfield-Mask: 0xff)                  */
+#define LEDTS2_LINE0_LINE_2_Pos               (16UL)                    /*!< LEDTS2 LINE0: LINE_2 (Bit 16)                               */
+#define LEDTS2_LINE0_LINE_2_Msk               (0xff0000UL)              /*!< LEDTS2 LINE0: LINE_2 (Bitfield-Mask: 0xff)                  */
+#define LEDTS2_LINE0_LINE_3_Pos               (24UL)                    /*!< LEDTS2 LINE0: LINE_3 (Bit 24)                               */
+#define LEDTS2_LINE0_LINE_3_Msk               (0xff000000UL)            /*!< LEDTS2 LINE0: LINE_3 (Bitfield-Mask: 0xff)                  */
+
+/* --------------------------------  LEDTS2_LINE1  -------------------------------- */
+#define LEDTS2_LINE1_LINE_4_Pos               (0UL)                     /*!< LEDTS2 LINE1: LINE_4 (Bit 0)                                */
+#define LEDTS2_LINE1_LINE_4_Msk               (0xffUL)                  /*!< LEDTS2 LINE1: LINE_4 (Bitfield-Mask: 0xff)                  */
+#define LEDTS2_LINE1_LINE_5_Pos               (8UL)                     /*!< LEDTS2 LINE1: LINE_5 (Bit 8)                                */
+#define LEDTS2_LINE1_LINE_5_Msk               (0xff00UL)                /*!< LEDTS2 LINE1: LINE_5 (Bitfield-Mask: 0xff)                  */
+#define LEDTS2_LINE1_LINE_6_Pos               (16UL)                    /*!< LEDTS2 LINE1: LINE_6 (Bit 16)                               */
+#define LEDTS2_LINE1_LINE_6_Msk               (0xff0000UL)              /*!< LEDTS2 LINE1: LINE_6 (Bitfield-Mask: 0xff)                  */
+#define LEDTS2_LINE1_LINE_A_Pos               (24UL)                    /*!< LEDTS2 LINE1: LINE_A (Bit 24)                               */
+#define LEDTS2_LINE1_LINE_A_Msk               (0xff000000UL)            /*!< LEDTS2 LINE1: LINE_A (Bitfield-Mask: 0xff)                  */
+
+/* --------------------------------  LEDTS2_LDCMP0  ------------------------------- */
+#define LEDTS2_LDCMP0_CMP_LD0_Pos             (0UL)                     /*!< LEDTS2 LDCMP0: CMP_LD0 (Bit 0)                              */
+#define LEDTS2_LDCMP0_CMP_LD0_Msk             (0xffUL)                  /*!< LEDTS2 LDCMP0: CMP_LD0 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_LDCMP0_CMP_LD1_Pos             (8UL)                     /*!< LEDTS2 LDCMP0: CMP_LD1 (Bit 8)                              */
+#define LEDTS2_LDCMP0_CMP_LD1_Msk             (0xff00UL)                /*!< LEDTS2 LDCMP0: CMP_LD1 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_LDCMP0_CMP_LD2_Pos             (16UL)                    /*!< LEDTS2 LDCMP0: CMP_LD2 (Bit 16)                             */
+#define LEDTS2_LDCMP0_CMP_LD2_Msk             (0xff0000UL)              /*!< LEDTS2 LDCMP0: CMP_LD2 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_LDCMP0_CMP_LD3_Pos             (24UL)                    /*!< LEDTS2 LDCMP0: CMP_LD3 (Bit 24)                             */
+#define LEDTS2_LDCMP0_CMP_LD3_Msk             (0xff000000UL)            /*!< LEDTS2 LDCMP0: CMP_LD3 (Bitfield-Mask: 0xff)                */
+
+/* --------------------------------  LEDTS2_LDCMP1  ------------------------------- */
+#define LEDTS2_LDCMP1_CMP_LD4_Pos             (0UL)                     /*!< LEDTS2 LDCMP1: CMP_LD4 (Bit 0)                              */
+#define LEDTS2_LDCMP1_CMP_LD4_Msk             (0xffUL)                  /*!< LEDTS2 LDCMP1: CMP_LD4 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_LDCMP1_CMP_LD5_Pos             (8UL)                     /*!< LEDTS2 LDCMP1: CMP_LD5 (Bit 8)                              */
+#define LEDTS2_LDCMP1_CMP_LD5_Msk             (0xff00UL)                /*!< LEDTS2 LDCMP1: CMP_LD5 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_LDCMP1_CMP_LD6_Pos             (16UL)                    /*!< LEDTS2 LDCMP1: CMP_LD6 (Bit 16)                             */
+#define LEDTS2_LDCMP1_CMP_LD6_Msk             (0xff0000UL)              /*!< LEDTS2 LDCMP1: CMP_LD6 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_LDCMP1_CMP_LDA_TSCOM_Pos       (24UL)                    /*!< LEDTS2 LDCMP1: CMP_LDA_TSCOM (Bit 24)                       */
+#define LEDTS2_LDCMP1_CMP_LDA_TSCOM_Msk       (0xff000000UL)            /*!< LEDTS2 LDCMP1: CMP_LDA_TSCOM (Bitfield-Mask: 0xff)          */
+
+/* --------------------------------  LEDTS2_TSCMP0  ------------------------------- */
+#define LEDTS2_TSCMP0_CMP_TS0_Pos             (0UL)                     /*!< LEDTS2 TSCMP0: CMP_TS0 (Bit 0)                              */
+#define LEDTS2_TSCMP0_CMP_TS0_Msk             (0xffUL)                  /*!< LEDTS2 TSCMP0: CMP_TS0 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_TSCMP0_CMP_TS1_Pos             (8UL)                     /*!< LEDTS2 TSCMP0: CMP_TS1 (Bit 8)                              */
+#define LEDTS2_TSCMP0_CMP_TS1_Msk             (0xff00UL)                /*!< LEDTS2 TSCMP0: CMP_TS1 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_TSCMP0_CMP_TS2_Pos             (16UL)                    /*!< LEDTS2 TSCMP0: CMP_TS2 (Bit 16)                             */
+#define LEDTS2_TSCMP0_CMP_TS2_Msk             (0xff0000UL)              /*!< LEDTS2 TSCMP0: CMP_TS2 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_TSCMP0_CMP_TS3_Pos             (24UL)                    /*!< LEDTS2 TSCMP0: CMP_TS3 (Bit 24)                             */
+#define LEDTS2_TSCMP0_CMP_TS3_Msk             (0xff000000UL)            /*!< LEDTS2 TSCMP0: CMP_TS3 (Bitfield-Mask: 0xff)                */
+
+/* --------------------------------  LEDTS2_TSCMP1  ------------------------------- */
+#define LEDTS2_TSCMP1_CMP_TS4_Pos             (0UL)                     /*!< LEDTS2 TSCMP1: CMP_TS4 (Bit 0)                              */
+#define LEDTS2_TSCMP1_CMP_TS4_Msk             (0xffUL)                  /*!< LEDTS2 TSCMP1: CMP_TS4 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_TSCMP1_CMP_TS5_Pos             (8UL)                     /*!< LEDTS2 TSCMP1: CMP_TS5 (Bit 8)                              */
+#define LEDTS2_TSCMP1_CMP_TS5_Msk             (0xff00UL)                /*!< LEDTS2 TSCMP1: CMP_TS5 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_TSCMP1_CMP_TS6_Pos             (16UL)                    /*!< LEDTS2 TSCMP1: CMP_TS6 (Bit 16)                             */
+#define LEDTS2_TSCMP1_CMP_TS6_Msk             (0xff0000UL)              /*!< LEDTS2 TSCMP1: CMP_TS6 (Bitfield-Mask: 0xff)                */
+#define LEDTS2_TSCMP1_CMP_TS7_Pos             (24UL)                    /*!< LEDTS2 TSCMP1: CMP_TS7 (Bit 24)                             */
+#define LEDTS2_TSCMP1_CMP_TS7_Msk             (0xff000000UL)            /*!< LEDTS2 TSCMP1: CMP_TS7 (Bitfield-Mask: 0xff)                */
 
 
 /* ================================================================================ */
@@ -2659,6 +3646,344 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 
 
 /* ================================================================================ */
+/* ================          struct 'CAN' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* -----------------------------------  CAN_CLC  ---------------------------------- */
+#define CAN_CLC_DISR_Pos                      (0UL)                     /*!< CAN CLC: DISR (Bit 0)                                       */
+#define CAN_CLC_DISR_Msk                      (0x1UL)                   /*!< CAN CLC: DISR (Bitfield-Mask: 0x01)                         */
+#define CAN_CLC_DISS_Pos                      (1UL)                     /*!< CAN CLC: DISS (Bit 1)                                       */
+#define CAN_CLC_DISS_Msk                      (0x2UL)                   /*!< CAN CLC: DISS (Bitfield-Mask: 0x01)                         */
+#define CAN_CLC_EDIS_Pos                      (3UL)                     /*!< CAN CLC: EDIS (Bit 3)                                       */
+#define CAN_CLC_EDIS_Msk                      (0x8UL)                   /*!< CAN CLC: EDIS (Bitfield-Mask: 0x01)                         */
+
+/* -----------------------------------  CAN_ID  ----------------------------------- */
+#define CAN_ID_MOD_REV_Pos                    (0UL)                     /*!< CAN ID: MOD_REV (Bit 0)                                     */
+#define CAN_ID_MOD_REV_Msk                    (0xffUL)                  /*!< CAN ID: MOD_REV (Bitfield-Mask: 0xff)                       */
+#define CAN_ID_MOD_TYPE_Pos                   (8UL)                     /*!< CAN ID: MOD_TYPE (Bit 8)                                    */
+#define CAN_ID_MOD_TYPE_Msk                   (0xff00UL)                /*!< CAN ID: MOD_TYPE (Bitfield-Mask: 0xff)                      */
+#define CAN_ID_MOD_NUMBER_Pos                 (16UL)                    /*!< CAN ID: MOD_NUMBER (Bit 16)                                 */
+#define CAN_ID_MOD_NUMBER_Msk                 (0xffff0000UL)            /*!< CAN ID: MOD_NUMBER (Bitfield-Mask: 0xffff)                  */
+
+/* -----------------------------------  CAN_FDR  ---------------------------------- */
+#define CAN_FDR_STEP_Pos                      (0UL)                     /*!< CAN FDR: STEP (Bit 0)                                       */
+#define CAN_FDR_STEP_Msk                      (0x3ffUL)                 /*!< CAN FDR: STEP (Bitfield-Mask: 0x3ff)                        */
+#define CAN_FDR_DM_Pos                        (14UL)                    /*!< CAN FDR: DM (Bit 14)                                        */
+#define CAN_FDR_DM_Msk                        (0xc000UL)                /*!< CAN FDR: DM (Bitfield-Mask: 0x03)                           */
+
+/* ----------------------------------  CAN_LIST  ---------------------------------- */
+#define CAN_LIST_BEGIN_Pos                    (0UL)                     /*!< CAN LIST: BEGIN (Bit 0)                                     */
+#define CAN_LIST_BEGIN_Msk                    (0xffUL)                  /*!< CAN LIST: BEGIN (Bitfield-Mask: 0xff)                       */
+#define CAN_LIST_END_Pos                      (8UL)                     /*!< CAN LIST: END (Bit 8)                                       */
+#define CAN_LIST_END_Msk                      (0xff00UL)                /*!< CAN LIST: END (Bitfield-Mask: 0xff)                         */
+#define CAN_LIST_SIZE_Pos                     (16UL)                    /*!< CAN LIST: SIZE (Bit 16)                                     */
+#define CAN_LIST_SIZE_Msk                     (0xff0000UL)              /*!< CAN LIST: SIZE (Bitfield-Mask: 0xff)                        */
+#define CAN_LIST_EMPTY_Pos                    (24UL)                    /*!< CAN LIST: EMPTY (Bit 24)                                    */
+#define CAN_LIST_EMPTY_Msk                    (0x1000000UL)             /*!< CAN LIST: EMPTY (Bitfield-Mask: 0x01)                       */
+
+/* ----------------------------------  CAN_MSPND  --------------------------------- */
+#define CAN_MSPND_PND_Pos                     (0UL)                     /*!< CAN MSPND: PND (Bit 0)                                      */
+#define CAN_MSPND_PND_Msk                     (0xffffffffUL)            /*!< CAN MSPND: PND (Bitfield-Mask: 0xffffffff)                  */
+
+/* ----------------------------------  CAN_MSID  ---------------------------------- */
+#define CAN_MSID_INDEX_Pos                    (0UL)                     /*!< CAN MSID: INDEX (Bit 0)                                     */
+#define CAN_MSID_INDEX_Msk                    (0x3fUL)                  /*!< CAN MSID: INDEX (Bitfield-Mask: 0x3f)                       */
+
+/* ---------------------------------  CAN_MSIMASK  -------------------------------- */
+#define CAN_MSIMASK_IM_Pos                    (0UL)                     /*!< CAN MSIMASK: IM (Bit 0)                                     */
+#define CAN_MSIMASK_IM_Msk                    (0xffffffffUL)            /*!< CAN MSIMASK: IM (Bitfield-Mask: 0xffffffff)                 */
+
+/* ---------------------------------  CAN_PANCTR  --------------------------------- */
+#define CAN_PANCTR_PANCMD_Pos                 (0UL)                     /*!< CAN PANCTR: PANCMD (Bit 0)                                  */
+#define CAN_PANCTR_PANCMD_Msk                 (0xffUL)                  /*!< CAN PANCTR: PANCMD (Bitfield-Mask: 0xff)                    */
+#define CAN_PANCTR_BUSY_Pos                   (8UL)                     /*!< CAN PANCTR: BUSY (Bit 8)                                    */
+#define CAN_PANCTR_BUSY_Msk                   (0x100UL)                 /*!< CAN PANCTR: BUSY (Bitfield-Mask: 0x01)                      */
+#define CAN_PANCTR_RBUSY_Pos                  (9UL)                     /*!< CAN PANCTR: RBUSY (Bit 9)                                   */
+#define CAN_PANCTR_RBUSY_Msk                  (0x200UL)                 /*!< CAN PANCTR: RBUSY (Bitfield-Mask: 0x01)                     */
+#define CAN_PANCTR_PANAR1_Pos                 (16UL)                    /*!< CAN PANCTR: PANAR1 (Bit 16)                                 */
+#define CAN_PANCTR_PANAR1_Msk                 (0xff0000UL)              /*!< CAN PANCTR: PANAR1 (Bitfield-Mask: 0xff)                    */
+#define CAN_PANCTR_PANAR2_Pos                 (24UL)                    /*!< CAN PANCTR: PANAR2 (Bit 24)                                 */
+#define CAN_PANCTR_PANAR2_Msk                 (0xff000000UL)            /*!< CAN PANCTR: PANAR2 (Bitfield-Mask: 0xff)                    */
+
+/* -----------------------------------  CAN_MCR  ---------------------------------- */
+#define CAN_MCR_CLKSEL_Pos                    (0UL)                     /*!< CAN MCR: CLKSEL (Bit 0)                                     */
+#define CAN_MCR_CLKSEL_Msk                    (0xfUL)                   /*!< CAN MCR: CLKSEL (Bitfield-Mask: 0x0f)                       */
+#define CAN_MCR_MPSEL_Pos                     (12UL)                    /*!< CAN MCR: MPSEL (Bit 12)                                     */
+#define CAN_MCR_MPSEL_Msk                     (0xf000UL)                /*!< CAN MCR: MPSEL (Bitfield-Mask: 0x0f)                        */
+
+/* ----------------------------------  CAN_MITR  ---------------------------------- */
+#define CAN_MITR_IT_Pos                       (0UL)                     /*!< CAN MITR: IT (Bit 0)                                        */
+#define CAN_MITR_IT_Msk                       (0xffUL)                  /*!< CAN MITR: IT (Bitfield-Mask: 0xff)                          */
+
+
+/* ================================================================================ */
+/* ================        Group 'CAN_NODE' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* --------------------------------  CAN_NODE_NCR  -------------------------------- */
+#define CAN_NODE_NCR_INIT_Pos                 (0UL)                     /*!< CAN_NODE NCR: INIT (Bit 0)                                  */
+#define CAN_NODE_NCR_INIT_Msk                 (0x1UL)                   /*!< CAN_NODE NCR: INIT (Bitfield-Mask: 0x01)                    */
+#define CAN_NODE_NCR_TRIE_Pos                 (1UL)                     /*!< CAN_NODE NCR: TRIE (Bit 1)                                  */
+#define CAN_NODE_NCR_TRIE_Msk                 (0x2UL)                   /*!< CAN_NODE NCR: TRIE (Bitfield-Mask: 0x01)                    */
+#define CAN_NODE_NCR_LECIE_Pos                (2UL)                     /*!< CAN_NODE NCR: LECIE (Bit 2)                                 */
+#define CAN_NODE_NCR_LECIE_Msk                (0x4UL)                   /*!< CAN_NODE NCR: LECIE (Bitfield-Mask: 0x01)                   */
+#define CAN_NODE_NCR_ALIE_Pos                 (3UL)                     /*!< CAN_NODE NCR: ALIE (Bit 3)                                  */
+#define CAN_NODE_NCR_ALIE_Msk                 (0x8UL)                   /*!< CAN_NODE NCR: ALIE (Bitfield-Mask: 0x01)                    */
+#define CAN_NODE_NCR_CANDIS_Pos               (4UL)                     /*!< CAN_NODE NCR: CANDIS (Bit 4)                                */
+#define CAN_NODE_NCR_CANDIS_Msk               (0x10UL)                  /*!< CAN_NODE NCR: CANDIS (Bitfield-Mask: 0x01)                  */
+#define CAN_NODE_NCR_TXDIS_Pos                (5UL)                     /*!< CAN_NODE NCR: TXDIS (Bit 5)                                 */
+#define CAN_NODE_NCR_TXDIS_Msk                (0x20UL)                  /*!< CAN_NODE NCR: TXDIS (Bitfield-Mask: 0x01)                   */
+#define CAN_NODE_NCR_CCE_Pos                  (6UL)                     /*!< CAN_NODE NCR: CCE (Bit 6)                                   */
+#define CAN_NODE_NCR_CCE_Msk                  (0x40UL)                  /*!< CAN_NODE NCR: CCE (Bitfield-Mask: 0x01)                     */
+#define CAN_NODE_NCR_CALM_Pos                 (7UL)                     /*!< CAN_NODE NCR: CALM (Bit 7)                                  */
+#define CAN_NODE_NCR_CALM_Msk                 (0x80UL)                  /*!< CAN_NODE NCR: CALM (Bitfield-Mask: 0x01)                    */
+
+/* --------------------------------  CAN_NODE_NSR  -------------------------------- */
+#define CAN_NODE_NSR_LEC_Pos                  (0UL)                     /*!< CAN_NODE NSR: LEC (Bit 0)                                   */
+#define CAN_NODE_NSR_LEC_Msk                  (0x7UL)                   /*!< CAN_NODE NSR: LEC (Bitfield-Mask: 0x07)                     */
+#define CAN_NODE_NSR_TXOK_Pos                 (3UL)                     /*!< CAN_NODE NSR: TXOK (Bit 3)                                  */
+#define CAN_NODE_NSR_TXOK_Msk                 (0x8UL)                   /*!< CAN_NODE NSR: TXOK (Bitfield-Mask: 0x01)                    */
+#define CAN_NODE_NSR_RXOK_Pos                 (4UL)                     /*!< CAN_NODE NSR: RXOK (Bit 4)                                  */
+#define CAN_NODE_NSR_RXOK_Msk                 (0x10UL)                  /*!< CAN_NODE NSR: RXOK (Bitfield-Mask: 0x01)                    */
+#define CAN_NODE_NSR_ALERT_Pos                (5UL)                     /*!< CAN_NODE NSR: ALERT (Bit 5)                                 */
+#define CAN_NODE_NSR_ALERT_Msk                (0x20UL)                  /*!< CAN_NODE NSR: ALERT (Bitfield-Mask: 0x01)                   */
+#define CAN_NODE_NSR_EWRN_Pos                 (6UL)                     /*!< CAN_NODE NSR: EWRN (Bit 6)                                  */
+#define CAN_NODE_NSR_EWRN_Msk                 (0x40UL)                  /*!< CAN_NODE NSR: EWRN (Bitfield-Mask: 0x01)                    */
+#define CAN_NODE_NSR_BOFF_Pos                 (7UL)                     /*!< CAN_NODE NSR: BOFF (Bit 7)                                  */
+#define CAN_NODE_NSR_BOFF_Msk                 (0x80UL)                  /*!< CAN_NODE NSR: BOFF (Bitfield-Mask: 0x01)                    */
+#define CAN_NODE_NSR_LLE_Pos                  (8UL)                     /*!< CAN_NODE NSR: LLE (Bit 8)                                   */
+#define CAN_NODE_NSR_LLE_Msk                  (0x100UL)                 /*!< CAN_NODE NSR: LLE (Bitfield-Mask: 0x01)                     */
+#define CAN_NODE_NSR_LOE_Pos                  (9UL)                     /*!< CAN_NODE NSR: LOE (Bit 9)                                   */
+#define CAN_NODE_NSR_LOE_Msk                  (0x200UL)                 /*!< CAN_NODE NSR: LOE (Bitfield-Mask: 0x01)                     */
+
+/* --------------------------------  CAN_NODE_NIPR  ------------------------------- */
+#define CAN_NODE_NIPR_ALINP_Pos               (0UL)                     /*!< CAN_NODE NIPR: ALINP (Bit 0)                                */
+#define CAN_NODE_NIPR_ALINP_Msk               (0xfUL)                   /*!< CAN_NODE NIPR: ALINP (Bitfield-Mask: 0x0f)                  */
+#define CAN_NODE_NIPR_LECINP_Pos              (4UL)                     /*!< CAN_NODE NIPR: LECINP (Bit 4)                               */
+#define CAN_NODE_NIPR_LECINP_Msk              (0xf0UL)                  /*!< CAN_NODE NIPR: LECINP (Bitfield-Mask: 0x0f)                 */
+#define CAN_NODE_NIPR_TRINP_Pos               (8UL)                     /*!< CAN_NODE NIPR: TRINP (Bit 8)                                */
+#define CAN_NODE_NIPR_TRINP_Msk               (0xf00UL)                 /*!< CAN_NODE NIPR: TRINP (Bitfield-Mask: 0x0f)                  */
+#define CAN_NODE_NIPR_CFCINP_Pos              (12UL)                    /*!< CAN_NODE NIPR: CFCINP (Bit 12)                              */
+#define CAN_NODE_NIPR_CFCINP_Msk              (0xf000UL)                /*!< CAN_NODE NIPR: CFCINP (Bitfield-Mask: 0x0f)                 */
+
+/* --------------------------------  CAN_NODE_NPCR  ------------------------------- */
+#define CAN_NODE_NPCR_RXSEL_Pos               (0UL)                     /*!< CAN_NODE NPCR: RXSEL (Bit 0)                                */
+#define CAN_NODE_NPCR_RXSEL_Msk               (0x7UL)                   /*!< CAN_NODE NPCR: RXSEL (Bitfield-Mask: 0x07)                  */
+#define CAN_NODE_NPCR_LBM_Pos                 (8UL)                     /*!< CAN_NODE NPCR: LBM (Bit 8)                                  */
+#define CAN_NODE_NPCR_LBM_Msk                 (0x100UL)                 /*!< CAN_NODE NPCR: LBM (Bitfield-Mask: 0x01)                    */
+
+/* --------------------------------  CAN_NODE_NBTR  ------------------------------- */
+#define CAN_NODE_NBTR_BRP_Pos                 (0UL)                     /*!< CAN_NODE NBTR: BRP (Bit 0)                                  */
+#define CAN_NODE_NBTR_BRP_Msk                 (0x3fUL)                  /*!< CAN_NODE NBTR: BRP (Bitfield-Mask: 0x3f)                    */
+#define CAN_NODE_NBTR_SJW_Pos                 (6UL)                     /*!< CAN_NODE NBTR: SJW (Bit 6)                                  */
+#define CAN_NODE_NBTR_SJW_Msk                 (0xc0UL)                  /*!< CAN_NODE NBTR: SJW (Bitfield-Mask: 0x03)                    */
+#define CAN_NODE_NBTR_TSEG1_Pos               (8UL)                     /*!< CAN_NODE NBTR: TSEG1 (Bit 8)                                */
+#define CAN_NODE_NBTR_TSEG1_Msk               (0xf00UL)                 /*!< CAN_NODE NBTR: TSEG1 (Bitfield-Mask: 0x0f)                  */
+#define CAN_NODE_NBTR_TSEG2_Pos               (12UL)                    /*!< CAN_NODE NBTR: TSEG2 (Bit 12)                               */
+#define CAN_NODE_NBTR_TSEG2_Msk               (0x7000UL)                /*!< CAN_NODE NBTR: TSEG2 (Bitfield-Mask: 0x07)                  */
+#define CAN_NODE_NBTR_DIV8_Pos                (15UL)                    /*!< CAN_NODE NBTR: DIV8 (Bit 15)                                */
+#define CAN_NODE_NBTR_DIV8_Msk                (0x8000UL)                /*!< CAN_NODE NBTR: DIV8 (Bitfield-Mask: 0x01)                   */
+
+/* -------------------------------  CAN_NODE_NECNT  ------------------------------- */
+#define CAN_NODE_NECNT_REC_Pos                (0UL)                     /*!< CAN_NODE NECNT: REC (Bit 0)                                 */
+#define CAN_NODE_NECNT_REC_Msk                (0xffUL)                  /*!< CAN_NODE NECNT: REC (Bitfield-Mask: 0xff)                   */
+#define CAN_NODE_NECNT_TEC_Pos                (8UL)                     /*!< CAN_NODE NECNT: TEC (Bit 8)                                 */
+#define CAN_NODE_NECNT_TEC_Msk                (0xff00UL)                /*!< CAN_NODE NECNT: TEC (Bitfield-Mask: 0xff)                   */
+#define CAN_NODE_NECNT_EWRNLVL_Pos            (16UL)                    /*!< CAN_NODE NECNT: EWRNLVL (Bit 16)                            */
+#define CAN_NODE_NECNT_EWRNLVL_Msk            (0xff0000UL)              /*!< CAN_NODE NECNT: EWRNLVL (Bitfield-Mask: 0xff)               */
+#define CAN_NODE_NECNT_LETD_Pos               (24UL)                    /*!< CAN_NODE NECNT: LETD (Bit 24)                               */
+#define CAN_NODE_NECNT_LETD_Msk               (0x1000000UL)             /*!< CAN_NODE NECNT: LETD (Bitfield-Mask: 0x01)                  */
+#define CAN_NODE_NECNT_LEINC_Pos              (25UL)                    /*!< CAN_NODE NECNT: LEINC (Bit 25)                              */
+#define CAN_NODE_NECNT_LEINC_Msk              (0x2000000UL)             /*!< CAN_NODE NECNT: LEINC (Bitfield-Mask: 0x01)                 */
+
+/* --------------------------------  CAN_NODE_NFCR  ------------------------------- */
+#define CAN_NODE_NFCR_CFC_Pos                 (0UL)                     /*!< CAN_NODE NFCR: CFC (Bit 0)                                  */
+#define CAN_NODE_NFCR_CFC_Msk                 (0xffffUL)                /*!< CAN_NODE NFCR: CFC (Bitfield-Mask: 0xffff)                  */
+#define CAN_NODE_NFCR_CFSEL_Pos               (16UL)                    /*!< CAN_NODE NFCR: CFSEL (Bit 16)                               */
+#define CAN_NODE_NFCR_CFSEL_Msk               (0x70000UL)               /*!< CAN_NODE NFCR: CFSEL (Bitfield-Mask: 0x07)                  */
+#define CAN_NODE_NFCR_CFMOD_Pos               (19UL)                    /*!< CAN_NODE NFCR: CFMOD (Bit 19)                               */
+#define CAN_NODE_NFCR_CFMOD_Msk               (0x180000UL)              /*!< CAN_NODE NFCR: CFMOD (Bitfield-Mask: 0x03)                  */
+#define CAN_NODE_NFCR_CFCIE_Pos               (22UL)                    /*!< CAN_NODE NFCR: CFCIE (Bit 22)                               */
+#define CAN_NODE_NFCR_CFCIE_Msk               (0x400000UL)              /*!< CAN_NODE NFCR: CFCIE (Bitfield-Mask: 0x01)                  */
+#define CAN_NODE_NFCR_CFCOV_Pos               (23UL)                    /*!< CAN_NODE NFCR: CFCOV (Bit 23)                               */
+#define CAN_NODE_NFCR_CFCOV_Msk               (0x800000UL)              /*!< CAN_NODE NFCR: CFCOV (Bitfield-Mask: 0x01)                  */
+
+
+/* ================================================================================ */
+/* ================     Cluster Group 'CAN_MO' Position & Mask     ================ */
+/* ================================================================================ */
+
+
+/* --------------------------------  CAN_MO_MOFCR  -------------------------------- */
+#define CAN_MO_MOFCR_MMC_Pos                  (0UL)                     /*!< CAN_MO MOFCR: MMC (Bit 0)                                   */
+#define CAN_MO_MOFCR_MMC_Msk                  (0xfUL)                   /*!< CAN_MO MOFCR: MMC (Bitfield-Mask: 0x0f)                     */
+#define CAN_MO_MOFCR_RXTOE_Pos                (4UL)                     /*!< CAN_MO MOFCR: RXTOE (Bit 4)                                 */
+#define CAN_MO_MOFCR_RXTOE_Msk                (0x10UL)                  /*!< CAN_MO MOFCR: RXTOE (Bitfield-Mask: 0x01)                   */
+#define CAN_MO_MOFCR_GDFS_Pos                 (8UL)                     /*!< CAN_MO MOFCR: GDFS (Bit 8)                                  */
+#define CAN_MO_MOFCR_GDFS_Msk                 (0x100UL)                 /*!< CAN_MO MOFCR: GDFS (Bitfield-Mask: 0x01)                    */
+#define CAN_MO_MOFCR_IDC_Pos                  (9UL)                     /*!< CAN_MO MOFCR: IDC (Bit 9)                                   */
+#define CAN_MO_MOFCR_IDC_Msk                  (0x200UL)                 /*!< CAN_MO MOFCR: IDC (Bitfield-Mask: 0x01)                     */
+#define CAN_MO_MOFCR_DLCC_Pos                 (10UL)                    /*!< CAN_MO MOFCR: DLCC (Bit 10)                                 */
+#define CAN_MO_MOFCR_DLCC_Msk                 (0x400UL)                 /*!< CAN_MO MOFCR: DLCC (Bitfield-Mask: 0x01)                    */
+#define CAN_MO_MOFCR_DATC_Pos                 (11UL)                    /*!< CAN_MO MOFCR: DATC (Bit 11)                                 */
+#define CAN_MO_MOFCR_DATC_Msk                 (0x800UL)                 /*!< CAN_MO MOFCR: DATC (Bitfield-Mask: 0x01)                    */
+#define CAN_MO_MOFCR_RXIE_Pos                 (16UL)                    /*!< CAN_MO MOFCR: RXIE (Bit 16)                                 */
+#define CAN_MO_MOFCR_RXIE_Msk                 (0x10000UL)               /*!< CAN_MO MOFCR: RXIE (Bitfield-Mask: 0x01)                    */
+#define CAN_MO_MOFCR_TXIE_Pos                 (17UL)                    /*!< CAN_MO MOFCR: TXIE (Bit 17)                                 */
+#define CAN_MO_MOFCR_TXIE_Msk                 (0x20000UL)               /*!< CAN_MO MOFCR: TXIE (Bitfield-Mask: 0x01)                    */
+#define CAN_MO_MOFCR_OVIE_Pos                 (18UL)                    /*!< CAN_MO MOFCR: OVIE (Bit 18)                                 */
+#define CAN_MO_MOFCR_OVIE_Msk                 (0x40000UL)               /*!< CAN_MO MOFCR: OVIE (Bitfield-Mask: 0x01)                    */
+#define CAN_MO_MOFCR_FRREN_Pos                (20UL)                    /*!< CAN_MO MOFCR: FRREN (Bit 20)                                */
+#define CAN_MO_MOFCR_FRREN_Msk                (0x100000UL)              /*!< CAN_MO MOFCR: FRREN (Bitfield-Mask: 0x01)                   */
+#define CAN_MO_MOFCR_RMM_Pos                  (21UL)                    /*!< CAN_MO MOFCR: RMM (Bit 21)                                  */
+#define CAN_MO_MOFCR_RMM_Msk                  (0x200000UL)              /*!< CAN_MO MOFCR: RMM (Bitfield-Mask: 0x01)                     */
+#define CAN_MO_MOFCR_SDT_Pos                  (22UL)                    /*!< CAN_MO MOFCR: SDT (Bit 22)                                  */
+#define CAN_MO_MOFCR_SDT_Msk                  (0x400000UL)              /*!< CAN_MO MOFCR: SDT (Bitfield-Mask: 0x01)                     */
+#define CAN_MO_MOFCR_STT_Pos                  (23UL)                    /*!< CAN_MO MOFCR: STT (Bit 23)                                  */
+#define CAN_MO_MOFCR_STT_Msk                  (0x800000UL)              /*!< CAN_MO MOFCR: STT (Bitfield-Mask: 0x01)                     */
+#define CAN_MO_MOFCR_DLC_Pos                  (24UL)                    /*!< CAN_MO MOFCR: DLC (Bit 24)                                  */
+#define CAN_MO_MOFCR_DLC_Msk                  (0xf000000UL)             /*!< CAN_MO MOFCR: DLC (Bitfield-Mask: 0x0f)                     */
+
+/* --------------------------------  CAN_MO_MOFGPR  ------------------------------- */
+#define CAN_MO_MOFGPR_BOT_Pos                 (0UL)                     /*!< CAN_MO MOFGPR: BOT (Bit 0)                                  */
+#define CAN_MO_MOFGPR_BOT_Msk                 (0xffUL)                  /*!< CAN_MO MOFGPR: BOT (Bitfield-Mask: 0xff)                    */
+#define CAN_MO_MOFGPR_TOP_Pos                 (8UL)                     /*!< CAN_MO MOFGPR: TOP (Bit 8)                                  */
+#define CAN_MO_MOFGPR_TOP_Msk                 (0xff00UL)                /*!< CAN_MO MOFGPR: TOP (Bitfield-Mask: 0xff)                    */
+#define CAN_MO_MOFGPR_CUR_Pos                 (16UL)                    /*!< CAN_MO MOFGPR: CUR (Bit 16)                                 */
+#define CAN_MO_MOFGPR_CUR_Msk                 (0xff0000UL)              /*!< CAN_MO MOFGPR: CUR (Bitfield-Mask: 0xff)                    */
+#define CAN_MO_MOFGPR_SEL_Pos                 (24UL)                    /*!< CAN_MO MOFGPR: SEL (Bit 24)                                 */
+#define CAN_MO_MOFGPR_SEL_Msk                 (0xff000000UL)            /*!< CAN_MO MOFGPR: SEL (Bitfield-Mask: 0xff)                    */
+
+/* --------------------------------  CAN_MO_MOIPR  -------------------------------- */
+#define CAN_MO_MOIPR_RXINP_Pos                (0UL)                     /*!< CAN_MO MOIPR: RXINP (Bit 0)                                 */
+#define CAN_MO_MOIPR_RXINP_Msk                (0xfUL)                   /*!< CAN_MO MOIPR: RXINP (Bitfield-Mask: 0x0f)                   */
+#define CAN_MO_MOIPR_TXINP_Pos                (4UL)                     /*!< CAN_MO MOIPR: TXINP (Bit 4)                                 */
+#define CAN_MO_MOIPR_TXINP_Msk                (0xf0UL)                  /*!< CAN_MO MOIPR: TXINP (Bitfield-Mask: 0x0f)                   */
+#define CAN_MO_MOIPR_MPN_Pos                  (8UL)                     /*!< CAN_MO MOIPR: MPN (Bit 8)                                   */
+#define CAN_MO_MOIPR_MPN_Msk                  (0xff00UL)                /*!< CAN_MO MOIPR: MPN (Bitfield-Mask: 0xff)                     */
+#define CAN_MO_MOIPR_CFCVAL_Pos               (16UL)                    /*!< CAN_MO MOIPR: CFCVAL (Bit 16)                               */
+#define CAN_MO_MOIPR_CFCVAL_Msk               (0xffff0000UL)            /*!< CAN_MO MOIPR: CFCVAL (Bitfield-Mask: 0xffff)                */
+
+/* --------------------------------  CAN_MO_MOAMR  -------------------------------- */
+#define CAN_MO_MOAMR_AM_Pos                   (0UL)                     /*!< CAN_MO MOAMR: AM (Bit 0)                                    */
+#define CAN_MO_MOAMR_AM_Msk                   (0x1fffffffUL)            /*!< CAN_MO MOAMR: AM (Bitfield-Mask: 0x1fffffff)                */
+#define CAN_MO_MOAMR_MIDE_Pos                 (29UL)                    /*!< CAN_MO MOAMR: MIDE (Bit 29)                                 */
+#define CAN_MO_MOAMR_MIDE_Msk                 (0x20000000UL)            /*!< CAN_MO MOAMR: MIDE (Bitfield-Mask: 0x01)                    */
+
+/* -------------------------------  CAN_MO_MODATAL  ------------------------------- */
+#define CAN_MO_MODATAL_DB0_Pos                (0UL)                     /*!< CAN_MO MODATAL: DB0 (Bit 0)                                 */
+#define CAN_MO_MODATAL_DB0_Msk                (0xffUL)                  /*!< CAN_MO MODATAL: DB0 (Bitfield-Mask: 0xff)                   */
+#define CAN_MO_MODATAL_DB1_Pos                (8UL)                     /*!< CAN_MO MODATAL: DB1 (Bit 8)                                 */
+#define CAN_MO_MODATAL_DB1_Msk                (0xff00UL)                /*!< CAN_MO MODATAL: DB1 (Bitfield-Mask: 0xff)                   */
+#define CAN_MO_MODATAL_DB2_Pos                (16UL)                    /*!< CAN_MO MODATAL: DB2 (Bit 16)                                */
+#define CAN_MO_MODATAL_DB2_Msk                (0xff0000UL)              /*!< CAN_MO MODATAL: DB2 (Bitfield-Mask: 0xff)                   */
+#define CAN_MO_MODATAL_DB3_Pos                (24UL)                    /*!< CAN_MO MODATAL: DB3 (Bit 24)                                */
+#define CAN_MO_MODATAL_DB3_Msk                (0xff000000UL)            /*!< CAN_MO MODATAL: DB3 (Bitfield-Mask: 0xff)                   */
+
+/* -------------------------------  CAN_MO_MODATAH  ------------------------------- */
+#define CAN_MO_MODATAH_DB4_Pos                (0UL)                     /*!< CAN_MO MODATAH: DB4 (Bit 0)                                 */
+#define CAN_MO_MODATAH_DB4_Msk                (0xffUL)                  /*!< CAN_MO MODATAH: DB4 (Bitfield-Mask: 0xff)                   */
+#define CAN_MO_MODATAH_DB5_Pos                (8UL)                     /*!< CAN_MO MODATAH: DB5 (Bit 8)                                 */
+#define CAN_MO_MODATAH_DB5_Msk                (0xff00UL)                /*!< CAN_MO MODATAH: DB5 (Bitfield-Mask: 0xff)                   */
+#define CAN_MO_MODATAH_DB6_Pos                (16UL)                    /*!< CAN_MO MODATAH: DB6 (Bit 16)                                */
+#define CAN_MO_MODATAH_DB6_Msk                (0xff0000UL)              /*!< CAN_MO MODATAH: DB6 (Bitfield-Mask: 0xff)                   */
+#define CAN_MO_MODATAH_DB7_Pos                (24UL)                    /*!< CAN_MO MODATAH: DB7 (Bit 24)                                */
+#define CAN_MO_MODATAH_DB7_Msk                (0xff000000UL)            /*!< CAN_MO MODATAH: DB7 (Bitfield-Mask: 0xff)                   */
+
+/* ---------------------------------  CAN_MO_MOAR  -------------------------------- */
+#define CAN_MO_MOAR_ID_Pos                    (0UL)                     /*!< CAN_MO MOAR: ID (Bit 0)                                     */
+#define CAN_MO_MOAR_ID_Msk                    (0x1fffffffUL)            /*!< CAN_MO MOAR: ID (Bitfield-Mask: 0x1fffffff)                 */
+#define CAN_MO_MOAR_IDE_Pos                   (29UL)                    /*!< CAN_MO MOAR: IDE (Bit 29)                                   */
+#define CAN_MO_MOAR_IDE_Msk                   (0x20000000UL)            /*!< CAN_MO MOAR: IDE (Bitfield-Mask: 0x01)                      */
+#define CAN_MO_MOAR_PRI_Pos                   (30UL)                    /*!< CAN_MO MOAR: PRI (Bit 30)                                   */
+#define CAN_MO_MOAR_PRI_Msk                   (0xc0000000UL)            /*!< CAN_MO MOAR: PRI (Bitfield-Mask: 0x03)                      */
+
+/* --------------------------------  CAN_MO_MOCTR  -------------------------------- */
+#define CAN_MO_MOCTR_RESRXPND_Pos             (0UL)                     /*!< CAN_MO MOCTR: RESRXPND (Bit 0)                              */
+#define CAN_MO_MOCTR_RESRXPND_Msk             (0x1UL)                   /*!< CAN_MO MOCTR: RESRXPND (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_RESTXPND_Pos             (1UL)                     /*!< CAN_MO MOCTR: RESTXPND (Bit 1)                              */
+#define CAN_MO_MOCTR_RESTXPND_Msk             (0x2UL)                   /*!< CAN_MO MOCTR: RESTXPND (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_RESRXUPD_Pos             (2UL)                     /*!< CAN_MO MOCTR: RESRXUPD (Bit 2)                              */
+#define CAN_MO_MOCTR_RESRXUPD_Msk             (0x4UL)                   /*!< CAN_MO MOCTR: RESRXUPD (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_RESNEWDAT_Pos            (3UL)                     /*!< CAN_MO MOCTR: RESNEWDAT (Bit 3)                             */
+#define CAN_MO_MOCTR_RESNEWDAT_Msk            (0x8UL)                   /*!< CAN_MO MOCTR: RESNEWDAT (Bitfield-Mask: 0x01)               */
+#define CAN_MO_MOCTR_RESMSGLST_Pos            (4UL)                     /*!< CAN_MO MOCTR: RESMSGLST (Bit 4)                             */
+#define CAN_MO_MOCTR_RESMSGLST_Msk            (0x10UL)                  /*!< CAN_MO MOCTR: RESMSGLST (Bitfield-Mask: 0x01)               */
+#define CAN_MO_MOCTR_RESMSGVAL_Pos            (5UL)                     /*!< CAN_MO MOCTR: RESMSGVAL (Bit 5)                             */
+#define CAN_MO_MOCTR_RESMSGVAL_Msk            (0x20UL)                  /*!< CAN_MO MOCTR: RESMSGVAL (Bitfield-Mask: 0x01)               */
+#define CAN_MO_MOCTR_RESRTSEL_Pos             (6UL)                     /*!< CAN_MO MOCTR: RESRTSEL (Bit 6)                              */
+#define CAN_MO_MOCTR_RESRTSEL_Msk             (0x40UL)                  /*!< CAN_MO MOCTR: RESRTSEL (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_RESRXEN_Pos              (7UL)                     /*!< CAN_MO MOCTR: RESRXEN (Bit 7)                               */
+#define CAN_MO_MOCTR_RESRXEN_Msk              (0x80UL)                  /*!< CAN_MO MOCTR: RESRXEN (Bitfield-Mask: 0x01)                 */
+#define CAN_MO_MOCTR_RESTXRQ_Pos              (8UL)                     /*!< CAN_MO MOCTR: RESTXRQ (Bit 8)                               */
+#define CAN_MO_MOCTR_RESTXRQ_Msk              (0x100UL)                 /*!< CAN_MO MOCTR: RESTXRQ (Bitfield-Mask: 0x01)                 */
+#define CAN_MO_MOCTR_RESTXEN0_Pos             (9UL)                     /*!< CAN_MO MOCTR: RESTXEN0 (Bit 9)                              */
+#define CAN_MO_MOCTR_RESTXEN0_Msk             (0x200UL)                 /*!< CAN_MO MOCTR: RESTXEN0 (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_RESTXEN1_Pos             (10UL)                    /*!< CAN_MO MOCTR: RESTXEN1 (Bit 10)                             */
+#define CAN_MO_MOCTR_RESTXEN1_Msk             (0x400UL)                 /*!< CAN_MO MOCTR: RESTXEN1 (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_RESDIR_Pos               (11UL)                    /*!< CAN_MO MOCTR: RESDIR (Bit 11)                               */
+#define CAN_MO_MOCTR_RESDIR_Msk               (0x800UL)                 /*!< CAN_MO MOCTR: RESDIR (Bitfield-Mask: 0x01)                  */
+#define CAN_MO_MOCTR_SETRXPND_Pos             (16UL)                    /*!< CAN_MO MOCTR: SETRXPND (Bit 16)                             */
+#define CAN_MO_MOCTR_SETRXPND_Msk             (0x10000UL)               /*!< CAN_MO MOCTR: SETRXPND (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_SETTXPND_Pos             (17UL)                    /*!< CAN_MO MOCTR: SETTXPND (Bit 17)                             */
+#define CAN_MO_MOCTR_SETTXPND_Msk             (0x20000UL)               /*!< CAN_MO MOCTR: SETTXPND (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_SETRXUPD_Pos             (18UL)                    /*!< CAN_MO MOCTR: SETRXUPD (Bit 18)                             */
+#define CAN_MO_MOCTR_SETRXUPD_Msk             (0x40000UL)               /*!< CAN_MO MOCTR: SETRXUPD (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_SETNEWDAT_Pos            (19UL)                    /*!< CAN_MO MOCTR: SETNEWDAT (Bit 19)                            */
+#define CAN_MO_MOCTR_SETNEWDAT_Msk            (0x80000UL)               /*!< CAN_MO MOCTR: SETNEWDAT (Bitfield-Mask: 0x01)               */
+#define CAN_MO_MOCTR_SETMSGLST_Pos            (20UL)                    /*!< CAN_MO MOCTR: SETMSGLST (Bit 20)                            */
+#define CAN_MO_MOCTR_SETMSGLST_Msk            (0x100000UL)              /*!< CAN_MO MOCTR: SETMSGLST (Bitfield-Mask: 0x01)               */
+#define CAN_MO_MOCTR_SETMSGVAL_Pos            (21UL)                    /*!< CAN_MO MOCTR: SETMSGVAL (Bit 21)                            */
+#define CAN_MO_MOCTR_SETMSGVAL_Msk            (0x200000UL)              /*!< CAN_MO MOCTR: SETMSGVAL (Bitfield-Mask: 0x01)               */
+#define CAN_MO_MOCTR_SETRTSEL_Pos             (22UL)                    /*!< CAN_MO MOCTR: SETRTSEL (Bit 22)                             */
+#define CAN_MO_MOCTR_SETRTSEL_Msk             (0x400000UL)              /*!< CAN_MO MOCTR: SETRTSEL (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_SETRXEN_Pos              (23UL)                    /*!< CAN_MO MOCTR: SETRXEN (Bit 23)                              */
+#define CAN_MO_MOCTR_SETRXEN_Msk              (0x800000UL)              /*!< CAN_MO MOCTR: SETRXEN (Bitfield-Mask: 0x01)                 */
+#define CAN_MO_MOCTR_SETTXRQ_Pos              (24UL)                    /*!< CAN_MO MOCTR: SETTXRQ (Bit 24)                              */
+#define CAN_MO_MOCTR_SETTXRQ_Msk              (0x1000000UL)             /*!< CAN_MO MOCTR: SETTXRQ (Bitfield-Mask: 0x01)                 */
+#define CAN_MO_MOCTR_SETTXEN0_Pos             (25UL)                    /*!< CAN_MO MOCTR: SETTXEN0 (Bit 25)                             */
+#define CAN_MO_MOCTR_SETTXEN0_Msk             (0x2000000UL)             /*!< CAN_MO MOCTR: SETTXEN0 (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_SETTXEN1_Pos             (26UL)                    /*!< CAN_MO MOCTR: SETTXEN1 (Bit 26)                             */
+#define CAN_MO_MOCTR_SETTXEN1_Msk             (0x4000000UL)             /*!< CAN_MO MOCTR: SETTXEN1 (Bitfield-Mask: 0x01)                */
+#define CAN_MO_MOCTR_SETDIR_Pos               (27UL)                    /*!< CAN_MO MOCTR: SETDIR (Bit 27)                               */
+#define CAN_MO_MOCTR_SETDIR_Msk               (0x8000000UL)             /*!< CAN_MO MOCTR: SETDIR (Bitfield-Mask: 0x01)                  */
+
+/* --------------------------------  CAN_MO_MOSTAT  ------------------------------- */
+#define CAN_MO_MOSTAT_RXPND_Pos               (0UL)                     /*!< CAN_MO MOSTAT: RXPND (Bit 0)                                */
+#define CAN_MO_MOSTAT_RXPND_Msk               (0x1UL)                   /*!< CAN_MO MOSTAT: RXPND (Bitfield-Mask: 0x01)                  */
+#define CAN_MO_MOSTAT_TXPND_Pos               (1UL)                     /*!< CAN_MO MOSTAT: TXPND (Bit 1)                                */
+#define CAN_MO_MOSTAT_TXPND_Msk               (0x2UL)                   /*!< CAN_MO MOSTAT: TXPND (Bitfield-Mask: 0x01)                  */
+#define CAN_MO_MOSTAT_RXUPD_Pos               (2UL)                     /*!< CAN_MO MOSTAT: RXUPD (Bit 2)                                */
+#define CAN_MO_MOSTAT_RXUPD_Msk               (0x4UL)                   /*!< CAN_MO MOSTAT: RXUPD (Bitfield-Mask: 0x01)                  */
+#define CAN_MO_MOSTAT_NEWDAT_Pos              (3UL)                     /*!< CAN_MO MOSTAT: NEWDAT (Bit 3)                               */
+#define CAN_MO_MOSTAT_NEWDAT_Msk              (0x8UL)                   /*!< CAN_MO MOSTAT: NEWDAT (Bitfield-Mask: 0x01)                 */
+#define CAN_MO_MOSTAT_MSGLST_Pos              (4UL)                     /*!< CAN_MO MOSTAT: MSGLST (Bit 4)                               */
+#define CAN_MO_MOSTAT_MSGLST_Msk              (0x10UL)                  /*!< CAN_MO MOSTAT: MSGLST (Bitfield-Mask: 0x01)                 */
+#define CAN_MO_MOSTAT_MSGVAL_Pos              (5UL)                     /*!< CAN_MO MOSTAT: MSGVAL (Bit 5)                               */
+#define CAN_MO_MOSTAT_MSGVAL_Msk              (0x20UL)                  /*!< CAN_MO MOSTAT: MSGVAL (Bitfield-Mask: 0x01)                 */
+#define CAN_MO_MOSTAT_RTSEL_Pos               (6UL)                     /*!< CAN_MO MOSTAT: RTSEL (Bit 6)                                */
+#define CAN_MO_MOSTAT_RTSEL_Msk               (0x40UL)                  /*!< CAN_MO MOSTAT: RTSEL (Bitfield-Mask: 0x01)                  */
+#define CAN_MO_MOSTAT_RXEN_Pos                (7UL)                     /*!< CAN_MO MOSTAT: RXEN (Bit 7)                                 */
+#define CAN_MO_MOSTAT_RXEN_Msk                (0x80UL)                  /*!< CAN_MO MOSTAT: RXEN (Bitfield-Mask: 0x01)                   */
+#define CAN_MO_MOSTAT_TXRQ_Pos                (8UL)                     /*!< CAN_MO MOSTAT: TXRQ (Bit 8)                                 */
+#define CAN_MO_MOSTAT_TXRQ_Msk                (0x100UL)                 /*!< CAN_MO MOSTAT: TXRQ (Bitfield-Mask: 0x01)                   */
+#define CAN_MO_MOSTAT_TXEN0_Pos               (9UL)                     /*!< CAN_MO MOSTAT: TXEN0 (Bit 9)                                */
+#define CAN_MO_MOSTAT_TXEN0_Msk               (0x200UL)                 /*!< CAN_MO MOSTAT: TXEN0 (Bitfield-Mask: 0x01)                  */
+#define CAN_MO_MOSTAT_TXEN1_Pos               (10UL)                    /*!< CAN_MO MOSTAT: TXEN1 (Bit 10)                               */
+#define CAN_MO_MOSTAT_TXEN1_Msk               (0x400UL)                 /*!< CAN_MO MOSTAT: TXEN1 (Bitfield-Mask: 0x01)                  */
+#define CAN_MO_MOSTAT_DIR_Pos                 (11UL)                    /*!< CAN_MO MOSTAT: DIR (Bit 11)                                 */
+#define CAN_MO_MOSTAT_DIR_Msk                 (0x800UL)                 /*!< CAN_MO MOSTAT: DIR (Bitfield-Mask: 0x01)                    */
+#define CAN_MO_MOSTAT_LIST_Pos                (12UL)                    /*!< CAN_MO MOSTAT: LIST (Bit 12)                                */
+#define CAN_MO_MOSTAT_LIST_Msk                (0xf000UL)                /*!< CAN_MO MOSTAT: LIST (Bitfield-Mask: 0x0f)                   */
+#define CAN_MO_MOSTAT_PPREV_Pos               (16UL)                    /*!< CAN_MO MOSTAT: PPREV (Bit 16)                               */
+#define CAN_MO_MOSTAT_PPREV_Msk               (0xff0000UL)              /*!< CAN_MO MOSTAT: PPREV (Bitfield-Mask: 0xff)                  */
+#define CAN_MO_MOSTAT_PNEXT_Pos               (24UL)                    /*!< CAN_MO MOSTAT: PNEXT (Bit 24)                               */
+#define CAN_MO_MOSTAT_PNEXT_Msk               (0xff000000UL)            /*!< CAN_MO MOSTAT: PNEXT (Bitfield-Mask: 0xff)                  */
+
+
+/* ================================================================================ */
 /* ================      struct 'SCU_GENERAL' Position & Mask      ================ */
 /* ================================================================================ */
 
@@ -2698,6 +4023,12 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 /* -----------------------------  SCU_GENERAL_CCUCON  ----------------------------- */
 #define SCU_GENERAL_CCUCON_GSC40_Pos          (0UL)                     /*!< SCU_GENERAL CCUCON: GSC40 (Bit 0)                           */
 #define SCU_GENERAL_CCUCON_GSC40_Msk          (0x1UL)                   /*!< SCU_GENERAL CCUCON: GSC40 (Bitfield-Mask: 0x01)             */
+#define SCU_GENERAL_CCUCON_GSC41_Pos          (1UL)                     /*!< SCU_GENERAL CCUCON: GSC41 (Bit 1)                           */
+#define SCU_GENERAL_CCUCON_GSC41_Msk          (0x2UL)                   /*!< SCU_GENERAL CCUCON: GSC41 (Bitfield-Mask: 0x01)             */
+#define SCU_GENERAL_CCUCON_GSC80_Pos          (8UL)                     /*!< SCU_GENERAL CCUCON: GSC80 (Bit 8)                           */
+#define SCU_GENERAL_CCUCON_GSC80_Msk          (0x100UL)                 /*!< SCU_GENERAL CCUCON: GSC80 (Bitfield-Mask: 0x01)             */
+#define SCU_GENERAL_CCUCON_GSC81_Pos          (9UL)                     /*!< SCU_GENERAL CCUCON: GSC81 (Bit 9)                           */
+#define SCU_GENERAL_CCUCON_GSC81_Msk          (0x200UL)                 /*!< SCU_GENERAL CCUCON: GSC81 (Bitfield-Mask: 0x01)             */
 
 /* -----------------------------  SCU_GENERAL_MIRRSTS  ---------------------------- */
 #define SCU_GENERAL_MIRRSTS_RTC_CTR_Pos       (0UL)                     /*!< SCU_GENERAL MIRRSTS: RTC_CTR (Bit 0)                        */
@@ -2714,6 +4045,82 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 /* ------------------------------  SCU_GENERAL_PMTSR  ----------------------------- */
 #define SCU_GENERAL_PMTSR_MTENS_Pos           (0UL)                     /*!< SCU_GENERAL PMTSR: MTENS (Bit 0)                            */
 #define SCU_GENERAL_PMTSR_MTENS_Msk           (0x1UL)                   /*!< SCU_GENERAL PMTSR: MTENS (Bitfield-Mask: 0x01)              */
+
+/* ------------------------------  SCU_GENERAL_PFUCR  ----------------------------- */
+#define SCU_GENERAL_PFUCR_PFUBYP_Pos          (0UL)                     /*!< SCU_GENERAL PFUCR: PFUBYP (Bit 0)                           */
+#define SCU_GENERAL_PFUCR_PFUBYP_Msk          (0x1UL)                   /*!< SCU_GENERAL PFUCR: PFUBYP (Bitfield-Mask: 0x01)             */
+
+/* -----------------------------  SCU_GENERAL_INTCR0  ----------------------------- */
+#define SCU_GENERAL_INTCR0_INTSEL0_Pos        (0UL)                     /*!< SCU_GENERAL INTCR0: INTSEL0 (Bit 0)                         */
+#define SCU_GENERAL_INTCR0_INTSEL0_Msk        (0x3UL)                   /*!< SCU_GENERAL INTCR0: INTSEL0 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL1_Pos        (2UL)                     /*!< SCU_GENERAL INTCR0: INTSEL1 (Bit 2)                         */
+#define SCU_GENERAL_INTCR0_INTSEL1_Msk        (0xcUL)                   /*!< SCU_GENERAL INTCR0: INTSEL1 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL2_Pos        (4UL)                     /*!< SCU_GENERAL INTCR0: INTSEL2 (Bit 4)                         */
+#define SCU_GENERAL_INTCR0_INTSEL2_Msk        (0x30UL)                  /*!< SCU_GENERAL INTCR0: INTSEL2 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL3_Pos        (6UL)                     /*!< SCU_GENERAL INTCR0: INTSEL3 (Bit 6)                         */
+#define SCU_GENERAL_INTCR0_INTSEL3_Msk        (0xc0UL)                  /*!< SCU_GENERAL INTCR0: INTSEL3 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL4_Pos        (8UL)                     /*!< SCU_GENERAL INTCR0: INTSEL4 (Bit 8)                         */
+#define SCU_GENERAL_INTCR0_INTSEL4_Msk        (0x300UL)                 /*!< SCU_GENERAL INTCR0: INTSEL4 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL5_Pos        (10UL)                    /*!< SCU_GENERAL INTCR0: INTSEL5 (Bit 10)                        */
+#define SCU_GENERAL_INTCR0_INTSEL5_Msk        (0xc00UL)                 /*!< SCU_GENERAL INTCR0: INTSEL5 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL6_Pos        (12UL)                    /*!< SCU_GENERAL INTCR0: INTSEL6 (Bit 12)                        */
+#define SCU_GENERAL_INTCR0_INTSEL6_Msk        (0x3000UL)                /*!< SCU_GENERAL INTCR0: INTSEL6 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL7_Pos        (14UL)                    /*!< SCU_GENERAL INTCR0: INTSEL7 (Bit 14)                        */
+#define SCU_GENERAL_INTCR0_INTSEL7_Msk        (0xc000UL)                /*!< SCU_GENERAL INTCR0: INTSEL7 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL8_Pos        (16UL)                    /*!< SCU_GENERAL INTCR0: INTSEL8 (Bit 16)                        */
+#define SCU_GENERAL_INTCR0_INTSEL8_Msk        (0x30000UL)               /*!< SCU_GENERAL INTCR0: INTSEL8 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL9_Pos        (18UL)                    /*!< SCU_GENERAL INTCR0: INTSEL9 (Bit 18)                        */
+#define SCU_GENERAL_INTCR0_INTSEL9_Msk        (0xc0000UL)               /*!< SCU_GENERAL INTCR0: INTSEL9 (Bitfield-Mask: 0x03)           */
+#define SCU_GENERAL_INTCR0_INTSEL10_Pos       (20UL)                    /*!< SCU_GENERAL INTCR0: INTSEL10 (Bit 20)                       */
+#define SCU_GENERAL_INTCR0_INTSEL10_Msk       (0x300000UL)              /*!< SCU_GENERAL INTCR0: INTSEL10 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR0_INTSEL11_Pos       (22UL)                    /*!< SCU_GENERAL INTCR0: INTSEL11 (Bit 22)                       */
+#define SCU_GENERAL_INTCR0_INTSEL11_Msk       (0xc00000UL)              /*!< SCU_GENERAL INTCR0: INTSEL11 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR0_INTSEL12_Pos       (24UL)                    /*!< SCU_GENERAL INTCR0: INTSEL12 (Bit 24)                       */
+#define SCU_GENERAL_INTCR0_INTSEL12_Msk       (0x3000000UL)             /*!< SCU_GENERAL INTCR0: INTSEL12 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR0_INTSEL13_Pos       (26UL)                    /*!< SCU_GENERAL INTCR0: INTSEL13 (Bit 26)                       */
+#define SCU_GENERAL_INTCR0_INTSEL13_Msk       (0xc000000UL)             /*!< SCU_GENERAL INTCR0: INTSEL13 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR0_INTSEL14_Pos       (28UL)                    /*!< SCU_GENERAL INTCR0: INTSEL14 (Bit 28)                       */
+#define SCU_GENERAL_INTCR0_INTSEL14_Msk       (0x30000000UL)            /*!< SCU_GENERAL INTCR0: INTSEL14 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR0_INTSEL15_Pos       (30UL)                    /*!< SCU_GENERAL INTCR0: INTSEL15 (Bit 30)                       */
+#define SCU_GENERAL_INTCR0_INTSEL15_Msk       (0xc0000000UL)            /*!< SCU_GENERAL INTCR0: INTSEL15 (Bitfield-Mask: 0x03)          */
+
+/* -----------------------------  SCU_GENERAL_INTCR1  ----------------------------- */
+#define SCU_GENERAL_INTCR1_INTSEL16_Pos       (0UL)                     /*!< SCU_GENERAL INTCR1: INTSEL16 (Bit 0)                        */
+#define SCU_GENERAL_INTCR1_INTSEL16_Msk       (0x3UL)                   /*!< SCU_GENERAL INTCR1: INTSEL16 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL17_Pos       (2UL)                     /*!< SCU_GENERAL INTCR1: INTSEL17 (Bit 2)                        */
+#define SCU_GENERAL_INTCR1_INTSEL17_Msk       (0xcUL)                   /*!< SCU_GENERAL INTCR1: INTSEL17 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL18_Pos       (4UL)                     /*!< SCU_GENERAL INTCR1: INTSEL18 (Bit 4)                        */
+#define SCU_GENERAL_INTCR1_INTSEL18_Msk       (0x30UL)                  /*!< SCU_GENERAL INTCR1: INTSEL18 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL19_Pos       (6UL)                     /*!< SCU_GENERAL INTCR1: INTSEL19 (Bit 6)                        */
+#define SCU_GENERAL_INTCR1_INTSEL19_Msk       (0xc0UL)                  /*!< SCU_GENERAL INTCR1: INTSEL19 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL20_Pos       (8UL)                     /*!< SCU_GENERAL INTCR1: INTSEL20 (Bit 8)                        */
+#define SCU_GENERAL_INTCR1_INTSEL20_Msk       (0x300UL)                 /*!< SCU_GENERAL INTCR1: INTSEL20 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL21_Pos       (10UL)                    /*!< SCU_GENERAL INTCR1: INTSEL21 (Bit 10)                       */
+#define SCU_GENERAL_INTCR1_INTSEL21_Msk       (0xc00UL)                 /*!< SCU_GENERAL INTCR1: INTSEL21 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL22_Pos       (12UL)                    /*!< SCU_GENERAL INTCR1: INTSEL22 (Bit 12)                       */
+#define SCU_GENERAL_INTCR1_INTSEL22_Msk       (0x3000UL)                /*!< SCU_GENERAL INTCR1: INTSEL22 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL23_Pos       (14UL)                    /*!< SCU_GENERAL INTCR1: INTSEL23 (Bit 14)                       */
+#define SCU_GENERAL_INTCR1_INTSEL23_Msk       (0xc000UL)                /*!< SCU_GENERAL INTCR1: INTSEL23 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL24_Pos       (16UL)                    /*!< SCU_GENERAL INTCR1: INTSEL24 (Bit 16)                       */
+#define SCU_GENERAL_INTCR1_INTSEL24_Msk       (0x30000UL)               /*!< SCU_GENERAL INTCR1: INTSEL24 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL25_Pos       (18UL)                    /*!< SCU_GENERAL INTCR1: INTSEL25 (Bit 18)                       */
+#define SCU_GENERAL_INTCR1_INTSEL25_Msk       (0xc0000UL)               /*!< SCU_GENERAL INTCR1: INTSEL25 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL26_Pos       (20UL)                    /*!< SCU_GENERAL INTCR1: INTSEL26 (Bit 20)                       */
+#define SCU_GENERAL_INTCR1_INTSEL26_Msk       (0x300000UL)              /*!< SCU_GENERAL INTCR1: INTSEL26 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL27_Pos       (22UL)                    /*!< SCU_GENERAL INTCR1: INTSEL27 (Bit 22)                       */
+#define SCU_GENERAL_INTCR1_INTSEL27_Msk       (0xc00000UL)              /*!< SCU_GENERAL INTCR1: INTSEL27 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL28_Pos       (24UL)                    /*!< SCU_GENERAL INTCR1: INTSEL28 (Bit 24)                       */
+#define SCU_GENERAL_INTCR1_INTSEL28_Msk       (0x3000000UL)             /*!< SCU_GENERAL INTCR1: INTSEL28 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL29_Pos       (26UL)                    /*!< SCU_GENERAL INTCR1: INTSEL29 (Bit 26)                       */
+#define SCU_GENERAL_INTCR1_INTSEL29_Msk       (0xc000000UL)             /*!< SCU_GENERAL INTCR1: INTSEL29 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL30_Pos       (28UL)                    /*!< SCU_GENERAL INTCR1: INTSEL30 (Bit 28)                       */
+#define SCU_GENERAL_INTCR1_INTSEL30_Msk       (0x30000000UL)            /*!< SCU_GENERAL INTCR1: INTSEL30 (Bitfield-Mask: 0x03)          */
+#define SCU_GENERAL_INTCR1_INTSEL31_Pos       (30UL)                    /*!< SCU_GENERAL INTCR1: INTSEL31 (Bit 30)                       */
+#define SCU_GENERAL_INTCR1_INTSEL31_Msk       (0xc0000000UL)            /*!< SCU_GENERAL INTCR1: INTSEL31 (Bitfield-Mask: 0x03)          */
+
+/* -----------------------------  SCU_GENERAL_STSTAT  ----------------------------- */
+#define SCU_GENERAL_STSTAT_HWCON_Pos          (0UL)                     /*!< SCU_GENERAL STSTAT: HWCON (Bit 0)                           */
+#define SCU_GENERAL_STSTAT_HWCON_Msk          (0x3UL)                   /*!< SCU_GENERAL STSTAT: HWCON (Bitfield-Mask: 0x03)             */
 
 
 /* ================================================================================ */
@@ -2971,6 +4378,54 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_INTERRUPT_SRSET_TSE_LOW_Pos       (31UL)                    /*!< SCU_INTERRUPT SRSET: TSE_LOW (Bit 31)                       */
 #define SCU_INTERRUPT_SRSET_TSE_LOW_Msk       (0x80000000UL)            /*!< SCU_INTERRUPT SRSET: TSE_LOW (Bitfield-Mask: 0x01)          */
 
+/* ----------------------------  SCU_INTERRUPT_SRRAW1  ---------------------------- */
+#define SCU_INTERRUPT_SRRAW1_ACMP3I_Pos       (0UL)                     /*!< SCU_INTERRUPT SRRAW1: ACMP3I (Bit 0)                        */
+#define SCU_INTERRUPT_SRRAW1_ACMP3I_Msk       (0x1UL)                   /*!< SCU_INTERRUPT SRRAW1: ACMP3I (Bitfield-Mask: 0x01)          */
+#define SCU_INTERRUPT_SRRAW1_LOECI_Pos        (1UL)                     /*!< SCU_INTERRUPT SRRAW1: LOECI (Bit 1)                         */
+#define SCU_INTERRUPT_SRRAW1_LOECI_Msk        (0x2UL)                   /*!< SCU_INTERRUPT SRRAW1: LOECI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRRAW1_PEU1I_Pos        (2UL)                     /*!< SCU_INTERRUPT SRRAW1: PEU1I (Bit 2)                         */
+#define SCU_INTERRUPT_SRRAW1_PEU1I_Msk        (0x4UL)                   /*!< SCU_INTERRUPT SRRAW1: PEU1I (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRRAW1_PEMCI_Pos        (3UL)                     /*!< SCU_INTERRUPT SRRAW1: PEMCI (Bit 3)                         */
+#define SCU_INTERRUPT_SRRAW1_PEMCI_Msk        (0x8UL)                   /*!< SCU_INTERRUPT SRRAW1: PEMCI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRRAW1_DCO1OFSI_Pos     (4UL)                     /*!< SCU_INTERRUPT SRRAW1: DCO1OFSI (Bit 4)                      */
+#define SCU_INTERRUPT_SRRAW1_DCO1OFSI_Msk     (0x10UL)                  /*!< SCU_INTERRUPT SRRAW1: DCO1OFSI (Bitfield-Mask: 0x01)        */
+
+/* ----------------------------  SCU_INTERRUPT_SRMSK1  ---------------------------- */
+#define SCU_INTERRUPT_SRMSK1_ACMP3I_Pos       (0UL)                     /*!< SCU_INTERRUPT SRMSK1: ACMP3I (Bit 0)                        */
+#define SCU_INTERRUPT_SRMSK1_ACMP3I_Msk       (0x1UL)                   /*!< SCU_INTERRUPT SRMSK1: ACMP3I (Bitfield-Mask: 0x01)          */
+#define SCU_INTERRUPT_SRMSK1_LOECI_Pos        (1UL)                     /*!< SCU_INTERRUPT SRMSK1: LOECI (Bit 1)                         */
+#define SCU_INTERRUPT_SRMSK1_LOECI_Msk        (0x2UL)                   /*!< SCU_INTERRUPT SRMSK1: LOECI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRMSK1_PEU1I_Pos        (2UL)                     /*!< SCU_INTERRUPT SRMSK1: PEU1I (Bit 2)                         */
+#define SCU_INTERRUPT_SRMSK1_PEU1I_Msk        (0x4UL)                   /*!< SCU_INTERRUPT SRMSK1: PEU1I (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRMSK1_PEMCI_Pos        (3UL)                     /*!< SCU_INTERRUPT SRMSK1: PEMCI (Bit 3)                         */
+#define SCU_INTERRUPT_SRMSK1_PEMCI_Msk        (0x8UL)                   /*!< SCU_INTERRUPT SRMSK1: PEMCI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRMSK1_DCO1OFSI_Pos     (4UL)                     /*!< SCU_INTERRUPT SRMSK1: DCO1OFSI (Bit 4)                      */
+#define SCU_INTERRUPT_SRMSK1_DCO1OFSI_Msk     (0x10UL)                  /*!< SCU_INTERRUPT SRMSK1: DCO1OFSI (Bitfield-Mask: 0x01)        */
+
+/* ----------------------------  SCU_INTERRUPT_SRCLR1  ---------------------------- */
+#define SCU_INTERRUPT_SRCLR1_ACMP3I_Pos       (0UL)                     /*!< SCU_INTERRUPT SRCLR1: ACMP3I (Bit 0)                        */
+#define SCU_INTERRUPT_SRCLR1_ACMP3I_Msk       (0x1UL)                   /*!< SCU_INTERRUPT SRCLR1: ACMP3I (Bitfield-Mask: 0x01)          */
+#define SCU_INTERRUPT_SRCLR1_LOECI_Pos        (1UL)                     /*!< SCU_INTERRUPT SRCLR1: LOECI (Bit 1)                         */
+#define SCU_INTERRUPT_SRCLR1_LOECI_Msk        (0x2UL)                   /*!< SCU_INTERRUPT SRCLR1: LOECI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRCLR1_PEU1I_Pos        (2UL)                     /*!< SCU_INTERRUPT SRCLR1: PEU1I (Bit 2)                         */
+#define SCU_INTERRUPT_SRCLR1_PEU1I_Msk        (0x4UL)                   /*!< SCU_INTERRUPT SRCLR1: PEU1I (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRCLR1_PEMCI_Pos        (3UL)                     /*!< SCU_INTERRUPT SRCLR1: PEMCI (Bit 3)                         */
+#define SCU_INTERRUPT_SRCLR1_PEMCI_Msk        (0x8UL)                   /*!< SCU_INTERRUPT SRCLR1: PEMCI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRCLR1_DCO1OFSI_Pos     (4UL)                     /*!< SCU_INTERRUPT SRCLR1: DCO1OFSI (Bit 4)                      */
+#define SCU_INTERRUPT_SRCLR1_DCO1OFSI_Msk     (0x10UL)                  /*!< SCU_INTERRUPT SRCLR1: DCO1OFSI (Bitfield-Mask: 0x01)        */
+
+/* ----------------------------  SCU_INTERRUPT_SRSET1  ---------------------------- */
+#define SCU_INTERRUPT_SRSET1_ACMP3I_Pos       (0UL)                     /*!< SCU_INTERRUPT SRSET1: ACMP3I (Bit 0)                        */
+#define SCU_INTERRUPT_SRSET1_ACMP3I_Msk       (0x1UL)                   /*!< SCU_INTERRUPT SRSET1: ACMP3I (Bitfield-Mask: 0x01)          */
+#define SCU_INTERRUPT_SRSET1_LOECI_Pos        (1UL)                     /*!< SCU_INTERRUPT SRSET1: LOECI (Bit 1)                         */
+#define SCU_INTERRUPT_SRSET1_LOECI_Msk        (0x2UL)                   /*!< SCU_INTERRUPT SRSET1: LOECI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRSET1_PEU1I_Pos        (2UL)                     /*!< SCU_INTERRUPT SRSET1: PEU1I (Bit 2)                         */
+#define SCU_INTERRUPT_SRSET1_PEU1I_Msk        (0x4UL)                   /*!< SCU_INTERRUPT SRSET1: PEU1I (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRSET1_PEMCI_Pos        (3UL)                     /*!< SCU_INTERRUPT SRSET1: PEMCI (Bit 3)                         */
+#define SCU_INTERRUPT_SRSET1_PEMCI_Msk        (0x8UL)                   /*!< SCU_INTERRUPT SRSET1: PEMCI (Bitfield-Mask: 0x01)           */
+#define SCU_INTERRUPT_SRSET1_DCO1OFSI_Pos     (4UL)                     /*!< SCU_INTERRUPT SRSET1: DCO1OFSI (Bit 4)                      */
+#define SCU_INTERRUPT_SRSET1_DCO1OFSI_Msk     (0x10UL)                  /*!< SCU_INTERRUPT SRSET1: DCO1OFSI (Bitfield-Mask: 0x01)        */
+
 
 /* ================================================================================ */
 /* ================       struct 'SCU_POWER' Position & Mask       ================ */
@@ -3012,6 +4467,8 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 /* ------------------------------  SCU_CLK_CGATSTAT0  ----------------------------- */
 #define SCU_CLK_CGATSTAT0_VADC_Pos            (0UL)                     /*!< SCU_CLK CGATSTAT0: VADC (Bit 0)                             */
 #define SCU_CLK_CGATSTAT0_VADC_Msk            (0x1UL)                   /*!< SCU_CLK CGATSTAT0: VADC (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_CGATSTAT0_CCU80_Pos           (1UL)                     /*!< SCU_CLK CGATSTAT0: CCU80 (Bit 1)                            */
+#define SCU_CLK_CGATSTAT0_CCU80_Msk           (0x2UL)                   /*!< SCU_CLK CGATSTAT0: CCU80 (Bitfield-Mask: 0x01)              */
 #define SCU_CLK_CGATSTAT0_CCU40_Pos           (2UL)                     /*!< SCU_CLK CGATSTAT0: CCU40 (Bit 2)                            */
 #define SCU_CLK_CGATSTAT0_CCU40_Msk           (0x4UL)                   /*!< SCU_CLK CGATSTAT0: CCU40 (Bitfield-Mask: 0x01)              */
 #define SCU_CLK_CGATSTAT0_USIC0_Pos           (3UL)                     /*!< SCU_CLK CGATSTAT0: USIC0 (Bit 3)                            */
@@ -3022,14 +4479,32 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_CLK_CGATSTAT0_LEDTS0_Msk          (0x20UL)                  /*!< SCU_CLK CGATSTAT0: LEDTS0 (Bitfield-Mask: 0x01)             */
 #define SCU_CLK_CGATSTAT0_LEDTS1_Pos          (6UL)                     /*!< SCU_CLK CGATSTAT0: LEDTS1 (Bit 6)                           */
 #define SCU_CLK_CGATSTAT0_LEDTS1_Msk          (0x40UL)                  /*!< SCU_CLK CGATSTAT0: LEDTS1 (Bitfield-Mask: 0x01)             */
+#define SCU_CLK_CGATSTAT0_POSIF0_Pos          (7UL)                     /*!< SCU_CLK CGATSTAT0: POSIF0 (Bit 7)                           */
+#define SCU_CLK_CGATSTAT0_POSIF0_Msk          (0x80UL)                  /*!< SCU_CLK CGATSTAT0: POSIF0 (Bitfield-Mask: 0x01)             */
+#define SCU_CLK_CGATSTAT0_MATH_Pos            (8UL)                     /*!< SCU_CLK CGATSTAT0: MATH (Bit 8)                             */
+#define SCU_CLK_CGATSTAT0_MATH_Msk            (0x100UL)                 /*!< SCU_CLK CGATSTAT0: MATH (Bitfield-Mask: 0x01)               */
 #define SCU_CLK_CGATSTAT0_WDT_Pos             (9UL)                     /*!< SCU_CLK CGATSTAT0: WDT (Bit 9)                              */
 #define SCU_CLK_CGATSTAT0_WDT_Msk             (0x200UL)                 /*!< SCU_CLK CGATSTAT0: WDT (Bitfield-Mask: 0x01)                */
 #define SCU_CLK_CGATSTAT0_RTC_Pos             (10UL)                    /*!< SCU_CLK CGATSTAT0: RTC (Bit 10)                             */
 #define SCU_CLK_CGATSTAT0_RTC_Msk             (0x400UL)                 /*!< SCU_CLK CGATSTAT0: RTC (Bitfield-Mask: 0x01)                */
+#define SCU_CLK_CGATSTAT0_CCU81_Pos           (16UL)                    /*!< SCU_CLK CGATSTAT0: CCU81 (Bit 16)                           */
+#define SCU_CLK_CGATSTAT0_CCU81_Msk           (0x10000UL)               /*!< SCU_CLK CGATSTAT0: CCU81 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATSTAT0_CCU41_Pos           (17UL)                    /*!< SCU_CLK CGATSTAT0: CCU41 (Bit 17)                           */
+#define SCU_CLK_CGATSTAT0_CCU41_Msk           (0x20000UL)               /*!< SCU_CLK CGATSTAT0: CCU41 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATSTAT0_USIC1_Pos           (18UL)                    /*!< SCU_CLK CGATSTAT0: USIC1 (Bit 18)                           */
+#define SCU_CLK_CGATSTAT0_USIC1_Msk           (0x40000UL)               /*!< SCU_CLK CGATSTAT0: USIC1 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATSTAT0_LEDTS2_Pos          (19UL)                    /*!< SCU_CLK CGATSTAT0: LEDTS2 (Bit 19)                          */
+#define SCU_CLK_CGATSTAT0_LEDTS2_Msk          (0x80000UL)               /*!< SCU_CLK CGATSTAT0: LEDTS2 (Bitfield-Mask: 0x01)             */
+#define SCU_CLK_CGATSTAT0_POSIF1_Pos          (20UL)                    /*!< SCU_CLK CGATSTAT0: POSIF1 (Bit 20)                          */
+#define SCU_CLK_CGATSTAT0_POSIF1_Msk          (0x100000UL)              /*!< SCU_CLK CGATSTAT0: POSIF1 (Bitfield-Mask: 0x01)             */
+#define SCU_CLK_CGATSTAT0_MCAN0_Pos           (21UL)                    /*!< SCU_CLK CGATSTAT0: MCAN0 (Bit 21)                           */
+#define SCU_CLK_CGATSTAT0_MCAN0_Msk           (0x200000UL)              /*!< SCU_CLK CGATSTAT0: MCAN0 (Bitfield-Mask: 0x01)              */
 
 /* ------------------------------  SCU_CLK_CGATSET0  ------------------------------ */
 #define SCU_CLK_CGATSET0_VADC_Pos             (0UL)                     /*!< SCU_CLK CGATSET0: VADC (Bit 0)                              */
 #define SCU_CLK_CGATSET0_VADC_Msk             (0x1UL)                   /*!< SCU_CLK CGATSET0: VADC (Bitfield-Mask: 0x01)                */
+#define SCU_CLK_CGATSET0_CCU80_Pos            (1UL)                     /*!< SCU_CLK CGATSET0: CCU80 (Bit 1)                             */
+#define SCU_CLK_CGATSET0_CCU80_Msk            (0x2UL)                   /*!< SCU_CLK CGATSET0: CCU80 (Bitfield-Mask: 0x01)               */
 #define SCU_CLK_CGATSET0_CCU40_Pos            (2UL)                     /*!< SCU_CLK CGATSET0: CCU40 (Bit 2)                             */
 #define SCU_CLK_CGATSET0_CCU40_Msk            (0x4UL)                   /*!< SCU_CLK CGATSET0: CCU40 (Bitfield-Mask: 0x01)               */
 #define SCU_CLK_CGATSET0_USIC0_Pos            (3UL)                     /*!< SCU_CLK CGATSET0: USIC0 (Bit 3)                             */
@@ -3040,14 +4515,32 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_CLK_CGATSET0_LEDTS0_Msk           (0x20UL)                  /*!< SCU_CLK CGATSET0: LEDTS0 (Bitfield-Mask: 0x01)              */
 #define SCU_CLK_CGATSET0_LEDTS1_Pos           (6UL)                     /*!< SCU_CLK CGATSET0: LEDTS1 (Bit 6)                            */
 #define SCU_CLK_CGATSET0_LEDTS1_Msk           (0x40UL)                  /*!< SCU_CLK CGATSET0: LEDTS1 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATSET0_POSIF0_Pos           (7UL)                     /*!< SCU_CLK CGATSET0: POSIF0 (Bit 7)                            */
+#define SCU_CLK_CGATSET0_POSIF0_Msk           (0x80UL)                  /*!< SCU_CLK CGATSET0: POSIF0 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATSET0_MATH_Pos             (8UL)                     /*!< SCU_CLK CGATSET0: MATH (Bit 8)                              */
+#define SCU_CLK_CGATSET0_MATH_Msk             (0x100UL)                 /*!< SCU_CLK CGATSET0: MATH (Bitfield-Mask: 0x01)                */
 #define SCU_CLK_CGATSET0_WDT_Pos              (9UL)                     /*!< SCU_CLK CGATSET0: WDT (Bit 9)                               */
 #define SCU_CLK_CGATSET0_WDT_Msk              (0x200UL)                 /*!< SCU_CLK CGATSET0: WDT (Bitfield-Mask: 0x01)                 */
 #define SCU_CLK_CGATSET0_RTC_Pos              (10UL)                    /*!< SCU_CLK CGATSET0: RTC (Bit 10)                              */
 #define SCU_CLK_CGATSET0_RTC_Msk              (0x400UL)                 /*!< SCU_CLK CGATSET0: RTC (Bitfield-Mask: 0x01)                 */
+#define SCU_CLK_CGATSET0_CCU81_Pos            (16UL)                    /*!< SCU_CLK CGATSET0: CCU81 (Bit 16)                            */
+#define SCU_CLK_CGATSET0_CCU81_Msk            (0x10000UL)               /*!< SCU_CLK CGATSET0: CCU81 (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_CGATSET0_CCU41_Pos            (17UL)                    /*!< SCU_CLK CGATSET0: CCU41 (Bit 17)                            */
+#define SCU_CLK_CGATSET0_CCU41_Msk            (0x20000UL)               /*!< SCU_CLK CGATSET0: CCU41 (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_CGATSET0_USIC1_Pos            (18UL)                    /*!< SCU_CLK CGATSET0: USIC1 (Bit 18)                            */
+#define SCU_CLK_CGATSET0_USIC1_Msk            (0x40000UL)               /*!< SCU_CLK CGATSET0: USIC1 (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_CGATSET0_LEDTS2_Pos           (19UL)                    /*!< SCU_CLK CGATSET0: LEDTS2 (Bit 19)                           */
+#define SCU_CLK_CGATSET0_LEDTS2_Msk           (0x80000UL)               /*!< SCU_CLK CGATSET0: LEDTS2 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATSET0_POSIF1_Pos           (20UL)                    /*!< SCU_CLK CGATSET0: POSIF1 (Bit 20)                           */
+#define SCU_CLK_CGATSET0_POSIF1_Msk           (0x100000UL)              /*!< SCU_CLK CGATSET0: POSIF1 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATSET0_MCAN0_Pos            (21UL)                    /*!< SCU_CLK CGATSET0: MCAN0 (Bit 21)                            */
+#define SCU_CLK_CGATSET0_MCAN0_Msk            (0x200000UL)              /*!< SCU_CLK CGATSET0: MCAN0 (Bitfield-Mask: 0x01)               */
 
 /* ------------------------------  SCU_CLK_CGATCLR0  ------------------------------ */
 #define SCU_CLK_CGATCLR0_VADC_Pos             (0UL)                     /*!< SCU_CLK CGATCLR0: VADC (Bit 0)                              */
 #define SCU_CLK_CGATCLR0_VADC_Msk             (0x1UL)                   /*!< SCU_CLK CGATCLR0: VADC (Bitfield-Mask: 0x01)                */
+#define SCU_CLK_CGATCLR0_CCU80_Pos            (1UL)                     /*!< SCU_CLK CGATCLR0: CCU80 (Bit 1)                             */
+#define SCU_CLK_CGATCLR0_CCU80_Msk            (0x2UL)                   /*!< SCU_CLK CGATCLR0: CCU80 (Bitfield-Mask: 0x01)               */
 #define SCU_CLK_CGATCLR0_CCU40_Pos            (2UL)                     /*!< SCU_CLK CGATCLR0: CCU40 (Bit 2)                             */
 #define SCU_CLK_CGATCLR0_CCU40_Msk            (0x4UL)                   /*!< SCU_CLK CGATCLR0: CCU40 (Bitfield-Mask: 0x01)               */
 #define SCU_CLK_CGATCLR0_USIC0_Pos            (3UL)                     /*!< SCU_CLK CGATCLR0: USIC0 (Bit 3)                             */
@@ -3058,20 +4551,50 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_CLK_CGATCLR0_LEDTS0_Msk           (0x20UL)                  /*!< SCU_CLK CGATCLR0: LEDTS0 (Bitfield-Mask: 0x01)              */
 #define SCU_CLK_CGATCLR0_LEDTS1_Pos           (6UL)                     /*!< SCU_CLK CGATCLR0: LEDTS1 (Bit 6)                            */
 #define SCU_CLK_CGATCLR0_LEDTS1_Msk           (0x40UL)                  /*!< SCU_CLK CGATCLR0: LEDTS1 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATCLR0_POSIF0_Pos           (7UL)                     /*!< SCU_CLK CGATCLR0: POSIF0 (Bit 7)                            */
+#define SCU_CLK_CGATCLR0_POSIF0_Msk           (0x80UL)                  /*!< SCU_CLK CGATCLR0: POSIF0 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATCLR0_MATH_Pos             (8UL)                     /*!< SCU_CLK CGATCLR0: MATH (Bit 8)                              */
+#define SCU_CLK_CGATCLR0_MATH_Msk             (0x100UL)                 /*!< SCU_CLK CGATCLR0: MATH (Bitfield-Mask: 0x01)                */
 #define SCU_CLK_CGATCLR0_WDT_Pos              (9UL)                     /*!< SCU_CLK CGATCLR0: WDT (Bit 9)                               */
 #define SCU_CLK_CGATCLR0_WDT_Msk              (0x200UL)                 /*!< SCU_CLK CGATCLR0: WDT (Bitfield-Mask: 0x01)                 */
 #define SCU_CLK_CGATCLR0_RTC_Pos              (10UL)                    /*!< SCU_CLK CGATCLR0: RTC (Bit 10)                              */
 #define SCU_CLK_CGATCLR0_RTC_Msk              (0x400UL)                 /*!< SCU_CLK CGATCLR0: RTC (Bitfield-Mask: 0x01)                 */
+#define SCU_CLK_CGATCLR0_CCU81_Pos            (16UL)                    /*!< SCU_CLK CGATCLR0: CCU81 (Bit 16)                            */
+#define SCU_CLK_CGATCLR0_CCU81_Msk            (0x10000UL)               /*!< SCU_CLK CGATCLR0: CCU81 (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_CGATCLR0_CCU41_Pos            (17UL)                    /*!< SCU_CLK CGATCLR0: CCU41 (Bit 17)                            */
+#define SCU_CLK_CGATCLR0_CCU41_Msk            (0x20000UL)               /*!< SCU_CLK CGATCLR0: CCU41 (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_CGATCLR0_USIC1_Pos            (18UL)                    /*!< SCU_CLK CGATCLR0: USIC1 (Bit 18)                            */
+#define SCU_CLK_CGATCLR0_USIC1_Msk            (0x40000UL)               /*!< SCU_CLK CGATCLR0: USIC1 (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_CGATCLR0_LEDTS2_Pos           (19UL)                    /*!< SCU_CLK CGATCLR0: LEDTS2 (Bit 19)                           */
+#define SCU_CLK_CGATCLR0_LEDTS2_Msk           (0x80000UL)               /*!< SCU_CLK CGATCLR0: LEDTS2 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATCLR0_POSIF1_Pos           (20UL)                    /*!< SCU_CLK CGATCLR0: POSIF1 (Bit 20)                           */
+#define SCU_CLK_CGATCLR0_POSIF1_Msk           (0x100000UL)              /*!< SCU_CLK CGATCLR0: POSIF1 (Bitfield-Mask: 0x01)              */
+#define SCU_CLK_CGATCLR0_MCAN0_Pos            (21UL)                    /*!< SCU_CLK CGATCLR0: MCAN0 (Bit 21)                            */
+#define SCU_CLK_CGATCLR0_MCAN0_Msk            (0x200000UL)              /*!< SCU_CLK CGATCLR0: MCAN0 (Bitfield-Mask: 0x01)               */
 
 /* -------------------------------  SCU_CLK_OSCCSR  ------------------------------- */
 #define SCU_CLK_OSCCSR_OSC2L_Pos              (0UL)                     /*!< SCU_CLK OSCCSR: OSC2L (Bit 0)                               */
 #define SCU_CLK_OSCCSR_OSC2L_Msk              (0x1UL)                   /*!< SCU_CLK OSCCSR: OSC2L (Bitfield-Mask: 0x01)                 */
 #define SCU_CLK_OSCCSR_OSC2H_Pos              (1UL)                     /*!< SCU_CLK OSCCSR: OSC2H (Bit 1)                               */
 #define SCU_CLK_OSCCSR_OSC2H_Msk              (0x2UL)                   /*!< SCU_CLK OSCCSR: OSC2H (Bitfield-Mask: 0x01)                 */
+#define SCU_CLK_OSCCSR_DCO1PD_Pos             (8UL)                     /*!< SCU_CLK OSCCSR: DCO1PD (Bit 8)                              */
+#define SCU_CLK_OSCCSR_DCO1PD_Msk             (0x100UL)                 /*!< SCU_CLK OSCCSR: DCO1PD (Bitfield-Mask: 0x01)                */
 #define SCU_CLK_OSCCSR_OWDRES_Pos             (16UL)                    /*!< SCU_CLK OSCCSR: OWDRES (Bit 16)                             */
 #define SCU_CLK_OSCCSR_OWDRES_Msk             (0x10000UL)               /*!< SCU_CLK OSCCSR: OWDRES (Bitfield-Mask: 0x01)                */
 #define SCU_CLK_OSCCSR_OWDEN_Pos              (17UL)                    /*!< SCU_CLK OSCCSR: OWDEN (Bit 17)                              */
 #define SCU_CLK_OSCCSR_OWDEN_Msk              (0x20000UL)               /*!< SCU_CLK OSCCSR: OWDEN (Bitfield-Mask: 0x01)                 */
+#define SCU_CLK_OSCCSR_XOWDRES_Pos            (24UL)                    /*!< SCU_CLK OSCCSR: XOWDRES (Bit 24)                            */
+#define SCU_CLK_OSCCSR_XOWDRES_Msk            (0x1000000UL)             /*!< SCU_CLK OSCCSR: XOWDRES (Bitfield-Mask: 0x01)               */
+#define SCU_CLK_OSCCSR_XOWDEN_Pos             (25UL)                    /*!< SCU_CLK OSCCSR: XOWDEN (Bit 25)                             */
+#define SCU_CLK_OSCCSR_XOWDEN_Msk             (0x2000000UL)             /*!< SCU_CLK OSCCSR: XOWDEN (Bitfield-Mask: 0x01)                */
+
+/* -------------------------------  SCU_CLK_CLKCR1  ------------------------------- */
+#define SCU_CLK_CLKCR1_FDIV_Pos               (0UL)                     /*!< SCU_CLK CLKCR1: FDIV (Bit 0)                                */
+#define SCU_CLK_CLKCR1_FDIV_Msk               (0x3UL)                   /*!< SCU_CLK CLKCR1: FDIV (Bitfield-Mask: 0x03)                  */
+#define SCU_CLK_CLKCR1_ADCCLKSEL_Pos          (8UL)                     /*!< SCU_CLK CLKCR1: ADCCLKSEL (Bit 8)                           */
+#define SCU_CLK_CLKCR1_ADCCLKSEL_Msk          (0x100UL)                 /*!< SCU_CLK CLKCR1: ADCCLKSEL (Bitfield-Mask: 0x01)             */
+#define SCU_CLK_CLKCR1_DCLKSEL_Pos            (9UL)                     /*!< SCU_CLK CLKCR1: DCLKSEL (Bit 9)                             */
+#define SCU_CLK_CLKCR1_DCLKSEL_Msk            (0x200UL)                 /*!< SCU_CLK CLKCR1: DCLKSEL (Bitfield-Mask: 0x01)               */
 
 
 /* ================================================================================ */
@@ -3104,6 +4627,12 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_RESET_RSTCON_SPERSTEN_Msk         (0x4UL)                   /*!< SCU_RESET RSTCON: SPERSTEN (Bitfield-Mask: 0x01)            */
 #define SCU_RESET_RSTCON_U0PERSTEN_Pos        (3UL)                     /*!< SCU_RESET RSTCON: U0PERSTEN (Bit 3)                         */
 #define SCU_RESET_RSTCON_U0PERSTEN_Msk        (0x8UL)                   /*!< SCU_RESET RSTCON: U0PERSTEN (Bitfield-Mask: 0x01)           */
+#define SCU_RESET_RSTCON_U1PERSTEN_Pos        (4UL)                     /*!< SCU_RESET RSTCON: U1PERSTEN (Bit 4)                         */
+#define SCU_RESET_RSTCON_U1PERSTEN_Msk        (0x10UL)                  /*!< SCU_RESET RSTCON: U1PERSTEN (Bitfield-Mask: 0x01)           */
+#define SCU_RESET_RSTCON_MPERSTEN_Pos         (5UL)                     /*!< SCU_RESET RSTCON: MPERSTEN (Bit 5)                          */
+#define SCU_RESET_RSTCON_MPERSTEN_Msk         (0x20UL)                  /*!< SCU_RESET RSTCON: MPERSTEN (Bitfield-Mask: 0x01)            */
+#define SCU_RESET_RSTCON_LOECRSTEN_Pos        (6UL)                     /*!< SCU_RESET RSTCON: LOECRSTEN (Bit 6)                         */
+#define SCU_RESET_RSTCON_LOECRSTEN_Msk        (0x40UL)                  /*!< SCU_RESET RSTCON: LOECRSTEN (Bitfield-Mask: 0x01)           */
 #define SCU_RESET_RSTCON_MRSTEN_Pos           (16UL)                    /*!< SCU_RESET RSTCON: MRSTEN (Bit 16)                           */
 #define SCU_RESET_RSTCON_MRSTEN_Msk           (0x10000UL)               /*!< SCU_RESET RSTCON: MRSTEN (Bitfield-Mask: 0x01)              */
 
@@ -3191,6 +4720,20 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define COMPARATOR_ANACMP2_CMP_OUT_Pos        (15UL)                    /*!< COMPARATOR ANACMP2: CMP_OUT (Bit 15)                        */
 #define COMPARATOR_ANACMP2_CMP_OUT_Msk        (0x8000UL)                /*!< COMPARATOR ANACMP2: CMP_OUT (Bitfield-Mask: 0x01)           */
 
+/* -----------------------------  COMPARATOR_ANACMP3  ----------------------------- */
+#define COMPARATOR_ANACMP3_CMP_EN_Pos         (0UL)                     /*!< COMPARATOR ANACMP3: CMP_EN (Bit 0)                          */
+#define COMPARATOR_ANACMP3_CMP_EN_Msk         (0x1UL)                   /*!< COMPARATOR ANACMP3: CMP_EN (Bitfield-Mask: 0x01)            */
+#define COMPARATOR_ANACMP3_CMP_FLT_OFF_Pos    (1UL)                     /*!< COMPARATOR ANACMP3: CMP_FLT_OFF (Bit 1)                     */
+#define COMPARATOR_ANACMP3_CMP_FLT_OFF_Msk    (0x2UL)                   /*!< COMPARATOR ANACMP3: CMP_FLT_OFF (Bitfield-Mask: 0x01)       */
+#define COMPARATOR_ANACMP3_CMP_INV_OUT_Pos    (3UL)                     /*!< COMPARATOR ANACMP3: CMP_INV_OUT (Bit 3)                     */
+#define COMPARATOR_ANACMP3_CMP_INV_OUT_Msk    (0x8UL)                   /*!< COMPARATOR ANACMP3: CMP_INV_OUT (Bitfield-Mask: 0x01)       */
+#define COMPARATOR_ANACMP3_CMP_HYST_ADJ_Pos   (4UL)                     /*!< COMPARATOR ANACMP3: CMP_HYST_ADJ (Bit 4)                    */
+#define COMPARATOR_ANACMP3_CMP_HYST_ADJ_Msk   (0x30UL)                  /*!< COMPARATOR ANACMP3: CMP_HYST_ADJ (Bitfield-Mask: 0x03)      */
+#define COMPARATOR_ANACMP3_ACMP3_SEL_Pos      (6UL)                     /*!< COMPARATOR ANACMP3: ACMP3_SEL (Bit 6)                       */
+#define COMPARATOR_ANACMP3_ACMP3_SEL_Msk      (0x40UL)                  /*!< COMPARATOR ANACMP3: ACMP3_SEL (Bitfield-Mask: 0x01)         */
+#define COMPARATOR_ANACMP3_CMP_OUT_Pos        (15UL)                    /*!< COMPARATOR ANACMP3: CMP_OUT (Bit 15)                        */
+#define COMPARATOR_ANACMP3_CMP_OUT_Msk        (0x8000UL)                /*!< COMPARATOR ANACMP3: CMP_OUT (Bitfield-Mask: 0x01)           */
+
 
 /* ================================================================================ */
 /* ================       struct 'SCU_ANALOG' Position & Mask      ================ */
@@ -3223,7 +4766,35 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 
 /* ----------------------------  SCU_ANALOG_ANAOFFSET  ---------------------------- */
 #define SCU_ANALOG_ANAOFFSET_ADJL_OFFSET_Pos  (0UL)                     /*!< SCU_ANALOG ANAOFFSET: ADJL_OFFSET (Bit 0)                   */
-#define SCU_ANALOG_ANAOFFSET_ADJL_OFFSET_Msk  (0xfUL)                   /*!< SCU_ANALOG ANAOFFSET: ADJL_OFFSET (Bitfield-Mask: 0x0f)     */
+#define SCU_ANALOG_ANAOFFSET_ADJL_OFFSET_Msk  (0x7fUL)                  /*!< SCU_ANALOG ANAOFFSET: ADJL_OFFSET (Bitfield-Mask: 0x7f)     */
+
+/* -----------------------------  SCU_ANALOG_ANASYNC1  ---------------------------- */
+#define SCU_ANALOG_ANASYNC1_SYNC_PRELOAD_Pos  (0UL)                     /*!< SCU_ANALOG ANASYNC1: SYNC_PRELOAD (Bit 0)                   */
+#define SCU_ANALOG_ANASYNC1_SYNC_PRELOAD_Msk  (0x3fffUL)                /*!< SCU_ANALOG ANASYNC1: SYNC_PRELOAD (Bitfield-Mask: 0x3fff)   */
+#define SCU_ANALOG_ANASYNC1_SYNC_DCO_EN_Pos   (14UL)                    /*!< SCU_ANALOG ANASYNC1: SYNC_DCO_EN (Bit 14)                   */
+#define SCU_ANALOG_ANASYNC1_SYNC_DCO_EN_Msk   (0x4000UL)                /*!< SCU_ANALOG ANASYNC1: SYNC_DCO_EN (Bitfield-Mask: 0x01)      */
+#define SCU_ANALOG_ANASYNC1_XTAL_SEL_Pos      (15UL)                    /*!< SCU_ANALOG ANASYNC1: XTAL_SEL (Bit 15)                      */
+#define SCU_ANALOG_ANASYNC1_XTAL_SEL_Msk      (0x8000UL)                /*!< SCU_ANALOG ANASYNC1: XTAL_SEL (Bitfield-Mask: 0x01)         */
+
+/* -----------------------------  SCU_ANALOG_ANASYNC2  ---------------------------- */
+#define SCU_ANALOG_ANASYNC2_PRESCALER_Pos     (0UL)                     /*!< SCU_ANALOG ANASYNC2: PRESCALER (Bit 0)                      */
+#define SCU_ANALOG_ANASYNC2_PRESCALER_Msk     (0x7ffUL)                 /*!< SCU_ANALOG ANASYNC2: PRESCALER (Bitfield-Mask: 0x7ff)       */
+#define SCU_ANALOG_ANASYNC2_SYNC_READY_Pos    (12UL)                    /*!< SCU_ANALOG ANASYNC2: SYNC_READY (Bit 12)                    */
+#define SCU_ANALOG_ANASYNC2_SYNC_READY_Msk    (0x1000UL)                /*!< SCU_ANALOG ANASYNC2: SYNC_READY (Bitfield-Mask: 0x01)       */
+
+/* ---------------------------  SCU_ANALOG_ANAOSCLPCTRL  -------------------------- */
+#define SCU_ANALOG_ANAOSCLPCTRL_MODE_Pos      (0UL)                     /*!< SCU_ANALOG ANAOSCLPCTRL: MODE (Bit 0)                       */
+#define SCU_ANALOG_ANAOSCLPCTRL_MODE_Msk      (0x3UL)                   /*!< SCU_ANALOG ANAOSCLPCTRL: MODE (Bitfield-Mask: 0x03)         */
+
+/* ---------------------------  SCU_ANALOG_ANAOSCHPCTRL  -------------------------- */
+#define SCU_ANALOG_ANAOSCHPCTRL_SHBY_Pos      (1UL)                     /*!< SCU_ANALOG ANAOSCHPCTRL: SHBY (Bit 1)                       */
+#define SCU_ANALOG_ANAOSCHPCTRL_SHBY_Msk      (0x2UL)                   /*!< SCU_ANALOG ANAOSCHPCTRL: SHBY (Bitfield-Mask: 0x01)         */
+#define SCU_ANALOG_ANAOSCHPCTRL_GAINSEL_Pos   (2UL)                     /*!< SCU_ANALOG ANAOSCHPCTRL: GAINSEL (Bit 2)                    */
+#define SCU_ANALOG_ANAOSCHPCTRL_GAINSEL_Msk   (0xcUL)                   /*!< SCU_ANALOG ANAOSCHPCTRL: GAINSEL (Bitfield-Mask: 0x03)      */
+#define SCU_ANALOG_ANAOSCHPCTRL_MODE_Pos      (4UL)                     /*!< SCU_ANALOG ANAOSCHPCTRL: MODE (Bit 4)                       */
+#define SCU_ANALOG_ANAOSCHPCTRL_MODE_Msk      (0x30UL)                  /*!< SCU_ANALOG ANAOSCHPCTRL: MODE (Bitfield-Mask: 0x03)         */
+#define SCU_ANALOG_ANAOSCHPCTRL_HYSCTRL_Pos   (6UL)                     /*!< SCU_ANALOG ANAOSCHPCTRL: HYSCTRL (Bit 6)                    */
+#define SCU_ANALOG_ANAOSCHPCTRL_HYSCTRL_Msk   (0x40UL)                  /*!< SCU_ANALOG ANAOSCHPCTRL: HYSCTRL (Bitfield-Mask: 0x01)      */
 
 
 /* ================================================================================ */
@@ -3403,31 +4974,25 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 /* ================================================================================ */
 
 
-/* --------------------------------  CCU4_CC4_INS  -------------------------------- */
-#define CCU4_CC4_INS_EV0IS_Pos                (0UL)                     /*!< CCU4_CC4 INS: EV0IS (Bit 0)                                 */
-#define CCU4_CC4_INS_EV0IS_Msk                (0xfUL)                   /*!< CCU4_CC4 INS: EV0IS (Bitfield-Mask: 0x0f)                   */
-#define CCU4_CC4_INS_EV1IS_Pos                (4UL)                     /*!< CCU4_CC4 INS: EV1IS (Bit 4)                                 */
-#define CCU4_CC4_INS_EV1IS_Msk                (0xf0UL)                  /*!< CCU4_CC4 INS: EV1IS (Bitfield-Mask: 0x0f)                   */
-#define CCU4_CC4_INS_EV2IS_Pos                (8UL)                     /*!< CCU4_CC4 INS: EV2IS (Bit 8)                                 */
-#define CCU4_CC4_INS_EV2IS_Msk                (0xf00UL)                 /*!< CCU4_CC4 INS: EV2IS (Bitfield-Mask: 0x0f)                   */
-#define CCU4_CC4_INS_EV0EM_Pos                (16UL)                    /*!< CCU4_CC4 INS: EV0EM (Bit 16)                                */
-#define CCU4_CC4_INS_EV0EM_Msk                (0x30000UL)               /*!< CCU4_CC4 INS: EV0EM (Bitfield-Mask: 0x03)                   */
-#define CCU4_CC4_INS_EV1EM_Pos                (18UL)                    /*!< CCU4_CC4 INS: EV1EM (Bit 18)                                */
-#define CCU4_CC4_INS_EV1EM_Msk                (0xc0000UL)               /*!< CCU4_CC4 INS: EV1EM (Bitfield-Mask: 0x03)                   */
-#define CCU4_CC4_INS_EV2EM_Pos                (20UL)                    /*!< CCU4_CC4 INS: EV2EM (Bit 20)                                */
-#define CCU4_CC4_INS_EV2EM_Msk                (0x300000UL)              /*!< CCU4_CC4 INS: EV2EM (Bitfield-Mask: 0x03)                   */
-#define CCU4_CC4_INS_EV0LM_Pos                (22UL)                    /*!< CCU4_CC4 INS: EV0LM (Bit 22)                                */
-#define CCU4_CC4_INS_EV0LM_Msk                (0x400000UL)              /*!< CCU4_CC4 INS: EV0LM (Bitfield-Mask: 0x01)                   */
-#define CCU4_CC4_INS_EV1LM_Pos                (23UL)                    /*!< CCU4_CC4 INS: EV1LM (Bit 23)                                */
-#define CCU4_CC4_INS_EV1LM_Msk                (0x800000UL)              /*!< CCU4_CC4 INS: EV1LM (Bitfield-Mask: 0x01)                   */
-#define CCU4_CC4_INS_EV2LM_Pos                (24UL)                    /*!< CCU4_CC4 INS: EV2LM (Bit 24)                                */
-#define CCU4_CC4_INS_EV2LM_Msk                (0x1000000UL)             /*!< CCU4_CC4 INS: EV2LM (Bitfield-Mask: 0x01)                   */
-#define CCU4_CC4_INS_LPF0M_Pos                (25UL)                    /*!< CCU4_CC4 INS: LPF0M (Bit 25)                                */
-#define CCU4_CC4_INS_LPF0M_Msk                (0x6000000UL)             /*!< CCU4_CC4 INS: LPF0M (Bitfield-Mask: 0x03)                   */
-#define CCU4_CC4_INS_LPF1M_Pos                (27UL)                    /*!< CCU4_CC4 INS: LPF1M (Bit 27)                                */
-#define CCU4_CC4_INS_LPF1M_Msk                (0x18000000UL)            /*!< CCU4_CC4 INS: LPF1M (Bitfield-Mask: 0x03)                   */
-#define CCU4_CC4_INS_LPF2M_Pos                (29UL)                    /*!< CCU4_CC4 INS: LPF2M (Bit 29)                                */
-#define CCU4_CC4_INS_LPF2M_Msk                (0x60000000UL)            /*!< CCU4_CC4 INS: LPF2M (Bitfield-Mask: 0x03)                   */
+/* --------------------------------  CCU4_CC4_INS2  ------------------------------- */
+#define CCU4_CC4_INS2_EV0EM_Pos               (0UL)                     /*!< CCU4_CC4 INS2: EV0EM (Bit 0)                                */
+#define CCU4_CC4_INS2_EV0EM_Msk               (0x3UL)                   /*!< CCU4_CC4 INS2: EV0EM (Bitfield-Mask: 0x03)                  */
+#define CCU4_CC4_INS2_EV0LM_Pos               (2UL)                     /*!< CCU4_CC4 INS2: EV0LM (Bit 2)                                */
+#define CCU4_CC4_INS2_EV0LM_Msk               (0x4UL)                   /*!< CCU4_CC4 INS2: EV0LM (Bitfield-Mask: 0x01)                  */
+#define CCU4_CC4_INS2_EV1EM_Pos               (4UL)                     /*!< CCU4_CC4 INS2: EV1EM (Bit 4)                                */
+#define CCU4_CC4_INS2_EV1EM_Msk               (0x30UL)                  /*!< CCU4_CC4 INS2: EV1EM (Bitfield-Mask: 0x03)                  */
+#define CCU4_CC4_INS2_EV1LM_Pos               (6UL)                     /*!< CCU4_CC4 INS2: EV1LM (Bit 6)                                */
+#define CCU4_CC4_INS2_EV1LM_Msk               (0x40UL)                  /*!< CCU4_CC4 INS2: EV1LM (Bitfield-Mask: 0x01)                  */
+#define CCU4_CC4_INS2_EV2EM_Pos               (8UL)                     /*!< CCU4_CC4 INS2: EV2EM (Bit 8)                                */
+#define CCU4_CC4_INS2_EV2EM_Msk               (0x300UL)                 /*!< CCU4_CC4 INS2: EV2EM (Bitfield-Mask: 0x03)                  */
+#define CCU4_CC4_INS2_EV2LM_Pos               (10UL)                    /*!< CCU4_CC4 INS2: EV2LM (Bit 10)                               */
+#define CCU4_CC4_INS2_EV2LM_Msk               (0x400UL)                 /*!< CCU4_CC4 INS2: EV2LM (Bitfield-Mask: 0x01)                  */
+#define CCU4_CC4_INS2_LPF0M_Pos               (16UL)                    /*!< CCU4_CC4 INS2: LPF0M (Bit 16)                               */
+#define CCU4_CC4_INS2_LPF0M_Msk               (0x30000UL)               /*!< CCU4_CC4 INS2: LPF0M (Bitfield-Mask: 0x03)                  */
+#define CCU4_CC4_INS2_LPF1M_Pos               (20UL)                    /*!< CCU4_CC4 INS2: LPF1M (Bit 20)                               */
+#define CCU4_CC4_INS2_LPF1M_Msk               (0x300000UL)              /*!< CCU4_CC4 INS2: LPF1M (Bitfield-Mask: 0x03)                  */
+#define CCU4_CC4_INS2_LPF2M_Pos               (24UL)                    /*!< CCU4_CC4 INS2: LPF2M (Bit 24)                               */
+#define CCU4_CC4_INS2_LPF2M_Msk               (0x3000000UL)             /*!< CCU4_CC4 INS2: LPF2M (Bitfield-Mask: 0x03)                  */
 
 /* --------------------------------  CCU4_CC4_CMC  -------------------------------- */
 #define CCU4_CC4_CMC_STRTS_Pos                (0UL)                     /*!< CCU4_CC4 CMC: STRTS (Bit 0)                                 */
@@ -3651,6 +5216,32 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define CCU4_CC4_SWR_RTRPF_Pos                (11UL)                    /*!< CCU4_CC4 SWR: RTRPF (Bit 11)                                */
 #define CCU4_CC4_SWR_RTRPF_Msk                (0x800UL)                 /*!< CCU4_CC4 SWR: RTRPF (Bitfield-Mask: 0x01)                   */
 
+/* --------------------------------  CCU4_CC4_STC  -------------------------------- */
+#define CCU4_CC4_STC_CSE_Pos                  (0UL)                     /*!< CCU4_CC4 STC: CSE (Bit 0)                                   */
+#define CCU4_CC4_STC_CSE_Msk                  (0x1UL)                   /*!< CCU4_CC4 STC: CSE (Bitfield-Mask: 0x01)                     */
+#define CCU4_CC4_STC_STM_Pos                  (1UL)                     /*!< CCU4_CC4 STC: STM (Bit 1)                                   */
+#define CCU4_CC4_STC_STM_Msk                  (0x6UL)                   /*!< CCU4_CC4 STC: STM (Bitfield-Mask: 0x03)                     */
+#define CCU4_CC4_STC_IRPC_Pos                 (4UL)                     /*!< CCU4_CC4 STC: IRPC (Bit 4)                                  */
+#define CCU4_CC4_STC_IRPC_Msk                 (0x10UL)                  /*!< CCU4_CC4 STC: IRPC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_IRCC_Pos                 (5UL)                     /*!< CCU4_CC4 STC: IRCC (Bit 5)                                  */
+#define CCU4_CC4_STC_IRCC_Msk                 (0x20UL)                  /*!< CCU4_CC4 STC: IRCC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_IRLC_Pos                 (7UL)                     /*!< CCU4_CC4 STC: IRLC (Bit 7)                                  */
+#define CCU4_CC4_STC_IRLC_Msk                 (0x80UL)                  /*!< CCU4_CC4 STC: IRLC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_IRDC_Pos                 (8UL)                     /*!< CCU4_CC4 STC: IRDC (Bit 8)                                  */
+#define CCU4_CC4_STC_IRDC_Msk                 (0x100UL)                 /*!< CCU4_CC4 STC: IRDC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_IRFC_Pos                 (9UL)                     /*!< CCU4_CC4 STC: IRFC (Bit 9)                                  */
+#define CCU4_CC4_STC_IRFC_Msk                 (0x200UL)                 /*!< CCU4_CC4 STC: IRFC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_ASPC_Pos                 (16UL)                    /*!< CCU4_CC4 STC: ASPC (Bit 16)                                 */
+#define CCU4_CC4_STC_ASPC_Msk                 (0x10000UL)               /*!< CCU4_CC4 STC: ASPC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_ASCC_Pos                 (17UL)                    /*!< CCU4_CC4 STC: ASCC (Bit 17)                                 */
+#define CCU4_CC4_STC_ASCC_Msk                 (0x20000UL)               /*!< CCU4_CC4 STC: ASCC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_ASLC_Pos                 (19UL)                    /*!< CCU4_CC4 STC: ASLC (Bit 19)                                 */
+#define CCU4_CC4_STC_ASLC_Msk                 (0x80000UL)               /*!< CCU4_CC4 STC: ASLC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_ASDC_Pos                 (20UL)                    /*!< CCU4_CC4 STC: ASDC (Bit 20)                                 */
+#define CCU4_CC4_STC_ASDC_Msk                 (0x100000UL)              /*!< CCU4_CC4 STC: ASDC (Bitfield-Mask: 0x01)                    */
+#define CCU4_CC4_STC_ASFC_Pos                 (21UL)                    /*!< CCU4_CC4 STC: ASFC (Bit 21)                                 */
+#define CCU4_CC4_STC_ASFC_Msk                 (0x200000UL)              /*!< CCU4_CC4 STC: ASFC (Bitfield-Mask: 0x01)                    */
+
 /* -------------------------------  CCU4_CC4_ECRD0  ------------------------------- */
 #define CCU4_CC4_ECRD0_CAPV_Pos               (0UL)                     /*!< CCU4_CC4 ECRD0: CAPV (Bit 0)                                */
 #define CCU4_CC4_ECRD0_CAPV_Msk               (0xffffUL)                /*!< CCU4_CC4 ECRD0: CAPV (Bitfield-Mask: 0xffff)                */
@@ -3678,6 +5269,878 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define CCU4_CC4_ECRD1_FFL_Msk                (0x1000000UL)             /*!< CCU4_CC4 ECRD1: FFL (Bitfield-Mask: 0x01)                   */
 #define CCU4_CC4_ECRD1_LCV_Pos                (25UL)                    /*!< CCU4_CC4 ECRD1: LCV (Bit 25)                                */
 #define CCU4_CC4_ECRD1_LCV_Msk                (0x2000000UL)             /*!< CCU4_CC4 ECRD1: LCV (Bitfield-Mask: 0x01)                   */
+
+/* --------------------------------  CCU4_CC4_INS1  ------------------------------- */
+#define CCU4_CC4_INS1_EV0IS_Pos               (0UL)                     /*!< CCU4_CC4 INS1: EV0IS (Bit 0)                                */
+#define CCU4_CC4_INS1_EV0IS_Msk               (0x3fUL)                  /*!< CCU4_CC4 INS1: EV0IS (Bitfield-Mask: 0x3f)                  */
+#define CCU4_CC4_INS1_EV1IS_Pos               (8UL)                     /*!< CCU4_CC4 INS1: EV1IS (Bit 8)                                */
+#define CCU4_CC4_INS1_EV1IS_Msk               (0x3f00UL)                /*!< CCU4_CC4 INS1: EV1IS (Bitfield-Mask: 0x3f)                  */
+#define CCU4_CC4_INS1_EV2IS_Pos               (16UL)                    /*!< CCU4_CC4 INS1: EV2IS (Bit 16)                               */
+#define CCU4_CC4_INS1_EV2IS_Msk               (0x3f0000UL)              /*!< CCU4_CC4 INS1: EV2IS (Bitfield-Mask: 0x3f)                  */
+
+
+/* ================================================================================ */
+/* ================          Group 'CCU8' Position & Mask          ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  CCU8_GCTRL  --------------------------------- */
+#define CCU8_GCTRL_PRBC_Pos                   (0UL)                     /*!< CCU8 GCTRL: PRBC (Bit 0)                                    */
+#define CCU8_GCTRL_PRBC_Msk                   (0x7UL)                   /*!< CCU8 GCTRL: PRBC (Bitfield-Mask: 0x07)                      */
+#define CCU8_GCTRL_PCIS_Pos                   (4UL)                     /*!< CCU8 GCTRL: PCIS (Bit 4)                                    */
+#define CCU8_GCTRL_PCIS_Msk                   (0x30UL)                  /*!< CCU8 GCTRL: PCIS (Bitfield-Mask: 0x03)                      */
+#define CCU8_GCTRL_SUSCFG_Pos                 (8UL)                     /*!< CCU8 GCTRL: SUSCFG (Bit 8)                                  */
+#define CCU8_GCTRL_SUSCFG_Msk                 (0x300UL)                 /*!< CCU8 GCTRL: SUSCFG (Bitfield-Mask: 0x03)                    */
+#define CCU8_GCTRL_MSE0_Pos                   (10UL)                    /*!< CCU8 GCTRL: MSE0 (Bit 10)                                   */
+#define CCU8_GCTRL_MSE0_Msk                   (0x400UL)                 /*!< CCU8 GCTRL: MSE0 (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCTRL_MSE1_Pos                   (11UL)                    /*!< CCU8 GCTRL: MSE1 (Bit 11)                                   */
+#define CCU8_GCTRL_MSE1_Msk                   (0x800UL)                 /*!< CCU8 GCTRL: MSE1 (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCTRL_MSE2_Pos                   (12UL)                    /*!< CCU8 GCTRL: MSE2 (Bit 12)                                   */
+#define CCU8_GCTRL_MSE2_Msk                   (0x1000UL)                /*!< CCU8 GCTRL: MSE2 (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCTRL_MSE3_Pos                   (13UL)                    /*!< CCU8 GCTRL: MSE3 (Bit 13)                                   */
+#define CCU8_GCTRL_MSE3_Msk                   (0x2000UL)                /*!< CCU8 GCTRL: MSE3 (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCTRL_MSDE_Pos                   (14UL)                    /*!< CCU8 GCTRL: MSDE (Bit 14)                                   */
+#define CCU8_GCTRL_MSDE_Msk                   (0xc000UL)                /*!< CCU8 GCTRL: MSDE (Bitfield-Mask: 0x03)                      */
+
+/* ---------------------------------  CCU8_GSTAT  --------------------------------- */
+#define CCU8_GSTAT_S0I_Pos                    (0UL)                     /*!< CCU8 GSTAT: S0I (Bit 0)                                     */
+#define CCU8_GSTAT_S0I_Msk                    (0x1UL)                   /*!< CCU8 GSTAT: S0I (Bitfield-Mask: 0x01)                       */
+#define CCU8_GSTAT_S1I_Pos                    (1UL)                     /*!< CCU8 GSTAT: S1I (Bit 1)                                     */
+#define CCU8_GSTAT_S1I_Msk                    (0x2UL)                   /*!< CCU8 GSTAT: S1I (Bitfield-Mask: 0x01)                       */
+#define CCU8_GSTAT_S2I_Pos                    (2UL)                     /*!< CCU8 GSTAT: S2I (Bit 2)                                     */
+#define CCU8_GSTAT_S2I_Msk                    (0x4UL)                   /*!< CCU8 GSTAT: S2I (Bitfield-Mask: 0x01)                       */
+#define CCU8_GSTAT_S3I_Pos                    (3UL)                     /*!< CCU8 GSTAT: S3I (Bit 3)                                     */
+#define CCU8_GSTAT_S3I_Msk                    (0x8UL)                   /*!< CCU8 GSTAT: S3I (Bitfield-Mask: 0x01)                       */
+#define CCU8_GSTAT_PRB_Pos                    (8UL)                     /*!< CCU8 GSTAT: PRB (Bit 8)                                     */
+#define CCU8_GSTAT_PRB_Msk                    (0x100UL)                 /*!< CCU8 GSTAT: PRB (Bitfield-Mask: 0x01)                       */
+#define CCU8_GSTAT_PCRB_Pos                   (10UL)                    /*!< CCU8 GSTAT: PCRB (Bit 10)                                   */
+#define CCU8_GSTAT_PCRB_Msk                   (0x400UL)                 /*!< CCU8 GSTAT: PCRB (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  CCU8_GIDLS  --------------------------------- */
+#define CCU8_GIDLS_SS0I_Pos                   (0UL)                     /*!< CCU8 GIDLS: SS0I (Bit 0)                                    */
+#define CCU8_GIDLS_SS0I_Msk                   (0x1UL)                   /*!< CCU8 GIDLS: SS0I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLS_SS1I_Pos                   (1UL)                     /*!< CCU8 GIDLS: SS1I (Bit 1)                                    */
+#define CCU8_GIDLS_SS1I_Msk                   (0x2UL)                   /*!< CCU8 GIDLS: SS1I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLS_SS2I_Pos                   (2UL)                     /*!< CCU8 GIDLS: SS2I (Bit 2)                                    */
+#define CCU8_GIDLS_SS2I_Msk                   (0x4UL)                   /*!< CCU8 GIDLS: SS2I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLS_SS3I_Pos                   (3UL)                     /*!< CCU8 GIDLS: SS3I (Bit 3)                                    */
+#define CCU8_GIDLS_SS3I_Msk                   (0x8UL)                   /*!< CCU8 GIDLS: SS3I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLS_CPRB_Pos                   (8UL)                     /*!< CCU8 GIDLS: CPRB (Bit 8)                                    */
+#define CCU8_GIDLS_CPRB_Msk                   (0x100UL)                 /*!< CCU8 GIDLS: CPRB (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLS_PSIC_Pos                   (9UL)                     /*!< CCU8 GIDLS: PSIC (Bit 9)                                    */
+#define CCU8_GIDLS_PSIC_Msk                   (0x200UL)                 /*!< CCU8 GIDLS: PSIC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLS_CPCH_Pos                   (10UL)                    /*!< CCU8 GIDLS: CPCH (Bit 10)                                   */
+#define CCU8_GIDLS_CPCH_Msk                   (0x400UL)                 /*!< CCU8 GIDLS: CPCH (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  CCU8_GIDLC  --------------------------------- */
+#define CCU8_GIDLC_CS0I_Pos                   (0UL)                     /*!< CCU8 GIDLC: CS0I (Bit 0)                                    */
+#define CCU8_GIDLC_CS0I_Msk                   (0x1UL)                   /*!< CCU8 GIDLC: CS0I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLC_CS1I_Pos                   (1UL)                     /*!< CCU8 GIDLC: CS1I (Bit 1)                                    */
+#define CCU8_GIDLC_CS1I_Msk                   (0x2UL)                   /*!< CCU8 GIDLC: CS1I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLC_CS2I_Pos                   (2UL)                     /*!< CCU8 GIDLC: CS2I (Bit 2)                                    */
+#define CCU8_GIDLC_CS2I_Msk                   (0x4UL)                   /*!< CCU8 GIDLC: CS2I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLC_CS3I_Pos                   (3UL)                     /*!< CCU8 GIDLC: CS3I (Bit 3)                                    */
+#define CCU8_GIDLC_CS3I_Msk                   (0x8UL)                   /*!< CCU8 GIDLC: CS3I (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLC_SPRB_Pos                   (8UL)                     /*!< CCU8 GIDLC: SPRB (Bit 8)                                    */
+#define CCU8_GIDLC_SPRB_Msk                   (0x100UL)                 /*!< CCU8 GIDLC: SPRB (Bitfield-Mask: 0x01)                      */
+#define CCU8_GIDLC_SPCH_Pos                   (10UL)                    /*!< CCU8 GIDLC: SPCH (Bit 10)                                   */
+#define CCU8_GIDLC_SPCH_Msk                   (0x400UL)                 /*!< CCU8 GIDLC: SPCH (Bitfield-Mask: 0x01)                      */
+
+/* ----------------------------------  CCU8_GCSS  --------------------------------- */
+#define CCU8_GCSS_S0SE_Pos                    (0UL)                     /*!< CCU8 GCSS: S0SE (Bit 0)                                     */
+#define CCU8_GCSS_S0SE_Msk                    (0x1UL)                   /*!< CCU8 GCSS: S0SE (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSS_S0DSE_Pos                   (1UL)                     /*!< CCU8 GCSS: S0DSE (Bit 1)                                    */
+#define CCU8_GCSS_S0DSE_Msk                   (0x2UL)                   /*!< CCU8 GCSS: S0DSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S0PSE_Pos                   (2UL)                     /*!< CCU8 GCSS: S0PSE (Bit 2)                                    */
+#define CCU8_GCSS_S0PSE_Msk                   (0x4UL)                   /*!< CCU8 GCSS: S0PSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S1SE_Pos                    (4UL)                     /*!< CCU8 GCSS: S1SE (Bit 4)                                     */
+#define CCU8_GCSS_S1SE_Msk                    (0x10UL)                  /*!< CCU8 GCSS: S1SE (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSS_S1DSE_Pos                   (5UL)                     /*!< CCU8 GCSS: S1DSE (Bit 5)                                    */
+#define CCU8_GCSS_S1DSE_Msk                   (0x20UL)                  /*!< CCU8 GCSS: S1DSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S1PSE_Pos                   (6UL)                     /*!< CCU8 GCSS: S1PSE (Bit 6)                                    */
+#define CCU8_GCSS_S1PSE_Msk                   (0x40UL)                  /*!< CCU8 GCSS: S1PSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S2SE_Pos                    (8UL)                     /*!< CCU8 GCSS: S2SE (Bit 8)                                     */
+#define CCU8_GCSS_S2SE_Msk                    (0x100UL)                 /*!< CCU8 GCSS: S2SE (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSS_S2DSE_Pos                   (9UL)                     /*!< CCU8 GCSS: S2DSE (Bit 9)                                    */
+#define CCU8_GCSS_S2DSE_Msk                   (0x200UL)                 /*!< CCU8 GCSS: S2DSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S2PSE_Pos                   (10UL)                    /*!< CCU8 GCSS: S2PSE (Bit 10)                                   */
+#define CCU8_GCSS_S2PSE_Msk                   (0x400UL)                 /*!< CCU8 GCSS: S2PSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S3SE_Pos                    (12UL)                    /*!< CCU8 GCSS: S3SE (Bit 12)                                    */
+#define CCU8_GCSS_S3SE_Msk                    (0x1000UL)                /*!< CCU8 GCSS: S3SE (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSS_S3DSE_Pos                   (13UL)                    /*!< CCU8 GCSS: S3DSE (Bit 13)                                   */
+#define CCU8_GCSS_S3DSE_Msk                   (0x2000UL)                /*!< CCU8 GCSS: S3DSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S3PSE_Pos                   (14UL)                    /*!< CCU8 GCSS: S3PSE (Bit 14)                                   */
+#define CCU8_GCSS_S3PSE_Msk                   (0x4000UL)                /*!< CCU8 GCSS: S3PSE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSS_S0ST1S_Pos                  (16UL)                    /*!< CCU8 GCSS: S0ST1S (Bit 16)                                  */
+#define CCU8_GCSS_S0ST1S_Msk                  (0x10000UL)               /*!< CCU8 GCSS: S0ST1S (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSS_S1ST1S_Pos                  (17UL)                    /*!< CCU8 GCSS: S1ST1S (Bit 17)                                  */
+#define CCU8_GCSS_S1ST1S_Msk                  (0x20000UL)               /*!< CCU8 GCSS: S1ST1S (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSS_S2ST1S_Pos                  (18UL)                    /*!< CCU8 GCSS: S2ST1S (Bit 18)                                  */
+#define CCU8_GCSS_S2ST1S_Msk                  (0x40000UL)               /*!< CCU8 GCSS: S2ST1S (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSS_S3ST1S_Pos                  (19UL)                    /*!< CCU8 GCSS: S3ST1S (Bit 19)                                  */
+#define CCU8_GCSS_S3ST1S_Msk                  (0x80000UL)               /*!< CCU8 GCSS: S3ST1S (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSS_S0ST2S_Pos                  (20UL)                    /*!< CCU8 GCSS: S0ST2S (Bit 20)                                  */
+#define CCU8_GCSS_S0ST2S_Msk                  (0x100000UL)              /*!< CCU8 GCSS: S0ST2S (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSS_S1ST2S_Pos                  (21UL)                    /*!< CCU8 GCSS: S1ST2S (Bit 21)                                  */
+#define CCU8_GCSS_S1ST2S_Msk                  (0x200000UL)              /*!< CCU8 GCSS: S1ST2S (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSS_S2ST2S_Pos                  (22UL)                    /*!< CCU8 GCSS: S2ST2S (Bit 22)                                  */
+#define CCU8_GCSS_S2ST2S_Msk                  (0x400000UL)              /*!< CCU8 GCSS: S2ST2S (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSS_S3ST2S_Pos                  (23UL)                    /*!< CCU8 GCSS: S3ST2S (Bit 23)                                  */
+#define CCU8_GCSS_S3ST2S_Msk                  (0x800000UL)              /*!< CCU8 GCSS: S3ST2S (Bitfield-Mask: 0x01)                     */
+
+/* ----------------------------------  CCU8_GCSC  --------------------------------- */
+#define CCU8_GCSC_S0SC_Pos                    (0UL)                     /*!< CCU8 GCSC: S0SC (Bit 0)                                     */
+#define CCU8_GCSC_S0SC_Msk                    (0x1UL)                   /*!< CCU8 GCSC: S0SC (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSC_S0DSC_Pos                   (1UL)                     /*!< CCU8 GCSC: S0DSC (Bit 1)                                    */
+#define CCU8_GCSC_S0DSC_Msk                   (0x2UL)                   /*!< CCU8 GCSC: S0DSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S0PSC_Pos                   (2UL)                     /*!< CCU8 GCSC: S0PSC (Bit 2)                                    */
+#define CCU8_GCSC_S0PSC_Msk                   (0x4UL)                   /*!< CCU8 GCSC: S0PSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S1SC_Pos                    (4UL)                     /*!< CCU8 GCSC: S1SC (Bit 4)                                     */
+#define CCU8_GCSC_S1SC_Msk                    (0x10UL)                  /*!< CCU8 GCSC: S1SC (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSC_S1DSC_Pos                   (5UL)                     /*!< CCU8 GCSC: S1DSC (Bit 5)                                    */
+#define CCU8_GCSC_S1DSC_Msk                   (0x20UL)                  /*!< CCU8 GCSC: S1DSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S1PSC_Pos                   (6UL)                     /*!< CCU8 GCSC: S1PSC (Bit 6)                                    */
+#define CCU8_GCSC_S1PSC_Msk                   (0x40UL)                  /*!< CCU8 GCSC: S1PSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S2SC_Pos                    (8UL)                     /*!< CCU8 GCSC: S2SC (Bit 8)                                     */
+#define CCU8_GCSC_S2SC_Msk                    (0x100UL)                 /*!< CCU8 GCSC: S2SC (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSC_S2DSC_Pos                   (9UL)                     /*!< CCU8 GCSC: S2DSC (Bit 9)                                    */
+#define CCU8_GCSC_S2DSC_Msk                   (0x200UL)                 /*!< CCU8 GCSC: S2DSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S2PSC_Pos                   (10UL)                    /*!< CCU8 GCSC: S2PSC (Bit 10)                                   */
+#define CCU8_GCSC_S2PSC_Msk                   (0x400UL)                 /*!< CCU8 GCSC: S2PSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S3SC_Pos                    (12UL)                    /*!< CCU8 GCSC: S3SC (Bit 12)                                    */
+#define CCU8_GCSC_S3SC_Msk                    (0x1000UL)                /*!< CCU8 GCSC: S3SC (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCSC_S3DSC_Pos                   (13UL)                    /*!< CCU8 GCSC: S3DSC (Bit 13)                                   */
+#define CCU8_GCSC_S3DSC_Msk                   (0x2000UL)                /*!< CCU8 GCSC: S3DSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S3PSC_Pos                   (14UL)                    /*!< CCU8 GCSC: S3PSC (Bit 14)                                   */
+#define CCU8_GCSC_S3PSC_Msk                   (0x4000UL)                /*!< CCU8 GCSC: S3PSC (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCSC_S0ST1C_Pos                  (16UL)                    /*!< CCU8 GCSC: S0ST1C (Bit 16)                                  */
+#define CCU8_GCSC_S0ST1C_Msk                  (0x10000UL)               /*!< CCU8 GCSC: S0ST1C (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSC_S1ST1C_Pos                  (17UL)                    /*!< CCU8 GCSC: S1ST1C (Bit 17)                                  */
+#define CCU8_GCSC_S1ST1C_Msk                  (0x20000UL)               /*!< CCU8 GCSC: S1ST1C (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSC_S2ST1C_Pos                  (18UL)                    /*!< CCU8 GCSC: S2ST1C (Bit 18)                                  */
+#define CCU8_GCSC_S2ST1C_Msk                  (0x40000UL)               /*!< CCU8 GCSC: S2ST1C (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSC_S3ST1C_Pos                  (19UL)                    /*!< CCU8 GCSC: S3ST1C (Bit 19)                                  */
+#define CCU8_GCSC_S3ST1C_Msk                  (0x80000UL)               /*!< CCU8 GCSC: S3ST1C (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSC_S0ST2C_Pos                  (20UL)                    /*!< CCU8 GCSC: S0ST2C (Bit 20)                                  */
+#define CCU8_GCSC_S0ST2C_Msk                  (0x100000UL)              /*!< CCU8 GCSC: S0ST2C (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSC_S1ST2C_Pos                  (21UL)                    /*!< CCU8 GCSC: S1ST2C (Bit 21)                                  */
+#define CCU8_GCSC_S1ST2C_Msk                  (0x200000UL)              /*!< CCU8 GCSC: S1ST2C (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSC_S2ST2C_Pos                  (22UL)                    /*!< CCU8 GCSC: S2ST2C (Bit 22)                                  */
+#define CCU8_GCSC_S2ST2C_Msk                  (0x400000UL)              /*!< CCU8 GCSC: S2ST2C (Bitfield-Mask: 0x01)                     */
+#define CCU8_GCSC_S3ST2C_Pos                  (23UL)                    /*!< CCU8 GCSC: S3ST2C (Bit 23)                                  */
+#define CCU8_GCSC_S3ST2C_Msk                  (0x800000UL)              /*!< CCU8 GCSC: S3ST2C (Bitfield-Mask: 0x01)                     */
+
+/* ----------------------------------  CCU8_GCST  --------------------------------- */
+#define CCU8_GCST_S0SS_Pos                    (0UL)                     /*!< CCU8 GCST: S0SS (Bit 0)                                     */
+#define CCU8_GCST_S0SS_Msk                    (0x1UL)                   /*!< CCU8 GCST: S0SS (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCST_S0DSS_Pos                   (1UL)                     /*!< CCU8 GCST: S0DSS (Bit 1)                                    */
+#define CCU8_GCST_S0DSS_Msk                   (0x2UL)                   /*!< CCU8 GCST: S0DSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_S0PSS_Pos                   (2UL)                     /*!< CCU8 GCST: S0PSS (Bit 2)                                    */
+#define CCU8_GCST_S0PSS_Msk                   (0x4UL)                   /*!< CCU8 GCST: S0PSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_S1SS_Pos                    (4UL)                     /*!< CCU8 GCST: S1SS (Bit 4)                                     */
+#define CCU8_GCST_S1SS_Msk                    (0x10UL)                  /*!< CCU8 GCST: S1SS (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCST_S1DSS_Pos                   (5UL)                     /*!< CCU8 GCST: S1DSS (Bit 5)                                    */
+#define CCU8_GCST_S1DSS_Msk                   (0x20UL)                  /*!< CCU8 GCST: S1DSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_S1PSS_Pos                   (6UL)                     /*!< CCU8 GCST: S1PSS (Bit 6)                                    */
+#define CCU8_GCST_S1PSS_Msk                   (0x40UL)                  /*!< CCU8 GCST: S1PSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_S2SS_Pos                    (8UL)                     /*!< CCU8 GCST: S2SS (Bit 8)                                     */
+#define CCU8_GCST_S2SS_Msk                    (0x100UL)                 /*!< CCU8 GCST: S2SS (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCST_S2DSS_Pos                   (9UL)                     /*!< CCU8 GCST: S2DSS (Bit 9)                                    */
+#define CCU8_GCST_S2DSS_Msk                   (0x200UL)                 /*!< CCU8 GCST: S2DSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_S2PSS_Pos                   (10UL)                    /*!< CCU8 GCST: S2PSS (Bit 10)                                   */
+#define CCU8_GCST_S2PSS_Msk                   (0x400UL)                 /*!< CCU8 GCST: S2PSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_S3SS_Pos                    (12UL)                    /*!< CCU8 GCST: S3SS (Bit 12)                                    */
+#define CCU8_GCST_S3SS_Msk                    (0x1000UL)                /*!< CCU8 GCST: S3SS (Bitfield-Mask: 0x01)                       */
+#define CCU8_GCST_S3DSS_Pos                   (13UL)                    /*!< CCU8 GCST: S3DSS (Bit 13)                                   */
+#define CCU8_GCST_S3DSS_Msk                   (0x2000UL)                /*!< CCU8 GCST: S3DSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_S3PSS_Pos                   (14UL)                    /*!< CCU8 GCST: S3PSS (Bit 14)                                   */
+#define CCU8_GCST_S3PSS_Msk                   (0x4000UL)                /*!< CCU8 GCST: S3PSS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GCST_CC80ST1_Pos                 (16UL)                    /*!< CCU8 GCST: CC80ST1 (Bit 16)                                 */
+#define CCU8_GCST_CC80ST1_Msk                 (0x10000UL)               /*!< CCU8 GCST: CC80ST1 (Bitfield-Mask: 0x01)                    */
+#define CCU8_GCST_CC81ST1_Pos                 (17UL)                    /*!< CCU8 GCST: CC81ST1 (Bit 17)                                 */
+#define CCU8_GCST_CC81ST1_Msk                 (0x20000UL)               /*!< CCU8 GCST: CC81ST1 (Bitfield-Mask: 0x01)                    */
+#define CCU8_GCST_CC82ST1_Pos                 (18UL)                    /*!< CCU8 GCST: CC82ST1 (Bit 18)                                 */
+#define CCU8_GCST_CC82ST1_Msk                 (0x40000UL)               /*!< CCU8 GCST: CC82ST1 (Bitfield-Mask: 0x01)                    */
+#define CCU8_GCST_CC83ST1_Pos                 (19UL)                    /*!< CCU8 GCST: CC83ST1 (Bit 19)                                 */
+#define CCU8_GCST_CC83ST1_Msk                 (0x80000UL)               /*!< CCU8 GCST: CC83ST1 (Bitfield-Mask: 0x01)                    */
+#define CCU8_GCST_CC80ST2_Pos                 (20UL)                    /*!< CCU8 GCST: CC80ST2 (Bit 20)                                 */
+#define CCU8_GCST_CC80ST2_Msk                 (0x100000UL)              /*!< CCU8 GCST: CC80ST2 (Bitfield-Mask: 0x01)                    */
+#define CCU8_GCST_CC81ST2_Pos                 (21UL)                    /*!< CCU8 GCST: CC81ST2 (Bit 21)                                 */
+#define CCU8_GCST_CC81ST2_Msk                 (0x200000UL)              /*!< CCU8 GCST: CC81ST2 (Bitfield-Mask: 0x01)                    */
+#define CCU8_GCST_CC82ST2_Pos                 (22UL)                    /*!< CCU8 GCST: CC82ST2 (Bit 22)                                 */
+#define CCU8_GCST_CC82ST2_Msk                 (0x400000UL)              /*!< CCU8 GCST: CC82ST2 (Bitfield-Mask: 0x01)                    */
+#define CCU8_GCST_CC83ST2_Pos                 (23UL)                    /*!< CCU8 GCST: CC83ST2 (Bit 23)                                 */
+#define CCU8_GCST_CC83ST2_Msk                 (0x800000UL)              /*!< CCU8 GCST: CC83ST2 (Bitfield-Mask: 0x01)                    */
+
+/* ---------------------------------  CCU8_GPCHK  --------------------------------- */
+#define CCU8_GPCHK_PASE_Pos                   (0UL)                     /*!< CCU8 GPCHK: PASE (Bit 0)                                    */
+#define CCU8_GPCHK_PASE_Msk                   (0x1UL)                   /*!< CCU8 GPCHK: PASE (Bitfield-Mask: 0x01)                      */
+#define CCU8_GPCHK_PACS_Pos                   (1UL)                     /*!< CCU8 GPCHK: PACS (Bit 1)                                    */
+#define CCU8_GPCHK_PACS_Msk                   (0x6UL)                   /*!< CCU8 GPCHK: PACS (Bitfield-Mask: 0x03)                      */
+#define CCU8_GPCHK_PISEL_Pos                  (3UL)                     /*!< CCU8 GPCHK: PISEL (Bit 3)                                   */
+#define CCU8_GPCHK_PISEL_Msk                  (0x18UL)                  /*!< CCU8 GPCHK: PISEL (Bitfield-Mask: 0x03)                     */
+#define CCU8_GPCHK_PCDS_Pos                   (5UL)                     /*!< CCU8 GPCHK: PCDS (Bit 5)                                    */
+#define CCU8_GPCHK_PCDS_Msk                   (0x60UL)                  /*!< CCU8 GPCHK: PCDS (Bitfield-Mask: 0x03)                      */
+#define CCU8_GPCHK_PCTS_Pos                   (7UL)                     /*!< CCU8 GPCHK: PCTS (Bit 7)                                    */
+#define CCU8_GPCHK_PCTS_Msk                   (0x80UL)                  /*!< CCU8 GPCHK: PCTS (Bitfield-Mask: 0x01)                      */
+#define CCU8_GPCHK_PCST_Pos                   (15UL)                    /*!< CCU8 GPCHK: PCST (Bit 15)                                   */
+#define CCU8_GPCHK_PCST_Msk                   (0x8000UL)                /*!< CCU8 GPCHK: PCST (Bitfield-Mask: 0x01)                      */
+#define CCU8_GPCHK_PCSEL0_Pos                 (16UL)                    /*!< CCU8 GPCHK: PCSEL0 (Bit 16)                                 */
+#define CCU8_GPCHK_PCSEL0_Msk                 (0xf0000UL)               /*!< CCU8 GPCHK: PCSEL0 (Bitfield-Mask: 0x0f)                    */
+#define CCU8_GPCHK_PCSEL1_Pos                 (20UL)                    /*!< CCU8 GPCHK: PCSEL1 (Bit 20)                                 */
+#define CCU8_GPCHK_PCSEL1_Msk                 (0xf00000UL)              /*!< CCU8 GPCHK: PCSEL1 (Bitfield-Mask: 0x0f)                    */
+#define CCU8_GPCHK_PCSEL2_Pos                 (24UL)                    /*!< CCU8 GPCHK: PCSEL2 (Bit 24)                                 */
+#define CCU8_GPCHK_PCSEL2_Msk                 (0xf000000UL)             /*!< CCU8 GPCHK: PCSEL2 (Bitfield-Mask: 0x0f)                    */
+#define CCU8_GPCHK_PCSEL3_Pos                 (28UL)                    /*!< CCU8 GPCHK: PCSEL3 (Bit 28)                                 */
+#define CCU8_GPCHK_PCSEL3_Msk                 (0xf0000000UL)            /*!< CCU8 GPCHK: PCSEL3 (Bitfield-Mask: 0x0f)                    */
+
+/* ----------------------------------  CCU8_MIDR  --------------------------------- */
+#define CCU8_MIDR_MODR_Pos                    (0UL)                     /*!< CCU8 MIDR: MODR (Bit 0)                                     */
+#define CCU8_MIDR_MODR_Msk                    (0xffUL)                  /*!< CCU8 MIDR: MODR (Bitfield-Mask: 0xff)                       */
+#define CCU8_MIDR_MODT_Pos                    (8UL)                     /*!< CCU8 MIDR: MODT (Bit 8)                                     */
+#define CCU8_MIDR_MODT_Msk                    (0xff00UL)                /*!< CCU8 MIDR: MODT (Bitfield-Mask: 0xff)                       */
+#define CCU8_MIDR_MODN_Pos                    (16UL)                    /*!< CCU8 MIDR: MODN (Bit 16)                                    */
+#define CCU8_MIDR_MODN_Msk                    (0xffff0000UL)            /*!< CCU8 MIDR: MODN (Bitfield-Mask: 0xffff)                     */
+
+
+/* ================================================================================ */
+/* ================        Group 'CCU8_CC8' Position & Mask        ================ */
+/* ================================================================================ */
+
+
+/* --------------------------------  CCU8_CC8_INS2  ------------------------------- */
+#define CCU8_CC8_INS2_EV0EM_Pos               (0UL)                     /*!< CCU8_CC8 INS2: EV0EM (Bit 0)                                */
+#define CCU8_CC8_INS2_EV0EM_Msk               (0x3UL)                   /*!< CCU8_CC8 INS2: EV0EM (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_INS2_EV0LM_Pos               (2UL)                     /*!< CCU8_CC8 INS2: EV0LM (Bit 2)                                */
+#define CCU8_CC8_INS2_EV0LM_Msk               (0x4UL)                   /*!< CCU8_CC8 INS2: EV0LM (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INS2_EV1EM_Pos               (4UL)                     /*!< CCU8_CC8 INS2: EV1EM (Bit 4)                                */
+#define CCU8_CC8_INS2_EV1EM_Msk               (0x30UL)                  /*!< CCU8_CC8 INS2: EV1EM (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_INS2_EV1LM_Pos               (6UL)                     /*!< CCU8_CC8 INS2: EV1LM (Bit 6)                                */
+#define CCU8_CC8_INS2_EV1LM_Msk               (0x40UL)                  /*!< CCU8_CC8 INS2: EV1LM (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INS2_EV2EM_Pos               (8UL)                     /*!< CCU8_CC8 INS2: EV2EM (Bit 8)                                */
+#define CCU8_CC8_INS2_EV2EM_Msk               (0x300UL)                 /*!< CCU8_CC8 INS2: EV2EM (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_INS2_EV2LM_Pos               (10UL)                    /*!< CCU8_CC8 INS2: EV2LM (Bit 10)                               */
+#define CCU8_CC8_INS2_EV2LM_Msk               (0x400UL)                 /*!< CCU8_CC8 INS2: EV2LM (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INS2_LPF0M_Pos               (16UL)                    /*!< CCU8_CC8 INS2: LPF0M (Bit 16)                               */
+#define CCU8_CC8_INS2_LPF0M_Msk               (0x30000UL)               /*!< CCU8_CC8 INS2: LPF0M (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_INS2_LPF1M_Pos               (20UL)                    /*!< CCU8_CC8 INS2: LPF1M (Bit 20)                               */
+#define CCU8_CC8_INS2_LPF1M_Msk               (0x300000UL)              /*!< CCU8_CC8 INS2: LPF1M (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_INS2_LPF2M_Pos               (24UL)                    /*!< CCU8_CC8 INS2: LPF2M (Bit 24)                               */
+#define CCU8_CC8_INS2_LPF2M_Msk               (0x3000000UL)             /*!< CCU8_CC8 INS2: LPF2M (Bitfield-Mask: 0x03)                  */
+
+/* --------------------------------  CCU8_CC8_CMC  -------------------------------- */
+#define CCU8_CC8_CMC_STRTS_Pos                (0UL)                     /*!< CCU8_CC8 CMC: STRTS (Bit 0)                                 */
+#define CCU8_CC8_CMC_STRTS_Msk                (0x3UL)                   /*!< CCU8_CC8 CMC: STRTS (Bitfield-Mask: 0x03)                   */
+#define CCU8_CC8_CMC_ENDS_Pos                 (2UL)                     /*!< CCU8_CC8 CMC: ENDS (Bit 2)                                  */
+#define CCU8_CC8_CMC_ENDS_Msk                 (0xcUL)                   /*!< CCU8_CC8 CMC: ENDS (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_CMC_CAP0S_Pos                (4UL)                     /*!< CCU8_CC8 CMC: CAP0S (Bit 4)                                 */
+#define CCU8_CC8_CMC_CAP0S_Msk                (0x30UL)                  /*!< CCU8_CC8 CMC: CAP0S (Bitfield-Mask: 0x03)                   */
+#define CCU8_CC8_CMC_CAP1S_Pos                (6UL)                     /*!< CCU8_CC8 CMC: CAP1S (Bit 6)                                 */
+#define CCU8_CC8_CMC_CAP1S_Msk                (0xc0UL)                  /*!< CCU8_CC8 CMC: CAP1S (Bitfield-Mask: 0x03)                   */
+#define CCU8_CC8_CMC_GATES_Pos                (8UL)                     /*!< CCU8_CC8 CMC: GATES (Bit 8)                                 */
+#define CCU8_CC8_CMC_GATES_Msk                (0x300UL)                 /*!< CCU8_CC8 CMC: GATES (Bitfield-Mask: 0x03)                   */
+#define CCU8_CC8_CMC_UDS_Pos                  (10UL)                    /*!< CCU8_CC8 CMC: UDS (Bit 10)                                  */
+#define CCU8_CC8_CMC_UDS_Msk                  (0xc00UL)                 /*!< CCU8_CC8 CMC: UDS (Bitfield-Mask: 0x03)                     */
+#define CCU8_CC8_CMC_LDS_Pos                  (12UL)                    /*!< CCU8_CC8 CMC: LDS (Bit 12)                                  */
+#define CCU8_CC8_CMC_LDS_Msk                  (0x3000UL)                /*!< CCU8_CC8 CMC: LDS (Bitfield-Mask: 0x03)                     */
+#define CCU8_CC8_CMC_CNTS_Pos                 (14UL)                    /*!< CCU8_CC8 CMC: CNTS (Bit 14)                                 */
+#define CCU8_CC8_CMC_CNTS_Msk                 (0xc000UL)                /*!< CCU8_CC8 CMC: CNTS (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_CMC_OFS_Pos                  (16UL)                    /*!< CCU8_CC8 CMC: OFS (Bit 16)                                  */
+#define CCU8_CC8_CMC_OFS_Msk                  (0x10000UL)               /*!< CCU8_CC8 CMC: OFS (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_CMC_TS_Pos                   (17UL)                    /*!< CCU8_CC8 CMC: TS (Bit 17)                                   */
+#define CCU8_CC8_CMC_TS_Msk                   (0x20000UL)               /*!< CCU8_CC8 CMC: TS (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_CMC_MOS_Pos                  (18UL)                    /*!< CCU8_CC8 CMC: MOS (Bit 18)                                  */
+#define CCU8_CC8_CMC_MOS_Msk                  (0xc0000UL)               /*!< CCU8_CC8 CMC: MOS (Bitfield-Mask: 0x03)                     */
+#define CCU8_CC8_CMC_TCE_Pos                  (20UL)                    /*!< CCU8_CC8 CMC: TCE (Bit 20)                                  */
+#define CCU8_CC8_CMC_TCE_Msk                  (0x100000UL)              /*!< CCU8_CC8 CMC: TCE (Bitfield-Mask: 0x01)                     */
+
+/* --------------------------------  CCU8_CC8_TCST  ------------------------------- */
+#define CCU8_CC8_TCST_TRB_Pos                 (0UL)                     /*!< CCU8_CC8 TCST: TRB (Bit 0)                                  */
+#define CCU8_CC8_TCST_TRB_Msk                 (0x1UL)                   /*!< CCU8_CC8 TCST: TRB (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_TCST_CDIR_Pos                (1UL)                     /*!< CCU8_CC8 TCST: CDIR (Bit 1)                                 */
+#define CCU8_CC8_TCST_CDIR_Msk                (0x2UL)                   /*!< CCU8_CC8 TCST: CDIR (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_TCST_DTR1_Pos                (3UL)                     /*!< CCU8_CC8 TCST: DTR1 (Bit 3)                                 */
+#define CCU8_CC8_TCST_DTR1_Msk                (0x8UL)                   /*!< CCU8_CC8 TCST: DTR1 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_TCST_DTR2_Pos                (4UL)                     /*!< CCU8_CC8 TCST: DTR2 (Bit 4)                                 */
+#define CCU8_CC8_TCST_DTR2_Msk                (0x10UL)                  /*!< CCU8_CC8 TCST: DTR2 (Bitfield-Mask: 0x01)                   */
+
+/* -------------------------------  CCU8_CC8_TCSET  ------------------------------- */
+#define CCU8_CC8_TCSET_TRBS_Pos               (0UL)                     /*!< CCU8_CC8 TCSET: TRBS (Bit 0)                                */
+#define CCU8_CC8_TCSET_TRBS_Msk               (0x1UL)                   /*!< CCU8_CC8 TCSET: TRBS (Bitfield-Mask: 0x01)                  */
+
+/* -------------------------------  CCU8_CC8_TCCLR  ------------------------------- */
+#define CCU8_CC8_TCCLR_TRBC_Pos               (0UL)                     /*!< CCU8_CC8 TCCLR: TRBC (Bit 0)                                */
+#define CCU8_CC8_TCCLR_TRBC_Msk               (0x1UL)                   /*!< CCU8_CC8 TCCLR: TRBC (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_TCCLR_TCC_Pos                (1UL)                     /*!< CCU8_CC8 TCCLR: TCC (Bit 1)                                 */
+#define CCU8_CC8_TCCLR_TCC_Msk                (0x2UL)                   /*!< CCU8_CC8 TCCLR: TCC (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_TCCLR_DITC_Pos               (2UL)                     /*!< CCU8_CC8 TCCLR: DITC (Bit 2)                                */
+#define CCU8_CC8_TCCLR_DITC_Msk               (0x4UL)                   /*!< CCU8_CC8 TCCLR: DITC (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_TCCLR_DTC1C_Pos              (3UL)                     /*!< CCU8_CC8 TCCLR: DTC1C (Bit 3)                               */
+#define CCU8_CC8_TCCLR_DTC1C_Msk              (0x8UL)                   /*!< CCU8_CC8 TCCLR: DTC1C (Bitfield-Mask: 0x01)                 */
+#define CCU8_CC8_TCCLR_DTC2C_Pos              (4UL)                     /*!< CCU8_CC8 TCCLR: DTC2C (Bit 4)                               */
+#define CCU8_CC8_TCCLR_DTC2C_Msk              (0x10UL)                  /*!< CCU8_CC8 TCCLR: DTC2C (Bitfield-Mask: 0x01)                 */
+
+/* ---------------------------------  CCU8_CC8_TC  -------------------------------- */
+#define CCU8_CC8_TC_TCM_Pos                   (0UL)                     /*!< CCU8_CC8 TC: TCM (Bit 0)                                    */
+#define CCU8_CC8_TC_TCM_Msk                   (0x1UL)                   /*!< CCU8_CC8 TC: TCM (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_TSSM_Pos                  (1UL)                     /*!< CCU8_CC8 TC: TSSM (Bit 1)                                   */
+#define CCU8_CC8_TC_TSSM_Msk                  (0x2UL)                   /*!< CCU8_CC8 TC: TSSM (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_TC_CLST_Pos                  (2UL)                     /*!< CCU8_CC8 TC: CLST (Bit 2)                                   */
+#define CCU8_CC8_TC_CLST_Msk                  (0x4UL)                   /*!< CCU8_CC8 TC: CLST (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_TC_CMOD_Pos                  (3UL)                     /*!< CCU8_CC8 TC: CMOD (Bit 3)                                   */
+#define CCU8_CC8_TC_CMOD_Msk                  (0x8UL)                   /*!< CCU8_CC8 TC: CMOD (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_TC_ECM_Pos                   (4UL)                     /*!< CCU8_CC8 TC: ECM (Bit 4)                                    */
+#define CCU8_CC8_TC_ECM_Msk                   (0x10UL)                  /*!< CCU8_CC8 TC: ECM (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_CAPC_Pos                  (5UL)                     /*!< CCU8_CC8 TC: CAPC (Bit 5)                                   */
+#define CCU8_CC8_TC_CAPC_Msk                  (0x60UL)                  /*!< CCU8_CC8 TC: CAPC (Bitfield-Mask: 0x03)                     */
+#define CCU8_CC8_TC_TLS_Pos                   (7UL)                     /*!< CCU8_CC8 TC: TLS (Bit 7)                                    */
+#define CCU8_CC8_TC_TLS_Msk                   (0x80UL)                  /*!< CCU8_CC8 TC: TLS (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_ENDM_Pos                  (8UL)                     /*!< CCU8_CC8 TC: ENDM (Bit 8)                                   */
+#define CCU8_CC8_TC_ENDM_Msk                  (0x300UL)                 /*!< CCU8_CC8 TC: ENDM (Bitfield-Mask: 0x03)                     */
+#define CCU8_CC8_TC_STRM_Pos                  (10UL)                    /*!< CCU8_CC8 TC: STRM (Bit 10)                                  */
+#define CCU8_CC8_TC_STRM_Msk                  (0x400UL)                 /*!< CCU8_CC8 TC: STRM (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_TC_SCE_Pos                   (11UL)                    /*!< CCU8_CC8 TC: SCE (Bit 11)                                   */
+#define CCU8_CC8_TC_SCE_Msk                   (0x800UL)                 /*!< CCU8_CC8 TC: SCE (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_CCS_Pos                   (12UL)                    /*!< CCU8_CC8 TC: CCS (Bit 12)                                   */
+#define CCU8_CC8_TC_CCS_Msk                   (0x1000UL)                /*!< CCU8_CC8 TC: CCS (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_DITHE_Pos                 (13UL)                    /*!< CCU8_CC8 TC: DITHE (Bit 13)                                 */
+#define CCU8_CC8_TC_DITHE_Msk                 (0x6000UL)                /*!< CCU8_CC8 TC: DITHE (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_TC_DIM_Pos                   (15UL)                    /*!< CCU8_CC8 TC: DIM (Bit 15)                                   */
+#define CCU8_CC8_TC_DIM_Msk                   (0x8000UL)                /*!< CCU8_CC8 TC: DIM (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_FPE_Pos                   (16UL)                    /*!< CCU8_CC8 TC: FPE (Bit 16)                                   */
+#define CCU8_CC8_TC_FPE_Msk                   (0x10000UL)               /*!< CCU8_CC8 TC: FPE (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_TRAPE0_Pos                (17UL)                    /*!< CCU8_CC8 TC: TRAPE0 (Bit 17)                                */
+#define CCU8_CC8_TC_TRAPE0_Msk                (0x20000UL)               /*!< CCU8_CC8 TC: TRAPE0 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_TC_TRAPE1_Pos                (18UL)                    /*!< CCU8_CC8 TC: TRAPE1 (Bit 18)                                */
+#define CCU8_CC8_TC_TRAPE1_Msk                (0x40000UL)               /*!< CCU8_CC8 TC: TRAPE1 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_TC_TRAPE2_Pos                (19UL)                    /*!< CCU8_CC8 TC: TRAPE2 (Bit 19)                                */
+#define CCU8_CC8_TC_TRAPE2_Msk                (0x80000UL)               /*!< CCU8_CC8 TC: TRAPE2 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_TC_TRAPE3_Pos                (20UL)                    /*!< CCU8_CC8 TC: TRAPE3 (Bit 20)                                */
+#define CCU8_CC8_TC_TRAPE3_Msk                (0x100000UL)              /*!< CCU8_CC8 TC: TRAPE3 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_TC_TRPSE_Pos                 (21UL)                    /*!< CCU8_CC8 TC: TRPSE (Bit 21)                                 */
+#define CCU8_CC8_TC_TRPSE_Msk                 (0x200000UL)              /*!< CCU8_CC8 TC: TRPSE (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_TC_TRPSW_Pos                 (22UL)                    /*!< CCU8_CC8 TC: TRPSW (Bit 22)                                 */
+#define CCU8_CC8_TC_TRPSW_Msk                 (0x400000UL)              /*!< CCU8_CC8 TC: TRPSW (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_TC_EMS_Pos                   (23UL)                    /*!< CCU8_CC8 TC: EMS (Bit 23)                                   */
+#define CCU8_CC8_TC_EMS_Msk                   (0x800000UL)              /*!< CCU8_CC8 TC: EMS (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_EMT_Pos                   (24UL)                    /*!< CCU8_CC8 TC: EMT (Bit 24)                                   */
+#define CCU8_CC8_TC_EMT_Msk                   (0x1000000UL)             /*!< CCU8_CC8 TC: EMT (Bitfield-Mask: 0x01)                      */
+#define CCU8_CC8_TC_MCME1_Pos                 (25UL)                    /*!< CCU8_CC8 TC: MCME1 (Bit 25)                                 */
+#define CCU8_CC8_TC_MCME1_Msk                 (0x2000000UL)             /*!< CCU8_CC8 TC: MCME1 (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_TC_MCME2_Pos                 (26UL)                    /*!< CCU8_CC8 TC: MCME2 (Bit 26)                                 */
+#define CCU8_CC8_TC_MCME2_Msk                 (0x4000000UL)             /*!< CCU8_CC8 TC: MCME2 (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_TC_EME_Pos                   (27UL)                    /*!< CCU8_CC8 TC: EME (Bit 27)                                   */
+#define CCU8_CC8_TC_EME_Msk                   (0x18000000UL)            /*!< CCU8_CC8 TC: EME (Bitfield-Mask: 0x03)                      */
+#define CCU8_CC8_TC_STOS_Pos                  (29UL)                    /*!< CCU8_CC8 TC: STOS (Bit 29)                                  */
+#define CCU8_CC8_TC_STOS_Msk                  (0x60000000UL)            /*!< CCU8_CC8 TC: STOS (Bitfield-Mask: 0x03)                     */
+
+/* --------------------------------  CCU8_CC8_PSL  -------------------------------- */
+#define CCU8_CC8_PSL_PSL11_Pos                (0UL)                     /*!< CCU8_CC8 PSL: PSL11 (Bit 0)                                 */
+#define CCU8_CC8_PSL_PSL11_Msk                (0x1UL)                   /*!< CCU8_CC8 PSL: PSL11 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_PSL_PSL12_Pos                (1UL)                     /*!< CCU8_CC8 PSL: PSL12 (Bit 1)                                 */
+#define CCU8_CC8_PSL_PSL12_Msk                (0x2UL)                   /*!< CCU8_CC8 PSL: PSL12 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_PSL_PSL21_Pos                (2UL)                     /*!< CCU8_CC8 PSL: PSL21 (Bit 2)                                 */
+#define CCU8_CC8_PSL_PSL21_Msk                (0x4UL)                   /*!< CCU8_CC8 PSL: PSL21 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_PSL_PSL22_Pos                (3UL)                     /*!< CCU8_CC8 PSL: PSL22 (Bit 3)                                 */
+#define CCU8_CC8_PSL_PSL22_Msk                (0x8UL)                   /*!< CCU8_CC8 PSL: PSL22 (Bitfield-Mask: 0x01)                   */
+
+/* --------------------------------  CCU8_CC8_DIT  -------------------------------- */
+#define CCU8_CC8_DIT_DCV_Pos                  (0UL)                     /*!< CCU8_CC8 DIT: DCV (Bit 0)                                   */
+#define CCU8_CC8_DIT_DCV_Msk                  (0xfUL)                   /*!< CCU8_CC8 DIT: DCV (Bitfield-Mask: 0x0f)                     */
+#define CCU8_CC8_DIT_DCNT_Pos                 (8UL)                     /*!< CCU8_CC8 DIT: DCNT (Bit 8)                                  */
+#define CCU8_CC8_DIT_DCNT_Msk                 (0xf00UL)                 /*!< CCU8_CC8 DIT: DCNT (Bitfield-Mask: 0x0f)                    */
+
+/* --------------------------------  CCU8_CC8_DITS  ------------------------------- */
+#define CCU8_CC8_DITS_DCVS_Pos                (0UL)                     /*!< CCU8_CC8 DITS: DCVS (Bit 0)                                 */
+#define CCU8_CC8_DITS_DCVS_Msk                (0xfUL)                   /*!< CCU8_CC8 DITS: DCVS (Bitfield-Mask: 0x0f)                   */
+
+/* --------------------------------  CCU8_CC8_PSC  -------------------------------- */
+#define CCU8_CC8_PSC_PSIV_Pos                 (0UL)                     /*!< CCU8_CC8 PSC: PSIV (Bit 0)                                  */
+#define CCU8_CC8_PSC_PSIV_Msk                 (0xfUL)                   /*!< CCU8_CC8 PSC: PSIV (Bitfield-Mask: 0x0f)                    */
+
+/* --------------------------------  CCU8_CC8_FPC  -------------------------------- */
+#define CCU8_CC8_FPC_PCMP_Pos                 (0UL)                     /*!< CCU8_CC8 FPC: PCMP (Bit 0)                                  */
+#define CCU8_CC8_FPC_PCMP_Msk                 (0xfUL)                   /*!< CCU8_CC8 FPC: PCMP (Bitfield-Mask: 0x0f)                    */
+#define CCU8_CC8_FPC_PVAL_Pos                 (8UL)                     /*!< CCU8_CC8 FPC: PVAL (Bit 8)                                  */
+#define CCU8_CC8_FPC_PVAL_Msk                 (0xf00UL)                 /*!< CCU8_CC8 FPC: PVAL (Bitfield-Mask: 0x0f)                    */
+
+/* --------------------------------  CCU8_CC8_FPCS  ------------------------------- */
+#define CCU8_CC8_FPCS_PCMP_Pos                (0UL)                     /*!< CCU8_CC8 FPCS: PCMP (Bit 0)                                 */
+#define CCU8_CC8_FPCS_PCMP_Msk                (0xfUL)                   /*!< CCU8_CC8 FPCS: PCMP (Bitfield-Mask: 0x0f)                   */
+
+/* ---------------------------------  CCU8_CC8_PR  -------------------------------- */
+#define CCU8_CC8_PR_PR_Pos                    (0UL)                     /*!< CCU8_CC8 PR: PR (Bit 0)                                     */
+#define CCU8_CC8_PR_PR_Msk                    (0xffffUL)                /*!< CCU8_CC8 PR: PR (Bitfield-Mask: 0xffff)                     */
+
+/* --------------------------------  CCU8_CC8_PRS  -------------------------------- */
+#define CCU8_CC8_PRS_PRS_Pos                  (0UL)                     /*!< CCU8_CC8 PRS: PRS (Bit 0)                                   */
+#define CCU8_CC8_PRS_PRS_Msk                  (0xffffUL)                /*!< CCU8_CC8 PRS: PRS (Bitfield-Mask: 0xffff)                   */
+
+/* --------------------------------  CCU8_CC8_CR1  -------------------------------- */
+#define CCU8_CC8_CR1_CR1_Pos                  (0UL)                     /*!< CCU8_CC8 CR1: CR1 (Bit 0)                                   */
+#define CCU8_CC8_CR1_CR1_Msk                  (0xffffUL)                /*!< CCU8_CC8 CR1: CR1 (Bitfield-Mask: 0xffff)                   */
+
+/* --------------------------------  CCU8_CC8_CR1S  ------------------------------- */
+#define CCU8_CC8_CR1S_CR1S_Pos                (0UL)                     /*!< CCU8_CC8 CR1S: CR1S (Bit 0)                                 */
+#define CCU8_CC8_CR1S_CR1S_Msk                (0xffffUL)                /*!< CCU8_CC8 CR1S: CR1S (Bitfield-Mask: 0xffff)                 */
+
+/* --------------------------------  CCU8_CC8_CR2  -------------------------------- */
+#define CCU8_CC8_CR2_CR2_Pos                  (0UL)                     /*!< CCU8_CC8 CR2: CR2 (Bit 0)                                   */
+#define CCU8_CC8_CR2_CR2_Msk                  (0xffffUL)                /*!< CCU8_CC8 CR2: CR2 (Bitfield-Mask: 0xffff)                   */
+
+/* --------------------------------  CCU8_CC8_CR2S  ------------------------------- */
+#define CCU8_CC8_CR2S_CR2S_Pos                (0UL)                     /*!< CCU8_CC8 CR2S: CR2S (Bit 0)                                 */
+#define CCU8_CC8_CR2S_CR2S_Msk                (0xffffUL)                /*!< CCU8_CC8 CR2S: CR2S (Bitfield-Mask: 0xffff)                 */
+
+/* --------------------------------  CCU8_CC8_CHC  -------------------------------- */
+#define CCU8_CC8_CHC_ASE_Pos                  (0UL)                     /*!< CCU8_CC8 CHC: ASE (Bit 0)                                   */
+#define CCU8_CC8_CHC_ASE_Msk                  (0x1UL)                   /*!< CCU8_CC8 CHC: ASE (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_CHC_OCS1_Pos                 (4UL)                     /*!< CCU8_CC8 CHC: OCS1 (Bit 4)                                  */
+#define CCU8_CC8_CHC_OCS1_Msk                 (0x30UL)                  /*!< CCU8_CC8 CHC: OCS1 (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_CHC_OCS2_Pos                 (8UL)                     /*!< CCU8_CC8 CHC: OCS2 (Bit 8)                                  */
+#define CCU8_CC8_CHC_OCS2_Msk                 (0x300UL)                 /*!< CCU8_CC8 CHC: OCS2 (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_CHC_OCS3_Pos                 (12UL)                    /*!< CCU8_CC8 CHC: OCS3 (Bit 12)                                 */
+#define CCU8_CC8_CHC_OCS3_Msk                 (0x3000UL)                /*!< CCU8_CC8 CHC: OCS3 (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_CHC_OCS4_Pos                 (16UL)                    /*!< CCU8_CC8 CHC: OCS4 (Bit 16)                                 */
+#define CCU8_CC8_CHC_OCS4_Msk                 (0x30000UL)               /*!< CCU8_CC8 CHC: OCS4 (Bitfield-Mask: 0x03)                    */
+
+/* --------------------------------  CCU8_CC8_DTC  -------------------------------- */
+#define CCU8_CC8_DTC_DTE1_Pos                 (0UL)                     /*!< CCU8_CC8 DTC: DTE1 (Bit 0)                                  */
+#define CCU8_CC8_DTC_DTE1_Msk                 (0x1UL)                   /*!< CCU8_CC8 DTC: DTE1 (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_DTC_DTE2_Pos                 (1UL)                     /*!< CCU8_CC8 DTC: DTE2 (Bit 1)                                  */
+#define CCU8_CC8_DTC_DTE2_Msk                 (0x2UL)                   /*!< CCU8_CC8 DTC: DTE2 (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_DTC_DCEN1_Pos                (2UL)                     /*!< CCU8_CC8 DTC: DCEN1 (Bit 2)                                 */
+#define CCU8_CC8_DTC_DCEN1_Msk                (0x4UL)                   /*!< CCU8_CC8 DTC: DCEN1 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_DTC_DCEN2_Pos                (3UL)                     /*!< CCU8_CC8 DTC: DCEN2 (Bit 3)                                 */
+#define CCU8_CC8_DTC_DCEN2_Msk                (0x8UL)                   /*!< CCU8_CC8 DTC: DCEN2 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_DTC_DCEN3_Pos                (4UL)                     /*!< CCU8_CC8 DTC: DCEN3 (Bit 4)                                 */
+#define CCU8_CC8_DTC_DCEN3_Msk                (0x10UL)                  /*!< CCU8_CC8 DTC: DCEN3 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_DTC_DCEN4_Pos                (5UL)                     /*!< CCU8_CC8 DTC: DCEN4 (Bit 5)                                 */
+#define CCU8_CC8_DTC_DCEN4_Msk                (0x20UL)                  /*!< CCU8_CC8 DTC: DCEN4 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_DTC_DTCC_Pos                 (6UL)                     /*!< CCU8_CC8 DTC: DTCC (Bit 6)                                  */
+#define CCU8_CC8_DTC_DTCC_Msk                 (0xc0UL)                  /*!< CCU8_CC8 DTC: DTCC (Bitfield-Mask: 0x03)                    */
+
+/* --------------------------------  CCU8_CC8_DC1R  ------------------------------- */
+#define CCU8_CC8_DC1R_DT1R_Pos                (0UL)                     /*!< CCU8_CC8 DC1R: DT1R (Bit 0)                                 */
+#define CCU8_CC8_DC1R_DT1R_Msk                (0xffUL)                  /*!< CCU8_CC8 DC1R: DT1R (Bitfield-Mask: 0xff)                   */
+#define CCU8_CC8_DC1R_DT1F_Pos                (8UL)                     /*!< CCU8_CC8 DC1R: DT1F (Bit 8)                                 */
+#define CCU8_CC8_DC1R_DT1F_Msk                (0xff00UL)                /*!< CCU8_CC8 DC1R: DT1F (Bitfield-Mask: 0xff)                   */
+
+/* --------------------------------  CCU8_CC8_DC2R  ------------------------------- */
+#define CCU8_CC8_DC2R_DT2R_Pos                (0UL)                     /*!< CCU8_CC8 DC2R: DT2R (Bit 0)                                 */
+#define CCU8_CC8_DC2R_DT2R_Msk                (0xffUL)                  /*!< CCU8_CC8 DC2R: DT2R (Bitfield-Mask: 0xff)                   */
+#define CCU8_CC8_DC2R_DT2F_Pos                (8UL)                     /*!< CCU8_CC8 DC2R: DT2F (Bit 8)                                 */
+#define CCU8_CC8_DC2R_DT2F_Msk                (0xff00UL)                /*!< CCU8_CC8 DC2R: DT2F (Bitfield-Mask: 0xff)                   */
+
+/* -------------------------------  CCU8_CC8_TIMER  ------------------------------- */
+#define CCU8_CC8_TIMER_TVAL_Pos               (0UL)                     /*!< CCU8_CC8 TIMER: TVAL (Bit 0)                                */
+#define CCU8_CC8_TIMER_TVAL_Msk               (0xffffUL)                /*!< CCU8_CC8 TIMER: TVAL (Bitfield-Mask: 0xffff)                */
+
+/* ---------------------------------  CCU8_CC8_CV  -------------------------------- */
+#define CCU8_CC8_CV_CAPTV_Pos                 (0UL)                     /*!< CCU8_CC8 CV: CAPTV (Bit 0)                                  */
+#define CCU8_CC8_CV_CAPTV_Msk                 (0xffffUL)                /*!< CCU8_CC8 CV: CAPTV (Bitfield-Mask: 0xffff)                  */
+#define CCU8_CC8_CV_FPCV_Pos                  (16UL)                    /*!< CCU8_CC8 CV: FPCV (Bit 16)                                  */
+#define CCU8_CC8_CV_FPCV_Msk                  (0xf0000UL)               /*!< CCU8_CC8 CV: FPCV (Bitfield-Mask: 0x0f)                     */
+#define CCU8_CC8_CV_FFL_Pos                   (20UL)                    /*!< CCU8_CC8 CV: FFL (Bit 20)                                   */
+#define CCU8_CC8_CV_FFL_Msk                   (0x100000UL)              /*!< CCU8_CC8 CV: FFL (Bitfield-Mask: 0x01)                      */
+
+/* --------------------------------  CCU8_CC8_INTS  ------------------------------- */
+#define CCU8_CC8_INTS_PMUS_Pos                (0UL)                     /*!< CCU8_CC8 INTS: PMUS (Bit 0)                                 */
+#define CCU8_CC8_INTS_PMUS_Msk                (0x1UL)                   /*!< CCU8_CC8 INTS: PMUS (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_INTS_OMDS_Pos                (1UL)                     /*!< CCU8_CC8 INTS: OMDS (Bit 1)                                 */
+#define CCU8_CC8_INTS_OMDS_Msk                (0x2UL)                   /*!< CCU8_CC8 INTS: OMDS (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_INTS_CMU1S_Pos               (2UL)                     /*!< CCU8_CC8 INTS: CMU1S (Bit 2)                                */
+#define CCU8_CC8_INTS_CMU1S_Msk               (0x4UL)                   /*!< CCU8_CC8 INTS: CMU1S (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTS_CMD1S_Pos               (3UL)                     /*!< CCU8_CC8 INTS: CMD1S (Bit 3)                                */
+#define CCU8_CC8_INTS_CMD1S_Msk               (0x8UL)                   /*!< CCU8_CC8 INTS: CMD1S (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTS_CMU2S_Pos               (4UL)                     /*!< CCU8_CC8 INTS: CMU2S (Bit 4)                                */
+#define CCU8_CC8_INTS_CMU2S_Msk               (0x10UL)                  /*!< CCU8_CC8 INTS: CMU2S (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTS_CMD2S_Pos               (5UL)                     /*!< CCU8_CC8 INTS: CMD2S (Bit 5)                                */
+#define CCU8_CC8_INTS_CMD2S_Msk               (0x20UL)                  /*!< CCU8_CC8 INTS: CMD2S (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTS_E0AS_Pos                (8UL)                     /*!< CCU8_CC8 INTS: E0AS (Bit 8)                                 */
+#define CCU8_CC8_INTS_E0AS_Msk                (0x100UL)                 /*!< CCU8_CC8 INTS: E0AS (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_INTS_E1AS_Pos                (9UL)                     /*!< CCU8_CC8 INTS: E1AS (Bit 9)                                 */
+#define CCU8_CC8_INTS_E1AS_Msk                (0x200UL)                 /*!< CCU8_CC8 INTS: E1AS (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_INTS_E2AS_Pos                (10UL)                    /*!< CCU8_CC8 INTS: E2AS (Bit 10)                                */
+#define CCU8_CC8_INTS_E2AS_Msk                (0x400UL)                 /*!< CCU8_CC8 INTS: E2AS (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_INTS_TRPF_Pos                (11UL)                    /*!< CCU8_CC8 INTS: TRPF (Bit 11)                                */
+#define CCU8_CC8_INTS_TRPF_Msk                (0x800UL)                 /*!< CCU8_CC8 INTS: TRPF (Bitfield-Mask: 0x01)                   */
+
+/* --------------------------------  CCU8_CC8_INTE  ------------------------------- */
+#define CCU8_CC8_INTE_PME_Pos                 (0UL)                     /*!< CCU8_CC8 INTE: PME (Bit 0)                                  */
+#define CCU8_CC8_INTE_PME_Msk                 (0x1UL)                   /*!< CCU8_CC8 INTE: PME (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_INTE_OME_Pos                 (1UL)                     /*!< CCU8_CC8 INTE: OME (Bit 1)                                  */
+#define CCU8_CC8_INTE_OME_Msk                 (0x2UL)                   /*!< CCU8_CC8 INTE: OME (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_INTE_CMU1E_Pos               (2UL)                     /*!< CCU8_CC8 INTE: CMU1E (Bit 2)                                */
+#define CCU8_CC8_INTE_CMU1E_Msk               (0x4UL)                   /*!< CCU8_CC8 INTE: CMU1E (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTE_CMD1E_Pos               (3UL)                     /*!< CCU8_CC8 INTE: CMD1E (Bit 3)                                */
+#define CCU8_CC8_INTE_CMD1E_Msk               (0x8UL)                   /*!< CCU8_CC8 INTE: CMD1E (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTE_CMU2E_Pos               (4UL)                     /*!< CCU8_CC8 INTE: CMU2E (Bit 4)                                */
+#define CCU8_CC8_INTE_CMU2E_Msk               (0x10UL)                  /*!< CCU8_CC8 INTE: CMU2E (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTE_CMD2E_Pos               (5UL)                     /*!< CCU8_CC8 INTE: CMD2E (Bit 5)                                */
+#define CCU8_CC8_INTE_CMD2E_Msk               (0x20UL)                  /*!< CCU8_CC8 INTE: CMD2E (Bitfield-Mask: 0x01)                  */
+#define CCU8_CC8_INTE_E0AE_Pos                (8UL)                     /*!< CCU8_CC8 INTE: E0AE (Bit 8)                                 */
+#define CCU8_CC8_INTE_E0AE_Msk                (0x100UL)                 /*!< CCU8_CC8 INTE: E0AE (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_INTE_E1AE_Pos                (9UL)                     /*!< CCU8_CC8 INTE: E1AE (Bit 9)                                 */
+#define CCU8_CC8_INTE_E1AE_Msk                (0x200UL)                 /*!< CCU8_CC8 INTE: E1AE (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_INTE_E2AE_Pos                (10UL)                    /*!< CCU8_CC8 INTE: E2AE (Bit 10)                                */
+#define CCU8_CC8_INTE_E2AE_Msk                (0x400UL)                 /*!< CCU8_CC8 INTE: E2AE (Bitfield-Mask: 0x01)                   */
+
+/* --------------------------------  CCU8_CC8_SRS  -------------------------------- */
+#define CCU8_CC8_SRS_POSR_Pos                 (0UL)                     /*!< CCU8_CC8 SRS: POSR (Bit 0)                                  */
+#define CCU8_CC8_SRS_POSR_Msk                 (0x3UL)                   /*!< CCU8_CC8 SRS: POSR (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_SRS_CM1SR_Pos                (2UL)                     /*!< CCU8_CC8 SRS: CM1SR (Bit 2)                                 */
+#define CCU8_CC8_SRS_CM1SR_Msk                (0xcUL)                   /*!< CCU8_CC8 SRS: CM1SR (Bitfield-Mask: 0x03)                   */
+#define CCU8_CC8_SRS_CM2SR_Pos                (4UL)                     /*!< CCU8_CC8 SRS: CM2SR (Bit 4)                                 */
+#define CCU8_CC8_SRS_CM2SR_Msk                (0x30UL)                  /*!< CCU8_CC8 SRS: CM2SR (Bitfield-Mask: 0x03)                   */
+#define CCU8_CC8_SRS_E0SR_Pos                 (8UL)                     /*!< CCU8_CC8 SRS: E0SR (Bit 8)                                  */
+#define CCU8_CC8_SRS_E0SR_Msk                 (0x300UL)                 /*!< CCU8_CC8 SRS: E0SR (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_SRS_E1SR_Pos                 (10UL)                    /*!< CCU8_CC8 SRS: E1SR (Bit 10)                                 */
+#define CCU8_CC8_SRS_E1SR_Msk                 (0xc00UL)                 /*!< CCU8_CC8 SRS: E1SR (Bitfield-Mask: 0x03)                    */
+#define CCU8_CC8_SRS_E2SR_Pos                 (12UL)                    /*!< CCU8_CC8 SRS: E2SR (Bit 12)                                 */
+#define CCU8_CC8_SRS_E2SR_Msk                 (0x3000UL)                /*!< CCU8_CC8 SRS: E2SR (Bitfield-Mask: 0x03)                    */
+
+/* --------------------------------  CCU8_CC8_SWS  -------------------------------- */
+#define CCU8_CC8_SWS_SPM_Pos                  (0UL)                     /*!< CCU8_CC8 SWS: SPM (Bit 0)                                   */
+#define CCU8_CC8_SWS_SPM_Msk                  (0x1UL)                   /*!< CCU8_CC8 SWS: SPM (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_SWS_SOM_Pos                  (1UL)                     /*!< CCU8_CC8 SWS: SOM (Bit 1)                                   */
+#define CCU8_CC8_SWS_SOM_Msk                  (0x2UL)                   /*!< CCU8_CC8 SWS: SOM (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_SWS_SCM1U_Pos                (2UL)                     /*!< CCU8_CC8 SWS: SCM1U (Bit 2)                                 */
+#define CCU8_CC8_SWS_SCM1U_Msk                (0x4UL)                   /*!< CCU8_CC8 SWS: SCM1U (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWS_SCM1D_Pos                (3UL)                     /*!< CCU8_CC8 SWS: SCM1D (Bit 3)                                 */
+#define CCU8_CC8_SWS_SCM1D_Msk                (0x8UL)                   /*!< CCU8_CC8 SWS: SCM1D (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWS_SCM2U_Pos                (4UL)                     /*!< CCU8_CC8 SWS: SCM2U (Bit 4)                                 */
+#define CCU8_CC8_SWS_SCM2U_Msk                (0x10UL)                  /*!< CCU8_CC8 SWS: SCM2U (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWS_SCM2D_Pos                (5UL)                     /*!< CCU8_CC8 SWS: SCM2D (Bit 5)                                 */
+#define CCU8_CC8_SWS_SCM2D_Msk                (0x20UL)                  /*!< CCU8_CC8 SWS: SCM2D (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWS_SE0A_Pos                 (8UL)                     /*!< CCU8_CC8 SWS: SE0A (Bit 8)                                  */
+#define CCU8_CC8_SWS_SE0A_Msk                 (0x100UL)                 /*!< CCU8_CC8 SWS: SE0A (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_SWS_SE1A_Pos                 (9UL)                     /*!< CCU8_CC8 SWS: SE1A (Bit 9)                                  */
+#define CCU8_CC8_SWS_SE1A_Msk                 (0x200UL)                 /*!< CCU8_CC8 SWS: SE1A (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_SWS_SE2A_Pos                 (10UL)                    /*!< CCU8_CC8 SWS: SE2A (Bit 10)                                 */
+#define CCU8_CC8_SWS_SE2A_Msk                 (0x400UL)                 /*!< CCU8_CC8 SWS: SE2A (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_SWS_STRPF_Pos                (11UL)                    /*!< CCU8_CC8 SWS: STRPF (Bit 11)                                */
+#define CCU8_CC8_SWS_STRPF_Msk                (0x800UL)                 /*!< CCU8_CC8 SWS: STRPF (Bitfield-Mask: 0x01)                   */
+
+/* --------------------------------  CCU8_CC8_SWR  -------------------------------- */
+#define CCU8_CC8_SWR_RPM_Pos                  (0UL)                     /*!< CCU8_CC8 SWR: RPM (Bit 0)                                   */
+#define CCU8_CC8_SWR_RPM_Msk                  (0x1UL)                   /*!< CCU8_CC8 SWR: RPM (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_SWR_ROM_Pos                  (1UL)                     /*!< CCU8_CC8 SWR: ROM (Bit 1)                                   */
+#define CCU8_CC8_SWR_ROM_Msk                  (0x2UL)                   /*!< CCU8_CC8 SWR: ROM (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_SWR_RCM1U_Pos                (2UL)                     /*!< CCU8_CC8 SWR: RCM1U (Bit 2)                                 */
+#define CCU8_CC8_SWR_RCM1U_Msk                (0x4UL)                   /*!< CCU8_CC8 SWR: RCM1U (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWR_RCM1D_Pos                (3UL)                     /*!< CCU8_CC8 SWR: RCM1D (Bit 3)                                 */
+#define CCU8_CC8_SWR_RCM1D_Msk                (0x8UL)                   /*!< CCU8_CC8 SWR: RCM1D (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWR_RCM2U_Pos                (4UL)                     /*!< CCU8_CC8 SWR: RCM2U (Bit 4)                                 */
+#define CCU8_CC8_SWR_RCM2U_Msk                (0x10UL)                  /*!< CCU8_CC8 SWR: RCM2U (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWR_RCM2D_Pos                (5UL)                     /*!< CCU8_CC8 SWR: RCM2D (Bit 5)                                 */
+#define CCU8_CC8_SWR_RCM2D_Msk                (0x20UL)                  /*!< CCU8_CC8 SWR: RCM2D (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_SWR_RE0A_Pos                 (8UL)                     /*!< CCU8_CC8 SWR: RE0A (Bit 8)                                  */
+#define CCU8_CC8_SWR_RE0A_Msk                 (0x100UL)                 /*!< CCU8_CC8 SWR: RE0A (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_SWR_RE1A_Pos                 (9UL)                     /*!< CCU8_CC8 SWR: RE1A (Bit 9)                                  */
+#define CCU8_CC8_SWR_RE1A_Msk                 (0x200UL)                 /*!< CCU8_CC8 SWR: RE1A (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_SWR_RE2A_Pos                 (10UL)                    /*!< CCU8_CC8 SWR: RE2A (Bit 10)                                 */
+#define CCU8_CC8_SWR_RE2A_Msk                 (0x400UL)                 /*!< CCU8_CC8 SWR: RE2A (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_SWR_RTRPF_Pos                (11UL)                    /*!< CCU8_CC8 SWR: RTRPF (Bit 11)                                */
+#define CCU8_CC8_SWR_RTRPF_Msk                (0x800UL)                 /*!< CCU8_CC8 SWR: RTRPF (Bitfield-Mask: 0x01)                   */
+
+/* --------------------------------  CCU8_CC8_STC  -------------------------------- */
+#define CCU8_CC8_STC_CSE_Pos                  (0UL)                     /*!< CCU8_CC8 STC: CSE (Bit 0)                                   */
+#define CCU8_CC8_STC_CSE_Msk                  (0x1UL)                   /*!< CCU8_CC8 STC: CSE (Bitfield-Mask: 0x01)                     */
+#define CCU8_CC8_STC_STM_Pos                  (1UL)                     /*!< CCU8_CC8 STC: STM (Bit 1)                                   */
+#define CCU8_CC8_STC_STM_Msk                  (0x6UL)                   /*!< CCU8_CC8 STC: STM (Bitfield-Mask: 0x03)                     */
+#define CCU8_CC8_STC_IRPC_Pos                 (4UL)                     /*!< CCU8_CC8 STC: IRPC (Bit 4)                                  */
+#define CCU8_CC8_STC_IRPC_Msk                 (0x10UL)                  /*!< CCU8_CC8 STC: IRPC (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_STC_IRCC1_Pos                (5UL)                     /*!< CCU8_CC8 STC: IRCC1 (Bit 5)                                 */
+#define CCU8_CC8_STC_IRCC1_Msk                (0x20UL)                  /*!< CCU8_CC8 STC: IRCC1 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_STC_IRCC2_Pos                (6UL)                     /*!< CCU8_CC8 STC: IRCC2 (Bit 6)                                 */
+#define CCU8_CC8_STC_IRCC2_Msk                (0x40UL)                  /*!< CCU8_CC8 STC: IRCC2 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_STC_IRLC_Pos                 (7UL)                     /*!< CCU8_CC8 STC: IRLC (Bit 7)                                  */
+#define CCU8_CC8_STC_IRLC_Msk                 (0x80UL)                  /*!< CCU8_CC8 STC: IRLC (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_STC_IRDC_Pos                 (8UL)                     /*!< CCU8_CC8 STC: IRDC (Bit 8)                                  */
+#define CCU8_CC8_STC_IRDC_Msk                 (0x100UL)                 /*!< CCU8_CC8 STC: IRDC (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_STC_IRFC_Pos                 (9UL)                     /*!< CCU8_CC8 STC: IRFC (Bit 9)                                  */
+#define CCU8_CC8_STC_IRFC_Msk                 (0x200UL)                 /*!< CCU8_CC8 STC: IRFC (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_STC_ASPC_Pos                 (16UL)                    /*!< CCU8_CC8 STC: ASPC (Bit 16)                                 */
+#define CCU8_CC8_STC_ASPC_Msk                 (0x10000UL)               /*!< CCU8_CC8 STC: ASPC (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_STC_ASCC1_Pos                (17UL)                    /*!< CCU8_CC8 STC: ASCC1 (Bit 17)                                */
+#define CCU8_CC8_STC_ASCC1_Msk                (0x20000UL)               /*!< CCU8_CC8 STC: ASCC1 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_STC_ASCC2_Pos                (18UL)                    /*!< CCU8_CC8 STC: ASCC2 (Bit 18)                                */
+#define CCU8_CC8_STC_ASCC2_Msk                (0x40000UL)               /*!< CCU8_CC8 STC: ASCC2 (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_STC_ASLC_Pos                 (19UL)                    /*!< CCU8_CC8 STC: ASLC (Bit 19)                                 */
+#define CCU8_CC8_STC_ASLC_Msk                 (0x80000UL)               /*!< CCU8_CC8 STC: ASLC (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_STC_ASDC_Pos                 (20UL)                    /*!< CCU8_CC8 STC: ASDC (Bit 20)                                 */
+#define CCU8_CC8_STC_ASDC_Msk                 (0x100000UL)              /*!< CCU8_CC8 STC: ASDC (Bitfield-Mask: 0x01)                    */
+#define CCU8_CC8_STC_ASFC_Pos                 (21UL)                    /*!< CCU8_CC8 STC: ASFC (Bit 21)                                 */
+#define CCU8_CC8_STC_ASFC_Msk                 (0x200000UL)              /*!< CCU8_CC8 STC: ASFC (Bitfield-Mask: 0x01)                    */
+
+/* -------------------------------  CCU8_CC8_ECRD0  ------------------------------- */
+#define CCU8_CC8_ECRD0_CAPV_Pos               (0UL)                     /*!< CCU8_CC8 ECRD0: CAPV (Bit 0)                                */
+#define CCU8_CC8_ECRD0_CAPV_Msk               (0xffffUL)                /*!< CCU8_CC8 ECRD0: CAPV (Bitfield-Mask: 0xffff)                */
+#define CCU8_CC8_ECRD0_FPCV_Pos               (16UL)                    /*!< CCU8_CC8 ECRD0: FPCV (Bit 16)                               */
+#define CCU8_CC8_ECRD0_FPCV_Msk               (0xf0000UL)               /*!< CCU8_CC8 ECRD0: FPCV (Bitfield-Mask: 0x0f)                  */
+#define CCU8_CC8_ECRD0_SPTR_Pos               (20UL)                    /*!< CCU8_CC8 ECRD0: SPTR (Bit 20)                               */
+#define CCU8_CC8_ECRD0_SPTR_Msk               (0x300000UL)              /*!< CCU8_CC8 ECRD0: SPTR (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_ECRD0_VPTR_Pos               (22UL)                    /*!< CCU8_CC8 ECRD0: VPTR (Bit 22)                               */
+#define CCU8_CC8_ECRD0_VPTR_Msk               (0xc00000UL)              /*!< CCU8_CC8 ECRD0: VPTR (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_ECRD0_FFL_Pos                (24UL)                    /*!< CCU8_CC8 ECRD0: FFL (Bit 24)                                */
+#define CCU8_CC8_ECRD0_FFL_Msk                (0x1000000UL)             /*!< CCU8_CC8 ECRD0: FFL (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_ECRD0_LCV_Pos                (25UL)                    /*!< CCU8_CC8 ECRD0: LCV (Bit 25)                                */
+#define CCU8_CC8_ECRD0_LCV_Msk                (0x2000000UL)             /*!< CCU8_CC8 ECRD0: LCV (Bitfield-Mask: 0x01)                   */
+
+/* -------------------------------  CCU8_CC8_ECRD1  ------------------------------- */
+#define CCU8_CC8_ECRD1_CAPV_Pos               (0UL)                     /*!< CCU8_CC8 ECRD1: CAPV (Bit 0)                                */
+#define CCU8_CC8_ECRD1_CAPV_Msk               (0xffffUL)                /*!< CCU8_CC8 ECRD1: CAPV (Bitfield-Mask: 0xffff)                */
+#define CCU8_CC8_ECRD1_FPCV_Pos               (16UL)                    /*!< CCU8_CC8 ECRD1: FPCV (Bit 16)                               */
+#define CCU8_CC8_ECRD1_FPCV_Msk               (0xf0000UL)               /*!< CCU8_CC8 ECRD1: FPCV (Bitfield-Mask: 0x0f)                  */
+#define CCU8_CC8_ECRD1_SPTR_Pos               (20UL)                    /*!< CCU8_CC8 ECRD1: SPTR (Bit 20)                               */
+#define CCU8_CC8_ECRD1_SPTR_Msk               (0x300000UL)              /*!< CCU8_CC8 ECRD1: SPTR (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_ECRD1_VPTR_Pos               (22UL)                    /*!< CCU8_CC8 ECRD1: VPTR (Bit 22)                               */
+#define CCU8_CC8_ECRD1_VPTR_Msk               (0xc00000UL)              /*!< CCU8_CC8 ECRD1: VPTR (Bitfield-Mask: 0x03)                  */
+#define CCU8_CC8_ECRD1_FFL_Pos                (24UL)                    /*!< CCU8_CC8 ECRD1: FFL (Bit 24)                                */
+#define CCU8_CC8_ECRD1_FFL_Msk                (0x1000000UL)             /*!< CCU8_CC8 ECRD1: FFL (Bitfield-Mask: 0x01)                   */
+#define CCU8_CC8_ECRD1_LCV_Pos                (25UL)                    /*!< CCU8_CC8 ECRD1: LCV (Bit 25)                                */
+#define CCU8_CC8_ECRD1_LCV_Msk                (0x2000000UL)             /*!< CCU8_CC8 ECRD1: LCV (Bitfield-Mask: 0x01)                   */
+
+/* --------------------------------  CCU8_CC8_INS1  ------------------------------- */
+#define CCU8_CC8_INS1_EV0IS_Pos               (0UL)                     /*!< CCU8_CC8 INS1: EV0IS (Bit 0)                                */
+#define CCU8_CC8_INS1_EV0IS_Msk               (0x3fUL)                  /*!< CCU8_CC8 INS1: EV0IS (Bitfield-Mask: 0x3f)                  */
+#define CCU8_CC8_INS1_EV1IS_Pos               (8UL)                     /*!< CCU8_CC8 INS1: EV1IS (Bit 8)                                */
+#define CCU8_CC8_INS1_EV1IS_Msk               (0x3f00UL)                /*!< CCU8_CC8 INS1: EV1IS (Bitfield-Mask: 0x3f)                  */
+#define CCU8_CC8_INS1_EV2IS_Pos               (16UL)                    /*!< CCU8_CC8 INS1: EV2IS (Bit 16)                               */
+#define CCU8_CC8_INS1_EV2IS_Msk               (0x3f0000UL)              /*!< CCU8_CC8 INS1: EV2IS (Bitfield-Mask: 0x3f)                  */
+
+
+/* ================================================================================ */
+/* ================          Group 'POSIF' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ---------------------------------  POSIF_PCONF  -------------------------------- */
+#define POSIF_PCONF_FSEL_Pos                  (0UL)                     /*!< POSIF PCONF: FSEL (Bit 0)                                   */
+#define POSIF_PCONF_FSEL_Msk                  (0x3UL)                   /*!< POSIF PCONF: FSEL (Bitfield-Mask: 0x03)                     */
+#define POSIF_PCONF_QDCM_Pos                  (2UL)                     /*!< POSIF PCONF: QDCM (Bit 2)                                   */
+#define POSIF_PCONF_QDCM_Msk                  (0x4UL)                   /*!< POSIF PCONF: QDCM (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_HIDG_Pos                  (4UL)                     /*!< POSIF PCONF: HIDG (Bit 4)                                   */
+#define POSIF_PCONF_HIDG_Msk                  (0x10UL)                  /*!< POSIF PCONF: HIDG (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_MCUE_Pos                  (5UL)                     /*!< POSIF PCONF: MCUE (Bit 5)                                   */
+#define POSIF_PCONF_MCUE_Msk                  (0x20UL)                  /*!< POSIF PCONF: MCUE (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_INSEL0_Pos                (8UL)                     /*!< POSIF PCONF: INSEL0 (Bit 8)                                 */
+#define POSIF_PCONF_INSEL0_Msk                (0x300UL)                 /*!< POSIF PCONF: INSEL0 (Bitfield-Mask: 0x03)                   */
+#define POSIF_PCONF_INSEL1_Pos                (10UL)                    /*!< POSIF PCONF: INSEL1 (Bit 10)                                */
+#define POSIF_PCONF_INSEL1_Msk                (0xc00UL)                 /*!< POSIF PCONF: INSEL1 (Bitfield-Mask: 0x03)                   */
+#define POSIF_PCONF_INSEL2_Pos                (12UL)                    /*!< POSIF PCONF: INSEL2 (Bit 12)                                */
+#define POSIF_PCONF_INSEL2_Msk                (0x3000UL)                /*!< POSIF PCONF: INSEL2 (Bitfield-Mask: 0x03)                   */
+#define POSIF_PCONF_DSEL_Pos                  (16UL)                    /*!< POSIF PCONF: DSEL (Bit 16)                                  */
+#define POSIF_PCONF_DSEL_Msk                  (0x10000UL)               /*!< POSIF PCONF: DSEL (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_SPES_Pos                  (17UL)                    /*!< POSIF PCONF: SPES (Bit 17)                                  */
+#define POSIF_PCONF_SPES_Msk                  (0x20000UL)               /*!< POSIF PCONF: SPES (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_MSETS_Pos                 (18UL)                    /*!< POSIF PCONF: MSETS (Bit 18)                                 */
+#define POSIF_PCONF_MSETS_Msk                 (0x1c0000UL)              /*!< POSIF PCONF: MSETS (Bitfield-Mask: 0x07)                    */
+#define POSIF_PCONF_MSES_Pos                  (21UL)                    /*!< POSIF PCONF: MSES (Bit 21)                                  */
+#define POSIF_PCONF_MSES_Msk                  (0x200000UL)              /*!< POSIF PCONF: MSES (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_MSYNS_Pos                 (22UL)                    /*!< POSIF PCONF: MSYNS (Bit 22)                                 */
+#define POSIF_PCONF_MSYNS_Msk                 (0xc00000UL)              /*!< POSIF PCONF: MSYNS (Bitfield-Mask: 0x03)                    */
+#define POSIF_PCONF_EWIS_Pos                  (24UL)                    /*!< POSIF PCONF: EWIS (Bit 24)                                  */
+#define POSIF_PCONF_EWIS_Msk                  (0x3000000UL)             /*!< POSIF PCONF: EWIS (Bitfield-Mask: 0x03)                     */
+#define POSIF_PCONF_EWIE_Pos                  (26UL)                    /*!< POSIF PCONF: EWIE (Bit 26)                                  */
+#define POSIF_PCONF_EWIE_Msk                  (0x4000000UL)             /*!< POSIF PCONF: EWIE (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_EWIL_Pos                  (27UL)                    /*!< POSIF PCONF: EWIL (Bit 27)                                  */
+#define POSIF_PCONF_EWIL_Msk                  (0x8000000UL)             /*!< POSIF PCONF: EWIL (Bitfield-Mask: 0x01)                     */
+#define POSIF_PCONF_LPC_Pos                   (28UL)                    /*!< POSIF PCONF: LPC (Bit 28)                                   */
+#define POSIF_PCONF_LPC_Msk                   (0x70000000UL)            /*!< POSIF PCONF: LPC (Bitfield-Mask: 0x07)                      */
+
+/* ---------------------------------  POSIF_PSUS  --------------------------------- */
+#define POSIF_PSUS_QSUS_Pos                   (0UL)                     /*!< POSIF PSUS: QSUS (Bit 0)                                    */
+#define POSIF_PSUS_QSUS_Msk                   (0x3UL)                   /*!< POSIF PSUS: QSUS (Bitfield-Mask: 0x03)                      */
+#define POSIF_PSUS_MSUS_Pos                   (2UL)                     /*!< POSIF PSUS: MSUS (Bit 2)                                    */
+#define POSIF_PSUS_MSUS_Msk                   (0xcUL)                   /*!< POSIF PSUS: MSUS (Bitfield-Mask: 0x03)                      */
+
+/* ---------------------------------  POSIF_PRUNS  -------------------------------- */
+#define POSIF_PRUNS_SRB_Pos                   (0UL)                     /*!< POSIF PRUNS: SRB (Bit 0)                                    */
+#define POSIF_PRUNS_SRB_Msk                   (0x1UL)                   /*!< POSIF PRUNS: SRB (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  POSIF_PRUNC  -------------------------------- */
+#define POSIF_PRUNC_CRB_Pos                   (0UL)                     /*!< POSIF PRUNC: CRB (Bit 0)                                    */
+#define POSIF_PRUNC_CRB_Msk                   (0x1UL)                   /*!< POSIF PRUNC: CRB (Bitfield-Mask: 0x01)                      */
+#define POSIF_PRUNC_CSM_Pos                   (1UL)                     /*!< POSIF PRUNC: CSM (Bit 1)                                    */
+#define POSIF_PRUNC_CSM_Msk                   (0x2UL)                   /*!< POSIF PRUNC: CSM (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  POSIF_PRUN  --------------------------------- */
+#define POSIF_PRUN_RB_Pos                     (0UL)                     /*!< POSIF PRUN: RB (Bit 0)                                      */
+#define POSIF_PRUN_RB_Msk                     (0x1UL)                   /*!< POSIF PRUN: RB (Bitfield-Mask: 0x01)                        */
+
+/* ---------------------------------  POSIF_MIDR  --------------------------------- */
+#define POSIF_MIDR_MODR_Pos                   (0UL)                     /*!< POSIF MIDR: MODR (Bit 0)                                    */
+#define POSIF_MIDR_MODR_Msk                   (0xffUL)                  /*!< POSIF MIDR: MODR (Bitfield-Mask: 0xff)                      */
+#define POSIF_MIDR_MODT_Pos                   (8UL)                     /*!< POSIF MIDR: MODT (Bit 8)                                    */
+#define POSIF_MIDR_MODT_Msk                   (0xff00UL)                /*!< POSIF MIDR: MODT (Bitfield-Mask: 0xff)                      */
+#define POSIF_MIDR_MODN_Pos                   (16UL)                    /*!< POSIF MIDR: MODN (Bit 16)                                   */
+#define POSIF_MIDR_MODN_Msk                   (0xffff0000UL)            /*!< POSIF MIDR: MODN (Bitfield-Mask: 0xffff)                    */
+
+/* ---------------------------------  POSIF_HALP  --------------------------------- */
+#define POSIF_HALP_HCP_Pos                    (0UL)                     /*!< POSIF HALP: HCP (Bit 0)                                     */
+#define POSIF_HALP_HCP_Msk                    (0x7UL)                   /*!< POSIF HALP: HCP (Bitfield-Mask: 0x07)                       */
+#define POSIF_HALP_HEP_Pos                    (3UL)                     /*!< POSIF HALP: HEP (Bit 3)                                     */
+#define POSIF_HALP_HEP_Msk                    (0x38UL)                  /*!< POSIF HALP: HEP (Bitfield-Mask: 0x07)                       */
+
+/* ---------------------------------  POSIF_HALPS  -------------------------------- */
+#define POSIF_HALPS_HCPS_Pos                  (0UL)                     /*!< POSIF HALPS: HCPS (Bit 0)                                   */
+#define POSIF_HALPS_HCPS_Msk                  (0x7UL)                   /*!< POSIF HALPS: HCPS (Bitfield-Mask: 0x07)                     */
+#define POSIF_HALPS_HEPS_Pos                  (3UL)                     /*!< POSIF HALPS: HEPS (Bit 3)                                   */
+#define POSIF_HALPS_HEPS_Msk                  (0x38UL)                  /*!< POSIF HALPS: HEPS (Bitfield-Mask: 0x07)                     */
+
+/* ----------------------------------  POSIF_MCM  --------------------------------- */
+#define POSIF_MCM_MCMP_Pos                    (0UL)                     /*!< POSIF MCM: MCMP (Bit 0)                                     */
+#define POSIF_MCM_MCMP_Msk                    (0xffffUL)                /*!< POSIF MCM: MCMP (Bitfield-Mask: 0xffff)                     */
+
+/* ---------------------------------  POSIF_MCSM  --------------------------------- */
+#define POSIF_MCSM_MCMPS_Pos                  (0UL)                     /*!< POSIF MCSM: MCMPS (Bit 0)                                   */
+#define POSIF_MCSM_MCMPS_Msk                  (0xffffUL)                /*!< POSIF MCSM: MCMPS (Bitfield-Mask: 0xffff)                   */
+
+/* ---------------------------------  POSIF_MCMS  --------------------------------- */
+#define POSIF_MCMS_MNPS_Pos                   (0UL)                     /*!< POSIF MCMS: MNPS (Bit 0)                                    */
+#define POSIF_MCMS_MNPS_Msk                   (0x1UL)                   /*!< POSIF MCMS: MNPS (Bitfield-Mask: 0x01)                      */
+#define POSIF_MCMS_STHR_Pos                   (1UL)                     /*!< POSIF MCMS: STHR (Bit 1)                                    */
+#define POSIF_MCMS_STHR_Msk                   (0x2UL)                   /*!< POSIF MCMS: STHR (Bitfield-Mask: 0x01)                      */
+#define POSIF_MCMS_STMR_Pos                   (2UL)                     /*!< POSIF MCMS: STMR (Bit 2)                                    */
+#define POSIF_MCMS_STMR_Msk                   (0x4UL)                   /*!< POSIF MCMS: STMR (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  POSIF_MCMC  --------------------------------- */
+#define POSIF_MCMC_MNPC_Pos                   (0UL)                     /*!< POSIF MCMC: MNPC (Bit 0)                                    */
+#define POSIF_MCMC_MNPC_Msk                   (0x1UL)                   /*!< POSIF MCMC: MNPC (Bitfield-Mask: 0x01)                      */
+#define POSIF_MCMC_MPC_Pos                    (1UL)                     /*!< POSIF MCMC: MPC (Bit 1)                                     */
+#define POSIF_MCMC_MPC_Msk                    (0x2UL)                   /*!< POSIF MCMC: MPC (Bitfield-Mask: 0x01)                       */
+
+/* ---------------------------------  POSIF_MCMF  --------------------------------- */
+#define POSIF_MCMF_MSS_Pos                    (0UL)                     /*!< POSIF MCMF: MSS (Bit 0)                                     */
+#define POSIF_MCMF_MSS_Msk                    (0x1UL)                   /*!< POSIF MCMF: MSS (Bitfield-Mask: 0x01)                       */
+
+/* ----------------------------------  POSIF_QDC  --------------------------------- */
+#define POSIF_QDC_PALS_Pos                    (0UL)                     /*!< POSIF QDC: PALS (Bit 0)                                     */
+#define POSIF_QDC_PALS_Msk                    (0x1UL)                   /*!< POSIF QDC: PALS (Bitfield-Mask: 0x01)                       */
+#define POSIF_QDC_PBLS_Pos                    (1UL)                     /*!< POSIF QDC: PBLS (Bit 1)                                     */
+#define POSIF_QDC_PBLS_Msk                    (0x2UL)                   /*!< POSIF QDC: PBLS (Bitfield-Mask: 0x01)                       */
+#define POSIF_QDC_PHS_Pos                     (2UL)                     /*!< POSIF QDC: PHS (Bit 2)                                      */
+#define POSIF_QDC_PHS_Msk                     (0x4UL)                   /*!< POSIF QDC: PHS (Bitfield-Mask: 0x01)                        */
+#define POSIF_QDC_ICM_Pos                     (4UL)                     /*!< POSIF QDC: ICM (Bit 4)                                      */
+#define POSIF_QDC_ICM_Msk                     (0x30UL)                  /*!< POSIF QDC: ICM (Bitfield-Mask: 0x03)                        */
+#define POSIF_QDC_DVAL_Pos                    (8UL)                     /*!< POSIF QDC: DVAL (Bit 8)                                     */
+#define POSIF_QDC_DVAL_Msk                    (0x100UL)                 /*!< POSIF QDC: DVAL (Bitfield-Mask: 0x01)                       */
+
+/* ---------------------------------  POSIF_PFLG  --------------------------------- */
+#define POSIF_PFLG_CHES_Pos                   (0UL)                     /*!< POSIF PFLG: CHES (Bit 0)                                    */
+#define POSIF_PFLG_CHES_Msk                   (0x1UL)                   /*!< POSIF PFLG: CHES (Bitfield-Mask: 0x01)                      */
+#define POSIF_PFLG_WHES_Pos                   (1UL)                     /*!< POSIF PFLG: WHES (Bit 1)                                    */
+#define POSIF_PFLG_WHES_Msk                   (0x2UL)                   /*!< POSIF PFLG: WHES (Bitfield-Mask: 0x01)                      */
+#define POSIF_PFLG_HIES_Pos                   (2UL)                     /*!< POSIF PFLG: HIES (Bit 2)                                    */
+#define POSIF_PFLG_HIES_Msk                   (0x4UL)                   /*!< POSIF PFLG: HIES (Bitfield-Mask: 0x01)                      */
+#define POSIF_PFLG_MSTS_Pos                   (4UL)                     /*!< POSIF PFLG: MSTS (Bit 4)                                    */
+#define POSIF_PFLG_MSTS_Msk                   (0x10UL)                  /*!< POSIF PFLG: MSTS (Bitfield-Mask: 0x01)                      */
+#define POSIF_PFLG_INDXS_Pos                  (8UL)                     /*!< POSIF PFLG: INDXS (Bit 8)                                   */
+#define POSIF_PFLG_INDXS_Msk                  (0x100UL)                 /*!< POSIF PFLG: INDXS (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLG_ERRS_Pos                   (9UL)                     /*!< POSIF PFLG: ERRS (Bit 9)                                    */
+#define POSIF_PFLG_ERRS_Msk                   (0x200UL)                 /*!< POSIF PFLG: ERRS (Bitfield-Mask: 0x01)                      */
+#define POSIF_PFLG_CNTS_Pos                   (10UL)                    /*!< POSIF PFLG: CNTS (Bit 10)                                   */
+#define POSIF_PFLG_CNTS_Msk                   (0x400UL)                 /*!< POSIF PFLG: CNTS (Bitfield-Mask: 0x01)                      */
+#define POSIF_PFLG_DIRS_Pos                   (11UL)                    /*!< POSIF PFLG: DIRS (Bit 11)                                   */
+#define POSIF_PFLG_DIRS_Msk                   (0x800UL)                 /*!< POSIF PFLG: DIRS (Bitfield-Mask: 0x01)                      */
+#define POSIF_PFLG_PCLKS_Pos                  (12UL)                    /*!< POSIF PFLG: PCLKS (Bit 12)                                  */
+#define POSIF_PFLG_PCLKS_Msk                  (0x1000UL)                /*!< POSIF PFLG: PCLKS (Bitfield-Mask: 0x01)                     */
+
+/* ---------------------------------  POSIF_PFLGE  -------------------------------- */
+#define POSIF_PFLGE_ECHE_Pos                  (0UL)                     /*!< POSIF PFLGE: ECHE (Bit 0)                                   */
+#define POSIF_PFLGE_ECHE_Msk                  (0x1UL)                   /*!< POSIF PFLGE: ECHE (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLGE_EWHE_Pos                  (1UL)                     /*!< POSIF PFLGE: EWHE (Bit 1)                                   */
+#define POSIF_PFLGE_EWHE_Msk                  (0x2UL)                   /*!< POSIF PFLGE: EWHE (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLGE_EHIE_Pos                  (2UL)                     /*!< POSIF PFLGE: EHIE (Bit 2)                                   */
+#define POSIF_PFLGE_EHIE_Msk                  (0x4UL)                   /*!< POSIF PFLGE: EHIE (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLGE_EMST_Pos                  (4UL)                     /*!< POSIF PFLGE: EMST (Bit 4)                                   */
+#define POSIF_PFLGE_EMST_Msk                  (0x10UL)                  /*!< POSIF PFLGE: EMST (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLGE_EINDX_Pos                 (8UL)                     /*!< POSIF PFLGE: EINDX (Bit 8)                                  */
+#define POSIF_PFLGE_EINDX_Msk                 (0x100UL)                 /*!< POSIF PFLGE: EINDX (Bitfield-Mask: 0x01)                    */
+#define POSIF_PFLGE_EERR_Pos                  (9UL)                     /*!< POSIF PFLGE: EERR (Bit 9)                                   */
+#define POSIF_PFLGE_EERR_Msk                  (0x200UL)                 /*!< POSIF PFLGE: EERR (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLGE_ECNT_Pos                  (10UL)                    /*!< POSIF PFLGE: ECNT (Bit 10)                                  */
+#define POSIF_PFLGE_ECNT_Msk                  (0x400UL)                 /*!< POSIF PFLGE: ECNT (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLGE_EDIR_Pos                  (11UL)                    /*!< POSIF PFLGE: EDIR (Bit 11)                                  */
+#define POSIF_PFLGE_EDIR_Msk                  (0x800UL)                 /*!< POSIF PFLGE: EDIR (Bitfield-Mask: 0x01)                     */
+#define POSIF_PFLGE_EPCLK_Pos                 (12UL)                    /*!< POSIF PFLGE: EPCLK (Bit 12)                                 */
+#define POSIF_PFLGE_EPCLK_Msk                 (0x1000UL)                /*!< POSIF PFLGE: EPCLK (Bitfield-Mask: 0x01)                    */
+#define POSIF_PFLGE_CHESEL_Pos                (16UL)                    /*!< POSIF PFLGE: CHESEL (Bit 16)                                */
+#define POSIF_PFLGE_CHESEL_Msk                (0x10000UL)               /*!< POSIF PFLGE: CHESEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_WHESEL_Pos                (17UL)                    /*!< POSIF PFLGE: WHESEL (Bit 17)                                */
+#define POSIF_PFLGE_WHESEL_Msk                (0x20000UL)               /*!< POSIF PFLGE: WHESEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_HIESEL_Pos                (18UL)                    /*!< POSIF PFLGE: HIESEL (Bit 18)                                */
+#define POSIF_PFLGE_HIESEL_Msk                (0x40000UL)               /*!< POSIF PFLGE: HIESEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_MSTSEL_Pos                (20UL)                    /*!< POSIF PFLGE: MSTSEL (Bit 20)                                */
+#define POSIF_PFLGE_MSTSEL_Msk                (0x100000UL)              /*!< POSIF PFLGE: MSTSEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_INDSEL_Pos                (24UL)                    /*!< POSIF PFLGE: INDSEL (Bit 24)                                */
+#define POSIF_PFLGE_INDSEL_Msk                (0x1000000UL)             /*!< POSIF PFLGE: INDSEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_ERRSEL_Pos                (25UL)                    /*!< POSIF PFLGE: ERRSEL (Bit 25)                                */
+#define POSIF_PFLGE_ERRSEL_Msk                (0x2000000UL)             /*!< POSIF PFLGE: ERRSEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_CNTSEL_Pos                (26UL)                    /*!< POSIF PFLGE: CNTSEL (Bit 26)                                */
+#define POSIF_PFLGE_CNTSEL_Msk                (0x4000000UL)             /*!< POSIF PFLGE: CNTSEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_DIRSEL_Pos                (27UL)                    /*!< POSIF PFLGE: DIRSEL (Bit 27)                                */
+#define POSIF_PFLGE_DIRSEL_Msk                (0x8000000UL)             /*!< POSIF PFLGE: DIRSEL (Bitfield-Mask: 0x01)                   */
+#define POSIF_PFLGE_PCLSEL_Pos                (28UL)                    /*!< POSIF PFLGE: PCLSEL (Bit 28)                                */
+#define POSIF_PFLGE_PCLSEL_Msk                (0x10000000UL)            /*!< POSIF PFLGE: PCLSEL (Bitfield-Mask: 0x01)                   */
+
+/* ---------------------------------  POSIF_SPFLG  -------------------------------- */
+#define POSIF_SPFLG_SCHE_Pos                  (0UL)                     /*!< POSIF SPFLG: SCHE (Bit 0)                                   */
+#define POSIF_SPFLG_SCHE_Msk                  (0x1UL)                   /*!< POSIF SPFLG: SCHE (Bitfield-Mask: 0x01)                     */
+#define POSIF_SPFLG_SWHE_Pos                  (1UL)                     /*!< POSIF SPFLG: SWHE (Bit 1)                                   */
+#define POSIF_SPFLG_SWHE_Msk                  (0x2UL)                   /*!< POSIF SPFLG: SWHE (Bitfield-Mask: 0x01)                     */
+#define POSIF_SPFLG_SHIE_Pos                  (2UL)                     /*!< POSIF SPFLG: SHIE (Bit 2)                                   */
+#define POSIF_SPFLG_SHIE_Msk                  (0x4UL)                   /*!< POSIF SPFLG: SHIE (Bitfield-Mask: 0x01)                     */
+#define POSIF_SPFLG_SMST_Pos                  (4UL)                     /*!< POSIF SPFLG: SMST (Bit 4)                                   */
+#define POSIF_SPFLG_SMST_Msk                  (0x10UL)                  /*!< POSIF SPFLG: SMST (Bitfield-Mask: 0x01)                     */
+#define POSIF_SPFLG_SINDX_Pos                 (8UL)                     /*!< POSIF SPFLG: SINDX (Bit 8)                                  */
+#define POSIF_SPFLG_SINDX_Msk                 (0x100UL)                 /*!< POSIF SPFLG: SINDX (Bitfield-Mask: 0x01)                    */
+#define POSIF_SPFLG_SERR_Pos                  (9UL)                     /*!< POSIF SPFLG: SERR (Bit 9)                                   */
+#define POSIF_SPFLG_SERR_Msk                  (0x200UL)                 /*!< POSIF SPFLG: SERR (Bitfield-Mask: 0x01)                     */
+#define POSIF_SPFLG_SCNT_Pos                  (10UL)                    /*!< POSIF SPFLG: SCNT (Bit 10)                                  */
+#define POSIF_SPFLG_SCNT_Msk                  (0x400UL)                 /*!< POSIF SPFLG: SCNT (Bitfield-Mask: 0x01)                     */
+#define POSIF_SPFLG_SDIR_Pos                  (11UL)                    /*!< POSIF SPFLG: SDIR (Bit 11)                                  */
+#define POSIF_SPFLG_SDIR_Msk                  (0x800UL)                 /*!< POSIF SPFLG: SDIR (Bitfield-Mask: 0x01)                     */
+#define POSIF_SPFLG_SPCLK_Pos                 (12UL)                    /*!< POSIF SPFLG: SPCLK (Bit 12)                                 */
+#define POSIF_SPFLG_SPCLK_Msk                 (0x1000UL)                /*!< POSIF SPFLG: SPCLK (Bitfield-Mask: 0x01)                    */
+
+/* ---------------------------------  POSIF_RPFLG  -------------------------------- */
+#define POSIF_RPFLG_RCHE_Pos                  (0UL)                     /*!< POSIF RPFLG: RCHE (Bit 0)                                   */
+#define POSIF_RPFLG_RCHE_Msk                  (0x1UL)                   /*!< POSIF RPFLG: RCHE (Bitfield-Mask: 0x01)                     */
+#define POSIF_RPFLG_RWHE_Pos                  (1UL)                     /*!< POSIF RPFLG: RWHE (Bit 1)                                   */
+#define POSIF_RPFLG_RWHE_Msk                  (0x2UL)                   /*!< POSIF RPFLG: RWHE (Bitfield-Mask: 0x01)                     */
+#define POSIF_RPFLG_RHIE_Pos                  (2UL)                     /*!< POSIF RPFLG: RHIE (Bit 2)                                   */
+#define POSIF_RPFLG_RHIE_Msk                  (0x4UL)                   /*!< POSIF RPFLG: RHIE (Bitfield-Mask: 0x01)                     */
+#define POSIF_RPFLG_RMST_Pos                  (4UL)                     /*!< POSIF RPFLG: RMST (Bit 4)                                   */
+#define POSIF_RPFLG_RMST_Msk                  (0x10UL)                  /*!< POSIF RPFLG: RMST (Bitfield-Mask: 0x01)                     */
+#define POSIF_RPFLG_RINDX_Pos                 (8UL)                     /*!< POSIF RPFLG: RINDX (Bit 8)                                  */
+#define POSIF_RPFLG_RINDX_Msk                 (0x100UL)                 /*!< POSIF RPFLG: RINDX (Bitfield-Mask: 0x01)                    */
+#define POSIF_RPFLG_RERR_Pos                  (9UL)                     /*!< POSIF RPFLG: RERR (Bit 9)                                   */
+#define POSIF_RPFLG_RERR_Msk                  (0x200UL)                 /*!< POSIF RPFLG: RERR (Bitfield-Mask: 0x01)                     */
+#define POSIF_RPFLG_RCNT_Pos                  (10UL)                    /*!< POSIF RPFLG: RCNT (Bit 10)                                  */
+#define POSIF_RPFLG_RCNT_Msk                  (0x400UL)                 /*!< POSIF RPFLG: RCNT (Bitfield-Mask: 0x01)                     */
+#define POSIF_RPFLG_RDIR_Pos                  (11UL)                    /*!< POSIF RPFLG: RDIR (Bit 11)                                  */
+#define POSIF_RPFLG_RDIR_Msk                  (0x800UL)                 /*!< POSIF RPFLG: RDIR (Bitfield-Mask: 0x01)                     */
+#define POSIF_RPFLG_RPCLK_Pos                 (12UL)                    /*!< POSIF RPFLG: RPCLK (Bit 12)                                 */
+#define POSIF_RPFLG_RPCLK_Msk                 (0x1000UL)                /*!< POSIF RPFLG: RPCLK (Bitfield-Mask: 0x01)                    */
+
+/* ---------------------------------  POSIF_PDBG  --------------------------------- */
+#define POSIF_PDBG_QCSV_Pos                   (0UL)                     /*!< POSIF PDBG: QCSV (Bit 0)                                    */
+#define POSIF_PDBG_QCSV_Msk                   (0x3UL)                   /*!< POSIF PDBG: QCSV (Bitfield-Mask: 0x03)                      */
+#define POSIF_PDBG_QPSV_Pos                   (2UL)                     /*!< POSIF PDBG: QPSV (Bit 2)                                    */
+#define POSIF_PDBG_QPSV_Msk                   (0xcUL)                   /*!< POSIF PDBG: QPSV (Bitfield-Mask: 0x03)                      */
+#define POSIF_PDBG_IVAL_Pos                   (4UL)                     /*!< POSIF PDBG: IVAL (Bit 4)                                    */
+#define POSIF_PDBG_IVAL_Msk                   (0x10UL)                  /*!< POSIF PDBG: IVAL (Bitfield-Mask: 0x01)                      */
+#define POSIF_PDBG_HSP_Pos                    (5UL)                     /*!< POSIF PDBG: HSP (Bit 5)                                     */
+#define POSIF_PDBG_HSP_Msk                    (0xe0UL)                  /*!< POSIF PDBG: HSP (Bitfield-Mask: 0x07)                       */
+#define POSIF_PDBG_LPP0_Pos                   (8UL)                     /*!< POSIF PDBG: LPP0 (Bit 8)                                    */
+#define POSIF_PDBG_LPP0_Msk                   (0x3f00UL)                /*!< POSIF PDBG: LPP0 (Bitfield-Mask: 0x3f)                      */
+#define POSIF_PDBG_LPP1_Pos                   (16UL)                    /*!< POSIF PDBG: LPP1 (Bit 16)                                   */
+#define POSIF_PDBG_LPP1_Msk                   (0x3f0000UL)              /*!< POSIF PDBG: LPP1 (Bitfield-Mask: 0x3f)                      */
+#define POSIF_PDBG_LPP2_Pos                   (22UL)                    /*!< POSIF PDBG: LPP2 (Bit 22)                                   */
+#define POSIF_PDBG_LPP2_Msk                   (0xfc00000UL)             /*!< POSIF PDBG: LPP2 (Bitfield-Mask: 0x3f)                      */
 
 
 /* ================================================================================ */
@@ -5222,44 +7685,44 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT0_OMR_PR15_Msk                    (0x80000000UL)            /*!< PORT0 OMR: PR15 (Bitfield-Mask: 0x01)                       */
 
 /* ---------------------------------  PORT0_IOCR0  -------------------------------- */
-#define PORT0_IOCR0_PC0_Pos                   (3UL)                     /*!< PORT0 IOCR0: PC0 (Bit 3)                                    */
-#define PORT0_IOCR0_PC0_Msk                   (0xf8UL)                  /*!< PORT0 IOCR0: PC0 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR0_PC1_Pos                   (11UL)                    /*!< PORT0 IOCR0: PC1 (Bit 11)                                   */
-#define PORT0_IOCR0_PC1_Msk                   (0xf800UL)                /*!< PORT0 IOCR0: PC1 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR0_PC2_Pos                   (19UL)                    /*!< PORT0 IOCR0: PC2 (Bit 19)                                   */
-#define PORT0_IOCR0_PC2_Msk                   (0xf80000UL)              /*!< PORT0 IOCR0: PC2 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR0_PC3_Pos                   (27UL)                    /*!< PORT0 IOCR0: PC3 (Bit 27)                                   */
-#define PORT0_IOCR0_PC3_Msk                   (0xf8000000UL)            /*!< PORT0 IOCR0: PC3 (Bitfield-Mask: 0x1f)                      */
+#define PORT0_IOCR0_PC0_Pos                   (2UL)                     /*!< PORT0 IOCR0: PC0 (Bit 2)                                    */
+#define PORT0_IOCR0_PC0_Msk                   (0xfcUL)                  /*!< PORT0 IOCR0: PC0 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR0_PC1_Pos                   (10UL)                    /*!< PORT0 IOCR0: PC1 (Bit 10)                                   */
+#define PORT0_IOCR0_PC1_Msk                   (0xfc00UL)                /*!< PORT0 IOCR0: PC1 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR0_PC2_Pos                   (18UL)                    /*!< PORT0 IOCR0: PC2 (Bit 18)                                   */
+#define PORT0_IOCR0_PC2_Msk                   (0xfc0000UL)              /*!< PORT0 IOCR0: PC2 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR0_PC3_Pos                   (26UL)                    /*!< PORT0 IOCR0: PC3 (Bit 26)                                   */
+#define PORT0_IOCR0_PC3_Msk                   (0xfc000000UL)            /*!< PORT0 IOCR0: PC3 (Bitfield-Mask: 0x3f)                      */
 
 /* ---------------------------------  PORT0_IOCR4  -------------------------------- */
-#define PORT0_IOCR4_PC4_Pos                   (3UL)                     /*!< PORT0 IOCR4: PC4 (Bit 3)                                    */
-#define PORT0_IOCR4_PC4_Msk                   (0xf8UL)                  /*!< PORT0 IOCR4: PC4 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR4_PC5_Pos                   (11UL)                    /*!< PORT0 IOCR4: PC5 (Bit 11)                                   */
-#define PORT0_IOCR4_PC5_Msk                   (0xf800UL)                /*!< PORT0 IOCR4: PC5 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR4_PC6_Pos                   (19UL)                    /*!< PORT0 IOCR4: PC6 (Bit 19)                                   */
-#define PORT0_IOCR4_PC6_Msk                   (0xf80000UL)              /*!< PORT0 IOCR4: PC6 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR4_PC7_Pos                   (27UL)                    /*!< PORT0 IOCR4: PC7 (Bit 27)                                   */
-#define PORT0_IOCR4_PC7_Msk                   (0xf8000000UL)            /*!< PORT0 IOCR4: PC7 (Bitfield-Mask: 0x1f)                      */
+#define PORT0_IOCR4_PC4_Pos                   (2UL)                     /*!< PORT0 IOCR4: PC4 (Bit 2)                                    */
+#define PORT0_IOCR4_PC4_Msk                   (0xfcUL)                  /*!< PORT0 IOCR4: PC4 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR4_PC5_Pos                   (10UL)                    /*!< PORT0 IOCR4: PC5 (Bit 10)                                   */
+#define PORT0_IOCR4_PC5_Msk                   (0xfc00UL)                /*!< PORT0 IOCR4: PC5 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR4_PC6_Pos                   (18UL)                    /*!< PORT0 IOCR4: PC6 (Bit 18)                                   */
+#define PORT0_IOCR4_PC6_Msk                   (0xfc0000UL)              /*!< PORT0 IOCR4: PC6 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR4_PC7_Pos                   (26UL)                    /*!< PORT0 IOCR4: PC7 (Bit 26)                                   */
+#define PORT0_IOCR4_PC7_Msk                   (0xfc000000UL)            /*!< PORT0 IOCR4: PC7 (Bitfield-Mask: 0x3f)                      */
 
 /* ---------------------------------  PORT0_IOCR8  -------------------------------- */
-#define PORT0_IOCR8_PC8_Pos                   (3UL)                     /*!< PORT0 IOCR8: PC8 (Bit 3)                                    */
-#define PORT0_IOCR8_PC8_Msk                   (0xf8UL)                  /*!< PORT0 IOCR8: PC8 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR8_PC9_Pos                   (11UL)                    /*!< PORT0 IOCR8: PC9 (Bit 11)                                   */
-#define PORT0_IOCR8_PC9_Msk                   (0xf800UL)                /*!< PORT0 IOCR8: PC9 (Bitfield-Mask: 0x1f)                      */
-#define PORT0_IOCR8_PC10_Pos                  (19UL)                    /*!< PORT0 IOCR8: PC10 (Bit 19)                                  */
-#define PORT0_IOCR8_PC10_Msk                  (0xf80000UL)              /*!< PORT0 IOCR8: PC10 (Bitfield-Mask: 0x1f)                     */
-#define PORT0_IOCR8_PC11_Pos                  (27UL)                    /*!< PORT0 IOCR8: PC11 (Bit 27)                                  */
-#define PORT0_IOCR8_PC11_Msk                  (0xf8000000UL)            /*!< PORT0 IOCR8: PC11 (Bitfield-Mask: 0x1f)                     */
+#define PORT0_IOCR8_PC8_Pos                   (2UL)                     /*!< PORT0 IOCR8: PC8 (Bit 2)                                    */
+#define PORT0_IOCR8_PC8_Msk                   (0xfcUL)                  /*!< PORT0 IOCR8: PC8 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR8_PC9_Pos                   (10UL)                    /*!< PORT0 IOCR8: PC9 (Bit 10)                                   */
+#define PORT0_IOCR8_PC9_Msk                   (0xfc00UL)                /*!< PORT0 IOCR8: PC9 (Bitfield-Mask: 0x3f)                      */
+#define PORT0_IOCR8_PC10_Pos                  (18UL)                    /*!< PORT0 IOCR8: PC10 (Bit 18)                                  */
+#define PORT0_IOCR8_PC10_Msk                  (0xfc0000UL)              /*!< PORT0 IOCR8: PC10 (Bitfield-Mask: 0x3f)                     */
+#define PORT0_IOCR8_PC11_Pos                  (26UL)                    /*!< PORT0 IOCR8: PC11 (Bit 26)                                  */
+#define PORT0_IOCR8_PC11_Msk                  (0xfc000000UL)            /*!< PORT0 IOCR8: PC11 (Bitfield-Mask: 0x3f)                     */
 
 /* --------------------------------  PORT0_IOCR12  -------------------------------- */
-#define PORT0_IOCR12_PC12_Pos                 (3UL)                     /*!< PORT0 IOCR12: PC12 (Bit 3)                                  */
-#define PORT0_IOCR12_PC12_Msk                 (0xf8UL)                  /*!< PORT0 IOCR12: PC12 (Bitfield-Mask: 0x1f)                    */
-#define PORT0_IOCR12_PC13_Pos                 (11UL)                    /*!< PORT0 IOCR12: PC13 (Bit 11)                                 */
-#define PORT0_IOCR12_PC13_Msk                 (0xf800UL)                /*!< PORT0 IOCR12: PC13 (Bitfield-Mask: 0x1f)                    */
-#define PORT0_IOCR12_PC14_Pos                 (19UL)                    /*!< PORT0 IOCR12: PC14 (Bit 19)                                 */
-#define PORT0_IOCR12_PC14_Msk                 (0xf80000UL)              /*!< PORT0 IOCR12: PC14 (Bitfield-Mask: 0x1f)                    */
-#define PORT0_IOCR12_PC15_Pos                 (27UL)                    /*!< PORT0 IOCR12: PC15 (Bit 27)                                 */
-#define PORT0_IOCR12_PC15_Msk                 (0xf8000000UL)            /*!< PORT0 IOCR12: PC15 (Bitfield-Mask: 0x1f)                    */
+#define PORT0_IOCR12_PC12_Pos                 (2UL)                     /*!< PORT0 IOCR12: PC12 (Bit 2)                                  */
+#define PORT0_IOCR12_PC12_Msk                 (0xfcUL)                  /*!< PORT0 IOCR12: PC12 (Bitfield-Mask: 0x3f)                    */
+#define PORT0_IOCR12_PC13_Pos                 (10UL)                    /*!< PORT0 IOCR12: PC13 (Bit 10)                                 */
+#define PORT0_IOCR12_PC13_Msk                 (0xfc00UL)                /*!< PORT0 IOCR12: PC13 (Bitfield-Mask: 0x3f)                    */
+#define PORT0_IOCR12_PC14_Pos                 (18UL)                    /*!< PORT0 IOCR12: PC14 (Bit 18)                                 */
+#define PORT0_IOCR12_PC14_Msk                 (0xfc0000UL)              /*!< PORT0 IOCR12: PC14 (Bitfield-Mask: 0x3f)                    */
+#define PORT0_IOCR12_PC15_Pos                 (26UL)                    /*!< PORT0 IOCR12: PC15 (Bit 26)                                 */
+#define PORT0_IOCR12_PC15_Msk                 (0xfc000000UL)            /*!< PORT0 IOCR12: PC15 (Bitfield-Mask: 0x3f)                    */
 
 /* ----------------------------------  PORT0_IN  ---------------------------------- */
 #define PORT0_IN_P0_Pos                       (0UL)                     /*!< PORT0 IN: P0 (Bit 0)                                        */
@@ -5454,6 +7917,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_OUT_P5_Msk                      (0x20UL)                  /*!< PORT1 OUT: P5 (Bitfield-Mask: 0x01)                         */
 #define PORT1_OUT_P6_Pos                      (6UL)                     /*!< PORT1 OUT: P6 (Bit 6)                                       */
 #define PORT1_OUT_P6_Msk                      (0x40UL)                  /*!< PORT1 OUT: P6 (Bitfield-Mask: 0x01)                         */
+#define PORT1_OUT_P7_Pos                      (7UL)                     /*!< PORT1 OUT: P7 (Bit 7)                                       */
+#define PORT1_OUT_P7_Msk                      (0x80UL)                  /*!< PORT1 OUT: P7 (Bitfield-Mask: 0x01)                         */
+#define PORT1_OUT_P8_Pos                      (8UL)                     /*!< PORT1 OUT: P8 (Bit 8)                                       */
+#define PORT1_OUT_P8_Msk                      (0x100UL)                 /*!< PORT1 OUT: P8 (Bitfield-Mask: 0x01)                         */
 
 /* ----------------------------------  PORT1_OMR  --------------------------------- */
 #define PORT1_OMR_PS0_Pos                     (0UL)                     /*!< PORT1 OMR: PS0 (Bit 0)                                      */
@@ -5470,6 +7937,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_OMR_PS5_Msk                     (0x20UL)                  /*!< PORT1 OMR: PS5 (Bitfield-Mask: 0x01)                        */
 #define PORT1_OMR_PS6_Pos                     (6UL)                     /*!< PORT1 OMR: PS6 (Bit 6)                                      */
 #define PORT1_OMR_PS6_Msk                     (0x40UL)                  /*!< PORT1 OMR: PS6 (Bitfield-Mask: 0x01)                        */
+#define PORT1_OMR_PS7_Pos                     (7UL)                     /*!< PORT1 OMR: PS7 (Bit 7)                                      */
+#define PORT1_OMR_PS7_Msk                     (0x80UL)                  /*!< PORT1 OMR: PS7 (Bitfield-Mask: 0x01)                        */
+#define PORT1_OMR_PS8_Pos                     (8UL)                     /*!< PORT1 OMR: PS8 (Bit 8)                                      */
+#define PORT1_OMR_PS8_Msk                     (0x100UL)                 /*!< PORT1 OMR: PS8 (Bitfield-Mask: 0x01)                        */
 #define PORT1_OMR_PR0_Pos                     (16UL)                    /*!< PORT1 OMR: PR0 (Bit 16)                                     */
 #define PORT1_OMR_PR0_Msk                     (0x10000UL)               /*!< PORT1 OMR: PR0 (Bitfield-Mask: 0x01)                        */
 #define PORT1_OMR_PR1_Pos                     (17UL)                    /*!< PORT1 OMR: PR1 (Bit 17)                                     */
@@ -5484,24 +7955,34 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_OMR_PR5_Msk                     (0x200000UL)              /*!< PORT1 OMR: PR5 (Bitfield-Mask: 0x01)                        */
 #define PORT1_OMR_PR6_Pos                     (22UL)                    /*!< PORT1 OMR: PR6 (Bit 22)                                     */
 #define PORT1_OMR_PR6_Msk                     (0x400000UL)              /*!< PORT1 OMR: PR6 (Bitfield-Mask: 0x01)                        */
+#define PORT1_OMR_PR7_Pos                     (23UL)                    /*!< PORT1 OMR: PR7 (Bit 23)                                     */
+#define PORT1_OMR_PR7_Msk                     (0x800000UL)              /*!< PORT1 OMR: PR7 (Bitfield-Mask: 0x01)                        */
+#define PORT1_OMR_PR8_Pos                     (24UL)                    /*!< PORT1 OMR: PR8 (Bit 24)                                     */
+#define PORT1_OMR_PR8_Msk                     (0x1000000UL)             /*!< PORT1 OMR: PR8 (Bitfield-Mask: 0x01)                        */
 
 /* ---------------------------------  PORT1_IOCR0  -------------------------------- */
-#define PORT1_IOCR0_PC0_Pos                   (3UL)                     /*!< PORT1 IOCR0: PC0 (Bit 3)                                    */
-#define PORT1_IOCR0_PC0_Msk                   (0xf8UL)                  /*!< PORT1 IOCR0: PC0 (Bitfield-Mask: 0x1f)                      */
-#define PORT1_IOCR0_PC1_Pos                   (11UL)                    /*!< PORT1 IOCR0: PC1 (Bit 11)                                   */
-#define PORT1_IOCR0_PC1_Msk                   (0xf800UL)                /*!< PORT1 IOCR0: PC1 (Bitfield-Mask: 0x1f)                      */
-#define PORT1_IOCR0_PC2_Pos                   (19UL)                    /*!< PORT1 IOCR0: PC2 (Bit 19)                                   */
-#define PORT1_IOCR0_PC2_Msk                   (0xf80000UL)              /*!< PORT1 IOCR0: PC2 (Bitfield-Mask: 0x1f)                      */
-#define PORT1_IOCR0_PC3_Pos                   (27UL)                    /*!< PORT1 IOCR0: PC3 (Bit 27)                                   */
-#define PORT1_IOCR0_PC3_Msk                   (0xf8000000UL)            /*!< PORT1 IOCR0: PC3 (Bitfield-Mask: 0x1f)                      */
+#define PORT1_IOCR0_PC0_Pos                   (2UL)                     /*!< PORT1 IOCR0: PC0 (Bit 2)                                    */
+#define PORT1_IOCR0_PC0_Msk                   (0xfcUL)                  /*!< PORT1 IOCR0: PC0 (Bitfield-Mask: 0x3f)                      */
+#define PORT1_IOCR0_PC1_Pos                   (10UL)                    /*!< PORT1 IOCR0: PC1 (Bit 10)                                   */
+#define PORT1_IOCR0_PC1_Msk                   (0xfc00UL)                /*!< PORT1 IOCR0: PC1 (Bitfield-Mask: 0x3f)                      */
+#define PORT1_IOCR0_PC2_Pos                   (18UL)                    /*!< PORT1 IOCR0: PC2 (Bit 18)                                   */
+#define PORT1_IOCR0_PC2_Msk                   (0xfc0000UL)              /*!< PORT1 IOCR0: PC2 (Bitfield-Mask: 0x3f)                      */
+#define PORT1_IOCR0_PC3_Pos                   (26UL)                    /*!< PORT1 IOCR0: PC3 (Bit 26)                                   */
+#define PORT1_IOCR0_PC3_Msk                   (0xfc000000UL)            /*!< PORT1 IOCR0: PC3 (Bitfield-Mask: 0x3f)                      */
 
 /* ---------------------------------  PORT1_IOCR4  -------------------------------- */
-#define PORT1_IOCR4_PC4_Pos                   (3UL)                     /*!< PORT1 IOCR4: PC4 (Bit 3)                                    */
-#define PORT1_IOCR4_PC4_Msk                   (0xf8UL)                  /*!< PORT1 IOCR4: PC4 (Bitfield-Mask: 0x1f)                      */
-#define PORT1_IOCR4_PC5_Pos                   (11UL)                    /*!< PORT1 IOCR4: PC5 (Bit 11)                                   */
-#define PORT1_IOCR4_PC5_Msk                   (0xf800UL)                /*!< PORT1 IOCR4: PC5 (Bitfield-Mask: 0x1f)                      */
-#define PORT1_IOCR4_PC6_Pos                   (19UL)                    /*!< PORT1 IOCR4: PC6 (Bit 19)                                   */
-#define PORT1_IOCR4_PC6_Msk                   (0xf80000UL)              /*!< PORT1 IOCR4: PC6 (Bitfield-Mask: 0x1f)                      */
+#define PORT1_IOCR4_PC4_Pos                   (2UL)                     /*!< PORT1 IOCR4: PC4 (Bit 2)                                    */
+#define PORT1_IOCR4_PC4_Msk                   (0xfcUL)                  /*!< PORT1 IOCR4: PC4 (Bitfield-Mask: 0x3f)                      */
+#define PORT1_IOCR4_PC5_Pos                   (10UL)                    /*!< PORT1 IOCR4: PC5 (Bit 10)                                   */
+#define PORT1_IOCR4_PC5_Msk                   (0xfc00UL)                /*!< PORT1 IOCR4: PC5 (Bitfield-Mask: 0x3f)                      */
+#define PORT1_IOCR4_PC6_Pos                   (18UL)                    /*!< PORT1 IOCR4: PC6 (Bit 18)                                   */
+#define PORT1_IOCR4_PC6_Msk                   (0xfc0000UL)              /*!< PORT1 IOCR4: PC6 (Bitfield-Mask: 0x3f)                      */
+#define PORT1_IOCR4_PC7_Pos                   (26UL)                    /*!< PORT1 IOCR4: PC7 (Bit 26)                                   */
+#define PORT1_IOCR4_PC7_Msk                   (0xfc000000UL)            /*!< PORT1 IOCR4: PC7 (Bitfield-Mask: 0x3f)                      */
+
+/* ---------------------------------  PORT1_IOCR8  -------------------------------- */
+#define PORT1_IOCR8_PC8_Pos                   (2UL)                     /*!< PORT1 IOCR8: PC8 (Bit 2)                                    */
+#define PORT1_IOCR8_PC8_Msk                   (0xfcUL)                  /*!< PORT1 IOCR8: PC8 (Bitfield-Mask: 0x3f)                      */
 
 /* ----------------------------------  PORT1_IN  ---------------------------------- */
 #define PORT1_IN_P0_Pos                       (0UL)                     /*!< PORT1 IN: P0 (Bit 0)                                        */
@@ -5518,6 +7999,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_IN_P5_Msk                       (0x20UL)                  /*!< PORT1 IN: P5 (Bitfield-Mask: 0x01)                          */
 #define PORT1_IN_P6_Pos                       (6UL)                     /*!< PORT1 IN: P6 (Bit 6)                                        */
 #define PORT1_IN_P6_Msk                       (0x40UL)                  /*!< PORT1 IN: P6 (Bitfield-Mask: 0x01)                          */
+#define PORT1_IN_P7_Pos                       (7UL)                     /*!< PORT1 IN: P7 (Bit 7)                                        */
+#define PORT1_IN_P7_Msk                       (0x80UL)                  /*!< PORT1 IN: P7 (Bitfield-Mask: 0x01)                          */
+#define PORT1_IN_P8_Pos                       (8UL)                     /*!< PORT1 IN: P8 (Bit 8)                                        */
+#define PORT1_IN_P8_Msk                       (0x100UL)                 /*!< PORT1 IN: P8 (Bitfield-Mask: 0x01)                          */
 
 /* ---------------------------------  PORT1_PHCR0  -------------------------------- */
 #define PORT1_PHCR0_PH0_Pos                   (2UL)                     /*!< PORT1 PHCR0: PH0 (Bit 2)                                    */
@@ -5534,6 +8019,12 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_PHCR0_PH5_Msk                   (0x400000UL)              /*!< PORT1 PHCR0: PH5 (Bitfield-Mask: 0x01)                      */
 #define PORT1_PHCR0_PH6_Pos                   (26UL)                    /*!< PORT1 PHCR0: PH6 (Bit 26)                                   */
 #define PORT1_PHCR0_PH6_Msk                   (0x4000000UL)             /*!< PORT1 PHCR0: PH6 (Bitfield-Mask: 0x01)                      */
+#define PORT1_PHCR0_PH7_Pos                   (30UL)                    /*!< PORT1 PHCR0: PH7 (Bit 30)                                   */
+#define PORT1_PHCR0_PH7_Msk                   (0x40000000UL)            /*!< PORT1 PHCR0: PH7 (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  PORT1_PHCR1  -------------------------------- */
+#define PORT1_PHCR1_PH8_Pos                   (2UL)                     /*!< PORT1 PHCR1: PH8 (Bit 2)                                    */
+#define PORT1_PHCR1_PH8_Msk                   (0x4UL)                   /*!< PORT1 PHCR1: PH8 (Bitfield-Mask: 0x01)                      */
 
 /* ---------------------------------  PORT1_PDISC  -------------------------------- */
 #define PORT1_PDISC_PDIS0_Pos                 (0UL)                     /*!< PORT1 PDISC: PDIS0 (Bit 0)                                  */
@@ -5550,6 +8041,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_PDISC_PDIS5_Msk                 (0x20UL)                  /*!< PORT1 PDISC: PDIS5 (Bitfield-Mask: 0x01)                    */
 #define PORT1_PDISC_PDIS6_Pos                 (6UL)                     /*!< PORT1 PDISC: PDIS6 (Bit 6)                                  */
 #define PORT1_PDISC_PDIS6_Msk                 (0x40UL)                  /*!< PORT1 PDISC: PDIS6 (Bitfield-Mask: 0x01)                    */
+#define PORT1_PDISC_PDIS7_Pos                 (7UL)                     /*!< PORT1 PDISC: PDIS7 (Bit 7)                                  */
+#define PORT1_PDISC_PDIS7_Msk                 (0x80UL)                  /*!< PORT1 PDISC: PDIS7 (Bitfield-Mask: 0x01)                    */
+#define PORT1_PDISC_PDIS8_Pos                 (8UL)                     /*!< PORT1 PDISC: PDIS8 (Bit 8)                                  */
+#define PORT1_PDISC_PDIS8_Msk                 (0x100UL)                 /*!< PORT1 PDISC: PDIS8 (Bitfield-Mask: 0x01)                    */
 
 /* ----------------------------------  PORT1_PPS  --------------------------------- */
 #define PORT1_PPS_PPS0_Pos                    (0UL)                     /*!< PORT1 PPS: PPS0 (Bit 0)                                     */
@@ -5566,6 +8061,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_PPS_PPS5_Msk                    (0x20UL)                  /*!< PORT1 PPS: PPS5 (Bitfield-Mask: 0x01)                       */
 #define PORT1_PPS_PPS6_Pos                    (6UL)                     /*!< PORT1 PPS: PPS6 (Bit 6)                                     */
 #define PORT1_PPS_PPS6_Msk                    (0x40UL)                  /*!< PORT1 PPS: PPS6 (Bitfield-Mask: 0x01)                       */
+#define PORT1_PPS_PPS7_Pos                    (7UL)                     /*!< PORT1 PPS: PPS7 (Bit 7)                                     */
+#define PORT1_PPS_PPS7_Msk                    (0x80UL)                  /*!< PORT1 PPS: PPS7 (Bitfield-Mask: 0x01)                       */
+#define PORT1_PPS_PPS8_Pos                    (8UL)                     /*!< PORT1 PPS: PPS8 (Bit 8)                                     */
+#define PORT1_PPS_PPS8_Msk                    (0x100UL)                 /*!< PORT1 PPS: PPS8 (Bitfield-Mask: 0x01)                       */
 
 /* ---------------------------------  PORT1_HWSEL  -------------------------------- */
 #define PORT1_HWSEL_HW0_Pos                   (0UL)                     /*!< PORT1 HWSEL: HW0 (Bit 0)                                    */
@@ -5582,6 +8081,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT1_HWSEL_HW5_Msk                   (0xc00UL)                 /*!< PORT1 HWSEL: HW5 (Bitfield-Mask: 0x03)                      */
 #define PORT1_HWSEL_HW6_Pos                   (12UL)                    /*!< PORT1 HWSEL: HW6 (Bit 12)                                   */
 #define PORT1_HWSEL_HW6_Msk                   (0x3000UL)                /*!< PORT1 HWSEL: HW6 (Bitfield-Mask: 0x03)                      */
+#define PORT1_HWSEL_HW7_Pos                   (14UL)                    /*!< PORT1 HWSEL: HW7 (Bit 14)                                   */
+#define PORT1_HWSEL_HW7_Msk                   (0xc000UL)                /*!< PORT1 HWSEL: HW7 (Bitfield-Mask: 0x03)                      */
+#define PORT1_HWSEL_HW8_Pos                   (16UL)                    /*!< PORT1 HWSEL: HW8 (Bit 16)                                   */
+#define PORT1_HWSEL_HW8_Msk                   (0x30000UL)               /*!< PORT1 HWSEL: HW8 (Bitfield-Mask: 0x03)                      */
 
 
 /* ================================================================================ */
@@ -5614,6 +8117,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_OUT_P10_Msk                     (0x400UL)                 /*!< PORT2 OUT: P10 (Bitfield-Mask: 0x01)                        */
 #define PORT2_OUT_P11_Pos                     (11UL)                    /*!< PORT2 OUT: P11 (Bit 11)                                     */
 #define PORT2_OUT_P11_Msk                     (0x800UL)                 /*!< PORT2 OUT: P11 (Bitfield-Mask: 0x01)                        */
+#define PORT2_OUT_P12_Pos                     (12UL)                    /*!< PORT2 OUT: P12 (Bit 12)                                     */
+#define PORT2_OUT_P12_Msk                     (0x1000UL)                /*!< PORT2 OUT: P12 (Bitfield-Mask: 0x01)                        */
+#define PORT2_OUT_P13_Pos                     (13UL)                    /*!< PORT2 OUT: P13 (Bit 13)                                     */
+#define PORT2_OUT_P13_Msk                     (0x2000UL)                /*!< PORT2 OUT: P13 (Bitfield-Mask: 0x01)                        */
 
 /* ----------------------------------  PORT2_OMR  --------------------------------- */
 #define PORT2_OMR_PS0_Pos                     (0UL)                     /*!< PORT2 OMR: PS0 (Bit 0)                                      */
@@ -5640,6 +8147,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_OMR_PS10_Msk                    (0x400UL)                 /*!< PORT2 OMR: PS10 (Bitfield-Mask: 0x01)                       */
 #define PORT2_OMR_PS11_Pos                    (11UL)                    /*!< PORT2 OMR: PS11 (Bit 11)                                    */
 #define PORT2_OMR_PS11_Msk                    (0x800UL)                 /*!< PORT2 OMR: PS11 (Bitfield-Mask: 0x01)                       */
+#define PORT2_OMR_PS12_Pos                    (12UL)                    /*!< PORT2 OMR: PS12 (Bit 12)                                    */
+#define PORT2_OMR_PS12_Msk                    (0x1000UL)                /*!< PORT2 OMR: PS12 (Bitfield-Mask: 0x01)                       */
+#define PORT2_OMR_PS13_Pos                    (13UL)                    /*!< PORT2 OMR: PS13 (Bit 13)                                    */
+#define PORT2_OMR_PS13_Msk                    (0x2000UL)                /*!< PORT2 OMR: PS13 (Bitfield-Mask: 0x01)                       */
 #define PORT2_OMR_PR0_Pos                     (16UL)                    /*!< PORT2 OMR: PR0 (Bit 16)                                     */
 #define PORT2_OMR_PR0_Msk                     (0x10000UL)               /*!< PORT2 OMR: PR0 (Bitfield-Mask: 0x01)                        */
 #define PORT2_OMR_PR1_Pos                     (17UL)                    /*!< PORT2 OMR: PR1 (Bit 17)                                     */
@@ -5664,36 +8175,46 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_OMR_PR10_Msk                    (0x4000000UL)             /*!< PORT2 OMR: PR10 (Bitfield-Mask: 0x01)                       */
 #define PORT2_OMR_PR11_Pos                    (27UL)                    /*!< PORT2 OMR: PR11 (Bit 27)                                    */
 #define PORT2_OMR_PR11_Msk                    (0x8000000UL)             /*!< PORT2 OMR: PR11 (Bitfield-Mask: 0x01)                       */
+#define PORT2_OMR_PR12_Pos                    (28UL)                    /*!< PORT2 OMR: PR12 (Bit 28)                                    */
+#define PORT2_OMR_PR12_Msk                    (0x10000000UL)            /*!< PORT2 OMR: PR12 (Bitfield-Mask: 0x01)                       */
+#define PORT2_OMR_PR13_Pos                    (29UL)                    /*!< PORT2 OMR: PR13 (Bit 29)                                    */
+#define PORT2_OMR_PR13_Msk                    (0x20000000UL)            /*!< PORT2 OMR: PR13 (Bitfield-Mask: 0x01)                       */
 
 /* ---------------------------------  PORT2_IOCR0  -------------------------------- */
-#define PORT2_IOCR0_PC0_Pos                   (3UL)                     /*!< PORT2 IOCR0: PC0 (Bit 3)                                    */
-#define PORT2_IOCR0_PC0_Msk                   (0xf8UL)                  /*!< PORT2 IOCR0: PC0 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR0_PC1_Pos                   (11UL)                    /*!< PORT2 IOCR0: PC1 (Bit 11)                                   */
-#define PORT2_IOCR0_PC1_Msk                   (0xf800UL)                /*!< PORT2 IOCR0: PC1 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR0_PC2_Pos                   (19UL)                    /*!< PORT2 IOCR0: PC2 (Bit 19)                                   */
-#define PORT2_IOCR0_PC2_Msk                   (0xf80000UL)              /*!< PORT2 IOCR0: PC2 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR0_PC3_Pos                   (27UL)                    /*!< PORT2 IOCR0: PC3 (Bit 27)                                   */
-#define PORT2_IOCR0_PC3_Msk                   (0xf8000000UL)            /*!< PORT2 IOCR0: PC3 (Bitfield-Mask: 0x1f)                      */
+#define PORT2_IOCR0_PC0_Pos                   (2UL)                     /*!< PORT2 IOCR0: PC0 (Bit 2)                                    */
+#define PORT2_IOCR0_PC0_Msk                   (0xfcUL)                  /*!< PORT2 IOCR0: PC0 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR0_PC1_Pos                   (10UL)                    /*!< PORT2 IOCR0: PC1 (Bit 10)                                   */
+#define PORT2_IOCR0_PC1_Msk                   (0xfc00UL)                /*!< PORT2 IOCR0: PC1 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR0_PC2_Pos                   (18UL)                    /*!< PORT2 IOCR0: PC2 (Bit 18)                                   */
+#define PORT2_IOCR0_PC2_Msk                   (0xfc0000UL)              /*!< PORT2 IOCR0: PC2 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR0_PC3_Pos                   (26UL)                    /*!< PORT2 IOCR0: PC3 (Bit 26)                                   */
+#define PORT2_IOCR0_PC3_Msk                   (0xfc000000UL)            /*!< PORT2 IOCR0: PC3 (Bitfield-Mask: 0x3f)                      */
 
 /* ---------------------------------  PORT2_IOCR4  -------------------------------- */
-#define PORT2_IOCR4_PC4_Pos                   (3UL)                     /*!< PORT2 IOCR4: PC4 (Bit 3)                                    */
-#define PORT2_IOCR4_PC4_Msk                   (0xf8UL)                  /*!< PORT2 IOCR4: PC4 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR4_PC5_Pos                   (11UL)                    /*!< PORT2 IOCR4: PC5 (Bit 11)                                   */
-#define PORT2_IOCR4_PC5_Msk                   (0xf800UL)                /*!< PORT2 IOCR4: PC5 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR4_PC6_Pos                   (19UL)                    /*!< PORT2 IOCR4: PC6 (Bit 19)                                   */
-#define PORT2_IOCR4_PC6_Msk                   (0xf80000UL)              /*!< PORT2 IOCR4: PC6 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR4_PC7_Pos                   (27UL)                    /*!< PORT2 IOCR4: PC7 (Bit 27)                                   */
-#define PORT2_IOCR4_PC7_Msk                   (0xf8000000UL)            /*!< PORT2 IOCR4: PC7 (Bitfield-Mask: 0x1f)                      */
+#define PORT2_IOCR4_PC4_Pos                   (2UL)                     /*!< PORT2 IOCR4: PC4 (Bit 2)                                    */
+#define PORT2_IOCR4_PC4_Msk                   (0xfcUL)                  /*!< PORT2 IOCR4: PC4 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR4_PC5_Pos                   (10UL)                    /*!< PORT2 IOCR4: PC5 (Bit 10)                                   */
+#define PORT2_IOCR4_PC5_Msk                   (0xfc00UL)                /*!< PORT2 IOCR4: PC5 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR4_PC6_Pos                   (18UL)                    /*!< PORT2 IOCR4: PC6 (Bit 18)                                   */
+#define PORT2_IOCR4_PC6_Msk                   (0xfc0000UL)              /*!< PORT2 IOCR4: PC6 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR4_PC7_Pos                   (26UL)                    /*!< PORT2 IOCR4: PC7 (Bit 26)                                   */
+#define PORT2_IOCR4_PC7_Msk                   (0xfc000000UL)            /*!< PORT2 IOCR4: PC7 (Bitfield-Mask: 0x3f)                      */
 
 /* ---------------------------------  PORT2_IOCR8  -------------------------------- */
-#define PORT2_IOCR8_PC8_Pos                   (3UL)                     /*!< PORT2 IOCR8: PC8 (Bit 3)                                    */
-#define PORT2_IOCR8_PC8_Msk                   (0xf8UL)                  /*!< PORT2 IOCR8: PC8 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR8_PC9_Pos                   (11UL)                    /*!< PORT2 IOCR8: PC9 (Bit 11)                                   */
-#define PORT2_IOCR8_PC9_Msk                   (0xf800UL)                /*!< PORT2 IOCR8: PC9 (Bitfield-Mask: 0x1f)                      */
-#define PORT2_IOCR8_PC10_Pos                  (19UL)                    /*!< PORT2 IOCR8: PC10 (Bit 19)                                  */
-#define PORT2_IOCR8_PC10_Msk                  (0xf80000UL)              /*!< PORT2 IOCR8: PC10 (Bitfield-Mask: 0x1f)                     */
-#define PORT2_IOCR8_PC11_Pos                  (27UL)                    /*!< PORT2 IOCR8: PC11 (Bit 27)                                  */
-#define PORT2_IOCR8_PC11_Msk                  (0xf8000000UL)            /*!< PORT2 IOCR8: PC11 (Bitfield-Mask: 0x1f)                     */
+#define PORT2_IOCR8_PC8_Pos                   (2UL)                     /*!< PORT2 IOCR8: PC8 (Bit 2)                                    */
+#define PORT2_IOCR8_PC8_Msk                   (0xfcUL)                  /*!< PORT2 IOCR8: PC8 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR8_PC9_Pos                   (10UL)                    /*!< PORT2 IOCR8: PC9 (Bit 10)                                   */
+#define PORT2_IOCR8_PC9_Msk                   (0xfc00UL)                /*!< PORT2 IOCR8: PC9 (Bitfield-Mask: 0x3f)                      */
+#define PORT2_IOCR8_PC10_Pos                  (18UL)                    /*!< PORT2 IOCR8: PC10 (Bit 18)                                  */
+#define PORT2_IOCR8_PC10_Msk                  (0xfc0000UL)              /*!< PORT2 IOCR8: PC10 (Bitfield-Mask: 0x3f)                     */
+#define PORT2_IOCR8_PC11_Pos                  (26UL)                    /*!< PORT2 IOCR8: PC11 (Bit 26)                                  */
+#define PORT2_IOCR8_PC11_Msk                  (0xfc000000UL)            /*!< PORT2 IOCR8: PC11 (Bitfield-Mask: 0x3f)                     */
+
+/* --------------------------------  PORT2_IOCR12  -------------------------------- */
+#define PORT2_IOCR12_PC12_Pos                 (2UL)                     /*!< PORT2 IOCR12: PC12 (Bit 2)                                  */
+#define PORT2_IOCR12_PC12_Msk                 (0xfcUL)                  /*!< PORT2 IOCR12: PC12 (Bitfield-Mask: 0x3f)                    */
+#define PORT2_IOCR12_PC13_Pos                 (10UL)                    /*!< PORT2 IOCR12: PC13 (Bit 10)                                 */
+#define PORT2_IOCR12_PC13_Msk                 (0xfc00UL)                /*!< PORT2 IOCR12: PC13 (Bitfield-Mask: 0x3f)                    */
 
 /* ----------------------------------  PORT2_IN  ---------------------------------- */
 #define PORT2_IN_P0_Pos                       (0UL)                     /*!< PORT2 IN: P0 (Bit 0)                                        */
@@ -5720,6 +8241,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_IN_P10_Msk                      (0x400UL)                 /*!< PORT2 IN: P10 (Bitfield-Mask: 0x01)                         */
 #define PORT2_IN_P11_Pos                      (11UL)                    /*!< PORT2 IN: P11 (Bit 11)                                      */
 #define PORT2_IN_P11_Msk                      (0x800UL)                 /*!< PORT2 IN: P11 (Bitfield-Mask: 0x01)                         */
+#define PORT2_IN_P12_Pos                      (12UL)                    /*!< PORT2 IN: P12 (Bit 12)                                      */
+#define PORT2_IN_P12_Msk                      (0x1000UL)                /*!< PORT2 IN: P12 (Bitfield-Mask: 0x01)                         */
+#define PORT2_IN_P13_Pos                      (13UL)                    /*!< PORT2 IN: P13 (Bit 13)                                      */
+#define PORT2_IN_P13_Msk                      (0x2000UL)                /*!< PORT2 IN: P13 (Bitfield-Mask: 0x01)                         */
 
 /* ---------------------------------  PORT2_PHCR0  -------------------------------- */
 #define PORT2_PHCR0_PH0_Pos                   (2UL)                     /*!< PORT2 PHCR0: PH0 (Bit 2)                                    */
@@ -5748,6 +8273,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_PHCR1_PH10_Msk                  (0x400UL)                 /*!< PORT2 PHCR1: PH10 (Bitfield-Mask: 0x01)                     */
 #define PORT2_PHCR1_PH11_Pos                  (14UL)                    /*!< PORT2 PHCR1: PH11 (Bit 14)                                  */
 #define PORT2_PHCR1_PH11_Msk                  (0x4000UL)                /*!< PORT2 PHCR1: PH11 (Bitfield-Mask: 0x01)                     */
+#define PORT2_PHCR1_PH12_Pos                  (18UL)                    /*!< PORT2 PHCR1: PH12 (Bit 18)                                  */
+#define PORT2_PHCR1_PH12_Msk                  (0x40000UL)               /*!< PORT2 PHCR1: PH12 (Bitfield-Mask: 0x01)                     */
+#define PORT2_PHCR1_PH13_Pos                  (22UL)                    /*!< PORT2 PHCR1: PH13 (Bit 22)                                  */
+#define PORT2_PHCR1_PH13_Msk                  (0x400000UL)              /*!< PORT2 PHCR1: PH13 (Bitfield-Mask: 0x01)                     */
 
 /* ---------------------------------  PORT2_PDISC  -------------------------------- */
 #define PORT2_PDISC_PDIS0_Pos                 (0UL)                     /*!< PORT2 PDISC: PDIS0 (Bit 0)                                  */
@@ -5774,6 +8303,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_PDISC_PDIS10_Msk                (0x400UL)                 /*!< PORT2 PDISC: PDIS10 (Bitfield-Mask: 0x01)                   */
 #define PORT2_PDISC_PDIS11_Pos                (11UL)                    /*!< PORT2 PDISC: PDIS11 (Bit 11)                                */
 #define PORT2_PDISC_PDIS11_Msk                (0x800UL)                 /*!< PORT2 PDISC: PDIS11 (Bitfield-Mask: 0x01)                   */
+#define PORT2_PDISC_PDIS12_Pos                (12UL)                    /*!< PORT2 PDISC: PDIS12 (Bit 12)                                */
+#define PORT2_PDISC_PDIS12_Msk                (0x1000UL)                /*!< PORT2 PDISC: PDIS12 (Bitfield-Mask: 0x01)                   */
+#define PORT2_PDISC_PDIS13_Pos                (13UL)                    /*!< PORT2 PDISC: PDIS13 (Bit 13)                                */
+#define PORT2_PDISC_PDIS13_Msk                (0x2000UL)                /*!< PORT2 PDISC: PDIS13 (Bitfield-Mask: 0x01)                   */
 
 /* ----------------------------------  PORT2_PPS  --------------------------------- */
 #define PORT2_PPS_PPS0_Pos                    (0UL)                     /*!< PORT2 PPS: PPS0 (Bit 0)                                     */
@@ -5800,6 +8333,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_PPS_PPS10_Msk                   (0x400UL)                 /*!< PORT2 PPS: PPS10 (Bitfield-Mask: 0x01)                      */
 #define PORT2_PPS_PPS11_Pos                   (11UL)                    /*!< PORT2 PPS: PPS11 (Bit 11)                                   */
 #define PORT2_PPS_PPS11_Msk                   (0x800UL)                 /*!< PORT2 PPS: PPS11 (Bitfield-Mask: 0x01)                      */
+#define PORT2_PPS_PPS12_Pos                   (12UL)                    /*!< PORT2 PPS: PPS12 (Bit 12)                                   */
+#define PORT2_PPS_PPS12_Msk                   (0x1000UL)                /*!< PORT2 PPS: PPS12 (Bitfield-Mask: 0x01)                      */
+#define PORT2_PPS_PPS13_Pos                   (13UL)                    /*!< PORT2 PPS: PPS13 (Bit 13)                                   */
+#define PORT2_PPS_PPS13_Msk                   (0x2000UL)                /*!< PORT2 PPS: PPS13 (Bitfield-Mask: 0x01)                      */
 
 /* ---------------------------------  PORT2_HWSEL  -------------------------------- */
 #define PORT2_HWSEL_HW0_Pos                   (0UL)                     /*!< PORT2 HWSEL: HW0 (Bit 0)                                    */
@@ -5826,6 +8363,368 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2_HWSEL_HW10_Msk                  (0x300000UL)              /*!< PORT2 HWSEL: HW10 (Bitfield-Mask: 0x03)                     */
 #define PORT2_HWSEL_HW11_Pos                  (22UL)                    /*!< PORT2 HWSEL: HW11 (Bit 22)                                  */
 #define PORT2_HWSEL_HW11_Msk                  (0xc00000UL)              /*!< PORT2 HWSEL: HW11 (Bitfield-Mask: 0x03)                     */
+#define PORT2_HWSEL_HW12_Pos                  (24UL)                    /*!< PORT2 HWSEL: HW12 (Bit 24)                                  */
+#define PORT2_HWSEL_HW12_Msk                  (0x3000000UL)             /*!< PORT2 HWSEL: HW12 (Bitfield-Mask: 0x03)                     */
+#define PORT2_HWSEL_HW13_Pos                  (26UL)                    /*!< PORT2 HWSEL: HW13 (Bit 26)                                  */
+#define PORT2_HWSEL_HW13_Msk                  (0xc000000UL)             /*!< PORT2 HWSEL: HW13 (Bitfield-Mask: 0x03)                     */
+
+
+/* ================================================================================ */
+/* ================         struct 'PORT3' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  PORT3_OUT  --------------------------------- */
+#define PORT3_OUT_P0_Pos                      (0UL)                     /*!< PORT3 OUT: P0 (Bit 0)                                       */
+#define PORT3_OUT_P0_Msk                      (0x1UL)                   /*!< PORT3 OUT: P0 (Bitfield-Mask: 0x01)                         */
+#define PORT3_OUT_P1_Pos                      (1UL)                     /*!< PORT3 OUT: P1 (Bit 1)                                       */
+#define PORT3_OUT_P1_Msk                      (0x2UL)                   /*!< PORT3 OUT: P1 (Bitfield-Mask: 0x01)                         */
+#define PORT3_OUT_P2_Pos                      (2UL)                     /*!< PORT3 OUT: P2 (Bit 2)                                       */
+#define PORT3_OUT_P2_Msk                      (0x4UL)                   /*!< PORT3 OUT: P2 (Bitfield-Mask: 0x01)                         */
+#define PORT3_OUT_P3_Pos                      (3UL)                     /*!< PORT3 OUT: P3 (Bit 3)                                       */
+#define PORT3_OUT_P3_Msk                      (0x8UL)                   /*!< PORT3 OUT: P3 (Bitfield-Mask: 0x01)                         */
+#define PORT3_OUT_P4_Pos                      (4UL)                     /*!< PORT3 OUT: P4 (Bit 4)                                       */
+#define PORT3_OUT_P4_Msk                      (0x10UL)                  /*!< PORT3 OUT: P4 (Bitfield-Mask: 0x01)                         */
+
+/* ----------------------------------  PORT3_OMR  --------------------------------- */
+#define PORT3_OMR_PS0_Pos                     (0UL)                     /*!< PORT3 OMR: PS0 (Bit 0)                                      */
+#define PORT3_OMR_PS0_Msk                     (0x1UL)                   /*!< PORT3 OMR: PS0 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PS1_Pos                     (1UL)                     /*!< PORT3 OMR: PS1 (Bit 1)                                      */
+#define PORT3_OMR_PS1_Msk                     (0x2UL)                   /*!< PORT3 OMR: PS1 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PS2_Pos                     (2UL)                     /*!< PORT3 OMR: PS2 (Bit 2)                                      */
+#define PORT3_OMR_PS2_Msk                     (0x4UL)                   /*!< PORT3 OMR: PS2 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PS3_Pos                     (3UL)                     /*!< PORT3 OMR: PS3 (Bit 3)                                      */
+#define PORT3_OMR_PS3_Msk                     (0x8UL)                   /*!< PORT3 OMR: PS3 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PS4_Pos                     (4UL)                     /*!< PORT3 OMR: PS4 (Bit 4)                                      */
+#define PORT3_OMR_PS4_Msk                     (0x10UL)                  /*!< PORT3 OMR: PS4 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PR0_Pos                     (16UL)                    /*!< PORT3 OMR: PR0 (Bit 16)                                     */
+#define PORT3_OMR_PR0_Msk                     (0x10000UL)               /*!< PORT3 OMR: PR0 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PR1_Pos                     (17UL)                    /*!< PORT3 OMR: PR1 (Bit 17)                                     */
+#define PORT3_OMR_PR1_Msk                     (0x20000UL)               /*!< PORT3 OMR: PR1 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PR2_Pos                     (18UL)                    /*!< PORT3 OMR: PR2 (Bit 18)                                     */
+#define PORT3_OMR_PR2_Msk                     (0x40000UL)               /*!< PORT3 OMR: PR2 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PR3_Pos                     (19UL)                    /*!< PORT3 OMR: PR3 (Bit 19)                                     */
+#define PORT3_OMR_PR3_Msk                     (0x80000UL)               /*!< PORT3 OMR: PR3 (Bitfield-Mask: 0x01)                        */
+#define PORT3_OMR_PR4_Pos                     (20UL)                    /*!< PORT3 OMR: PR4 (Bit 20)                                     */
+#define PORT3_OMR_PR4_Msk                     (0x100000UL)              /*!< PORT3 OMR: PR4 (Bitfield-Mask: 0x01)                        */
+
+/* ---------------------------------  PORT3_IOCR0  -------------------------------- */
+#define PORT3_IOCR0_PC0_Pos                   (2UL)                     /*!< PORT3 IOCR0: PC0 (Bit 2)                                    */
+#define PORT3_IOCR0_PC0_Msk                   (0xfcUL)                  /*!< PORT3 IOCR0: PC0 (Bitfield-Mask: 0x3f)                      */
+#define PORT3_IOCR0_PC1_Pos                   (10UL)                    /*!< PORT3 IOCR0: PC1 (Bit 10)                                   */
+#define PORT3_IOCR0_PC1_Msk                   (0xfc00UL)                /*!< PORT3 IOCR0: PC1 (Bitfield-Mask: 0x3f)                      */
+#define PORT3_IOCR0_PC2_Pos                   (18UL)                    /*!< PORT3 IOCR0: PC2 (Bit 18)                                   */
+#define PORT3_IOCR0_PC2_Msk                   (0xfc0000UL)              /*!< PORT3 IOCR0: PC2 (Bitfield-Mask: 0x3f)                      */
+#define PORT3_IOCR0_PC3_Pos                   (26UL)                    /*!< PORT3 IOCR0: PC3 (Bit 26)                                   */
+#define PORT3_IOCR0_PC3_Msk                   (0xfc000000UL)            /*!< PORT3 IOCR0: PC3 (Bitfield-Mask: 0x3f)                      */
+
+/* ---------------------------------  PORT3_IOCR4  -------------------------------- */
+#define PORT3_IOCR4_PC4_Pos                   (2UL)                     /*!< PORT3 IOCR4: PC4 (Bit 2)                                    */
+#define PORT3_IOCR4_PC4_Msk                   (0xfcUL)                  /*!< PORT3 IOCR4: PC4 (Bitfield-Mask: 0x3f)                      */
+
+/* ----------------------------------  PORT3_IN  ---------------------------------- */
+#define PORT3_IN_P0_Pos                       (0UL)                     /*!< PORT3 IN: P0 (Bit 0)                                        */
+#define PORT3_IN_P0_Msk                       (0x1UL)                   /*!< PORT3 IN: P0 (Bitfield-Mask: 0x01)                          */
+#define PORT3_IN_P1_Pos                       (1UL)                     /*!< PORT3 IN: P1 (Bit 1)                                        */
+#define PORT3_IN_P1_Msk                       (0x2UL)                   /*!< PORT3 IN: P1 (Bitfield-Mask: 0x01)                          */
+#define PORT3_IN_P2_Pos                       (2UL)                     /*!< PORT3 IN: P2 (Bit 2)                                        */
+#define PORT3_IN_P2_Msk                       (0x4UL)                   /*!< PORT3 IN: P2 (Bitfield-Mask: 0x01)                          */
+#define PORT3_IN_P3_Pos                       (3UL)                     /*!< PORT3 IN: P3 (Bit 3)                                        */
+#define PORT3_IN_P3_Msk                       (0x8UL)                   /*!< PORT3 IN: P3 (Bitfield-Mask: 0x01)                          */
+#define PORT3_IN_P4_Pos                       (4UL)                     /*!< PORT3 IN: P4 (Bit 4)                                        */
+#define PORT3_IN_P4_Msk                       (0x10UL)                  /*!< PORT3 IN: P4 (Bitfield-Mask: 0x01)                          */
+
+/* ---------------------------------  PORT3_PHCR0  -------------------------------- */
+#define PORT3_PHCR0_PH0_Pos                   (2UL)                     /*!< PORT3 PHCR0: PH0 (Bit 2)                                    */
+#define PORT3_PHCR0_PH0_Msk                   (0x4UL)                   /*!< PORT3 PHCR0: PH0 (Bitfield-Mask: 0x01)                      */
+#define PORT3_PHCR0_PH1_Pos                   (6UL)                     /*!< PORT3 PHCR0: PH1 (Bit 6)                                    */
+#define PORT3_PHCR0_PH1_Msk                   (0x40UL)                  /*!< PORT3 PHCR0: PH1 (Bitfield-Mask: 0x01)                      */
+#define PORT3_PHCR0_PH2_Pos                   (10UL)                    /*!< PORT3 PHCR0: PH2 (Bit 10)                                   */
+#define PORT3_PHCR0_PH2_Msk                   (0x400UL)                 /*!< PORT3 PHCR0: PH2 (Bitfield-Mask: 0x01)                      */
+#define PORT3_PHCR0_PH3_Pos                   (14UL)                    /*!< PORT3 PHCR0: PH3 (Bit 14)                                   */
+#define PORT3_PHCR0_PH3_Msk                   (0x4000UL)                /*!< PORT3 PHCR0: PH3 (Bitfield-Mask: 0x01)                      */
+#define PORT3_PHCR0_PH4_Pos                   (18UL)                    /*!< PORT3 PHCR0: PH4 (Bit 18)                                   */
+#define PORT3_PHCR0_PH4_Msk                   (0x40000UL)               /*!< PORT3 PHCR0: PH4 (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  PORT3_PDISC  -------------------------------- */
+#define PORT3_PDISC_PDIS0_Pos                 (0UL)                     /*!< PORT3 PDISC: PDIS0 (Bit 0)                                  */
+#define PORT3_PDISC_PDIS0_Msk                 (0x1UL)                   /*!< PORT3 PDISC: PDIS0 (Bitfield-Mask: 0x01)                    */
+#define PORT3_PDISC_PDIS1_Pos                 (1UL)                     /*!< PORT3 PDISC: PDIS1 (Bit 1)                                  */
+#define PORT3_PDISC_PDIS1_Msk                 (0x2UL)                   /*!< PORT3 PDISC: PDIS1 (Bitfield-Mask: 0x01)                    */
+#define PORT3_PDISC_PDIS2_Pos                 (2UL)                     /*!< PORT3 PDISC: PDIS2 (Bit 2)                                  */
+#define PORT3_PDISC_PDIS2_Msk                 (0x4UL)                   /*!< PORT3 PDISC: PDIS2 (Bitfield-Mask: 0x01)                    */
+#define PORT3_PDISC_PDIS3_Pos                 (3UL)                     /*!< PORT3 PDISC: PDIS3 (Bit 3)                                  */
+#define PORT3_PDISC_PDIS3_Msk                 (0x8UL)                   /*!< PORT3 PDISC: PDIS3 (Bitfield-Mask: 0x01)                    */
+#define PORT3_PDISC_PDIS4_Pos                 (4UL)                     /*!< PORT3 PDISC: PDIS4 (Bit 4)                                  */
+#define PORT3_PDISC_PDIS4_Msk                 (0x10UL)                  /*!< PORT3 PDISC: PDIS4 (Bitfield-Mask: 0x01)                    */
+
+/* ----------------------------------  PORT3_PPS  --------------------------------- */
+#define PORT3_PPS_PPS0_Pos                    (0UL)                     /*!< PORT3 PPS: PPS0 (Bit 0)                                     */
+#define PORT3_PPS_PPS0_Msk                    (0x1UL)                   /*!< PORT3 PPS: PPS0 (Bitfield-Mask: 0x01)                       */
+#define PORT3_PPS_PPS1_Pos                    (1UL)                     /*!< PORT3 PPS: PPS1 (Bit 1)                                     */
+#define PORT3_PPS_PPS1_Msk                    (0x2UL)                   /*!< PORT3 PPS: PPS1 (Bitfield-Mask: 0x01)                       */
+#define PORT3_PPS_PPS2_Pos                    (2UL)                     /*!< PORT3 PPS: PPS2 (Bit 2)                                     */
+#define PORT3_PPS_PPS2_Msk                    (0x4UL)                   /*!< PORT3 PPS: PPS2 (Bitfield-Mask: 0x01)                       */
+#define PORT3_PPS_PPS3_Pos                    (3UL)                     /*!< PORT3 PPS: PPS3 (Bit 3)                                     */
+#define PORT3_PPS_PPS3_Msk                    (0x8UL)                   /*!< PORT3 PPS: PPS3 (Bitfield-Mask: 0x01)                       */
+#define PORT3_PPS_PPS4_Pos                    (4UL)                     /*!< PORT3 PPS: PPS4 (Bit 4)                                     */
+#define PORT3_PPS_PPS4_Msk                    (0x10UL)                  /*!< PORT3 PPS: PPS4 (Bitfield-Mask: 0x01)                       */
+
+/* ---------------------------------  PORT3_HWSEL  -------------------------------- */
+#define PORT3_HWSEL_HW0_Pos                   (0UL)                     /*!< PORT3 HWSEL: HW0 (Bit 0)                                    */
+#define PORT3_HWSEL_HW0_Msk                   (0x3UL)                   /*!< PORT3 HWSEL: HW0 (Bitfield-Mask: 0x03)                      */
+#define PORT3_HWSEL_HW1_Pos                   (2UL)                     /*!< PORT3 HWSEL: HW1 (Bit 2)                                    */
+#define PORT3_HWSEL_HW1_Msk                   (0xcUL)                   /*!< PORT3 HWSEL: HW1 (Bitfield-Mask: 0x03)                      */
+#define PORT3_HWSEL_HW2_Pos                   (4UL)                     /*!< PORT3 HWSEL: HW2 (Bit 4)                                    */
+#define PORT3_HWSEL_HW2_Msk                   (0x30UL)                  /*!< PORT3 HWSEL: HW2 (Bitfield-Mask: 0x03)                      */
+#define PORT3_HWSEL_HW3_Pos                   (6UL)                     /*!< PORT3 HWSEL: HW3 (Bit 6)                                    */
+#define PORT3_HWSEL_HW3_Msk                   (0xc0UL)                  /*!< PORT3 HWSEL: HW3 (Bitfield-Mask: 0x03)                      */
+#define PORT3_HWSEL_HW4_Pos                   (8UL)                     /*!< PORT3 HWSEL: HW4 (Bit 8)                                    */
+#define PORT3_HWSEL_HW4_Msk                   (0x300UL)                 /*!< PORT3 HWSEL: HW4 (Bitfield-Mask: 0x03)                      */
+
+
+/* ================================================================================ */
+/* ================         struct 'PORT4' Position & Mask         ================ */
+/* ================================================================================ */
+
+
+/* ----------------------------------  PORT4_OUT  --------------------------------- */
+#define PORT4_OUT_P0_Pos                      (0UL)                     /*!< PORT4 OUT: P0 (Bit 0)                                       */
+#define PORT4_OUT_P0_Msk                      (0x1UL)                   /*!< PORT4 OUT: P0 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P1_Pos                      (1UL)                     /*!< PORT4 OUT: P1 (Bit 1)                                       */
+#define PORT4_OUT_P1_Msk                      (0x2UL)                   /*!< PORT4 OUT: P1 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P2_Pos                      (2UL)                     /*!< PORT4 OUT: P2 (Bit 2)                                       */
+#define PORT4_OUT_P2_Msk                      (0x4UL)                   /*!< PORT4 OUT: P2 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P3_Pos                      (3UL)                     /*!< PORT4 OUT: P3 (Bit 3)                                       */
+#define PORT4_OUT_P3_Msk                      (0x8UL)                   /*!< PORT4 OUT: P3 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P4_Pos                      (4UL)                     /*!< PORT4 OUT: P4 (Bit 4)                                       */
+#define PORT4_OUT_P4_Msk                      (0x10UL)                  /*!< PORT4 OUT: P4 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P5_Pos                      (5UL)                     /*!< PORT4 OUT: P5 (Bit 5)                                       */
+#define PORT4_OUT_P5_Msk                      (0x20UL)                  /*!< PORT4 OUT: P5 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P6_Pos                      (6UL)                     /*!< PORT4 OUT: P6 (Bit 6)                                       */
+#define PORT4_OUT_P6_Msk                      (0x40UL)                  /*!< PORT4 OUT: P6 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P7_Pos                      (7UL)                     /*!< PORT4 OUT: P7 (Bit 7)                                       */
+#define PORT4_OUT_P7_Msk                      (0x80UL)                  /*!< PORT4 OUT: P7 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P8_Pos                      (8UL)                     /*!< PORT4 OUT: P8 (Bit 8)                                       */
+#define PORT4_OUT_P8_Msk                      (0x100UL)                 /*!< PORT4 OUT: P8 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P9_Pos                      (9UL)                     /*!< PORT4 OUT: P9 (Bit 9)                                       */
+#define PORT4_OUT_P9_Msk                      (0x200UL)                 /*!< PORT4 OUT: P9 (Bitfield-Mask: 0x01)                         */
+#define PORT4_OUT_P10_Pos                     (10UL)                    /*!< PORT4 OUT: P10 (Bit 10)                                     */
+#define PORT4_OUT_P10_Msk                     (0x400UL)                 /*!< PORT4 OUT: P10 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OUT_P11_Pos                     (11UL)                    /*!< PORT4 OUT: P11 (Bit 11)                                     */
+#define PORT4_OUT_P11_Msk                     (0x800UL)                 /*!< PORT4 OUT: P11 (Bitfield-Mask: 0x01)                        */
+
+/* ----------------------------------  PORT4_OMR  --------------------------------- */
+#define PORT4_OMR_PS0_Pos                     (0UL)                     /*!< PORT4 OMR: PS0 (Bit 0)                                      */
+#define PORT4_OMR_PS0_Msk                     (0x1UL)                   /*!< PORT4 OMR: PS0 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS1_Pos                     (1UL)                     /*!< PORT4 OMR: PS1 (Bit 1)                                      */
+#define PORT4_OMR_PS1_Msk                     (0x2UL)                   /*!< PORT4 OMR: PS1 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS2_Pos                     (2UL)                     /*!< PORT4 OMR: PS2 (Bit 2)                                      */
+#define PORT4_OMR_PS2_Msk                     (0x4UL)                   /*!< PORT4 OMR: PS2 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS3_Pos                     (3UL)                     /*!< PORT4 OMR: PS3 (Bit 3)                                      */
+#define PORT4_OMR_PS3_Msk                     (0x8UL)                   /*!< PORT4 OMR: PS3 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS4_Pos                     (4UL)                     /*!< PORT4 OMR: PS4 (Bit 4)                                      */
+#define PORT4_OMR_PS4_Msk                     (0x10UL)                  /*!< PORT4 OMR: PS4 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS5_Pos                     (5UL)                     /*!< PORT4 OMR: PS5 (Bit 5)                                      */
+#define PORT4_OMR_PS5_Msk                     (0x20UL)                  /*!< PORT4 OMR: PS5 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS6_Pos                     (6UL)                     /*!< PORT4 OMR: PS6 (Bit 6)                                      */
+#define PORT4_OMR_PS6_Msk                     (0x40UL)                  /*!< PORT4 OMR: PS6 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS7_Pos                     (7UL)                     /*!< PORT4 OMR: PS7 (Bit 7)                                      */
+#define PORT4_OMR_PS7_Msk                     (0x80UL)                  /*!< PORT4 OMR: PS7 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS8_Pos                     (8UL)                     /*!< PORT4 OMR: PS8 (Bit 8)                                      */
+#define PORT4_OMR_PS8_Msk                     (0x100UL)                 /*!< PORT4 OMR: PS8 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS9_Pos                     (9UL)                     /*!< PORT4 OMR: PS9 (Bit 9)                                      */
+#define PORT4_OMR_PS9_Msk                     (0x200UL)                 /*!< PORT4 OMR: PS9 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PS10_Pos                    (10UL)                    /*!< PORT4 OMR: PS10 (Bit 10)                                    */
+#define PORT4_OMR_PS10_Msk                    (0x400UL)                 /*!< PORT4 OMR: PS10 (Bitfield-Mask: 0x01)                       */
+#define PORT4_OMR_PS11_Pos                    (11UL)                    /*!< PORT4 OMR: PS11 (Bit 11)                                    */
+#define PORT4_OMR_PS11_Msk                    (0x800UL)                 /*!< PORT4 OMR: PS11 (Bitfield-Mask: 0x01)                       */
+#define PORT4_OMR_PR0_Pos                     (16UL)                    /*!< PORT4 OMR: PR0 (Bit 16)                                     */
+#define PORT4_OMR_PR0_Msk                     (0x10000UL)               /*!< PORT4 OMR: PR0 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR1_Pos                     (17UL)                    /*!< PORT4 OMR: PR1 (Bit 17)                                     */
+#define PORT4_OMR_PR1_Msk                     (0x20000UL)               /*!< PORT4 OMR: PR1 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR2_Pos                     (18UL)                    /*!< PORT4 OMR: PR2 (Bit 18)                                     */
+#define PORT4_OMR_PR2_Msk                     (0x40000UL)               /*!< PORT4 OMR: PR2 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR3_Pos                     (19UL)                    /*!< PORT4 OMR: PR3 (Bit 19)                                     */
+#define PORT4_OMR_PR3_Msk                     (0x80000UL)               /*!< PORT4 OMR: PR3 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR4_Pos                     (20UL)                    /*!< PORT4 OMR: PR4 (Bit 20)                                     */
+#define PORT4_OMR_PR4_Msk                     (0x100000UL)              /*!< PORT4 OMR: PR4 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR5_Pos                     (21UL)                    /*!< PORT4 OMR: PR5 (Bit 21)                                     */
+#define PORT4_OMR_PR5_Msk                     (0x200000UL)              /*!< PORT4 OMR: PR5 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR6_Pos                     (22UL)                    /*!< PORT4 OMR: PR6 (Bit 22)                                     */
+#define PORT4_OMR_PR6_Msk                     (0x400000UL)              /*!< PORT4 OMR: PR6 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR7_Pos                     (23UL)                    /*!< PORT4 OMR: PR7 (Bit 23)                                     */
+#define PORT4_OMR_PR7_Msk                     (0x800000UL)              /*!< PORT4 OMR: PR7 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR8_Pos                     (24UL)                    /*!< PORT4 OMR: PR8 (Bit 24)                                     */
+#define PORT4_OMR_PR8_Msk                     (0x1000000UL)             /*!< PORT4 OMR: PR8 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR9_Pos                     (25UL)                    /*!< PORT4 OMR: PR9 (Bit 25)                                     */
+#define PORT4_OMR_PR9_Msk                     (0x2000000UL)             /*!< PORT4 OMR: PR9 (Bitfield-Mask: 0x01)                        */
+#define PORT4_OMR_PR10_Pos                    (26UL)                    /*!< PORT4 OMR: PR10 (Bit 26)                                    */
+#define PORT4_OMR_PR10_Msk                    (0x4000000UL)             /*!< PORT4 OMR: PR10 (Bitfield-Mask: 0x01)                       */
+#define PORT4_OMR_PR11_Pos                    (27UL)                    /*!< PORT4 OMR: PR11 (Bit 27)                                    */
+#define PORT4_OMR_PR11_Msk                    (0x8000000UL)             /*!< PORT4 OMR: PR11 (Bitfield-Mask: 0x01)                       */
+
+/* ---------------------------------  PORT4_IOCR0  -------------------------------- */
+#define PORT4_IOCR0_PC0_Pos                   (2UL)                     /*!< PORT4 IOCR0: PC0 (Bit 2)                                    */
+#define PORT4_IOCR0_PC0_Msk                   (0xfcUL)                  /*!< PORT4 IOCR0: PC0 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR0_PC1_Pos                   (10UL)                    /*!< PORT4 IOCR0: PC1 (Bit 10)                                   */
+#define PORT4_IOCR0_PC1_Msk                   (0xfc00UL)                /*!< PORT4 IOCR0: PC1 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR0_PC2_Pos                   (18UL)                    /*!< PORT4 IOCR0: PC2 (Bit 18)                                   */
+#define PORT4_IOCR0_PC2_Msk                   (0xfc0000UL)              /*!< PORT4 IOCR0: PC2 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR0_PC3_Pos                   (26UL)                    /*!< PORT4 IOCR0: PC3 (Bit 26)                                   */
+#define PORT4_IOCR0_PC3_Msk                   (0xfc000000UL)            /*!< PORT4 IOCR0: PC3 (Bitfield-Mask: 0x3f)                      */
+
+/* ---------------------------------  PORT4_IOCR4  -------------------------------- */
+#define PORT4_IOCR4_PC4_Pos                   (2UL)                     /*!< PORT4 IOCR4: PC4 (Bit 2)                                    */
+#define PORT4_IOCR4_PC4_Msk                   (0xfcUL)                  /*!< PORT4 IOCR4: PC4 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR4_PC5_Pos                   (10UL)                    /*!< PORT4 IOCR4: PC5 (Bit 10)                                   */
+#define PORT4_IOCR4_PC5_Msk                   (0xfc00UL)                /*!< PORT4 IOCR4: PC5 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR4_PC6_Pos                   (18UL)                    /*!< PORT4 IOCR4: PC6 (Bit 18)                                   */
+#define PORT4_IOCR4_PC6_Msk                   (0xfc0000UL)              /*!< PORT4 IOCR4: PC6 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR4_PC7_Pos                   (26UL)                    /*!< PORT4 IOCR4: PC7 (Bit 26)                                   */
+#define PORT4_IOCR4_PC7_Msk                   (0xfc000000UL)            /*!< PORT4 IOCR4: PC7 (Bitfield-Mask: 0x3f)                      */
+
+/* ---------------------------------  PORT4_IOCR8  -------------------------------- */
+#define PORT4_IOCR8_PC8_Pos                   (2UL)                     /*!< PORT4 IOCR8: PC8 (Bit 2)                                    */
+#define PORT4_IOCR8_PC8_Msk                   (0xfcUL)                  /*!< PORT4 IOCR8: PC8 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR8_PC9_Pos                   (10UL)                    /*!< PORT4 IOCR8: PC9 (Bit 10)                                   */
+#define PORT4_IOCR8_PC9_Msk                   (0xfc00UL)                /*!< PORT4 IOCR8: PC9 (Bitfield-Mask: 0x3f)                      */
+#define PORT4_IOCR8_PC10_Pos                  (18UL)                    /*!< PORT4 IOCR8: PC10 (Bit 18)                                  */
+#define PORT4_IOCR8_PC10_Msk                  (0xfc0000UL)              /*!< PORT4 IOCR8: PC10 (Bitfield-Mask: 0x3f)                     */
+#define PORT4_IOCR8_PC11_Pos                  (26UL)                    /*!< PORT4 IOCR8: PC11 (Bit 26)                                  */
+#define PORT4_IOCR8_PC11_Msk                  (0xfc000000UL)            /*!< PORT4 IOCR8: PC11 (Bitfield-Mask: 0x3f)                     */
+
+/* ----------------------------------  PORT4_IN  ---------------------------------- */
+#define PORT4_IN_P0_Pos                       (0UL)                     /*!< PORT4 IN: P0 (Bit 0)                                        */
+#define PORT4_IN_P0_Msk                       (0x1UL)                   /*!< PORT4 IN: P0 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P1_Pos                       (1UL)                     /*!< PORT4 IN: P1 (Bit 1)                                        */
+#define PORT4_IN_P1_Msk                       (0x2UL)                   /*!< PORT4 IN: P1 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P2_Pos                       (2UL)                     /*!< PORT4 IN: P2 (Bit 2)                                        */
+#define PORT4_IN_P2_Msk                       (0x4UL)                   /*!< PORT4 IN: P2 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P3_Pos                       (3UL)                     /*!< PORT4 IN: P3 (Bit 3)                                        */
+#define PORT4_IN_P3_Msk                       (0x8UL)                   /*!< PORT4 IN: P3 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P4_Pos                       (4UL)                     /*!< PORT4 IN: P4 (Bit 4)                                        */
+#define PORT4_IN_P4_Msk                       (0x10UL)                  /*!< PORT4 IN: P4 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P5_Pos                       (5UL)                     /*!< PORT4 IN: P5 (Bit 5)                                        */
+#define PORT4_IN_P5_Msk                       (0x20UL)                  /*!< PORT4 IN: P5 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P6_Pos                       (6UL)                     /*!< PORT4 IN: P6 (Bit 6)                                        */
+#define PORT4_IN_P6_Msk                       (0x40UL)                  /*!< PORT4 IN: P6 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P7_Pos                       (7UL)                     /*!< PORT4 IN: P7 (Bit 7)                                        */
+#define PORT4_IN_P7_Msk                       (0x80UL)                  /*!< PORT4 IN: P7 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P8_Pos                       (8UL)                     /*!< PORT4 IN: P8 (Bit 8)                                        */
+#define PORT4_IN_P8_Msk                       (0x100UL)                 /*!< PORT4 IN: P8 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P9_Pos                       (9UL)                     /*!< PORT4 IN: P9 (Bit 9)                                        */
+#define PORT4_IN_P9_Msk                       (0x200UL)                 /*!< PORT4 IN: P9 (Bitfield-Mask: 0x01)                          */
+#define PORT4_IN_P10_Pos                      (10UL)                    /*!< PORT4 IN: P10 (Bit 10)                                      */
+#define PORT4_IN_P10_Msk                      (0x400UL)                 /*!< PORT4 IN: P10 (Bitfield-Mask: 0x01)                         */
+#define PORT4_IN_P11_Pos                      (11UL)                    /*!< PORT4 IN: P11 (Bit 11)                                      */
+#define PORT4_IN_P11_Msk                      (0x800UL)                 /*!< PORT4 IN: P11 (Bitfield-Mask: 0x01)                         */
+
+/* ---------------------------------  PORT4_PHCR0  -------------------------------- */
+#define PORT4_PHCR0_PH0_Pos                   (2UL)                     /*!< PORT4 PHCR0: PH0 (Bit 2)                                    */
+#define PORT4_PHCR0_PH0_Msk                   (0x4UL)                   /*!< PORT4 PHCR0: PH0 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR0_PH1_Pos                   (6UL)                     /*!< PORT4 PHCR0: PH1 (Bit 6)                                    */
+#define PORT4_PHCR0_PH1_Msk                   (0x40UL)                  /*!< PORT4 PHCR0: PH1 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR0_PH2_Pos                   (10UL)                    /*!< PORT4 PHCR0: PH2 (Bit 10)                                   */
+#define PORT4_PHCR0_PH2_Msk                   (0x400UL)                 /*!< PORT4 PHCR0: PH2 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR0_PH3_Pos                   (14UL)                    /*!< PORT4 PHCR0: PH3 (Bit 14)                                   */
+#define PORT4_PHCR0_PH3_Msk                   (0x4000UL)                /*!< PORT4 PHCR0: PH3 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR0_PH4_Pos                   (18UL)                    /*!< PORT4 PHCR0: PH4 (Bit 18)                                   */
+#define PORT4_PHCR0_PH4_Msk                   (0x40000UL)               /*!< PORT4 PHCR0: PH4 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR0_PH5_Pos                   (22UL)                    /*!< PORT4 PHCR0: PH5 (Bit 22)                                   */
+#define PORT4_PHCR0_PH5_Msk                   (0x400000UL)              /*!< PORT4 PHCR0: PH5 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR0_PH6_Pos                   (26UL)                    /*!< PORT4 PHCR0: PH6 (Bit 26)                                   */
+#define PORT4_PHCR0_PH6_Msk                   (0x4000000UL)             /*!< PORT4 PHCR0: PH6 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR0_PH7_Pos                   (30UL)                    /*!< PORT4 PHCR0: PH7 (Bit 30)                                   */
+#define PORT4_PHCR0_PH7_Msk                   (0x40000000UL)            /*!< PORT4 PHCR0: PH7 (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  PORT4_PHCR1  -------------------------------- */
+#define PORT4_PHCR1_PH8_Pos                   (2UL)                     /*!< PORT4 PHCR1: PH8 (Bit 2)                                    */
+#define PORT4_PHCR1_PH8_Msk                   (0x4UL)                   /*!< PORT4 PHCR1: PH8 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR1_PH9_Pos                   (6UL)                     /*!< PORT4 PHCR1: PH9 (Bit 6)                                    */
+#define PORT4_PHCR1_PH9_Msk                   (0x40UL)                  /*!< PORT4 PHCR1: PH9 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PHCR1_PH10_Pos                  (10UL)                    /*!< PORT4 PHCR1: PH10 (Bit 10)                                  */
+#define PORT4_PHCR1_PH10_Msk                  (0x400UL)                 /*!< PORT4 PHCR1: PH10 (Bitfield-Mask: 0x01)                     */
+#define PORT4_PHCR1_PH11_Pos                  (14UL)                    /*!< PORT4 PHCR1: PH11 (Bit 14)                                  */
+#define PORT4_PHCR1_PH11_Msk                  (0x4000UL)                /*!< PORT4 PHCR1: PH11 (Bitfield-Mask: 0x01)                     */
+
+/* ---------------------------------  PORT4_PDISC  -------------------------------- */
+#define PORT4_PDISC_PDIS0_Pos                 (0UL)                     /*!< PORT4 PDISC: PDIS0 (Bit 0)                                  */
+#define PORT4_PDISC_PDIS0_Msk                 (0x1UL)                   /*!< PORT4 PDISC: PDIS0 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS1_Pos                 (1UL)                     /*!< PORT4 PDISC: PDIS1 (Bit 1)                                  */
+#define PORT4_PDISC_PDIS1_Msk                 (0x2UL)                   /*!< PORT4 PDISC: PDIS1 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS2_Pos                 (2UL)                     /*!< PORT4 PDISC: PDIS2 (Bit 2)                                  */
+#define PORT4_PDISC_PDIS2_Msk                 (0x4UL)                   /*!< PORT4 PDISC: PDIS2 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS3_Pos                 (3UL)                     /*!< PORT4 PDISC: PDIS3 (Bit 3)                                  */
+#define PORT4_PDISC_PDIS3_Msk                 (0x8UL)                   /*!< PORT4 PDISC: PDIS3 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS4_Pos                 (4UL)                     /*!< PORT4 PDISC: PDIS4 (Bit 4)                                  */
+#define PORT4_PDISC_PDIS4_Msk                 (0x10UL)                  /*!< PORT4 PDISC: PDIS4 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS5_Pos                 (5UL)                     /*!< PORT4 PDISC: PDIS5 (Bit 5)                                  */
+#define PORT4_PDISC_PDIS5_Msk                 (0x20UL)                  /*!< PORT4 PDISC: PDIS5 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS6_Pos                 (6UL)                     /*!< PORT4 PDISC: PDIS6 (Bit 6)                                  */
+#define PORT4_PDISC_PDIS6_Msk                 (0x40UL)                  /*!< PORT4 PDISC: PDIS6 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS7_Pos                 (7UL)                     /*!< PORT4 PDISC: PDIS7 (Bit 7)                                  */
+#define PORT4_PDISC_PDIS7_Msk                 (0x80UL)                  /*!< PORT4 PDISC: PDIS7 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS8_Pos                 (8UL)                     /*!< PORT4 PDISC: PDIS8 (Bit 8)                                  */
+#define PORT4_PDISC_PDIS8_Msk                 (0x100UL)                 /*!< PORT4 PDISC: PDIS8 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS9_Pos                 (9UL)                     /*!< PORT4 PDISC: PDIS9 (Bit 9)                                  */
+#define PORT4_PDISC_PDIS9_Msk                 (0x200UL)                 /*!< PORT4 PDISC: PDIS9 (Bitfield-Mask: 0x01)                    */
+#define PORT4_PDISC_PDIS10_Pos                (10UL)                    /*!< PORT4 PDISC: PDIS10 (Bit 10)                                */
+#define PORT4_PDISC_PDIS10_Msk                (0x400UL)                 /*!< PORT4 PDISC: PDIS10 (Bitfield-Mask: 0x01)                   */
+#define PORT4_PDISC_PDIS11_Pos                (11UL)                    /*!< PORT4 PDISC: PDIS11 (Bit 11)                                */
+#define PORT4_PDISC_PDIS11_Msk                (0x800UL)                 /*!< PORT4 PDISC: PDIS11 (Bitfield-Mask: 0x01)                   */
+
+/* ----------------------------------  PORT4_PPS  --------------------------------- */
+#define PORT4_PPS_PPS0_Pos                    (0UL)                     /*!< PORT4 PPS: PPS0 (Bit 0)                                     */
+#define PORT4_PPS_PPS0_Msk                    (0x1UL)                   /*!< PORT4 PPS: PPS0 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS1_Pos                    (1UL)                     /*!< PORT4 PPS: PPS1 (Bit 1)                                     */
+#define PORT4_PPS_PPS1_Msk                    (0x2UL)                   /*!< PORT4 PPS: PPS1 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS2_Pos                    (2UL)                     /*!< PORT4 PPS: PPS2 (Bit 2)                                     */
+#define PORT4_PPS_PPS2_Msk                    (0x4UL)                   /*!< PORT4 PPS: PPS2 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS3_Pos                    (3UL)                     /*!< PORT4 PPS: PPS3 (Bit 3)                                     */
+#define PORT4_PPS_PPS3_Msk                    (0x8UL)                   /*!< PORT4 PPS: PPS3 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS4_Pos                    (4UL)                     /*!< PORT4 PPS: PPS4 (Bit 4)                                     */
+#define PORT4_PPS_PPS4_Msk                    (0x10UL)                  /*!< PORT4 PPS: PPS4 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS5_Pos                    (5UL)                     /*!< PORT4 PPS: PPS5 (Bit 5)                                     */
+#define PORT4_PPS_PPS5_Msk                    (0x20UL)                  /*!< PORT4 PPS: PPS5 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS6_Pos                    (6UL)                     /*!< PORT4 PPS: PPS6 (Bit 6)                                     */
+#define PORT4_PPS_PPS6_Msk                    (0x40UL)                  /*!< PORT4 PPS: PPS6 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS7_Pos                    (7UL)                     /*!< PORT4 PPS: PPS7 (Bit 7)                                     */
+#define PORT4_PPS_PPS7_Msk                    (0x80UL)                  /*!< PORT4 PPS: PPS7 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS8_Pos                    (8UL)                     /*!< PORT4 PPS: PPS8 (Bit 8)                                     */
+#define PORT4_PPS_PPS8_Msk                    (0x100UL)                 /*!< PORT4 PPS: PPS8 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS9_Pos                    (9UL)                     /*!< PORT4 PPS: PPS9 (Bit 9)                                     */
+#define PORT4_PPS_PPS9_Msk                    (0x200UL)                 /*!< PORT4 PPS: PPS9 (Bitfield-Mask: 0x01)                       */
+#define PORT4_PPS_PPS10_Pos                   (10UL)                    /*!< PORT4 PPS: PPS10 (Bit 10)                                   */
+#define PORT4_PPS_PPS10_Msk                   (0x400UL)                 /*!< PORT4 PPS: PPS10 (Bitfield-Mask: 0x01)                      */
+#define PORT4_PPS_PPS11_Pos                   (11UL)                    /*!< PORT4 PPS: PPS11 (Bit 11)                                   */
+#define PORT4_PPS_PPS11_Msk                   (0x800UL)                 /*!< PORT4 PPS: PPS11 (Bitfield-Mask: 0x01)                      */
+
+/* ---------------------------------  PORT4_HWSEL  -------------------------------- */
+#define PORT4_HWSEL_HW0_Pos                   (0UL)                     /*!< PORT4 HWSEL: HW0 (Bit 0)                                    */
+#define PORT4_HWSEL_HW0_Msk                   (0x3UL)                   /*!< PORT4 HWSEL: HW0 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW1_Pos                   (2UL)                     /*!< PORT4 HWSEL: HW1 (Bit 2)                                    */
+#define PORT4_HWSEL_HW1_Msk                   (0xcUL)                   /*!< PORT4 HWSEL: HW1 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW2_Pos                   (4UL)                     /*!< PORT4 HWSEL: HW2 (Bit 4)                                    */
+#define PORT4_HWSEL_HW2_Msk                   (0x30UL)                  /*!< PORT4 HWSEL: HW2 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW3_Pos                   (6UL)                     /*!< PORT4 HWSEL: HW3 (Bit 6)                                    */
+#define PORT4_HWSEL_HW3_Msk                   (0xc0UL)                  /*!< PORT4 HWSEL: HW3 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW4_Pos                   (8UL)                     /*!< PORT4 HWSEL: HW4 (Bit 8)                                    */
+#define PORT4_HWSEL_HW4_Msk                   (0x300UL)                 /*!< PORT4 HWSEL: HW4 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW5_Pos                   (10UL)                    /*!< PORT4 HWSEL: HW5 (Bit 10)                                   */
+#define PORT4_HWSEL_HW5_Msk                   (0xc00UL)                 /*!< PORT4 HWSEL: HW5 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW6_Pos                   (12UL)                    /*!< PORT4 HWSEL: HW6 (Bit 12)                                   */
+#define PORT4_HWSEL_HW6_Msk                   (0x3000UL)                /*!< PORT4 HWSEL: HW6 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW7_Pos                   (14UL)                    /*!< PORT4 HWSEL: HW7 (Bit 14)                                   */
+#define PORT4_HWSEL_HW7_Msk                   (0xc000UL)                /*!< PORT4 HWSEL: HW7 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW8_Pos                   (16UL)                    /*!< PORT4 HWSEL: HW8 (Bit 16)                                   */
+#define PORT4_HWSEL_HW8_Msk                   (0x30000UL)               /*!< PORT4 HWSEL: HW8 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW9_Pos                   (18UL)                    /*!< PORT4 HWSEL: HW9 (Bit 18)                                   */
+#define PORT4_HWSEL_HW9_Msk                   (0xc0000UL)               /*!< PORT4 HWSEL: HW9 (Bitfield-Mask: 0x03)                      */
+#define PORT4_HWSEL_HW10_Pos                  (20UL)                    /*!< PORT4 HWSEL: HW10 (Bit 20)                                  */
+#define PORT4_HWSEL_HW10_Msk                  (0x300000UL)              /*!< PORT4 HWSEL: HW10 (Bitfield-Mask: 0x03)                     */
+#define PORT4_HWSEL_HW11_Pos                  (22UL)                    /*!< PORT4 HWSEL: HW11 (Bit 22)                                  */
+#define PORT4_HWSEL_HW11_Msk                  (0xc00000UL)              /*!< PORT4 HWSEL: HW11 (Bitfield-Mask: 0x03)                     */
 
 
 
@@ -5835,6 +8734,8 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 
 #define PPB_BASE                        0xE000E000UL
 #define ERU0_BASE                       0x40010600UL
+#define ERU1_BASE                       0x40010630UL
+#define MATH_BASE                       0x40030000UL
 #define PAU_BASE                        0x40000000UL
 #define NVM_BASE                        0x40050000UL
 #define WDT_BASE                        0x40020000UL
@@ -5842,9 +8743,17 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PRNG_BASE                       0x48020000UL
 #define LEDTS0_BASE                     0x50020000UL
 #define LEDTS1_BASE                     0x50020400UL
+#define LEDTS2_BASE                     0x50020800UL
 #define USIC0_BASE                      0x48000008UL
+#define USIC1_BASE                      0x48004008UL
 #define USIC0_CH0_BASE                  0x48000000UL
 #define USIC0_CH1_BASE                  0x48000200UL
+#define USIC1_CH0_BASE                  0x48004000UL
+#define USIC1_CH1_BASE                  0x48004200UL
+#define CAN_BASE                        0x50040000UL
+#define CAN_NODE0_BASE                  0x50040200UL
+#define CAN_NODE1_BASE                  0x50040300UL
+#define CAN_MO_BASE                     0x50041000UL
 #define SCU_GENERAL_BASE                0x40010000UL
 #define SCU_INTERRUPT_BASE              0x40010038UL
 #define SCU_POWER_BASE                  0x40010200UL
@@ -5853,10 +8762,27 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define COMPARATOR_BASE                 0x40010500UL
 #define SCU_ANALOG_BASE                 0x40011000UL
 #define CCU40_BASE                      0x48040000UL
+#define CCU41_BASE                      0x48044000UL
 #define CCU40_CC40_BASE                 0x48040100UL
 #define CCU40_CC41_BASE                 0x48040200UL
 #define CCU40_CC42_BASE                 0x48040300UL
 #define CCU40_CC43_BASE                 0x48040400UL
+#define CCU41_CC40_BASE                 0x48044100UL
+#define CCU41_CC41_BASE                 0x48044200UL
+#define CCU41_CC42_BASE                 0x48044300UL
+#define CCU41_CC43_BASE                 0x48044400UL
+#define CCU80_BASE                      0x50000000UL
+#define CCU81_BASE                      0x50004000UL
+#define CCU80_CC80_BASE                 0x50000100UL
+#define CCU80_CC81_BASE                 0x50000200UL
+#define CCU80_CC82_BASE                 0x50000300UL
+#define CCU80_CC83_BASE                 0x50000400UL
+#define CCU81_CC80_BASE                 0x50004100UL
+#define CCU81_CC81_BASE                 0x50004200UL
+#define CCU81_CC82_BASE                 0x50004300UL
+#define CCU81_CC83_BASE                 0x50004400UL
+#define POSIF0_BASE                     0x50010000UL
+#define POSIF1_BASE                     0x50014000UL
 #define VADC_BASE                       0x48030000UL
 #define VADC_G0_BASE                    0x48030400UL
 #define VADC_G1_BASE                    0x48030800UL
@@ -5877,6 +8803,8 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT0_BASE                      0x40040000UL
 #define PORT1_BASE                      0x40040100UL
 #define PORT2_BASE                      0x40040200UL
+#define PORT3_BASE                      0x40040300UL
+#define PORT4_BASE                      0x40040400UL
 
 
 /* ================================================================================ */
@@ -5885,16 +8813,19 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 
 #define PPB                             ((PPB_Type                *) PPB_BASE)
 #define ERU0                            ((ERU_GLOBAL_TypeDef                *) ERU0_BASE)
+#define ERU1                            ((ERU_GLOBAL_TypeDef                *) ERU1_BASE)
+#define MATH                            ((MATH_Type               *) MATH_BASE)
 #define PAU                             ((PAU_Type                *) PAU_BASE)
 #define NVM                             ((NVM_Type                *) NVM_BASE)
 #define WDT                             ((WDT_GLOBAL_TypeDef                *) WDT_BASE)
 #define RTC                             ((RTC_GLOBAL_TypeDef                *) RTC_BASE)
 #define PRNG                            ((PRNG_Type               *) PRNG_BASE)
-#define LEDTS0                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS0_BASE)
-#define LEDTS1                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS1_BASE)
 #define USIC0                           ((USIC_GLOBAL_TypeDef               *) USIC0_BASE)
+#define USIC1                           ((USIC_GLOBAL_TypeDef               *) USIC1_BASE)
 #define USIC0_CH0                       ((USIC_CH_TypeDef            *) USIC0_CH0_BASE)
 #define USIC0_CH1                       ((USIC_CH_TypeDef            *) USIC0_CH1_BASE)
+#define USIC1_CH0                       ((USIC_CH_TypeDef            *) USIC1_CH0_BASE)
+#define USIC1_CH1                       ((USIC_CH_TypeDef            *) USIC1_CH1_BASE)
 #define SCU_GENERAL                     ((SCU_GENERAL_Type        *) SCU_GENERAL_BASE)
 #define SCU_INTERRUPT                   ((SCU_INTERRUPT_TypeDef      *) SCU_INTERRUPT_BASE)
 #define SCU_POWER                       ((SCU_POWER_Type          *) SCU_POWER_BASE)
@@ -5903,10 +8834,27 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define COMPARATOR                      ((COMPARATOR_Type         *) COMPARATOR_BASE)
 #define SCU_ANALOG                      ((SCU_ANALOG_Type         *) SCU_ANALOG_BASE)
 #define CCU40                           ((CCU4_GLOBAL_TypeDef               *) CCU40_BASE)
+#define CCU41                           ((CCU4_GLOBAL_TypeDef               *) CCU41_BASE)
 #define CCU40_CC40                      ((CCU4_CC4_TypeDef           *) CCU40_CC40_BASE)
 #define CCU40_CC41                      ((CCU4_CC4_TypeDef           *) CCU40_CC41_BASE)
 #define CCU40_CC42                      ((CCU4_CC4_TypeDef           *) CCU40_CC42_BASE)
 #define CCU40_CC43                      ((CCU4_CC4_TypeDef           *) CCU40_CC43_BASE)
+#define CCU41_CC40                      ((CCU4_CC4_TypeDef           *) CCU41_CC40_BASE)
+#define CCU41_CC41                      ((CCU4_CC4_TypeDef           *) CCU41_CC41_BASE)
+#define CCU41_CC42                      ((CCU4_CC4_TypeDef           *) CCU41_CC42_BASE)
+#define CCU41_CC43                      ((CCU4_CC4_TypeDef           *) CCU41_CC43_BASE)
+#define CCU80                           ((CCU8_GLOBAL_TypeDef               *) CCU80_BASE)
+#define CCU81                           ((CCU8_GLOBAL_TypeDef               *) CCU81_BASE)
+#define CCU80_CC80                      ((CCU8_CC8_TypeDef           *) CCU80_CC80_BASE)
+#define CCU80_CC81                      ((CCU8_CC8_TypeDef           *) CCU80_CC81_BASE)
+#define CCU80_CC82                      ((CCU8_CC8_TypeDef           *) CCU80_CC82_BASE)
+#define CCU80_CC83                      ((CCU8_CC8_TypeDef           *) CCU80_CC83_BASE)
+#define CCU81_CC80                      ((CCU8_CC8_TypeDef           *) CCU81_CC80_BASE)
+#define CCU81_CC81                      ((CCU8_CC8_TypeDef           *) CCU81_CC81_BASE)
+#define CCU81_CC82                      ((CCU8_CC8_TypeDef           *) CCU81_CC82_BASE)
+#define CCU81_CC83                      ((CCU8_CC8_TypeDef           *) CCU81_CC83_BASE)
+#define POSIF0                          ((POSIF_GLOBAL_TypeDef              *) POSIF0_BASE)
+#define POSIF1                          ((POSIF_GLOBAL_TypeDef              *) POSIF1_BASE)
 #define VADC                            ((VADC_GLOBAL_TypeDef               *) VADC_BASE)
 #define VADC_G0                         ((VADC_G_TypeDef             *) VADC_G0_BASE)
 #define VADC_G1                         ((VADC_G_TypeDef             *) VADC_G1_BASE)
@@ -5927,9 +8875,12 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT0                           ((PORT0_Type              *) PORT0_BASE)
 #define PORT1                           ((PORT1_Type              *) PORT1_BASE)
 #define PORT2                           ((PORT2_Type              *) PORT2_BASE)
+#define PORT3                           ((PORT3_Type              *) PORT3_BASE)
+#define PORT4                           ((PORT4_Type              *) PORT4_BASE)
+
 
 /** @} */ /* End of group Device_Peripheral_Registers */
-/** @} */ /* End of group XMC1200 */
+/** @} */ /* End of group XMC1402 */
 /** @} */ /* End of group Infineon */
 
 #ifdef __cplusplus
@@ -5937,5 +8888,5 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #endif
 
 
-#endif  /* XMC1200_H */
+#endif  /* XMC1402_H */
 

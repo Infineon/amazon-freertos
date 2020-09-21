@@ -33,17 +33,17 @@
 
 
 /****************************************************************************************************//**
- * @file     XMC4200.h
+ * @file     XMC4108.h
  *
  * @brief    CMSIS Cortex-M4 Peripheral Access Layer Header File for
- *           XMC4200 from Infineon.
+ *           XMC4108 from Infineon.
  *
  * @version  V1.6.2 (Reference Manual v1.6)
- * @date     01. Sep 2020
+ * @date     01. September 2020
  *
  * @note     Generated with SVDConv V2.87l 
- *           from CMSIS SVD File 'XMC4200_Processed_SVD.xml' Version 1.6.0 (Reference Manual v1.6),
- *           added support for ARM Compiler 6 (armclang)  
+ *           from CMSIS SVD File 'XMC4100_Processed_SVD.xml' Version 1.6.0 (Reference Manual v1.6),
+ *           added support for ARM Compiler 6 (armclang) 
  *******************************************************************************************************/
 
 
@@ -52,12 +52,12 @@
   * @{
   */
 
-/** @addtogroup XMC4200
+/** @addtogroup XMC4108
   * @{
   */
 
-#ifndef XMC4200_H
-#define XMC4200_H
+#ifndef XMC4108_H
+#define XMC4108_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -80,7 +80,7 @@ typedef enum {
   DebugMonitor_IRQn             =  -4,              /*!<  12  Debug Monitor                                                    */
   PendSV_IRQn                   =  -2,              /*!<  14  Pendable request for system service                              */
   SysTick_IRQn                  =  -1,              /*!<  15  System Tick Timer                                                */
-/* ---------------------  XMC4200 Specific Interrupt Numbers  --------------------- */
+/* ---------------------  XMC4108 Specific Interrupt Numbers  --------------------- */
   SCU_0_IRQn                    =   0,              /*!<   0  System Control                                                   */
   ERU0_0_IRQn                   =   1,              /*!<   1  External Request Unit 0                                          */
   ERU0_1_IRQn                   =   2,              /*!<   2  External Request Unit 0                                          */
@@ -119,10 +119,6 @@ typedef enum {
   CCU80_3_IRQn                  =  63,              /*!<  63  Capture Compare Unit 8 (Module 0)                                */
   POSIF0_0_IRQn                 =  68,              /*!<  68  Position Interface (Module 0)                                    */
   POSIF0_1_IRQn                 =  69,              /*!<  69  Position Interface (Module 0)                                    */
-  HRPWM_0_IRQn                  =  72,              /*!<  72  High Resolution Pulse Width Modulation (Module 0)                */
-  HRPWM_1_IRQn                  =  73,              /*!<  73  High Resolution Pulse Width Modulation (Module 0)                */
-  HRPWM_2_IRQn                  =  74,              /*!<  74  High Resolution Pulse Width Modulation (Module 0)                */
-  HRPWM_3_IRQn                  =  75,              /*!<  75  High Resolution Pulse Width Modulation (Module 0)                */
   CAN0_0_IRQn                   =  76,              /*!<  76  MultiCAN                                                         */
   CAN0_1_IRQn                   =  77,              /*!<  77  MultiCAN                                                         */
   CAN0_2_IRQn                   =  78,              /*!<  78  MultiCAN                                                         */
@@ -143,10 +139,8 @@ typedef enum {
   USIC1_3_IRQn                  =  93,              /*!<  93  Universal Serial Interface Channel (Module 1)                    */
   USIC1_4_IRQn                  =  94,              /*!<  94  Universal Serial Interface Channel (Module 1)                    */
   USIC1_5_IRQn                  =  95,              /*!<  95  Universal Serial Interface Channel (Module 1)                    */
-  LEDTS0_0_IRQn                 = 102,              /*!< 102  LED and Touch Sense Control Unit (Module 0)                      */
   FCE0_0_IRQn                   = 104,              /*!< 104  Flexible CRC Engine                                              */
   GPDMA0_0_IRQn                 = 105,              /*!< 105  General Purpose DMA Unit 0                                       */
-  USB0_0_IRQn                   = 107               /*!< 107  Universal Serial Bus (Module 0)                                  */
 } IRQn_Type;
 
 
@@ -168,7 +162,7 @@ typedef enum {
 /** @} */ /* End of group Configuration_of_CMSIS */
 
 #include "core_cm4.h"                               /*!< Cortex-M4 processor and core peripherals                              */
-#include "system_XMC4200.h"                         /*!< XMC4200 System                                                        */
+#include "system_XMC4100.h"                         /*!< XMC4100 System                                                        */
 
 
 /* ================================================================================ */
@@ -13108,15 +13102,6 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define SCU_HIBERNATE                   ((SCU_HIBERNATE_TypeDef      *) SCU_HIBERNATE_BASE)
 #define SCU_POWER                       ((SCU_POWER_TypeDef          *) SCU_POWER_BASE)
 #define SCU_RESET                       ((SCU_RESET_TypeDef          *) SCU_RESET_BASE)
-#define LEDTS0                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS0_BASE)
-#define USB0                            ((USB0_GLOBAL_TypeDef                *) USB0_BASE)
-#define USB0_EP0                        ((USB0_EP0_TypeDef           *) USB_EP_BASE)
-#define USB0_EP1                        ((USB0_EP_TypeDef             *) USB0_EP1_BASE)
-#define USB0_EP2                        ((USB0_EP_TypeDef             *) USB0_EP2_BASE)
-#define USB0_EP3                        ((USB0_EP_TypeDef             *) USB0_EP3_BASE)
-#define USB0_EP4                        ((USB0_EP_TypeDef             *) USB0_EP4_BASE)
-#define USB0_EP5                        ((USB0_EP_TypeDef             *) USB0_EP5_BASE)
-#define USB0_EP6                        ((USB0_EP_TypeDef             *) USB0_EP6_BASE)
 #define USIC0                           ((USIC_GLOBAL_TypeDef               *) USIC0_BASE)
 #define USIC1                           ((USIC_GLOBAL_TypeDef               *) USIC1_BASE)
 #define USIC0_CH0                       ((USIC_CH_TypeDef            *) USIC0_CH0_BASE)
@@ -13125,7 +13110,6 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define USIC1_CH1                       ((USIC_CH_TypeDef            *) USIC1_CH1_BASE)
 #define CAN                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
 #define CAN_NODE0                       ((CAN_NODE_TypeDef           *) CAN_NODE0_BASE)
-#define CAN_NODE1                       ((CAN_NODE_TypeDef           *) CAN_NODE1_BASE)
 #define CAN_MO0                         ((CAN_MO_TypeDef             *) CAN_MO0_BASE)
 #define CAN_MO1                         ((CAN_MO_TypeDef             *) CAN_MO1_BASE)
 #define CAN_MO2                         ((CAN_MO_TypeDef             *) CAN_MO2_BASE)
@@ -13158,38 +13142,6 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define CAN_MO29                        ((CAN_MO_TypeDef             *) CAN_MO29_BASE)
 #define CAN_MO30                        ((CAN_MO_TypeDef             *) CAN_MO30_BASE)
 #define CAN_MO31                        ((CAN_MO_TypeDef             *) CAN_MO31_BASE)
-#define CAN_MO32                        ((CAN_MO_TypeDef             *) CAN_MO32_BASE)
-#define CAN_MO33                        ((CAN_MO_TypeDef             *) CAN_MO33_BASE)
-#define CAN_MO34                        ((CAN_MO_TypeDef             *) CAN_MO34_BASE)
-#define CAN_MO35                        ((CAN_MO_TypeDef             *) CAN_MO35_BASE)
-#define CAN_MO36                        ((CAN_MO_TypeDef             *) CAN_MO36_BASE)
-#define CAN_MO37                        ((CAN_MO_TypeDef             *) CAN_MO37_BASE)
-#define CAN_MO38                        ((CAN_MO_TypeDef             *) CAN_MO38_BASE)
-#define CAN_MO39                        ((CAN_MO_TypeDef             *) CAN_MO39_BASE)
-#define CAN_MO40                        ((CAN_MO_TypeDef             *) CAN_MO40_BASE)
-#define CAN_MO41                        ((CAN_MO_TypeDef             *) CAN_MO41_BASE)
-#define CAN_MO42                        ((CAN_MO_TypeDef             *) CAN_MO42_BASE)
-#define CAN_MO43                        ((CAN_MO_TypeDef             *) CAN_MO43_BASE)
-#define CAN_MO44                        ((CAN_MO_TypeDef             *) CAN_MO44_BASE)
-#define CAN_MO45                        ((CAN_MO_TypeDef             *) CAN_MO45_BASE)
-#define CAN_MO46                        ((CAN_MO_TypeDef             *) CAN_MO46_BASE)
-#define CAN_MO47                        ((CAN_MO_TypeDef             *) CAN_MO47_BASE)
-#define CAN_MO48                        ((CAN_MO_TypeDef             *) CAN_MO48_BASE)
-#define CAN_MO49                        ((CAN_MO_TypeDef             *) CAN_MO49_BASE)
-#define CAN_MO50                        ((CAN_MO_TypeDef             *) CAN_MO50_BASE)
-#define CAN_MO51                        ((CAN_MO_TypeDef             *) CAN_MO51_BASE)
-#define CAN_MO52                        ((CAN_MO_TypeDef             *) CAN_MO52_BASE)
-#define CAN_MO53                        ((CAN_MO_TypeDef             *) CAN_MO53_BASE)
-#define CAN_MO54                        ((CAN_MO_TypeDef             *) CAN_MO54_BASE)
-#define CAN_MO55                        ((CAN_MO_TypeDef             *) CAN_MO55_BASE)
-#define CAN_MO56                        ((CAN_MO_TypeDef             *) CAN_MO56_BASE)
-#define CAN_MO57                        ((CAN_MO_TypeDef             *) CAN_MO57_BASE)
-#define CAN_MO58                        ((CAN_MO_TypeDef             *) CAN_MO58_BASE)
-#define CAN_MO59                        ((CAN_MO_TypeDef             *) CAN_MO59_BASE)
-#define CAN_MO60                        ((CAN_MO_TypeDef             *) CAN_MO60_BASE)
-#define CAN_MO61                        ((CAN_MO_TypeDef             *) CAN_MO61_BASE)
-#define CAN_MO62                        ((CAN_MO_TypeDef             *) CAN_MO62_BASE)
-#define CAN_MO63                        ((CAN_MO_TypeDef             *) CAN_MO63_BASE)
 #define VADC                            ((VADC_GLOBAL_TypeDef               *) VADC_BASE)
 #define VADC_G0                         ((VADC_G_TypeDef             *) VADC_G0_BASE)
 #define VADC_G1                         ((VADC_G_TypeDef             *) VADC_G1_BASE)
@@ -13209,14 +13161,6 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define CCU80_CC81                      ((CCU8_CC8_TypeDef           *) CCU80_CC81_BASE)
 #define CCU80_CC82                      ((CCU8_CC8_TypeDef           *) CCU80_CC82_BASE)
 #define CCU80_CC83                      ((CCU8_CC8_TypeDef           *) CCU80_CC83_BASE)
-#define HRPWM0                          ((HRPWM0_Type             *) HRPWM0_BASE)
-#define HRPWM0_CSG0                     ((HRPWM0_CSG_Type         *) HRPWM0_CSG0_BASE)
-#define HRPWM0_CSG1                     ((HRPWM0_CSG_Type         *) HRPWM0_CSG1_BASE)
-#define HRPWM0_CSG2                     ((HRPWM0_CSG_Type         *) HRPWM0_CSG2_BASE)
-#define HRPWM0_HRC0                     ((HRPWM0_HRC_Type         *) HRPWM0_HRC0_BASE)
-#define HRPWM0_HRC1                     ((HRPWM0_HRC_Type         *) HRPWM0_HRC1_BASE)
-#define HRPWM0_HRC2                     ((HRPWM0_HRC_Type         *) HRPWM0_HRC2_BASE)
-#define HRPWM0_HRC3                     ((HRPWM0_HRC_Type         *) HRPWM0_HRC3_BASE)
 #define POSIF0                          ((POSIF_GLOBAL_TypeDef              *) POSIF0_BASE)
 #define PORT0                           ((PORT0_Type              *) PORT0_BASE)
 #define PORT1                           ((PORT1_Type              *) PORT1_BASE)
@@ -13226,7 +13170,7 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 
 
 /** @} */ /* End of group Device_Peripheral_Registers */
-/** @} */ /* End of group XMC4200 */
+/** @} */ /* End of group XMC4108 */
 /** @} */ /* End of group Infineon */
 
 #ifdef __cplusplus
@@ -13234,5 +13178,5 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #endif
 
 
-#endif  /* XMC4200_H */
+#endif  /* XMC4108_H */
 

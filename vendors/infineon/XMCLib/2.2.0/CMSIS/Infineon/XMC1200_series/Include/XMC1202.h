@@ -33,10 +33,10 @@
 
 
 /****************************************************************************************************//**
- * @file     XMC1200.h
+ * @file     XMC1202.h
  *
  * @brief    CMSIS Cortex-M0 Peripheral Access Layer Header File for
- *           XMC1200 from Infineon.
+ *           XMC1202 from Infineon.
  *
  * @version  V1.3.2 (Reference Manual v1.3)
  * @date     01. September 2020
@@ -52,12 +52,12 @@
   * @{
   */
 
-/** @addtogroup XMC1200
+/** @addtogroup XMC1202
   * @{
   */
 
-#ifndef XMC1200_H
-#define XMC1200_H
+#ifndef XMC1202_H
+#define XMC1202_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,7 +74,7 @@ typedef enum {
   SVCall_IRQn                   =  -5,              /*!<  11  System Service Call via SVC instruction                          */
   PendSV_IRQn                   =  -2,              /*!<  14  Pendable request for system service                              */
   SysTick_IRQn                  =  -1,              /*!<  15  System Tick Timer                                                */
-/* ---------------------  XMC1200 Specific Interrupt Numbers  --------------------- */
+/* ---------------------  XMC1202 Specific Interrupt Numbers  --------------------- */
   SCU_0_IRQn          =   0,   /*!< SCU SR0 Interrupt                        */
   SCU_1_IRQn          =   1,   /*!< SCU SR1 Interrupt                        */
   SCU_2_IRQn          =   2,   /*!< SCU SR2 Interrupt                        */
@@ -101,9 +101,6 @@ typedef enum {
   CCU40_1_IRQn        =  22,   /*!< CCU40 SR1 Interrupt                      */
   CCU40_2_IRQn        =  23,   /*!< CCU40 SR2 Interrupt                      */
   CCU40_3_IRQn        =  24,   /*!< CCU40 SR3 Interrupt                      */
-  
-  LEDTS0_0_IRQn       =  29,   /*!< LEDTS0 SR0 Interrupt                     */
-  LEDTS1_0_IRQn       =  30,   /*!< LEDTS1 SR0 Interrupt                     */
   
   BCCU0_0_IRQn        =  31,   /*!< BCCU0 SR0 Interrupt                      */
 } IRQn_Type;
@@ -5890,8 +5887,6 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define WDT                             ((WDT_GLOBAL_TypeDef                *) WDT_BASE)
 #define RTC                             ((RTC_GLOBAL_TypeDef                *) RTC_BASE)
 #define PRNG                            ((PRNG_Type               *) PRNG_BASE)
-#define LEDTS0                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS0_BASE)
-#define LEDTS1                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS1_BASE)
 #define USIC0                           ((USIC_GLOBAL_TypeDef               *) USIC0_BASE)
 #define USIC0_CH0                       ((USIC_CH_TypeDef            *) USIC0_CH0_BASE)
 #define USIC0_CH1                       ((USIC_CH_TypeDef            *) USIC0_CH1_BASE)
@@ -5929,7 +5924,7 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define PORT2                           ((PORT2_Type              *) PORT2_BASE)
 
 /** @} */ /* End of group Device_Peripheral_Registers */
-/** @} */ /* End of group XMC1200 */
+/** @} */ /* End of group XMC1202 */
 /** @} */ /* End of group Infineon */
 
 #ifdef __cplusplus
@@ -5937,5 +5932,5 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #endif
 
 
-#endif  /* XMC1200_H */
+#endif  /* XMC1202_H */
 

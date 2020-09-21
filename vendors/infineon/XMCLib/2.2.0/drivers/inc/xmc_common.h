@@ -155,14 +155,14 @@
 #ifdef XMC_ASSERT_ENABLE
 #define XMC_ASSERT(msg, exp) { if(!(exp)) {XMC_AssertHandler(msg, __FILE__, __LINE__);} }
 #else
-#define XMC_ASSERT(msg, exp) { ; }
+#define XMC_ASSERT(msg, exp)
 #endif
 
 #ifdef XMC_DEBUG_ENABLE
 #include <stdio.h>
 #define XMC_DEBUG(...) { printf(__VA_ARGS__); }
 #else
-#define XMC_DEBUG(...) { ; }
+#define XMC_DEBUG(...)
 #endif
 
 #define XMC_UNUSED_ARG(x) (void)x

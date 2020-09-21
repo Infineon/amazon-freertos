@@ -13,11 +13,20 @@ See https://github.com/ARM-software/CMSIS_5/releases for changes on CMSIS 5.7.0
 ### Fixed
 - system_XMC1400.c
   Fix seeting of ANAOSCHPCTRL accoring to OSC_CM.D001 in errata
+- system_XMC4100.c
 - system_XMC4200.c
   Fix EXTCLKDIV macro definition
   Fix code for condition EXTCLK_PIN == EXTCLK_PIN_P1_15
+  Fix clock setup when using internal oscillator as clock source for the system PLL
+- system_XMC4300.c
+- system_XMC4400.c
+- system_XMC4500.c
+- system_XMC4700.c
+- system_XMC4800.c
+
 ### Added
 - CMSIS Driver implementation
+- Device variants header files to avoid compilation warnings in Keil MDK
 
 ## [5.6.0-p1] - 2019-08-01
 Based on CMSIS 5.6.0 with Infineon specific files

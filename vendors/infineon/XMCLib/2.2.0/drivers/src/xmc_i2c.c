@@ -148,11 +148,13 @@ void XMC_I2C_CH_SetSlaveAddress(XMC_USIC_CH_t *const channel, const uint16_t add
 {
   if ((address & XMC_I2C_10BIT_ADDR_MASK) == XMC_I2C_10BIT_ADDR_GROUP)
   {
-    channel->PCR_IICMode = (address & 0xffU) | ((address << 1) & 0xfe00U);
+    channel->PCR_IICMode = (channel->PCR_IICMode & (uint32_t)~USIC_CH_PCR_IICMode_SLAD_Msk) |
+                           (address & 0x00ffU) | ((address << 1) & 0xfe00U);
   }
   else
   {
-    channel->PCR_IICMode = ((uint32_t)address) << XMC_I2C_7BIT_ADDR_Pos;
+    channel->PCR_IICMode = (channel->PCR_IICMode & (uint32_t)~USIC_CH_PCR_IICMode_SLAD_Msk) |
+                           ((uint32_t)address) << XMC_I2C_7BIT_ADDR_Pos;
   }
 }
 /* Read the slave address */
