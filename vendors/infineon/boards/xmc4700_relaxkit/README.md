@@ -431,17 +431,19 @@ Building FreeRTOS can be accomplished with DAVE IDE or with CMAKE. If you are us
 
 1. First, you will need to set the secure element configuration for your board. Right click the Project and navigate to **Build Configurations** and then **Set Active**. 
 
-1. In the **Set Active** menu, choose **build_standard** if you are not using a secure element, **build_optiga_trustm** with the OPTIGA™ Trust M, or **build_optiga_trustx** with the OPTIGA™ Trust X.
+2. In the **Set Active** menu, choose **build_standard** if you are not using a secure element, **build_optiga_trustm** with the OPTIGA™ Trust M, or **build_optiga_trustx** with the OPTIGA™ Trust X.
 
-1. From the **Project** menu, choose **Build Active Project**\. 
+![XNC4700 DAVE configuration](images/XMC4700DAVEBuild.png)
+
+3. From the **Project** menu, choose **Build Active Project**\. 
 
    Make sure that the project builds without errors\.
 
-1. From **Project Explorer**, right\-click `aws_demos`, choose **Debug As**, and then choose **DAVE C/C\+\+ Application**\.
+4. From **Project Explorer**, right\-click `aws_demos`, choose **Debug As**, and then choose **DAVE C/C\+\+ Application**\.
 
-1. Double\-click **GDB SEGGER J\-Link Debugging** to create a debug confirmation\. Choose **Debug**\.
+5. Double\-click **GDB SEGGER J\-Link Debugging** to create a debug confirmation\. Choose **Debug**\.
 
-1. When the debugger stops at the breakpoint in `main()`, from the **Run** menu, choose **Resume**\.
+6. When the debugger stops at the breakpoint in `main()`, from the **Run** menu, choose **Resume**\.
 
 ## 11.2:  Build and run with CMAKE
 
