@@ -553,45 +553,29 @@ Building FreeRTOS can be accomplished with DAVE IDE or with CMAKE. If you are us
 A successful run of the FreeRTOS MQTT Demo should have an output similar to the following in the serial console. See **Section 6** for more information on how to enable serial output.
 
 ```
-0 0 [Tmr Svc] Starting key provisioning...
-1 1 [Tmr Svc] Write root certificate...
-2 4 [Tmr Svc] Write device private key...
-3 82 [Tmr Svc] Write device certificate...
-4 86 [Tmr Svc] Key provisioning done...
-5 291 [Tmr Svc] Wi-Fi module initialized. Connecting to AP...
-.6 8046 [Tmr Svc] Wi-Fi Connected to AP. Creating tasks which use network...
-7 8058 [Tmr Svc] IP Address acquired [IP Address]
-8 8058 [Tmr Svc] Creating MQTT Echo Task...
-9 8059 [MQTTEcho] MQTT echo attempting to connect to [MQTT Broker].
-...10 23010 [MQTTEcho] MQTT echo connected.
-11 23010 [MQTTEcho] MQTT echo test echoing task created.
-.12 26011 [MQTTEcho] MQTT Echo demo subscribed to iotdemo/#
-13 29012 [MQTTEcho] Echo successfully published 'Hello World 0'
-.14 32096 [Echoing] Message returned with ACK: 'Hello World 0 ACK'
-.15 37013 [MQTTEcho] Echo successfully published 'Hello World 1'
-16 40080 [Echoing] Message returned with ACK: 'Hello World 1 ACK'
-.17 45014 [MQTTEcho] Echo successfully published 'Hello World 2'
-.18 48091 [Echoing] Message returned with ACK: 'Hello World 2 ACK'
-.19 53015 [MQTTEcho] Echo successfully published 'Hello World 3'
-.20 56087 [Echoing] Message returned with ACK: 'Hello World 3 ACK'
-.21 61016 [MQTTEcho] Echo successfully published 'Hello World 4'
-22 64083 [Echoing] Message returned with ACK: 'Hello World 4 ACK'
-.23 69017 [MQTTEcho] Echo successfully published 'Hello World 5'
-.24 72091 [Echoing] Message returned with ACK: 'Hello World 5 ACK'
-.25 77018 [MQTTEcho] Echo successfully published 'Hello World 6'
-26 80085 [Echoing] Message returned with ACK: 'Hello World 6 ACK'
-.27 85019 [MQTTEcho] Echo successfully published 'Hello World 7'
-.28 88086 [Echoing] Message returned with ACK: 'Hello World 7 ACK'
-.29 93020 [MQTTEcho] Echo successfully published 'Hello World 8'
-.30 96088 [Echoing] Message returned with ACK: 'Hello World 8 ACK'
-.31 101021 [MQTTEcho] Echo successfully published 'Hello World 9'
-32 104102 [Echoing] Message returned with ACK: 'Hello World 9 ACK'
-.33 109022 [MQTTEcho] Echo successfully published 'Hello World 10'
-.34 112047 [Echoing] Message returned with ACK: 'Hello World 10 ACK'
-.35 117023 [MQTTEcho] Echo successfully published 'Hello World 11'
-36 120089 [Echoing] Message returned with ACK: 'Hello World 11 ACK'
-.37 122068 [MQTTEcho] MQTT echo demo finished.
-38 122068 [MQTTEcho] ----Demo finished----
+Publish topic name: iotdemo/topic/4
+Publish retain flag: 0
+Publish QoS: 1
+Publish payload: Hello world 19!
+146 6051 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658) MQTT PUBLISH operation queued.
+147 6051 [iot_thread] [INFO ][DEMO] Acknowledgment message for PUBLISH 19 will be sent.
+148 6052 [iot_thread] [INFO ][DEMO] 2 publishes received.
+149 6053 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658) UNSUBSCRIBE operation scheduled.
+151 6130 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658, UNSUBSCRIBE operation 1FFF03E0) Wait complete with result SUCCESS.
+152 6130 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658) Disconnecting connection.
+153 6131 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658, DISCONNECT operation 1FFF03E0) Waiting for operation completion.
+154 6131 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658, DISCONNECT operation 1FFF03E0) Wait complete with result SUCCESS.
+155 6131 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658) Connection disconnected.
+156 6132 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658) Network connection closed.
+157 6204 [iot_thread] [INFO ][MQTT] (MQTT connection 1FFF2658) Network connection destroyed.
+158 6204 [iot_thread] [INFO ][MQTT] MQTT library cleanup done.
+159 6204 [iot_thread] [INFO ][DEMO] memory_metrics::freertos_heap::before::bytes::167440
+160 6204 [iot_thread] [INFO ][DEMO] memory_metrics::freertos_heap::after::bytes::67976
+161 6204 [iot_thread] [INFO ][DEMO] memory_metrics::demo_task_stack::before::bytes::8148
+162 6204 [iot_thread] [INFO ][DEMO] memory_metrics::demo_task_stack::after::bytes::4340
+163 6204 [iot_thread] [INFO ][DEMO] Demo completed successfully.
+164 6206 [iot_thread] [INFO ][INIT] SDK cleanup done.
+165 6206 [iot_thread] [INFO ][DEMO] -------DEMO FINISHED-------
 ```
 
 
