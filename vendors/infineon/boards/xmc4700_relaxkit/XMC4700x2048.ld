@@ -60,7 +60,7 @@ OUTPUT_FORMAT("elf32-littlearm")
 OUTPUT_ARCH(arm)
 ENTRY(Reset_Handler)
 
-stack_size = DEFINED(stack_size) ? stack_size : 2048;
+stack_size = DEFINED(stack_size) ? stack_size : 4096;
 no_init_size = 64;
 
 MEMORY

@@ -829,6 +829,7 @@ CK_RV prvOPTIGATrustM_Initialize( void )
     if( xResult == CKR_OK )
     {
         memset( &xP11Context, 0, sizeof( xP11Context ) );
+        pal_init();
     	pal_i2c_init(NULL);
         xP11Context.xObjectList.xMutex = xSemaphoreCreateMutex();
 

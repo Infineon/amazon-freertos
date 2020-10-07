@@ -46,9 +46,9 @@
 
 #include "xmc_gpio.h"
 // Uncomment the following line if Optiga Shield2Go connected to Socket2/3 of MyIoT Shield2Go Adapter
-#define OPTIGA_RESET_PIN P1_8
+//#define OPTIGA_RESET_PIN P1_8
 // Uncomment the following line if Optiga Shield2Go connected to Socket1 of MyIoT Shield2Go Adapter
-//#define OPTIGA_RESET_PIN P1_11
+#define OPTIGA_RESET_PIN P1_11
 
 #include "Driver_I2C.h"
 extern ARM_DRIVER_I2C            Driver_I2C3;
