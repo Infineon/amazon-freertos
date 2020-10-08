@@ -61,6 +61,12 @@ typedef struct DIGITAL_IO
  * API IMPLEMENTATION
  *********************************************************************************************************************/
 
+void pal_gpio_init(const pal_gpio_t* p_gpio_context);
+
+
+
+void pal_gpio_init(const pal_gpio_t* p_gpio_context) {}
+
 /**
 * Sets the gpio pin to high state
 * 

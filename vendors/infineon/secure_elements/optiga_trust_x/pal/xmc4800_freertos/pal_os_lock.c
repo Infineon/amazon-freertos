@@ -37,24 +37,15 @@
 
 SemaphoreHandle_t xLockSemaphoreHandle;
 
-volatile uint8_t first_call_flag = 1;
-
-void _lock_init(void)
+void pal_os_lock_init(void)
 {
 	xLockSemaphoreHandle = xSemaphoreCreateBinary();
 	pal_os_lock_release();
 }
 
+
 pal_status_t pal_os_lock_acquire(void)
 {
-	vPortEnterCritical();
-	if (first_call_flag)
-	{
-		_lock_init();
-		first_call_flag = 0;
-	}
-	vPortExitCritical();
-
 	if ( xSemaphoreTake(xLockSemaphoreHandle, portMAX_DELAY) == pdTRUE )
 		return PAL_STATUS_SUCCESS;
 }

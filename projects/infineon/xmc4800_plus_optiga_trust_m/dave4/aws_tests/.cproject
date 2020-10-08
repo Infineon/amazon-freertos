@@ -240,7 +240,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="vendors/infineon/secure_elements/optiga_trust_m/pal/pal_crypt_mbedtls.c|vendors/infineon/secure_elements/optiga_trust_m/pal/stm32l475iot_freertos|vendors/infineon/secure_elements/optiga_trust_m/pal/esp32_freertos|vendors/infineon/boards/xmc4800_plus_optiga_trust_m/secure_elements/optiga_trust_m/pal/stm32l475iot_freertos|vendors/infineon/boards/xmc4800_plus_optiga_trust_m/secure_elements/optiga_trust_m/pal/esp32_freertos" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="vendors/infineon/secure_elements/optiga_trust_m/examples/utilities/authenticate_chip|vendors/infineon/secure_elements/optiga_trust_m/pal/pal_crypt_mbedtls.c|vendors/infineon/secure_elements/optiga_trust_m/pal/stm32l475iot_freertos|vendors/infineon/secure_elements/optiga_trust_m/pal/esp32_freertos|vendors/infineon/boards/xmc4800_plus_optiga_trust_m/secure_elements/optiga_trust_m/pal/stm32l475iot_freertos|vendors/infineon/boards/xmc4800_plus_optiga_trust_m/secure_elements/optiga_trust_m/pal/esp32_freertos" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

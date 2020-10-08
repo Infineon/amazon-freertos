@@ -762,12 +762,8 @@ CK_RV prvOPTIGATrustX_Initialize( void )
 
     if( xResult == CKR_OK )
     {
-
-/*        CRYPTO_Init(); */
-
-        pal_gpio_init(&optiga_reset_0);
+    	pal_gpio_init(&optiga_reset_0);
         pal_os_lock_init();
-
         pal_os_event_init();
 
         xResult = optiga_util_open_application( &optiga_comms );
