@@ -1,6 +1,6 @@
 /*
-* FreeRTOS
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Amazon FreeRTOS
+ * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -87,7 +87,7 @@
  * For devices with secure elements or hardware limitations, this may be defined
  * to a different label to preserve AWS IoT credentials for other test suites.
  */
-#define pkcs11testLABEL_DEVICE_PRIVATE_KEY_FOR_TLS    "0xE0F2"
+#define pkcs11testLABEL_DEVICE_PRIVATE_KEY_FOR_TLS    "0xE0F3"
 
 /**
  * @brief The PKCS #11 label for device public key.
@@ -96,7 +96,7 @@
  * For devices with secure elements or hardware limitations, this may be defined
  * to a different label to preserve AWS IoT credentials for other test suites.
  */
-#define pkcs11testLABEL_DEVICE_PUBLIC_KEY_FOR_TLS     "0xF1D2"
+#define pkcs11testLABEL_DEVICE_PUBLIC_KEY_FOR_TLS     "0xF1D3"
 
 /**
  * @brief The PKCS #11 label for the device certificate.
@@ -105,7 +105,7 @@
  * For devices with secure elements or hardware limitations, this may be defined
  * to a different label to preserve AWS IoT credentials for other test suites.
  */
-#define pkcs11testLABEL_DEVICE_CERTIFICATE_FOR_TLS    "0xE0E2"
+#define pkcs11testLABEL_DEVICE_CERTIFICATE_FOR_TLS    "0xE0E3"
 
 /**
  * @brief The PKCS #11 label for the object to be used for code verification.

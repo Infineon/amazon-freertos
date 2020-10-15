@@ -1,6 +1,6 @@
 /*
- * FreeRTOS V1.1.4
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Amazon FreeRTOS V1.1.4
+ * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -93,7 +93,7 @@
  *
  * The public key corresponding to pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS.
  */
-#define pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS        "0xF1D2"
+#define pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS        "0xF1D1"
 
 /**
  * @brief The PKCS #11 label for the device certificate.
@@ -116,14 +116,14 @@
  * (pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS) when using the JITR or
  * JITP flow.
  */
-#define pkcs11configLABEL_JITP_CERTIFICATE                 "JITP Cert"
+#define pkcs11configLABEL_JITP_CERTIFICATE                 "0xE0E2"
 
 /**
  * @brief The PKCS #11 label for the AWS Trusted Root Certificate.
  *
  * @see aws_default_root_certificates.h
  */
-#define pkcs11configLABEL_ROOT_CERTIFICATE                 "0xE0E8"
+#define pkcs11configLABEL_ROOT_CERTIFICATE                 "0xE0E3"
 
 /**
  * @brief Set to 1 if importing device private key via C_CreateObject is supported. 0 if not.

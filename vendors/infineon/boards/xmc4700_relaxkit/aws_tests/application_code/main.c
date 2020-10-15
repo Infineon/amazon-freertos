@@ -208,25 +208,15 @@ static void prvMiscInitialization( void )
 {
 	CONSOLE_IO_Init();
 
-//	if (ETEHRNET_Init() != 0)
-//	{
-//		configPRINT_STRING("ERROR: ETHERNET initialization failed\r\n");
-//		while(1);
-//	}
-	 if( ( SYSTEM_Init() == pdPASS ) )
-	        {
-	            xTaskCreate( TEST_RUNNER_RunTests_task,
-	                         "RunTests_task",
-							 mainTEST_RUNNER_TASK_STACK_SIZE,
-	                         NULL,
-	                         tskIDLE_PRIORITY,
-							 NULL );
-
-	        }
+	if (ETEHRNET_Init() != 0)
+	{
+		configPRINT_STRING("ERROR: ETHERNET initialization failed\r\n");
+		while(1);
+	}
 
 #if !defined(CONFIG_USE_OPTIGA)
     ENTROPY_HARDWARE_Init();
-#endif	
+#endif
 }
 /*-----------------------------------------------------------*/
 
@@ -370,4 +360,3 @@ void vAssertCalled(const char * pcFile,
 
 #endif /* if ( ipconfigUSE_LLMNR != 0 ) || ( ipconfigUSE_NBNS != 0 ) */
 /*-----------------------------------------------------------*/
-

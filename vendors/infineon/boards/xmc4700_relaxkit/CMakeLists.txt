@@ -71,6 +71,7 @@ set( defined_symbols
      MBEDTLS_ECDH_GEN_PUBLIC_ALT
      PAL_OS_HAS_EVENT_INIT
      CONFIG_USE_OPTIGA
+	 MBEDTLS_CONFIG_FILE="optiga_mbedtls_config.h"
 )
 endif()
 

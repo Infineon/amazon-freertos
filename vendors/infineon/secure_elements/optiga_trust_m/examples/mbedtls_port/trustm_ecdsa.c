@@ -38,6 +38,7 @@
 #include "optiga/pal/pal_os_timer.h"
 #include "optiga/common/optiga_lib_common.h"
 
+
 #define PRINT_SIGNATURE   0
 #define PRINT_HASH        0
 #define PRINT_PUBLICKEY   0
@@ -53,6 +54,7 @@ static void optiga_crypt_event_completed(void * context, optiga_lib_status_t ret
         // callback to upper layer here
     }
 }
+
 
 #if defined(MBEDTLS_ECDSA_SIGN_ALT)
 int mbedtls_ecdsa_sign( mbedtls_ecp_group *grp, mbedtls_mpi *r, mbedtls_mpi *s,

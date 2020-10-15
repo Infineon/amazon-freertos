@@ -125,6 +125,13 @@ int mbedtls_ecdh_gen_public(mbedtls_ecp_group *grp, mbedtls_mpi *d,
 	ret = mbedtls_ecp_point_read_binary(grp, Q, &public_key[3], public_key_len - 3);
 cleanup:
 
+	// destroy me_example instances
+	if (me != NULL)
+	{
+		optiga_crypt_destroy(me);
+	}
+
+
 	return ret;
 
 }
@@ -231,6 +238,11 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp, mbedtls_mpi *z,
 	}
 
 cleanup:
+	// destroy me_example instances
+	if (me != NULL)
+	{
+		optiga_crypt_destroy(me);
+	}
 
 	return ret;
 

@@ -101,6 +101,13 @@ int mbedtls_hardware_poll( void *data,
         }
     }
 
+    // destroy me_example instances
+    if (me != NULL)
+    {
+        optiga_crypt_destroy(me);
+    }
+
+
     return error;
 }
 

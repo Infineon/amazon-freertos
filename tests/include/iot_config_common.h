@@ -34,6 +34,7 @@
 /* Credentials include. */
 #include <aws_clientcredential.h>
 #include <aws_clientcredential_keys.h>
+#include <iot_default_root_certificates.h>
 
 /* Unity framework includes. */
 #include "unity.h"
@@ -268,22 +269,38 @@ typedef struct IotNetworkCredentials   IotTestNetworkCredentials_t;
 #define IOT_TEST_NETWORK_CONNECTION_INITIALIZER     IOT_NETWORK_CONNECTION_AFR_INITIALIZER
 #define IOT_TEST_NETWORK_SERVER_INFO_INITIALIZER    AWS_IOT_NETWORK_SERVER_INFO_AFR_INITIALIZER
 
+
 /* Define the credentials initializer based on the server port. Use ALPN if on
  * 443, otherwise disable ALPN. */
 #if clientcredentialMQTT_BROKER_PORT == 443
     #define IOT_TEST_NETWORK_CREDENTIALS_INITIALIZER    AWS_IOT_NETWORK_CREDENTIALS_AFR_INITIALIZER
 #else
-    #define IOT_TEST_NETWORK_CREDENTIALS_INITIALIZER           \
-    {                                                          \
-        .disableSni = false,                                   \
-        .pAlpnProtos = NULL,                                   \
-        .pRootCa = NULL,                                       \
-        .pClientCert = keyCLIENT_CERTIFICATE_PEM,              \
-        .pPrivateKey = keyCLIENT_PRIVATE_KEY_PEM,              \
-        .rootCaSize = 0,                                       \
-        .clientCertSize = sizeof( keyCLIENT_CERTIFICATE_PEM ), \
-        .privateKeySize = sizeof( keyCLIENT_PRIVATE_KEY_PEM )  \
-    }
+#ifdef CONFIG_USE_OPTIGA
+#define IOT_TEST_NETWORK_CREDENTIALS_INITIALIZER           \
+{                                                          \
+    .disableSni = false,                                   \
+    .pAlpnProtos = NULL,                                   \
+    .pRootCa = tlsATS3_ROOT_CERTIFICATE_PEM,               \
+    .pClientCert = keyCLIENT_CERTIFICATE_PEM,              \
+    .pPrivateKey = keyCLIENT_PRIVATE_KEY_PEM,              \
+	.rootCaSize = sizeof(tlsATS3_ROOT_CERTIFICATE_PEM),    \
+    .clientCertSize = sizeof( keyCLIENT_CERTIFICATE_PEM ), \
+    .privateKeySize = sizeof( keyCLIENT_PRIVATE_KEY_PEM )  \
+}
+#else
+#define IOT_TEST_NETWORK_CREDENTIALS_INITIALIZER           \
+{                                                          \
+    .disableSni = false,                                   \
+    .pAlpnProtos = NULL,                                   \
+    .pRootCa = NULL,                                       \
+    .pClientCert = keyCLIENT_CERTIFICATE_PEM,              \
+    .pPrivateKey = keyCLIENT_PRIVATE_KEY_PEM,              \
+	.rootCaSize = 0,                                       \
+    .clientCertSize = sizeof( keyCLIENT_CERTIFICATE_PEM ), \
+    .privateKeySize = sizeof( keyCLIENT_PRIVATE_KEY_PEM )  \
+}
+#endif /* CONFIG_USE_OPTIGA */
+
 #endif /* if clientcredentialMQTT_BROKER_PORT == 443 */
 
 /* Network initialization and cleanup functions are not needed on FreeRTOS. */

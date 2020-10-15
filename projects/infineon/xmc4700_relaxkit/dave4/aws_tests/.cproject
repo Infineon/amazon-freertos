@@ -246,7 +246,7 @@
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="com.ifx.xmc4000.targetPlatform.2114815428" isAbstract="false" name="Windows Platform" osList="win32" superClass="com.ifx.xmc4000.targetPlatform"/>
 							<builder buildPath="${workspace_loc:/aws_tests_xmc4700_relaxkit}/Debug" id="com.ifx.XMC4000.toolchainBuilder.460497392" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="XMC Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.ifx.XMC4000.toolchainBuilder"/>
 							<tool id="com.ifx.xmc4000.appDebug.compiler.687173769" name="ARM-GCC C Compiler" superClass="com.ifx.xmc4000.appDebug.compiler">
-								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level.702348320" name="Optimization level" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.optimization.level.more" valueType="enumerated"/>
+								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level.702348320" name="Optimization level" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.optimization.level.none" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.compiler.option.misc.mfloat.2017266043" name="Floating point" superClass="com.ifx.xmc4000.compiler.option.misc.mfloat" useByScannerDiscovery="false" value="org.eclipse.cdt.cross.arm.gnu.base.option.other.mfloat.hard" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.compiler.option.include.paths.546649645" name="Include paths (-I)" superClass="com.ifx.xmc4000.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/vendors/infineon/XMCLib/2.2.0/drivers/inc}&quot;"/>
@@ -327,6 +327,7 @@
 									<listOptionValue builtIn="false" value="CONFIG_USE_OPTIGA"/>
 									<listOptionValue builtIn="false" value="CONFIG_USE_OPTIGA_TRUSTM"/>
 									<listOptionValue builtIn="false" value="PRINTF_INCLUDE_CONFIG_H"/>
+									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE='&quot;optiga_mbedtls_config.h&quot;'"/>
 								</option>
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.warnings.extrawarn.952487155" name="Extra warnings (-Wextra)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.warnings.nocommon.1475951236" name="No common (-fno-common)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.warnings.nocommon" useByScannerDiscovery="false" value="true" valueType="boolean"/>
@@ -543,6 +544,7 @@
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def.33810886" name="Defined symbols (-D)" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="XMC4700_F144x2048"/>
 									<listOptionValue builtIn="false" value="XMC_ETH_PHY_KSZ8081RNB"/>
+									<listOptionValue builtIn="false" value="MBEDTLS_CONFIG_FILE='&quot;optiga_mbedtls_config.h&quot;'"/>
 									<listOptionValue builtIn="false" value="UNITY_INCLUDE_CONFIG_H"/>
 									<listOptionValue builtIn="false" value="AMAZON_FREERTOS_ENABLE_UNIT_TESTS"/>
 									<listOptionValue builtIn="false" value="USE_CMDLIB_WITH_RTOS"/>
