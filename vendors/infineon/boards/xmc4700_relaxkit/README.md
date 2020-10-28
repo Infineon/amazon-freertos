@@ -1,12 +1,17 @@
-# Getting Started with the Infineon XMC4700 Relax Kit and OPTIGA Trust X
+# Getting Started with the Infineon XMC4700 Relax Kit and OPTIGA Trust X/M
 
-This tutorial provides instructions for getting started with the Infineon XMC4700 Relax Kit and OPTIGA Trust X Secure Element\. 
+This tutorial provides instructions for getting started with the Infineon XMC4700 Relax Kit in various configurations, namely:
+1. Without Secure Element
+2. with OPTIGA Trust X Secure Element
+3. With OPTIGA Trust M Secure Element
 
 You need the following hardware:
 
 1. [Infineon XMC4700 Relax Kit](https://www.infineon.com/cms/en/product/evaluation-boards/kit_xmc47_relax_v1/)
 2. [Infineon MyIoT Adapter](https://www.infineon.com/cms/en/product/evaluation-boards/my-iot-adapter/)
-3. [Shield2Go Security OPTIGA™ Trust X](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-x/)
+3. Secure Elements:
+  1. [Shield2Go Security OPTIGA™ Trust X](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-x/) (optional)
+  2. [Shield2Go Security OPTIGA™ Trust M](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-security-optiga-m/) (optional)
 
 Before you begin, you must configure AWS IoT and your FreeRTOS download to connect your device to the AWS Cloud\. For instructions, see [Option \#2: Onboard Private Key Generation](https://docs.aws.amazon.com/freertos/latest/userguide/dev-mode-key-provisioning.html)\. In this tutorial, the path to the FreeRTOS download directory is referred to as `<freertos>`\.
 
@@ -30,7 +35,7 @@ The following diagram give a detailed description of the board hardware
 
 ![alt text](docs/PCB_block.png)
 
-To set up the XMC4700 RelaxKit + Optiga Trust X:
+To set up the XMC4700 RelaxKit + Optiga Trust X/M:
 
 1. Connect your computer to the Debugger Micro USB port on your XMC4700 RelaxKit. The On-board USB debug probe is used to program the board and provides Virtual COM Port support for logging purposes.
 
@@ -38,7 +43,9 @@ To set up the XMC4700 RelaxKit + Optiga Trust X:
 
 1. Plug the Infineon MyIoT Adapter in the Arduino Pin Header
 
-1. Plug the Shield2Go Security OPTIGA™ Trust X in Socket 3 of the Infineon MyIoT Adapter
+1. Plug the Shield2Go Security OPTIGA™ Trust X/M in Socket 3 of the Infineon MyIoT Adapter
+
+Note: if you don't want to use a SE, you can skip the last step.
 
 ![alt text](docs/hardware_setup.png)
 
