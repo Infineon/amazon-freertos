@@ -3,6 +3,7 @@ This document describes how to set up the development environment and run the Fr
 
 ## 1.1	Revision History (Version, Date, Description of change)
 1.0 - 16 Sep 2020 - First version.
+1.1 - 28 Oct 2020 - Minor corrections for the git clone path
 
 # 2: Overview
 The XMC4700 device is a member of the XMC4000 family of microcontrollers based on the ARM Cortex-M4 processor core. The growing complexity of today's energy efficient embedded control applications are demanding microcontroller solutions with higher performance CPU cores featuring DSP and FPU capabilities.The XMC4700 family of microcontrollers take advantage of Infineon's decades of experience in the industrial market to provide an optimized solution to meet the performance challenges of today's embedded control applications.
@@ -95,7 +96,7 @@ To set up the XMC4700 RelaxKit + OPTIGA Security Shield2Go:
 
 1. Plug the Infineon MyIoT Adapter in the Arduino Pin Header
 
-1. Plug the Shield2Go Security OPTIGA™ Trust X/M in Socket 3 of the Infineon MyIoT Adapter
+1. Plug the Shield2Go Security OPTIGA™ Trust X/M in Socket 1 of the Infineon MyIoT Adapter
 
 # 6: Establishing a serial connection for debugging
 To establish a serial connection between your host machine and your board
@@ -171,11 +172,6 @@ git clone git@github.com:Infineon/amazon-freertos.git --recurse-submodules
 If you have downloaded the repo without using the `--recurse-submodules` argument, you need to run:
 ```
 git submodule update --init --recursive
-```
-
-To checkout the branch with both Trust X and Trust M, you need to run:
-```
-git checkout feature/trustm
 ```
 
 If you are using CMAKE and a third party IDE, you can open the source code in your editor of choice.
