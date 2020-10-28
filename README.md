@@ -20,11 +20,6 @@ If you have downloaded the repo without using the `--recurse-submodules` argumen
 git submodule update --init --recursive
 ```
 
-To checkout the branch with both Trust X and Trust M, you need to run:
-```
-git checkout feature/trustm
-```
-
 ## Getting Started
 
 For more information on FreeRTOS, refer to the [Getting Started section of FreeRTOS webpage](https://aws.amazon.com/freertos).
