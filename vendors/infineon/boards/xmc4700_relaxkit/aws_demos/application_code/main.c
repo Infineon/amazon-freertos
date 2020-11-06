@@ -103,13 +103,14 @@ void vApplicationIPInit( void );
  * @brief Initializes the board.
  */
 static void prvMiscInitialization( void );
-
+#include "get_optiga_certificate.h"
 /*-----------------------------------------------------------*/
 static void vMainTask(void* pvParameters)
 {
   (void)pvParameters;
 
   vDevModeKeyProvisioning();
+  vGetOptigaCertificate();
   vApplicationIPInit();
 
   vTaskDelete(NULL);
