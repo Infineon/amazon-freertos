@@ -86,21 +86,21 @@
  * Private key for connection to AWS IoT endpoint.  The corresponding
  * public key should be registered with the AWS IoT endpoint.
  */
-#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS       "0xE0F2"
+#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS       "0xE0F0"
 
 /**
  * @brief The PKCS #11 label for device public key.
  *
  * The public key corresponding to pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS.
  */
-#define pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS        "0xF1D2"
+#define pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS        "0xF1D1"
 
 /**
  * @brief The PKCS #11 label for the device certificate.
  *
  * Device certificate corresponding to pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS.
  */
-#define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS       "0xE0E2"
+#define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS       "0xE0E0"
 
 /**
  * @brief The PKCS #11 label for the object to be used for code verification.
@@ -116,7 +116,7 @@
  * (pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS) when using the JITR or
  * JITP flow.
  */
-#define pkcs11configLABEL_JITP_CERTIFICATE                 "0xE0E2"
+#define pkcs11configLABEL_JITP_CERTIFICATE                 "0xE0E0"
 
 /**
  * @brief The PKCS #11 label for the AWS Trusted Root Certificate.
