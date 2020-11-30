@@ -148,26 +148,23 @@ void ETH0_0_IRQHandler(void)
   ulStatusRegister = XMC_ETH_MAC_GetEventStatus(&eth_mac);
   XMC_ETH_MAC_ClearEventStatus(&eth_mac, ulStatusRegister);
 
-  if (netif_task_handler != 0)
-  {
-    /* xHigherPriorityTaskWoken must be initialised to pdFALSE.  If calling
-       xTaskNotifyFromISR() unblocks the handling task, and the priority of
-       the handling task is higher than the priority of the currently running task,
-       then xHigherPriorityTaskWoken will automatically get set to pdTRUE. */
-    xHigherPriorityTaskWoken = pdFALSE;
+  /* xHigherPriorityTaskWoken must be initialised to pdFALSE.  If calling
+     xTaskNotifyFromISR() unblocks the handling task, and the priority of
+     the handling task is higher than the priority of the currently running task,
+     then xHigherPriorityTaskWoken will automatically get set to pdTRUE. */
+  xHigherPriorityTaskWoken = pdFALSE;
 
-    /* Unblock the handling task so the task can perform any processing necessitated
-       by the interrupt.  xHandlingTask is the task's handle, which was obtained
-       when the task was created.  The handling task's notification value
-       is bitwise ORed with the interrupt status - ensuring bits that are already
-       set are not overwritten. */
-    xTaskNotifyFromISR(netif_task_handler, ulStatusRegister, eSetBits, &xHigherPriorityTaskWoken );
+  /* Unblock the handling task so the task can perform any processing necessitated
+     by the interrupt.  xHandlingTask is the task's handle, which was obtained
+     when the task was created.  The handling task's notification value
+     is bitwise ORed with the interrupt status - ensuring bits that are already
+     set are not overwritten. */
+  xTaskNotifyFromISR(netif_task_handler, ulStatusRegister, eSetBits, &xHigherPriorityTaskWoken );
 
-    /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
-       The macro used to do this is dependent on the port and may be called
-       portEND_SWITCHING_ISR. */
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-  }
+  /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+     The macro used to do this is dependent on the port and may be called
+     portEND_SWITCHING_ISR. */
+  portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
 #if (ipconfigZERO_COPY_RX_DRIVER == 0)
@@ -320,7 +317,7 @@ static void set_link_up(void)
   XMC_ETH_MAC_SetLink(&eth_mac, speed, duplex);
 
   /* Enable ethernet interrupts */
-  XMC_ETH_MAC_EnableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_TRANSMIT));
+  XMC_ETH_MAC_EnableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_RECEIVE_BUFFER_UNAVAILABLE | XMC_ETH_MAC_EVENT_TRANSMIT));
 
   NVIC_SetPriority(ETH0_0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 62U, 0U));
   NVIC_ClearPendingIRQ(ETH0_0_IRQn);
@@ -334,7 +331,7 @@ static void set_link_up(void)
 
 static void set_link_down(void)
 {
-  XMC_ETH_MAC_DisableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_TRANSMIT));
+  XMC_ETH_MAC_DisableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_RECEIVE_BUFFER_UNAVAILABLE | XMC_ETH_MAC_EVENT_TRANSMIT));
   NVIC_DisableIRQ(ETH0_0_IRQn);
 
   XMC_ETH_MAC_DisableTx(&eth_mac);
@@ -360,7 +357,7 @@ static void netif_task(void *arg)
                     &ulInterruptStatus, /* Receives the notification value. */
                     portMAX_DELAY);     /* Block indefinitely. */
 
-    if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_RECEIVE) != 0)
+    if ((ulInterruptStatus & (XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_RECEIVE_BUFFER_UNAVAILABLE)) != 0)
     {
       /* Go through the application owned descriptors */
       while (XMC_ETH_MAC_IsRxDescriptorOwnedByDma(&eth_mac) == pdFALSE)
@@ -516,7 +513,7 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxNetworkB
 BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxDescriptor, BaseType_t xReleaseAfterSend )
 {
   (void)xReleaseAfterSend;
-  const TickType_t xBlockTimeTicks = pdMS_TO_TICKS(50u);
+  const TickType_t xBlockTimeTicks = pdMS_TO_TICKS(250);
   BaseType_t xReturn = pdFAIL;
 
   do
@@ -586,6 +583,9 @@ void vNetworkInterfaceAllocateRAMToBuffers(
     /* pucEthernetBuffer is set to point ipBUFFER_PADDING bytes in from the
        beginning of the allocated buffer. */
     pxDescriptor[ x ].pucEthernetBuffer = &( ucBuffers[ x ][ ipBUFFER_PADDING ] );
+    pxDescriptor[ x ].xDataLength = 0;
+    pxDescriptor[ x ].usPort = 0;
+    pxDescriptor[ x ].usBoundPort = 0;
 
     /* The following line is also required, but will not be required in
        future versions. */
