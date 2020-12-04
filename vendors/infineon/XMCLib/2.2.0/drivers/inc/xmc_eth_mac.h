@@ -90,6 +90,9 @@
  *     - Added XMC_ETH_MAC_SetRxBuffer(), XMC_ETH_MAC_SetRxBufferEx()
  *     - Added XMC_ETH_MAC_SetTxBufferSizeEx()
  *
+ * 2020-11-12:
+ *     - Fixed XMC_ETH_MAC_GetAddress()
+ * 
  * @endcond
  */
 
@@ -497,19 +500,6 @@ void XMC_ETH_MAC_Disable(XMC_ETH_MAC_t *const eth_mac);
 
 /**
  * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
- * @return bool
- *
- * \par<b>Description: </b><br>
- * Check if the ETH MAC is enabled <br>
- *
- * \par
- * The function checks if the ETH MAC is enabled or not. It returns "true" if the
- * peripheral is enabled, "false" otherwise.
- */
-bool XMC_ETH_MAC_IsEnabled(const XMC_ETH_MAC_t *const eth_mac);
-
-/**
- * @param eth_mac A constant pointer to XMC_ETH_MAC_t, pointing to the ETH MAC base address
  * @return None
  *
  * \par<b>Description: </b><br>
@@ -640,7 +630,9 @@ void XMC_ETH_MAC_SetAddressEx(XMC_ETH_MAC_t *const eth_mac, const uint8_t *const
  */
 __STATIC_INLINE uint64_t XMC_ETH_MAC_GetAddress(XMC_ETH_MAC_t *const eth_mac)
 {
-  return ((((uint64_t)eth_mac->regs->MAC_ADDRESS0_HIGH << 32)) | (uint64_t)eth_mac->regs->MAC_ADDRESS0_LOW);
+  uint32_t mac_addr_high = eth_mac->regs->MAC_ADDRESS0_HIGH;
+  uint32_t mac_addr_low = eth_mac->regs->MAC_ADDRESS0_HIGH;
+  return ((((uint64_t)mac_addr_high << 32)) | (uint64_t)mac_addr_low);
 }
 
 /**

@@ -34,8 +34,8 @@
 
 /**
  * @file SAI.c
- * @date 16 Dec., 2019
- * @version 1.4
+ * @date 19 Nov., 2020
+ * @version 1.5
  *
  * @brief SAI CMSIS Driver for Infineon XMC devices
  *
@@ -46,11 +46,10 @@
  * Version 1.2 Conditional compiling based on RTE_Drivers_SAI
  * Version 1.3 Fix compiler warnings
  * Version 1.4 Added interrupt priority
+ * Version 1.5 Fixed compiler warnings
  */
 
 #include "SAI.h"
-#include "RTE_Device.h"
-#include "RTE_Components.h"
 
 #if defined(RTE_Drivers_SAI)
 
@@ -58,7 +57,7 @@
 #error "SAI not configured in RTE_Device.h!"
 #endif
 
-#define ARM_SAI_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(1, 4) /* driver version */
+#define ARM_SAI_DRV_VERSION    ARM_DRIVER_VERSION_MAJOR_MINOR(1, 5) /* driver version */
 
 /* Driver Version */
 static const ARM_DRIVER_VERSION i2s_driver_version = 

@@ -1,6 +1,6 @@
 /**
  * @file xmc_i2c.c
- * @date 2019-12-16
+ * @date 2020-09-02
  *
  * @cond
  *****************************************************************************
@@ -67,6 +67,9 @@
  *
  * 2019-12-16:
  *     - Fix including files following the convention: angle brackets are used for standard includes and double quotes for everything else.
+ *
+ * 2020-09-02:
+ *     - Fixed XMC_I2C_CH_SetSlaveAddress
  *
  * @endcond
  *

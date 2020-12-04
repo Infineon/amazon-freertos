@@ -46,11 +46,13 @@
 
 #ifndef USBH_H_
 #define USBH_H_
-#include <stdint.h>
+
 #include "xmc_common.h"
 #include "xmc_scu.h"
 #include "xmc_gpio.h"
+
 #include "Driver_USBH.h"
+#include "RTE_Components.h"
 #include "RTE_Device.h"
 
 #ifndef USBH0_MAX_PIPE_NUM

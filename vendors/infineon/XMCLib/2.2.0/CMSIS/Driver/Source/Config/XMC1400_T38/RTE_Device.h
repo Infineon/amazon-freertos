@@ -34,8 +34,8 @@
 
 /**
  * @file RTE_Device.h
- * @date 16 Dec., 2019
- * @version 1.2.0
+ * @date 16 Nov., 2020
+ * @version 1.3.0
  *
  * @brief RTE Device Configuration for Infineon XMC1401/2_T38
  *
@@ -49,6 +49,9 @@
  * Version 1.2.0
  * - [New] Added IRQ priority setting for drivers
  * - [New] Added Hold delay option for I2C driver
+ * 
+ * Version 1.3.0
+ * - [Changed] Added definitions for not used USIC channels
  * 
  */
 
@@ -464,6 +467,10 @@
 #define RTE_UART3_IRQ_PRIORITY  3
 
 // </e>
+
+#define RTE_UART4                      0
+#define RTE_UART5                      0
+
 // <e> SPI0 (Serial peripheral interface) [Driver_SPI0]
 // <i> Configuration settings for Driver_SPI0 in component ::Drivers:SPI
 #define RTE_SPI0                      0
@@ -1209,6 +1216,10 @@
 #define RTE_SPI3_IRQ_PRIORITY  3
 
 //</e>
+
+#define RTE_SPI4                      0
+#define RTE_SPI5                      0
+
 // <e> I2C0 (Inter-Integrated circuit) [Driver_I2C0]
 // <i> Configuration settings for Driver_I2C0 in component ::Drivers:I2C
 #define RTE_I2C0                      0
@@ -1750,6 +1761,9 @@
 #define RTE_I2C3_HDEL  0
 
 //</e>
+
+#define RTE_I2C4                      0
+#define RTE_I2C5                      0
 
 // <e> I2S0 (Inter-Integrated Sound) [Driver_SAI0]
 // <i> Configuration settings for Driver_SAI0 in component ::Drivers:SAI
@@ -2307,6 +2321,9 @@
 // <i> Default: 3
 #define RTE_I2S3_IRQ_PRIORITY  3
 //</e>
+
+#define RTE_I2S4                      0
+#define RTE_I2S5                      0
 
 #if ((RTE_UART0+RTE_I2C0+RTE_SPI0+RTE_I2S0)>1)
 #error "Choose just one Driver_I2C0/SPI0/UART0/SAI0 driver !"

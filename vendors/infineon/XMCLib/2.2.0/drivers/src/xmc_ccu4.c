@@ -1079,14 +1079,12 @@ void XMC_CCU4_SLICE_SetInterruptNode(XMC_CCU4_SLICE_t *const slice,
                                      const XMC_CCU4_SLICE_SR_ID_t sr)
 {
   uint32_t srs;
-  int32_t pos = -1;
-  uint32_t mask = 0;
+  int32_t pos;
+  uint32_t mask;
 
   XMC_ASSERT("XMC_CCU4_SLICE_SetInterruptNode:Invalid Slice Pointer", XMC_CCU4_IsValidSlice(slice));
   XMC_ASSERT("XMC_CCU4_SLICE_SetInterruptNode:Invalid SR ID ", XMC_CCU4_SLICE_CHECK_SR_ID(sr));
   XMC_ASSERT("XMC_CCU4_SLICE_SetInterruptNode:Invalid event", XMC_CCU4_SLICE_CHECK_INTERRUPT(event));
-
-  srs = slice->SRS;
 
   switch (event)
   {
@@ -1117,11 +1115,20 @@ void XMC_CCU4_SLICE_SetInterruptNode(XMC_CCU4_SLICE_t *const slice,
       mask = ((uint32_t) CCU4_CC4_SRS_E2SR_Msk);
       pos  = CCU4_CC4_SRS_E2SR_Pos;
       break;
+	  
+	default:
+	  mask = 0;
+	  pos = 0;
+	  break;
   }
 
-  srs &= ~mask;
-  srs |= (uint32_t)sr << pos;
-  slice->SRS = srs;
+  if (mask != 0)
+  {
+    srs = slice->SRS;
+    srs &= ~mask;
+    srs |= (uint32_t)sr << pos;
+    slice->SRS = srs;
+  }
 }
 
 /* Asserts passive level for the slice output */

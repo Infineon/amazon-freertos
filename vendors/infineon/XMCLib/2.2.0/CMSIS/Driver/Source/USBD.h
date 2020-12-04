@@ -56,10 +56,12 @@
 
 #ifndef USBD_H_
 #define USBD_H_
+
 #include "xmc_scu.h"
+
 #include "Driver_USBD.h"
-#include "RTE_Device.h"
 #include "RTE_Components.h"
+#include "RTE_Device.h"
 
 /**
  * \brief Driver interface function table

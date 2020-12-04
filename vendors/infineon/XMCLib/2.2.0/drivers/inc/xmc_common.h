@@ -169,13 +169,6 @@
 
 #define XMC_STRUCT_INIT(m) memset(&m, 0, sizeof(m))
 
-#define XMC_PRIOARRAY_DEF(name, size) \
-XMC_PRIOARRAY_ITEM_t prioarray_m_##name[size + 2]; \
-XMC_PRIOARRAY_t prioarray_def_##name = {(size), (prioarray_m_##name)};
-
-#define XMC_PRIOARRAY(name) \
-&prioarray_def_##name
-
 /**********************************************************************************************************************
  * DATA STRUCTURES
  *********************************************************************************************************************/
@@ -189,30 +182,6 @@ typedef struct XMC_DRIVER_VERSION
   uint8_t patch;
 } XMC_DRIVER_VERSION_t;
 
-/*
- *
- */
-typedef void *XMC_LIST_t;
-
-/*
- *
- */
-typedef struct XMC_PRIOARRAY_ITEM
-{
-  int32_t priority;
-  int32_t previous;
-  int32_t next;
-} XMC_PRIOARRAY_ITEM_t;
-
-/*
- *
- */
-typedef struct XMC_PRIOARRAY
-{
-  int32_t size;
-  XMC_PRIOARRAY_ITEM_t *items;
-} XMC_PRIOARRAY_t;
-
 /**********************************************************************************************************************
  * API PROTOTYPES
  *********************************************************************************************************************/
@@ -225,101 +194,6 @@ extern "C" {
  *
  */
 void XMC_AssertHandler(const char *const msg, const char *const file, uint32_t line);
-
-/*
- *
- */
-void XMC_LIST_Init(XMC_LIST_t *list);
-
-/*
- *
- */
-void XMC_LIST_Add(XMC_LIST_t *list, void *const item);
-
-/*
- *
- */
-void XMC_LIST_Remove(XMC_LIST_t *list, void *const item);
-
-/*
- *
- */
-uint32_t XMC_LIST_GetLength(XMC_LIST_t *list);
-
-/*
- *
- */
-void *XMC_LIST_GetHead(XMC_LIST_t *list);
-
-/*
- *
- */
-void *XMC_LIST_GetTail(XMC_LIST_t *list);
-
-/*
- *
- */
-void XMC_LIST_Insert(XMC_LIST_t *list, void *prev_item, void *new_item);
-
-/*
- *
- */
-void XMC_PRIOARRAY_Init(XMC_PRIOARRAY_t *prioarray);
-
-/*
- *
- */
-void XMC_PRIOARRAY_Add(XMC_PRIOARRAY_t *prioarray, int32_t item, int32_t priority);
-
-/*
- *
- */
-void XMC_PRIOARRAY_Remove(XMC_PRIOARRAY_t *prioarray, int32_t item);
-
-/*
- *
- */
-__STATIC_INLINE int32_t XMC_PRIOARRAY_GetHead(XMC_PRIOARRAY_t *prioarray)
-{
-  XMC_ASSERT("XMC_PRIOARRAY_Init: NULL pointer", prioarray != NULL);
-  return prioarray->items[prioarray->size].next;
-}
-
-/*
- *
- */
-__STATIC_INLINE int32_t XMC_PRIOARRAY_GetTail(XMC_PRIOARRAY_t *prioarray)
-{
-  XMC_ASSERT("XMC_PRIOARRAY_Init: NULL pointer", prioarray != NULL);
-  return prioarray->items[prioarray->size + 1].previous;
-}
-
-/*
- *
- */
-__STATIC_INLINE int32_t XMC_PRIOARRAY_GetItemPriority(XMC_PRIOARRAY_t *prioarray, int32_t item)
-{
-  XMC_ASSERT("XMC_PRIOARRAY_GetItemPriority: item out of range", (item >= 0) && (item < prioarray->size));
-  return prioarray->items[item].priority;
-}
-
-/*
- *
- */
-__STATIC_INLINE int32_t XMC_PRIOARRAY_GetItemNext(XMC_PRIOARRAY_t *prioarray, int32_t item)
-{
-  XMC_ASSERT("XMC_PRIOARRAY_GetItemNext: item out of range", (item >= 0) && (item < prioarray->size));
-  return prioarray->items[item].next;
-}
-
-/*
- *
- */
-__STATIC_INLINE int32_t XMC_PRIOARRAY_GetItemPrevious(XMC_PRIOARRAY_t *prioarray, int32_t item)
-{
-  XMC_ASSERT("XMC_PRIOARRAY_GetItemPrevious: item out of range", (item >= 0) && (item < prioarray->size));
-  return prioarray->items[item].previous;
-}
 
 #ifdef __cplusplus
 }

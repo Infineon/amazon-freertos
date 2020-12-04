@@ -451,6 +451,9 @@ XMC_DMA_CH_STATUS_t XMC_DMA_CH_Init(XMC_DMA_t *const dma, const uint8_t channel,
           dma->CH[channel].CTLL |= (uint32_t)((uint32_t)GPDMA0_CH_CTLL_LLP_SRC_EN_Msk |
                                               (uint32_t)GPDMA0_CH_CTLL_LLP_DST_EN_Msk);
           break;
+
+        default:
+          break;
       }
 
       status = XMC_DMA_CH_STATUS_OK;

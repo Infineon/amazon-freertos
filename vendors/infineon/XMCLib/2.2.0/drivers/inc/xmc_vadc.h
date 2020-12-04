@@ -126,6 +126,12 @@
  * 2019-12-02:
  *     - Fix including files following the convention: angle brackets are used for standard includes and double quotes for everything else.
  *
+ * 2020-09-03:
+ *     - Added XMC_VADC_GROUP_GetPowerMode()
+ * 
+ * 2020-11-11:
+ *     - Fixed XMC_VADC_GLOBAL_SHS_SetAnalogReference() and XMC_VADC_GROUP_SetChannelAlias()
+ * 
  * @endcond
  *
  */
@@ -1957,7 +1963,7 @@ __STATIC_INLINE void XMC_VADC_GLOBAL_SHS_SetAnalogReference(XMC_VADC_GLOBAL_SHS_
   XMC_ASSERT("XMC_VADC_GLOBAL_SHS_StepperInit:Wrong SHS Pointer",
              (shs_ptr == (XMC_VADC_GLOBAL_SHS_t *)(void *)SHS0))
 
-  shs_ptr->SHSCFG |=  (shs_ptr->SHSCFG & (uint32_t)~SHS_SHSCFG_AREF_Msk) | (uint32_t)aref | SHS_SHSCFG_SCWC_Msk;
+  shs_ptr->SHSCFG = (shs_ptr->SHSCFG & (uint32_t)~SHS_SHSCFG_AREF_Msk) | (uint32_t)aref | SHS_SHSCFG_SCWC_Msk;
 }
 
 #if(XMC_VADC_SHS_FULL_SET_REG == 1U)
@@ -2359,6 +2365,24 @@ void XMC_VADC_GROUP_SetSyncSlave(XMC_VADC_GROUP_t *const group_ptr, uint32_t mas
  * None
  */
 void XMC_VADC_GROUP_SetPowerMode(XMC_VADC_GROUP_t *const group_ptr, const XMC_VADC_GROUP_POWERMODE_t power_mode);
+
+/**
+ *
+ * @param group_ptr  Constant pointer to the VADC Group.
+ *
+ * @return
+ *    XMC_VADC_GROUP_POWERMODE_t Current power mode
+ *
+ * \par<b>Description:</b><br>
+ * Retrieves the power mode of a VADC group.
+ *
+ * \par<b>Related APIs:</b><BR>
+ * XMC_VADC_GROUP_SetPowerMode()<BR>
+ */
+__STATIC_INLINE int32_t XMC_VADC_GROUP_GetPowerMode(XMC_VADC_GROUP_t *const group_ptr)
+{
+  return ((group_ptr->ARBCFG & (uint32_t)VADC_G_ARBCFG_ANONS_Msk) >> VADC_G_ARBCFG_ANONS_Pos);
+}
 
 /**
  *
@@ -4311,8 +4335,8 @@ __STATIC_INLINE void XMC_VADC_GROUP_SetChannelAlias(XMC_VADC_GROUP_t *const grou
   XMC_ASSERT("XMC_VADC_GROUP_SetChannelAlias:Wrong Alias Channel", ((alias_ch_num == 0) || (alias_ch_num == 1U)))
   XMC_ASSERT("XMC_VADC_GROUP_SetChannelAlias:Wrong Aliased Channel", ((src_ch_num < 8U)))
 
-  group_ptr->ALIAS |= (group_ptr->ALIAS & (uint32_t)~(VADC_G_ALIAS_ALIAS0_Msk << (VADC_G_ALIAS_ALIAS1_Pos * src_ch_num))) |
-                      (alias_ch_num << (VADC_G_ALIAS_ALIAS1_Pos * src_ch_num));
+  group_ptr->ALIAS = (group_ptr->ALIAS & (uint32_t)~(VADC_G_ALIAS_ALIAS0_Msk << (VADC_G_ALIAS_ALIAS1_Pos * src_ch_num))) |
+                     (alias_ch_num << (VADC_G_ALIAS_ALIAS1_Pos * src_ch_num));
 }
 
 /**

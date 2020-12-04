@@ -299,7 +299,7 @@ typedef enum XMC_ERU_OGU_SERVICE_REQUEST
 /**
  * ERU module
  */
-typedef struct
+typedef struct XMC_ERU
 {
   union
   {

@@ -34,8 +34,8 @@
 
 /**
  * @file UART.h
- * @date 16 Dec., 2019
- * @version 2.9
+ * @date 19 Nov., 2020
+ * @version 2.10
  *
  * @brief UART Driver for Infineon XMC devices
  *
@@ -55,12 +55,18 @@
  *
  * Version 2.9 Added interrupt priority<br>
  *
+ * Version 2.10 Fixed compiler warnings
+ *
  */
 
-#include "Driver_USART.h"
+
 #include "xmc_scu.h"
 #include "xmc_gpio.h"
 #include "xmc_uart.h"
+
+#include "Driver_USART.h"
+#include "RTE_Components.h"
+#include "RTE_Device.h"
 
 // UART flags
 #define UART_INITIALIZED       (1 << 0)
@@ -143,6 +149,35 @@ typedef struct
   volatile UART_INFO     *info;                      // Run-Time Information
 } const UART_RESOURCES;
 
+#if (RTE_UART0 != 0)
+extern void UART0_ISR(void);
+extern ARM_DRIVER_USART Driver_USART0;
+#endif
+
+#if (RTE_UART1 != 0)
+extern void UART1_ISR(void);
+extern ARM_DRIVER_USART Driver_USART1;
+#endif
+
+#if (RTE_UART2 != 0)
+extern void UART2_ISR(void);
+extern ARM_DRIVER_USART Driver_USART2;
+#endif
+
+#if (RTE_UART3 != 0)
+extern void UART3_ISR(void);
+extern ARM_DRIVER_USART Driver_USART3;
+#endif
+
+#if (RTE_UART4 != 0)
+extern void UART4_ISR(void);
+extern ARM_DRIVER_USART Driver_USART4;
+#endif
+
+#if (RTE_UART5 != 0)
+extern void UART5_ISR(void);
+extern ARM_DRIVER_USART Driver_USART5;
+#endif
 
 
 

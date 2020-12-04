@@ -81,6 +81,9 @@
  * 2019-05-07:
  *     - Fix compilation issues on XMC45
  *     - Fix compilation warnings
+ * 
+ * 2020-11-12:
+ *     - Fix XMC_SDMMC_SetCardDetectionSource() and XMC_SDMMC_SetCardDetectionStatus()
  *
  * @endcond
  */
@@ -829,7 +832,7 @@ __STATIC_INLINE void XMC_SDMMC_SetCardDetectionSource(XMC_SDMMC_t *const sdmmc, 
   XMC_ASSERT("XMC_SDMMC_SetCardDetectionSource: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
 
 #if UC_SERIES == XMC45
-  sdmmc->HOST_CTRL |= (sdmmc->HOST_CTRL & (uint32_t)~SDMMC_HOST_CTRL_CARD_DET_SIGNAL_DETECT_Msk) | source;
+  sdmmc->HOST_CTRL = (sdmmc->HOST_CTRL & (uint32_t)~SDMMC_HOST_CTRL_CARD_DET_SIGNAL_DETECT_Msk) | source;
 #else
   XMC_UNUSED_ARG(sdmmc);
   *(uint32_t *)SDMMC_CON = (*(uint32_t *)SDMMC_CON & (uint32_t)~SDMMC_CON_CDSEL_Msk) | source;
@@ -854,7 +857,7 @@ __STATIC_INLINE void XMC_SDMMC_SetCardDetectionStatus(XMC_SDMMC_t *const sdmmc, 
   XMC_ASSERT("XMC_SDMMC_SetCardDetectionStatus: Invalid module pointer", XMC_SDMMC_CHECK_MODULE_PTR(sdmmc));
 
 #if UC_SERIES == XMC45
-  sdmmc->HOST_CTRL |= (sdmmc->HOST_CTRL & (uint32_t)~SDMMC_HOST_CTRL_CARD_DETECT_TEST_LEVEL_Msk) | status;
+  sdmmc->HOST_CTRL = (sdmmc->HOST_CTRL & (uint32_t)~SDMMC_HOST_CTRL_CARD_DETECT_TEST_LEVEL_Msk) | status;
 #else
   XMC_UNUSED_ARG(sdmmc);
   *(uint32_t *)SDMMC_CON = (*(uint32_t *)SDMMC_CON & (uint32_t)~SDMMC_CON_CDSVAL_Msk) | status;

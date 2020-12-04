@@ -34,8 +34,8 @@
 
 /**
  * @file UART.c
- * @date 16 Dec., 2019
- * @version 2.14
+ * @date 19 Nov., 2020
+ * @version 2.15
  *
  * @brief UART Driver for Infineon XMC devices
  *
@@ -67,11 +67,11 @@
  *
  * Version 2.14 Added interrupt priority
  *              Fix Receive functionality if FIFO enabled
+ *
+ * Version 2.15 Fixed compiler warnings
  */
 
 #include "UART.h"
-#include "RTE_Device.h"
-#include "RTE_Components.h"
 
 #if defined(RTE_Drivers_USART)
 
@@ -79,7 +79,7 @@
 #error "USART not configured in RTE_Device.h!"
 #endif
 
-#define ARM_USART_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,14)   /* driver version */
+#define ARM_USART_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,15)   /* driver version */
 
 // Driver Version
 static const ARM_DRIVER_VERSION DriverVersion = 

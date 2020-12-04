@@ -34,8 +34,8 @@
 
 /**
  * @file I2C.h
- * @date 16 Dec., 2019
- * @version 2.4
+ * @date 19 Nov., 2020
+ * @version 2.5
  *
  * @brief I2C Driver for Infineon XMC devices
  *
@@ -45,15 +45,17 @@
  * Version 2.2 Added Status Structure for handling the driver status<br>
  * Version 2.3 Adapted to xmc1400 devices<br>
  * Version 2.4 Added IRQ priority and HDEL settings<br>
+ * Version 2.5 Fixed compiler warnings
  *
  */
 
-
-#include "Driver_I2C.h"
 #include "xmc_scu.h"
 #include "xmc_gpio.h"
 #include "xmc_i2c.h"
 
+#include "Driver_I2C.h"
+#include "RTE_Components.h"
+#include "RTE_Device.h"
 
 // I2C flags
 #define I2C_FLAG_INITIALIZED       (1 << 0)
@@ -150,3 +152,33 @@ typedef struct
   uint32_t                rx_fifo_size_reg;   // FIFO rx size register
   volatile I2C_INFO       *info;              // Run-Time Information
 } const I2C_RESOURCES;
+
+#if (RTE_I2C0 != 0)
+extern void I2C0_ISR(void);
+extern ARM_DRIVER_I2C Driver_I2C0;
+#endif
+
+#if (RTE_I2C1 != 0)
+extern void I2C1_ISR(void);
+extern ARM_DRIVER_I2C Driver_I2C1;
+#endif
+
+#if (RTE_I2C2 != 0)
+extern void I2C2_ISR(void);
+extern ARM_DRIVER_I2C Driver_I2C2;
+#endif
+
+#if (RTE_I2C3 != 0)
+extern void I2C3_ISR(void);
+extern ARM_DRIVER_I2C Driver_I2C3;
+#endif
+
+#if (RTE_I2C4 != 0)
+extern void I2C4_ISR(void);
+extern ARM_DRIVER_I2C Driver_I2C4;
+#endif
+
+#if (RTE_I2C5 != 0)
+extern void I2C5_ISR(void);
+extern ARM_DRIVER_I2C Driver_I2C5;
+#endif

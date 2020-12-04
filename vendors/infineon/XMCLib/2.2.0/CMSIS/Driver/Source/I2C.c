@@ -71,8 +71,6 @@
  */
 
 #include "I2C.h"
-#include "RTE_Device.h"
-#include "RTE_Components.h"
 
 #if defined(RTE_Drivers_I2C)
 

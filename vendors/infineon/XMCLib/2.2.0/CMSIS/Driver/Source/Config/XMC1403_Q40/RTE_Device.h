@@ -34,8 +34,8 @@
 
 /**
  * @file RTE_Device.h
- * @date 16 Dec., 2019
- * @version 1.2.0
+ * @date 16 Nov., 2020
+ * @version 1.4.0
  *
  * @brief RTE Device Configuration for Infineon XMC1403/4_Q40
  *
@@ -52,6 +52,12 @@
  * Version 1.2.0
  * - [New] Added IRQ priority setting for drivers
  * - [New] Added Hold delay option for I2C driver
+ * 
+ * Version 1.3.0
+ * - [New] Added CAN clock source selection
+ * 
+ * Version 1.4.0
+ * - [Changed] Added definitions for not used USIC channels
  * 
  */
 
@@ -71,6 +77,16 @@
 #define FIFO_SIZE_8 3
 #define FIFO_SIZE_16 4
 #define FIFO_SIZE_32 5
+
+/*
+//    <o> CAN clock source
+//       <1=> MCLK
+//       <2=> OSC_HP
+//    <i> Default: MCLK
+*/
+#define RTE_CAN_CLKSRC 1
+#define RTE_CAN_CLKSRC_MCLK 1
+#define RTE_CAN_CLKSRC_OSC_HP 2
 
 // <e> CAN0 (Controller area network) [Driver_CAN0]
 // <i> Configuration settings for Driver_CAN0 in component ::Drivers:CAN
@@ -139,7 +155,7 @@
 // <o>IRQ Priority <0-63>
 // <i> Defines priority of CAN events IRQ handling
 // <i> Default: 63
-#define RTE_CAN0_IRQ_PRIORITY  63
+#define RTE_CAN0_IRQ_PRIORITY  3
 
 // </e>
 
@@ -198,9 +214,14 @@
 // <o>IRQ Priority <0-63>
 // <i> Defines priority of CAN events IRQ handling
 // <i> Default: 63
-#define RTE_CAN1_IRQ_PRIORITY  63
+#define RTE_CAN1_IRQ_PRIORITY  3
 
 // </e>
+
+#define RTE_CAN2                      0
+#define RTE_CAN3                      0
+#define RTE_CAN4                      0
+#define RTE_CAN5                      0
 
 // <e> UART0 (Universal asynchronous receiver transmitter) [Driver_USART0]
 // <i> Configuration settings for Driver_USART0 in component ::Drivers:UART
@@ -606,6 +627,10 @@
 #define RTE_UART3_IRQ_PRIORITY  3
 
 // </e>
+
+#define RTE_UART4                      0
+#define RTE_UART5                      0
+
 // <e> SPI0 (Serial peripheral interface) [Driver_SPI0]
 // <i> Configuration settings for Driver_SPI0 in component ::Drivers:SPI
 #define RTE_SPI0                      0
@@ -1375,6 +1400,10 @@
 #define RTE_SPI3_IRQ_PRIORITY  3
 
 //</e>
+
+#define RTE_SPI4                      0
+#define RTE_SPI5                      0
+
 // <e> I2C0 (Inter-Integrated circuit) [Driver_I2C0]
 // <i> Configuration settings for Driver_I2C0 in component ::Drivers:I2C
 #define RTE_I2C0                      0
@@ -1918,6 +1947,9 @@
 #define RTE_I2C3_HDEL  0
 
 //</e>
+
+#define RTE_I2C4                      0
+#define RTE_I2C5                      0
 
 // <e> I2S0 (Inter-Integrated Sound) [Driver_SAI0]
 // <i> Configuration settings for Driver_SAI0 in component ::Drivers:SAI
@@ -2481,6 +2513,9 @@
 // <i> Default: 3
 #define RTE_I2S3_IRQ_PRIORITY  3
 //</e>
+
+#define RTE_I2S4                      0
+#define RTE_I2S5                      0
 
 #if ((RTE_UART0+RTE_I2C0+RTE_SPI0+RTE_I2S0)>1)
 #error "Choose just one Driver_I2C0/SPI0/UART0/SAI0 driver !"

@@ -182,8 +182,8 @@
 
 #elif OSCHP_FREQUENCY == 12000000U
 #define PLL_PDIV (1U)
-#define PLL_NDIV (39U)
-#define PLL_K2DIV (2U)
+#define PLL_NDIV (79U)
+#define PLL_K2DIV (5U)
 
 #elif OSCHP_FREQUENCY == 16000000U
 #define PLL_PDIV (1U)

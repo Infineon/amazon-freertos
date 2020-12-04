@@ -95,9 +95,9 @@
 #include "xmc_gpio.h"
 
 #include "Driver_ETH_MAC.h"
-
-#include "RTE_Device.h"
 #include "RTE_Components.h"
+#include "RTE_Device.h"
+
 
 #if defined(RTE_Drivers_ETH_MAC)
 

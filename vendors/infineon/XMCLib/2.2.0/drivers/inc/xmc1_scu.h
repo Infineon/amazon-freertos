@@ -1,6 +1,6 @@
 /**
  * @file xmc1_scu.h
- * @date 2019-12-16
+ * @date 2020-12-03
  *
  * @cond
  *****************************************************************************
@@ -81,6 +81,9 @@
  * 2019-10-11:
  *     - Added XMC_SCU_CLOCK_ADCCLKSRC_t and XMC_SCU_CLOCK_SetAdcClockSrc()
  *
+ * 2020-12-03:
+ *     - Renamed XMC_SCU_IRQCTRL_CAN0_SR4_IRQ20 to XMC_SCU_IRQCTRL_CAN0_SR3_IRQ20
+ * 
  * @endcond
  *
  */
@@ -588,7 +591,7 @@ typedef enum XMC_SCU_IRQCTRL
   XMC_SCU_IRQCTRL_VADC0_G1SR1_IRQ20              = (20U << 8U) | 0U, /**< VADC0_G1SR1 connected to IRQ20 */
   XMC_SCU_IRQCTRL_USIC0_SR5_IRQ20                = (20U << 8U) | 1U, /**< USIC0_SR5 connected to IRQ20 */
 #if defined(CAN)
-  XMC_SCU_IRQCTRL_CAN0_SR4_IRQ20                 = (20U << 8U) | 2U, /**< CAN0_SR4 connected to IRQ20 */
+  XMC_SCU_IRQCTRL_CAN0_SR3_IRQ20                 = (20U << 8U) | 2U, /**< CAN0_SR3 connected to IRQ20 */
 #endif
   XMC_SCU_IRQCTRL_VADC0_G1SR1_OR_USIC0_SR5_IRQ20 = (20U << 8U) | 3U, /**< VADC0_G1SR1 and USIC0_SR5 connected to IRQ20 */
 

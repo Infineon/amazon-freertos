@@ -1,6 +1,6 @@
 /**
  * @file xmc_usbh.c
- * @date 2019-12-03
+ * @date 2020-11-20
  *
  * @cond
  *****************************************************************************
@@ -51,13 +51,15 @@
  *     - Fixed compilation warnings
  * 2019-12-03:
  *     - Fixed compilation warnings
+ * 2020-11-20:
+ *     - Fixed compilation errors for XMC4504
  * @endcond
  *
  */
 
 #include "xmc_usbh.h"
 
-#if ((UC_SERIES == XMC45) || (UC_SERIES == XMC44) || (UC_SERIES == XMC43) || (UC_SERIES == XMC47) || (UC_SERIES == XMC48))
+#if defined(USB0) && ((UC_SERIES == XMC45) || (UC_SERIES == XMC44) || (UC_SERIES == XMC43) || (UC_SERIES == XMC47) || (UC_SERIES == XMC48))
 
 /*Function provides transfer result*/
 static uint32_t XMC_USBH_PipeTransferGetResult (XMC_USBH_PIPE_HANDLE pipe_hndl);
@@ -1287,7 +1289,8 @@ void XMC_USBH_HandleIrq (uint32_t gintsts)
       ch         = (uint32_t)(grxsts & USB_GRXSTSR_DEVICEMODE_EPNum_Msk);
       bcnt       = ((uint32_t)(grxsts & USB_GRXSTSR_DEVICEMODE_BCnt_Msk) >> USB_GRXSTSR_DEVICEMODE_BCnt_Pos);
       dfifo      = (uint32_t *)XMC_USBH0_dfifo_ptr[ch];
-      ptr_data   =  pipe[ch].data + pipe[ch].num_transferred_total;
+      ptr_data   =  pipe[ch].data;
+      ptr_data   += pipe[ch].num_transferred_total;
       len        =  bcnt / 4U; /* Received number of 32-bit data */
       len_rest   =  bcnt & 3U; /* Number of bytes left */
       /* Read data from fifo */
