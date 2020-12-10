@@ -168,7 +168,7 @@ void ETH0_0_IRQHandler(void)
 }
 
 #if (ipconfigZERO_COPY_RX_DRIVER == 0)
-static void prvNetworkInterfaceInput(void)
+static BaseType_t prvNetworkInterfaceInput(void)
 {
   uint32_t xReceivedLength;
   uint8_t *pucBuffer;
@@ -210,63 +210,74 @@ static void prvNetworkInterfaceInput(void)
   XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
   XMC_ETH_MAC_ResumeRx(&eth_mac);
 
+	return ( xReceivedLength > 0 );
+
 }
 #else
-static void prvNetworkInterfaceInput(void)
+static BaseType_t prvNetworkInterfaceInput(void)
 {
   uint32_t xReceivedLength;
   uint8_t *pucBuffer;
-  NetworkBufferDescriptor_t *pxDescriptor;
+  NetworkBufferDescriptor_t *pxCurDescriptor;
+  NetworkBufferDescriptor_t *pxNewDescriptor = NULL;
+
   const TickType_t xDescriptorWaitTime = pdMS_TO_TICKS( 250 );
   xIPStackEvent_t xRxEvent = { eNetworkRxEvent, NULL };
 
   xReceivedLength = XMC_ETH_MAC_GetRxFrameSize(&eth_mac);
-  if ((xReceivedLength > 0) && (xReceivedLength <= ipTOTAL_ETHERNET_FRAME_SIZE))
+  if (xReceivedLength > 0)
   {
-    pucBuffer = XMC_ETH_MAC_GetRxBuffer(&eth_mac);
-
-    if (ipCONSIDER_FRAME_FOR_PROCESSING(pucBuffer))
+    /* Check if it is a valid frame */
+    if (xReceivedLength <= ipTOTAL_ETHERNET_FRAME_SIZE)
     {
-      /* Allocate a new network buffer descriptor that references an Ethernet
-         frame large enough to hold the maximum network packet size (as defined
-         in the FreeRTOSIPConfig.h header file). */
-      pxDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, xDescriptorWaitTime);
-      if (pxDescriptor != NULL)
+      pucBuffer = XMC_ETH_MAC_GetRxBuffer(&eth_mac);
+
+      if (ipCONSIDER_FRAME_FOR_PROCESSING(pucBuffer))
       {
-        XMC_ETH_MAC_SetRxBuffer(&eth_mac, pxDescriptor->pucEthernetBuffer);
-
-        pxDescriptor->pucEthernetBuffer = pucBuffer;
-        pxDescriptor->xDataLength = xReceivedLength;
-
-        *( ( NetworkBufferDescriptor_t ** )
-          ( pxDescriptor->pucEthernetBuffer - ipBUFFER_PADDING ) ) = pxDescriptor;
-
-        /*
-         * The network buffer descriptor now points to the Ethernet buffer that
-         * contains the received data, and the Ethernet DMA descriptor now points
-         * to a newly allocated (and empty) Ethernet buffer ready to receive more
-         * data.  No data was copied.  Only pointers to data were swapped.
-         */
-
-        xRxEvent.pvData = ( void * )pxDescriptor;
-
-        /* Pass the data to the TCP/IP task for processing. */
-        if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
+        /* Allocate a new network buffer descriptor that references an Ethernet
+           frame large enough to hold the maximum network packet size (as defined
+           in the FreeRTOSIPConfig.h header file). */
+        pxNewDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, xDescriptorWaitTime);
+        if (pxNewDescriptor != NULL)
         {
-          /* Could not send the descriptor into the TCP/IP stack, it must be released. */
-          vReleaseNetworkBufferAndDescriptor(pxDescriptor);
-          iptraceETHERNET_RX_EVENT_LOST();
-        }
-        else
-        {
-          iptraceNETWORK_INTERFACE_RECEIVE();
+          XMC_ETH_MAC_SetRxBuffer(&eth_mac, pxNewDescriptor->pucEthernetBuffer);
+
+			    pxCurDescriptor = pxPacketBuffer_to_NetworkBuffer( pucBuffer );
+			    configASSERT( pxCurDescriptor != NULL );
+
+          pxCurDescriptor->xDataLength = xReceivedLength;
+
+          /*
+           * The network buffer descriptor now points to the Ethernet buffer that
+           * contains the received data, and the Ethernet DMA descriptor now points
+           * to a newly allocated (and empty) Ethernet buffer ready to receive more
+           * data.  No data was copied.  Only pointers to data were swapped.
+           */
+
+          xRxEvent.pvData = ( void * )pxCurDescriptor;
+
+          /* Pass the data to the TCP/IP task for processing. */
+          if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
+          {
+            /* Could not send the descriptor into the TCP/IP stack, it must be released. */
+            vReleaseNetworkBufferAndDescriptor(pxCurDescriptor);
+            iptraceETHERNET_RX_EVENT_LOST();
+          }
+          else
+          {
+            iptraceNETWORK_INTERFACE_RECEIVE();
+          }
         }
       }
     }
+
+    XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
   }
 
-  XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
   XMC_ETH_MAC_ResumeRx(&eth_mac);
+
+	return ( xReceivedLength > 0 );
+
 }
 #endif
 
@@ -287,7 +298,7 @@ static void vClearTXBuffers()
       NetworkBufferDescriptor_t *pxDescriptor = pxPacketBuffer_to_NetworkBuffer(ucPayLoad);
       if (pxDescriptor != NULL)
       {
-      vReleaseNetworkBufferAndDescriptor(pxDescriptor);
+        vReleaseNetworkBufferAndDescriptor(pxDescriptor);
       }
       XMC_ETH_MAC_SetTxBufferEx(&eth_mac, ulTxDescriptorToClear, 0);
     }
@@ -359,11 +370,7 @@ static void netif_task(void *arg)
 
     if ((ulInterruptStatus & (XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_RECEIVE_BUFFER_UNAVAILABLE)) != 0)
     {
-      /* Go through the application owned descriptors */
-      while (XMC_ETH_MAC_IsRxDescriptorOwnedByDma(&eth_mac) == pdFALSE)
-      {
-        prvNetworkInterfaceInput();
-      }
+	  	while (prvNetworkInterfaceInput());
     }
 
     if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_TRANSMIT) != 0 )
