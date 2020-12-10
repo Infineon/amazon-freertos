@@ -1,6 +1,6 @@
 /**
  * @file xmc_i2c.h
- * @date 2019-12-10
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -86,6 +86,9 @@
  * 2019-12-10:
  *     - Added XMC_I2C_CH_SetHoldDelay()
  *
+ * 2020-12-05:
+ *    - Added XMC_I2C_CH_InitEx() that allows user select if automatic baudrate configuration should be done or not
+ * 
  * @endcond
  *
  */
@@ -285,6 +288,7 @@ extern "C" {
 /**
  * @param channel Constant pointer to USIC channel structure of type @ref XMC_USIC_CH_t
  * @param config  Constant pointer to I2C channel config structure of type @ref XMC_I2C_CH_CONFIG_t
+ * @param init_brg Selects if the baudrate generator should be configured automatically.
  *
  * @return None<br>
  *
@@ -298,8 +302,28 @@ extern "C" {
  * \par<b>Related APIs:</b><br>
  * XMC_USIC_CH_Enable()\n\n
  */
+void XMC_I2C_CH_InitEx(XMC_USIC_CH_t *const channel, const XMC_I2C_CH_CONFIG_t *const config, bool init_brg);
 
-void XMC_I2C_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2C_CH_CONFIG_t *const config);
+/**
+ * @param channel Constant pointer to USIC channel structure of type @ref XMC_USIC_CH_t
+ * @param config  Constant pointer to I2C channel config structure of type @ref XMC_I2C_CH_CONFIG_t
+ *
+ * @return None<br>
+ *
+ * \par<b>Description:</b><br>
+ * Initializes the I2C \a channel.<br>
+ *
+ * \par
+ * Configures the data format in SCTR register. Sets the slave address, baud rate. Enables transmit data valid, clears status flags
+ * and disables parity generation.<br>
+ *
+ * \par<b>Related APIs:</b><br>
+ * XMC_USIC_CH_Enable()\n\n
+ */
+__STATIC_INLINE void XMC_I2C_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2C_CH_CONFIG_t *const config)
+{
+  XMC_I2C_CH_InitEx(channel, config, true);
+}
 
 /**
  * @param channel Constant pointer to USIC channel structure of type @ref XMC_USIC_CH_t

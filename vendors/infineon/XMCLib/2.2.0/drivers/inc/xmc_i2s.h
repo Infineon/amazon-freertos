@@ -1,6 +1,6 @@
 /**
  * @file xmc_i2s.h
- * @date 2019-05-07
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -67,7 +67,9 @@
  *       It selects normal divider mode for baudrate generator instead of default fractional divider decreasing jitter at cost of frequency selection
  *     - Added XMC_I2S_CH_SetBaudrateEx()
  *
- *
+ * 2020-12-05:
+ *    - Added XMC_I2S_CH_InitEx() that allows user select if automatic baudrate configuration should be done or not
+ * 
  * @endcond
  *
  */
@@ -264,6 +266,7 @@ extern "C" {
  * @param channel Constant pointer to USIC channel handle of type @ref XMC_USIC_CH_t \n
  *          \b Range: @ref XMC_I2S0_CH0, XMC_I2S0_CH1,XMC_I2S1_CH0, XMC_I2S1_CH1,XMC_I2S2_CH0, XMC_I2S2_CH1 @note Availability of I2S1 and I2S2 depends on device selection
  * @param config Constant pointer to I2S configuration structure of type @ref XMC_I2S_CH_CONFIG_t.
+ * @param init_brg Selects if the baudrate generator should be configured automatically.
  * @return XMC_I2S_CH_STATUS_t Status of initializing the USIC channel for I2S protocol.\n
  *          \b Range: @ref XMC_I2S_CH_STATUS_OK if initialization is successful.\n
  *                    @ref XMC_I2S_CH_STATUS_ERROR if configuration of baudrate failed.
@@ -282,7 +285,34 @@ extern "C" {
  * \par<b>Related APIs:</b><BR>
  * XMC_I2S_CH_Start(), XMC_I2S_CH_Stop(), XMC_I2S_CH_Transmit(), XMC_I2S_CH_SetSystemWordLength()\n\n\n
  */
-void XMC_I2S_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2S_CH_CONFIG_t *const config);
+void XMC_I2S_CH_InitEx(XMC_USIC_CH_t *const channel, const XMC_I2S_CH_CONFIG_t *const config, bool init_brg);
+
+/**
+ * @param channel Constant pointer to USIC channel handle of type @ref XMC_USIC_CH_t \n
+ *          \b Range: @ref XMC_I2S0_CH0, XMC_I2S0_CH1,XMC_I2S1_CH0, XMC_I2S1_CH1,XMC_I2S2_CH0, XMC_I2S2_CH1 @note Availability of I2S1 and I2S2 depends on device selection
+ * @param config Constant pointer to I2S configuration structure of type @ref XMC_I2S_CH_CONFIG_t.
+ * @return XMC_I2S_CH_STATUS_t Status of initializing the USIC channel for I2S protocol.\n
+ *          \b Range: @ref XMC_I2S_CH_STATUS_OK if initialization is successful.\n
+ *                    @ref XMC_I2S_CH_STATUS_ERROR if configuration of baudrate failed.
+ *
+ * \par<b>Description</b><br>
+ * Initializes the USIC channel for I2S protocol.\n\n
+ * During the initialization, USIC channel is enabled and baudrate is configured.
+ * After each change of the WA signal, a complete data frame is intended to be transferred (frame length <= system word length).
+ * The number of data bits transferred after a change of signal WA is defined by config->frame_length.
+ * A data frame can consist of several data words with a data word length defined by config->data_bits.
+ * The changes of signal WA define the system word length as the number of SCLK cycles between two changes of WA.
+ * The system word length is set by default to the frame length defined by config->frame_length.
+ *
+ * XMC_I2S_CH_Start() should be invoked after the initialization to enable the channel.
+ *
+ * \par<b>Related APIs:</b><BR>
+ * XMC_I2S_CH_Start(), XMC_I2S_CH_Stop(), XMC_I2S_CH_Transmit(), XMC_I2S_CH_SetSystemWordLength()\n\n\n
+ */
+__STATIC_INLINE void XMC_I2S_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2S_CH_CONFIG_t *const config)
+{
+  XMC_I2S_CH_InitEx(channel, config, true);
+}
 
 /**
  * @param channel A constant pointer to XMC_USIC_CH_t, pointing to the USIC channel base address.

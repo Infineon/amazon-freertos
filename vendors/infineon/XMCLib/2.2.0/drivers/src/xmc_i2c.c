@@ -1,6 +1,6 @@
 /**
  * @file xmc_i2c.c
- * @date 2020-09-02
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -71,6 +71,9 @@
  * 2020-09-02:
  *     - Fixed XMC_I2C_CH_SetSlaveAddress
  *
+ * 2020-12-05:
+ *     - Added XMC_I2C_CH_InitEx that allows user select if automatic baudrate configuration should be done or not
+ * 
  * @endcond
  *
  */
@@ -122,7 +125,7 @@ typedef enum XMC_I2C_CH_CLOCK_OVERSAMPLING
  * API IMPLEMENTATION
  *********************************************************************************************************************/
 /* Initializes the USIC channel by setting the data format, slave address, baudrate, transfer buffer */
-void XMC_I2C_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2C_CH_CONFIG_t *const config)
+void XMC_I2C_CH_InitEx(XMC_USIC_CH_t *const channel, const XMC_I2C_CH_CONFIG_t *const config, bool init_brg)
 {
   XMC_USIC_CH_Enable(channel);
 
@@ -134,7 +137,11 @@ void XMC_I2C_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2C_CH_CONFIG_t *co
                   USIC_CH_SCTR_PDL_Msk;            /* Passive Data Level */
 
   XMC_I2C_CH_SetSlaveAddress(channel, config->address);
-  (void)XMC_I2C_CH_SetBaudrateEx(channel, config->baudrate, config->normal_divider_mode);
+
+  if (init_brg)
+  {
+    (void)XMC_I2C_CH_SetBaudrateEx(channel, config->baudrate, config->normal_divider_mode);
+  }
 
 
   /* Enable transfer buffer */
@@ -146,6 +153,7 @@ void XMC_I2C_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2C_CH_CONFIG_t *co
   /* Disable parity generation */
   channel->CCR = 0x0U;
 }
+
 /* Sets the slave address */
 void XMC_I2C_CH_SetSlaveAddress(XMC_USIC_CH_t *const channel, const uint16_t address)
 {

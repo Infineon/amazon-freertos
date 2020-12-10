@@ -1,6 +1,6 @@
 /**
  * @file xmc_spi.h
- * @date 2019-05-07
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -85,6 +85,9 @@
  * 2019-09-04:
  *    - Added XMC_SPI_CLOCK_MODE_t enum
  *
+ * 2020-12-05:
+ *    - Added XMC_SPI_CH_InitEx() that allows user select if automatic baudrate configuration should be done or not
+ * 
  * @endcond
  *
  */
@@ -369,6 +372,7 @@ extern "C" {
  * @param channel A constant pointer to XMC_USIC_CH_t, pointing to the USIC channel base address.
  * @param config pointer to constant SPI channel configuration data structure.\n
  *               Refer data structure @ref XMC_SPI_CH_CONFIG_t for detail.
+ * @param init_brg Selects if the baudrate generator should be configured automatically.
  *
  * @return None
  *
@@ -394,7 +398,41 @@ extern "C" {
  * <li>Enable Frame end mode(MSLS signal is kept active after transmission of a frame)</li>
  * </ul>
  */
-void XMC_SPI_CH_Init(XMC_USIC_CH_t *const channel, const XMC_SPI_CH_CONFIG_t *const config);
+void XMC_SPI_CH_InitEx(XMC_USIC_CH_t *const channel, const XMC_SPI_CH_CONFIG_t *const config, bool init_brg);
+
+/**
+ * @param channel A constant pointer to XMC_USIC_CH_t, pointing to the USIC channel base address.
+ * @param config pointer to constant SPI channel configuration data structure.\n
+ *               Refer data structure @ref XMC_SPI_CH_CONFIG_t for detail.
+ *
+ * @return None
+ *
+ * \par<b>Description:</b><br>
+ * Initializes the selected SPI \a channel with the \a config structure.\n\n
+ * Enable SPI channel by calling XMC_USIC_CH_Enable() and then configures
+ * <ul>
+ * <li>Baudrate,</li>
+ * <li>Passive data level as active high,</li>
+ * <li>Shift control signal as active high,</li>
+ * <li>Frame length as 64U,</li>
+ * <li>Word length as 8U,</li>
+ * <li>Enable Hardware port control mode,</li>
+ * <li>Enable transmission of data TDV(Transmit data valid) bit is set to 1,</li>
+ * <li>Enable invalidation of data in TBUF once loaded into shift register,</li>
+ * <li>Parity mode settings</li>
+ * </ul>
+ * And if master mode is selected,
+ * <ul>
+ * <li>Enables MSLS signal generation,</li>
+ * <li>configures slave selection as normal mode,</li>
+ * <li>Set polarity for the Slave signal,</li>
+ * <li>Enable Frame end mode(MSLS signal is kept active after transmission of a frame)</li>
+ * </ul>
+ */
+__STATIC_INLINE void XMC_SPI_CH_Init(XMC_USIC_CH_t *const channel, const XMC_SPI_CH_CONFIG_t *const config)
+{
+  XMC_SPI_CH_InitEx(channel, config, true);
+}
 
 /**
  * @param channel A constant pointer to XMC_USIC_CH_t, pointing to the USIC channel base address.

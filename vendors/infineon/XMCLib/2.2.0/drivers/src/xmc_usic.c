@@ -1,6 +1,6 @@
 /**
  * @file xmc_usic.c
- * @date 2019-09-25
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -79,6 +79,9 @@
  *     - Fixed XMC_USIC_CH_TXFIFO_SetSizeTriggerLimit() and  XMC_USIC_CH_RXFIFO_SetSizeTriggerLimit(), avoid disabling the FIFO while the channel is active.
  *       For new projects please use XMC_USIC_CH_TXFIFO_SetTriggerLimit() and XMC_USIC_CH_RXFIFO_SetTriggerLimit()
  *
+ * 2020-12-05:
+ *     - Added XMC_USIC_CH_SetBaudrateDivider()
+ * 
  * @endcond
  *
  */
@@ -252,6 +255,20 @@ XMC_USIC_CH_STATUS_t XMC_USIC_CH_SetBaudrateEx(XMC_USIC_CH_t *const channel, int
   }
 
   return status;
+}
+
+void XMC_USIC_CH_SetBaudrateDivider(XMC_USIC_CH_t *const channel, 
+                                    XMC_USIC_CH_BRG_CLOCK_SOURCE_t clksel,
+                                    bool pppen,
+                                    uint32_t pdiv,
+                                    XMC_USIC_CH_BRG_CTQSEL_t ctqsel,
+                                    uint32_t pctq,
+                                    uint32_t dctq)
+{
+    uint32_t regval = channel->BRG;
+    regval &= (uint32_t)~(USIC_CH_BRG_CLKSEL_Msk | USIC_CH_BRG_PPPEN_Msk | USIC_CH_BRG_PDIV_Msk | USIC_CH_BRG_CTQSEL_Msk | USIC_CH_BRG_PCTQ_Msk | USIC_CH_BRG_DCTQ_Msk);
+    regval |= clksel | (pppen ? USIC_CH_BRG_PPPEN_Msk : 0) | (pdiv << USIC_CH_BRG_PDIV_Pos) | ctqsel | (pctq << USIC_CH_BRG_PCTQ_Pos) | (dctq << USIC_CH_BRG_DCTQ_Pos);
+    channel->BRG = regval;
 }
 
 uint32_t XMC_USIC_CH_GetBaudrate(XMC_USIC_CH_t *const channel)

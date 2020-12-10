@@ -1,6 +1,6 @@
 /**
  * @file xmc1_ccu4_map.h
- * @date 2019-07-30
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -49,6 +49,9 @@
  *
  * 2019-07-30:
  *     - Added support for XMC1404-Q040
+ *
+ * 2020-12-05:
+ *     - Added CCU41_IN<x>_SCU_GSC41. CCU41_IN<x>_SCU_GSC40 are marked as deprecated
  *
  * @endcond
  */
@@ -1388,7 +1391,8 @@
 #define CCU41_IN0_P4_0                     	2
 #define CCU41_IN0_P4_4                     	21
 #define CCU41_IN0_P4_8                     	26
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_CCU40_ST1                	11
 #define CCU41_IN1_CCU41_GP02               	12
@@ -1409,7 +1413,8 @@
 #define CCU41_IN1_P4_1                     	2
 #define CCU41_IN1_P4_5                     	21
 #define CCU41_IN1_P4_9                     	26
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_CCU40_ST2                	11
 #define CCU41_IN2_CCU41_GP03               	12
@@ -1430,7 +1435,8 @@
 #define CCU41_IN2_P4_10                    	26
 #define CCU41_IN2_P4_2                     	2
 #define CCU41_IN2_P4_6                     	21
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_CCU40_ST3                	11
 #define CCU41_IN3_CCU41_GP00               	12
 #define CCU41_IN3_CCU41_SR1                	19
@@ -1450,7 +1456,8 @@
 #define CCU41_IN3_P4_11                    	26
 #define CCU41_IN3_P4_3                     	2
 #define CCU41_IN3_P4_7                     	21
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -1546,7 +1553,8 @@
 #define CCU41_IN0_P0_4                     	1
 #define CCU41_IN0_P3_0                     	0
 #define CCU41_IN0_P4_4                     	21
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_CCU40_ST1                	11
 #define CCU41_IN1_CCU41_GP02               	12
@@ -1565,7 +1573,8 @@
 #define CCU41_IN1_P0_5                     	1
 #define CCU41_IN1_P3_0                     	0
 #define CCU41_IN1_P4_5                     	21
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_CCU40_ST2                	11
 #define CCU41_IN2_CCU41_GP03               	12
@@ -1584,7 +1593,8 @@
 #define CCU41_IN2_P0_6                     	1
 #define CCU41_IN2_P3_0                     	0
 #define CCU41_IN2_P4_6                     	21
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_CCU40_ST3                	11
 #define CCU41_IN3_CCU41_GP00               	12
 #define CCU41_IN3_CCU41_SR1                	19
@@ -1602,7 +1612,8 @@
 #define CCU41_IN3_P0_7                     	1
 #define CCU41_IN3_P3_0                     	0
 #define CCU41_IN3_P4_7                     	21
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -1747,7 +1758,8 @@
 #define CCU41_IN0_POSIF1_OUT3              	6
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -1776,7 +1788,8 @@
 #define CCU41_IN1_POSIF1_OUT4              	7
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
 #define CCU41_IN1_SCU_ACMP3_OUT            	17
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -1806,7 +1819,8 @@
 #define CCU41_IN2_POSIF1_OUT4              	7
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -1835,7 +1849,8 @@
 #define CCU41_IN3_POSIF1_OUT5              	5
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
 #define CCU41_IN3_SCU_ACMP3_OUT            	18
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -1963,7 +1978,8 @@
 #define CCU41_IN0_P0_4                     	1
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -1983,7 +1999,8 @@
 #define CCU41_IN1_ERU1_PDOUT1              	22
 #define CCU41_IN1_P0_5                     	1
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -2004,7 +2021,8 @@
 #define CCU41_IN2_P0_6                     	1
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -2024,7 +2042,8 @@
 #define CCU41_IN3_ERU1_PDOUT3              	22
 #define CCU41_IN3_P0_7                     	1
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -2159,7 +2178,8 @@
 #define CCU41_IN0_POSIF1_OUT3              	6
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -2186,7 +2206,8 @@
 #define CCU41_IN1_POSIF1_OUT4              	7
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
 #define CCU41_IN1_SCU_ACMP3_OUT            	17
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -2214,7 +2235,8 @@
 #define CCU41_IN2_POSIF1_OUT4              	7
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -2241,7 +2263,8 @@
 #define CCU41_IN3_POSIF1_OUT5              	5
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
 #define CCU41_IN3_SCU_ACMP3_OUT            	18
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -2386,7 +2409,8 @@
 #define CCU41_IN0_POSIF1_OUT3              	6
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -2415,7 +2439,8 @@
 #define CCU41_IN1_POSIF1_OUT4              	7
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
 #define CCU41_IN1_SCU_ACMP3_OUT            	17
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -2445,7 +2470,8 @@
 #define CCU41_IN2_POSIF1_OUT4              	7
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -2474,7 +2500,8 @@
 #define CCU41_IN3_POSIF1_OUT5              	5
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
 #define CCU41_IN3_SCU_ACMP3_OUT            	18
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -2602,7 +2629,8 @@
 #define CCU41_IN0_P0_4                     	1
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -2622,7 +2650,8 @@
 #define CCU41_IN1_ERU1_PDOUT1              	22
 #define CCU41_IN1_P0_5                     	1
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -2643,7 +2672,8 @@
 #define CCU41_IN2_P0_6                     	1
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -2663,7 +2693,8 @@
 #define CCU41_IN3_ERU1_PDOUT3              	22
 #define CCU41_IN3_P0_7                     	1
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -2754,7 +2785,8 @@
 #define CCU41_IN0_ERU1_PDOUT0              	22
 #define CCU41_IN0_ERU1_PDOUT1              	24
 #define CCU41_IN0_P0_4                     	1
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_CCU40_ST1                	11
 #define CCU41_IN1_CCU41_GP02               	12
@@ -2771,7 +2803,8 @@
 #define CCU41_IN1_ERU1_PDOUT0              	24
 #define CCU41_IN1_ERU1_PDOUT1              	22
 #define CCU41_IN1_P0_5                     	1
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_CCU40_ST2                	11
 #define CCU41_IN2_CCU41_GP03               	12
@@ -2788,7 +2821,8 @@
 #define CCU41_IN2_ERU1_PDOUT2              	22
 #define CCU41_IN2_ERU1_PDOUT3              	24
 #define CCU41_IN2_P0_6                     	1
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_CCU40_ST3                	11
 #define CCU41_IN3_CCU41_GP00               	12
 #define CCU41_IN3_CCU41_SR1                	19
@@ -2804,7 +2838,8 @@
 #define CCU41_IN3_ERU1_PDOUT2              	24
 #define CCU41_IN3_ERU1_PDOUT3              	22
 #define CCU41_IN3_P0_7                     	1
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -2898,7 +2933,8 @@
 #define CCU41_IN0_P0_4                     	1
 #define CCU41_IN0_P3_0                     	0
 #define CCU41_IN0_P4_4                     	21
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_CCU40_ST1                	11
 #define CCU41_IN1_CCU41_GP02               	12
@@ -2917,7 +2953,8 @@
 #define CCU41_IN1_P0_5                     	1
 #define CCU41_IN1_P3_0                     	0
 #define CCU41_IN1_P4_5                     	21
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_CCU40_ST2                	11
 #define CCU41_IN2_CCU41_GP03               	12
@@ -2936,7 +2973,8 @@
 #define CCU41_IN2_P0_6                     	1
 #define CCU41_IN2_P3_0                     	0
 #define CCU41_IN2_P4_6                     	21
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_CCU40_ST3                	11
 #define CCU41_IN3_CCU41_GP00               	12
 #define CCU41_IN3_CCU41_SR1                	19
@@ -2954,7 +2992,8 @@
 #define CCU41_IN3_P0_7                     	1
 #define CCU41_IN3_P3_0                     	0
 #define CCU41_IN3_P4_7                     	21
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -3057,7 +3096,8 @@
 #define CCU41_IN0_P4_0                     	2
 #define CCU41_IN0_P4_4                     	21
 #define CCU41_IN0_P4_8                     	26
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_CCU40_ST1                	11
 #define CCU41_IN1_CCU41_GP02               	12
@@ -3078,7 +3118,8 @@
 #define CCU41_IN1_P4_1                     	2
 #define CCU41_IN1_P4_5                     	21
 #define CCU41_IN1_P4_9                     	26
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_CCU40_ST2                	11
 #define CCU41_IN2_CCU41_GP03               	12
@@ -3099,7 +3140,8 @@
 #define CCU41_IN2_P4_10                    	26
 #define CCU41_IN2_P4_2                     	2
 #define CCU41_IN2_P4_6                     	21
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_CCU40_ST3                	11
 #define CCU41_IN3_CCU41_GP00               	12
 #define CCU41_IN3_CCU41_SR1                	19
@@ -3119,7 +3161,8 @@
 #define CCU41_IN3_P4_11                    	26
 #define CCU41_IN3_P4_3                     	2
 #define CCU41_IN3_P4_7                     	21
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -3266,7 +3309,8 @@
 #define CCU41_IN0_POSIF1_OUT3              	6
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -3295,7 +3339,8 @@
 #define CCU41_IN1_POSIF1_OUT4              	7
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
 #define CCU41_IN1_SCU_ACMP3_OUT            	17
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -3325,7 +3370,8 @@
 #define CCU41_IN2_POSIF1_OUT4              	7
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -3354,7 +3400,8 @@
 #define CCU41_IN3_POSIF1_OUT5              	5
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
 #define CCU41_IN3_SCU_ACMP3_OUT            	18
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -3481,7 +3528,8 @@
 #define CCU41_IN0_P0_4                     	1
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -3501,7 +3549,8 @@
 #define CCU41_IN1_ERU1_PDOUT1              	22
 #define CCU41_IN1_P0_5                     	1
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -3522,7 +3571,8 @@
 #define CCU41_IN2_P0_6                     	1
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -3542,7 +3592,8 @@
 #define CCU41_IN3_ERU1_PDOUT3              	22
 #define CCU41_IN3_P0_7                     	1
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -3678,7 +3729,8 @@
 #define CCU41_IN0_POSIF1_OUT3              	6
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -3705,7 +3757,8 @@
 #define CCU41_IN1_POSIF1_OUT4              	7
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
 #define CCU41_IN1_SCU_ACMP3_OUT            	17
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -3733,7 +3786,8 @@
 #define CCU41_IN2_POSIF1_OUT4              	7
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -3760,7 +3814,8 @@
 #define CCU41_IN3_POSIF1_OUT5              	5
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
 #define CCU41_IN3_SCU_ACMP3_OUT            	18
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
@@ -3907,7 +3962,8 @@
 #define CCU41_IN0_POSIF1_OUT3              	6
 #define CCU41_IN0_SCU_ACMP0_OUT            	18
 #define CCU41_IN0_SCU_ACMP1_OUT            	17
-#define CCU41_IN0_SCU_GSC40                	8
+#define CCU41_IN0_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN0_SCU_GSC41 */
+#define CCU41_IN0_SCU_GSC41                	8
 #define CCU41_IN0_U1C0_DX2INS              	28
 #define CCU41_IN1_BCCU0_OUT1               	16
 #define CCU41_IN1_BCCU0_OUT3               	25
@@ -3936,7 +3992,8 @@
 #define CCU41_IN1_POSIF1_OUT4              	7
 #define CCU41_IN1_SCU_ACMP2_OUT            	18
 #define CCU41_IN1_SCU_ACMP3_OUT            	17
-#define CCU41_IN1_SCU_GSC40                	8
+#define CCU41_IN1_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN1_SCU_GSC41 */
+#define CCU41_IN1_SCU_GSC41                	8
 #define CCU41_IN1_U1C1_DX2INS              	28
 #define CCU41_IN2_BCCU0_OUT2               	16
 #define CCU41_IN2_BCCU0_OUT7               	25
@@ -3966,7 +4023,8 @@
 #define CCU41_IN2_POSIF1_OUT4              	7
 #define CCU41_IN2_SCU_ACMP1_OUT            	18
 #define CCU41_IN2_SCU_ACMP2_OUT            	17
-#define CCU41_IN2_SCU_GSC40                	8
+#define CCU41_IN2_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN2_SCU_GSC41 */
+#define CCU41_IN2_SCU_GSC41                	8
 #define CCU41_IN3_BCCU0_OUT5               	16
 #define CCU41_IN3_BCCU0_OUT8               	25
 #define CCU41_IN3_CCU40_ST3                	11
@@ -3994,7 +4052,8 @@
 #define CCU41_IN3_POSIF1_OUT5              	5
 #define CCU41_IN3_SCU_ACMP0_OUT            	17
 #define CCU41_IN3_SCU_ACMP3_OUT            	18
-#define CCU41_IN3_SCU_GSC40                	8
+#define CCU41_IN3_SCU_GSC40                	8  /**< @deprecated use instead CCU41_IN3_SCU_GSC41 */
+#define CCU41_IN3_SCU_GSC41                	8
 #define CCU41_IN3_VADC0_G0ARBCNT           	6
 #endif
 
