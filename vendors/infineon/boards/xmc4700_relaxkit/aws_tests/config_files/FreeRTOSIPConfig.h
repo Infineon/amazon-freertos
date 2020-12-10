@@ -107,7 +107,7 @@ extern void vLoggingPrintf( const char * pcFormatString,
  * FreeRTOSConfig.h, not FreeRTOSIPConfig.h. Consideration needs to be given as to
  * the priority assigned to the task executing the IP stack relative to the
  * priority assigned to tasks that use the IP stack. */
-#define ipconfigIP_TASK_PRIORITY                   ( configMAX_PRIORITIES - 1 )
+#define ipconfigIP_TASK_PRIORITY                   ( configMAX_PRIORITIES - 2 )
 
 /* The size, in words (not bytes), of the stack allocated to the FreeRTOS+TCP
  * task.  This setting is less important when the FreeRTOS Win32 simulator is used
@@ -209,7 +209,7 @@ extern uint32_t ulRand();
  * are available to the IP stack.  The total number of network buffers is limited
  * to ensure the total amount of RAM that can be consumed by the IP stack is capped
  * to a pre-determinable value. */
-#define ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS    24
+#define ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS    16
 #define configNUM_RX_DESCRIPTORS 8
 #define configNUM_TX_DESCRIPTORS 8
 

@@ -120,6 +120,8 @@ static __ALIGNED(4) uint8_t eth_tx_buf[configNUM_TX_DESCRIPTORS][XMC_ETH_MAC_BUF
 #endif
 #endif
 
+#define TX_BUFFER_FREE_WAIT ( pdMS_TO_TICKS( 5UL ) )
+#define MAX_TX_ATTEMPTS     ( 10 )
 
 /* If ipconfigETHERNET_DRIVER_FILTERS_FRAME_TYPES is set to 1, then the Ethernet
 driver will filter incoming packets and only pass the stack those packets it
@@ -221,7 +223,6 @@ static BaseType_t prvNetworkInterfaceInput(void)
   NetworkBufferDescriptor_t *pxCurDescriptor;
   NetworkBufferDescriptor_t *pxNewDescriptor = NULL;
 
-  const TickType_t xDescriptorWaitTime = pdMS_TO_TICKS( 250 );
   xIPStackEvent_t xRxEvent = { eNetworkRxEvent, NULL };
 
   xReceivedLength = XMC_ETH_MAC_GetRxFrameSize(&eth_mac);
@@ -237,7 +238,7 @@ static BaseType_t prvNetworkInterfaceInput(void)
         /* Allocate a new network buffer descriptor that references an Ethernet
            frame large enough to hold the maximum network packet size (as defined
            in the FreeRTOSIPConfig.h header file). */
-        pxNewDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, xDescriptorWaitTime);
+        pxNewDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, 0);
         if (pxNewDescriptor != NULL)
         {
           XMC_ETH_MAC_SetRxBuffer(&eth_mac, pxNewDescriptor->pucEthernetBuffer);
@@ -267,6 +268,12 @@ static BaseType_t prvNetworkInterfaceInput(void)
           {
             iptraceNETWORK_INTERFACE_RECEIVE();
           }
+        }
+        else
+        {
+          /* The event was lost because a network buffer was not available.
+             Call the standard trace macro to log the occurrence. */
+          iptraceETHERNET_RX_EVENT_LOST();
         }
       }
     }
@@ -520,8 +527,8 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxNetworkB
 BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxDescriptor, BaseType_t xReleaseAfterSend )
 {
   (void)xReleaseAfterSend;
-  const TickType_t xBlockTimeTicks = pdMS_TO_TICKS(250);
   BaseType_t xReturn = pdFAIL;
+  int32_t x;
 
   do
   {
@@ -530,9 +537,18 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxDescript
       break;
     }
 
-    if (xSemaphoreTake(xTXDescriptorSemaphore, xBlockTimeTicks) != pdPASS)
+  	for (x = 0; x < MAX_TX_ATTEMPTS; ++x)
     {
-      /* Time-out waiting for a free TX descriptor. */
+      if (xSemaphoreTake(xTXDescriptorSemaphore, 0) == pdPASS)
+      {
+  			break;
+      }
+      iptraceWAITING_FOR_TX_DMA_DESCRIPTOR();	
+      vTaskDelay(TX_BUFFER_FREE_WAIT);
+    }
+
+    if (x == MAX_TX_ATTEMPTS)
+    {
       break;
     }
     
