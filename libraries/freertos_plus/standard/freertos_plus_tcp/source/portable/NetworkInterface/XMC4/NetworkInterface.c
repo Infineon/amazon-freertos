@@ -258,7 +258,7 @@ static BaseType_t prvNetworkInterfaceInput(void)
           xRxEvent.pvData = ( void * )pxCurDescriptor;
 
           /* Pass the data to the TCP/IP task for processing. */
-          if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
+          if (xSendEventStructToIPTask( &xRxEvent, 0 ) == pdFALSE)
           {
             /* Could not send the descriptor into the TCP/IP stack, it must be released. */
             vReleaseNetworkBufferAndDescriptor(pxCurDescriptor);
