@@ -34,8 +34,8 @@
 
 /**
  * @file RTE_Device.h
- * @date 16 Dec., 2019
- * @version 1.2.0
+ * @date 13 Nov., 2020
+ * @version 1.3.0
  *
  * @brief RTE Device Configuration for Infineon XMC4300_F100
  *
@@ -53,6 +53,9 @@
  * - [New] Added IRQ priority setting for drivers
  * - [New] Added Hold delay option for I2C driver
  *
+ * Version 1.3.0
+ * - [New] Added CAN clock source selection
+ * 
  */
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -71,6 +74,14 @@
 #define FIFO_SIZE_8 3
 #define FIFO_SIZE_16 4
 #define FIFO_SIZE_32 5
+
+/*
+//    <o> CAN clock source
+//       <1=> FPERI
+//       <2=> OSC_HP
+//    <i> Default: FPERI
+*/
+#define RTE_CAN_CLKSRC 1
 
 // <e> CAN0 (Controller area network) [Driver_CAN0]
 // <i> Configuration settings for Driver_CAN0 in component ::Drivers:CAN

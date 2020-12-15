@@ -272,7 +272,7 @@ typedef enum XMC_DMA_CH_STATUS
  * modes and the like.
  */
 
-typedef struct
+typedef struct GPDMA_CH
 {
   __IO uint32_t  SAR;
   __I  uint32_t  RESERVED0;
@@ -305,7 +305,7 @@ typedef struct
  * to configure the GPDMA peripheral on the XMC4000 series of microcontrollers.
  * The registers can be accessed with ::XMC_DMA0 and ::XMC_DMA1.
  */
-typedef struct
+typedef struct XMC_DMA
 {
   GPDMA_CH_t CH[8];
 

@@ -87,6 +87,9 @@
  *             XMC_SCU_PARITY_SetParityWriteValue(uint8_t val)
  *             XMC_SCU_PARITY_GetParityReadValue(void)
  *
+ * 2020-11-11:
+ *     - Change making declaration of functions XMC_SCU_HighTemperature(), XMC_SCU_LowTemperature() and XMC_SCU_SetRawTempLimits() available only XMC41, XMC42 and XMC44
+ * 
  * @endcond
  *
  */
@@ -1141,7 +1144,7 @@ bool XMC_SCU_IsTemperatureSensorBusy(void);
  */
 bool XMC_SCU_IsTemperatureSensorReady(void);
 
-#if (UC_SERIES != XMC45)
+#if ((UC_SERIES == XMC41) || (UC_SERIES == XMC42) || (UC_SERIES == XMC44))
 /**
  * @return bool  Indicates if the measured die temperature value has exceeded the configured upper limit.\n
  *              \b Range: \a true if the temperature value has exceeded the configured upper limit. \a false
@@ -1154,6 +1157,7 @@ bool XMC_SCU_IsTemperatureSensorReady(void);
  * the bitfield \a UPPER in the \a DTEMPLIM register.
  * \par<b>Related APIs:</b><BR>
  * XMC_SCU_SetRawTempLimits(),XMC_SCU_LowTemperature() \n\n\n
+ * \note Only available in XMC44, XMC42 and XMC41 series
  */
 bool XMC_SCU_HighTemperature(void);
 
@@ -1178,6 +1182,7 @@ bool XMC_SCU_HighTemperature(void);
  * - Use \a XMC_SCU_HighTemperature() and XMC_SCU_LowTemperature() to monitor the temperature.\n
  * \par<b>Related APIs:</b><BR>
  * XMC_SCU_HighTemperature(), XMC_SCU_LowTemperature() \n\n\n
+ * \note Only available in XMC44, XMC42 and XMC41 series
  */
 void XMC_SCU_SetRawTempLimits(const uint32_t lower_temp, const uint32_t upper_temp);
 
@@ -1193,6 +1198,7 @@ void XMC_SCU_SetRawTempLimits(const uint32_t lower_temp, const uint32_t upper_te
  * the bitfield \a LOWER in the \a DTEMPLIM register.
  * \par<b>Related APIs:</b><BR>
  * XMC_SCU_SetRawTempLimits(),XMC_SCU_HighTemperature() \n\n\n
+ * \note Only available in XMC44, XMC42 and XMC41 series
  */
 bool XMC_SCU_LowTemperature(void);
 #endif

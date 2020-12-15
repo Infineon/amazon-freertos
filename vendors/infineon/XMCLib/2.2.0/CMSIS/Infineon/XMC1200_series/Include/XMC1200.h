@@ -5890,8 +5890,10 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define WDT                             ((WDT_GLOBAL_TypeDef                *) WDT_BASE)
 #define RTC                             ((RTC_GLOBAL_TypeDef                *) RTC_BASE)
 #define PRNG                            ((PRNG_Type               *) PRNG_BASE)
+#if defined(UC_DEVICE) && ((UC_DEVICE == XMC1200) || (UC_DEVICE == XMC1201))
 #define LEDTS0                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS0_BASE)
 #define LEDTS1                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS1_BASE)
+#endif
 #define USIC0                           ((USIC_GLOBAL_TypeDef               *) USIC0_BASE)
 #define USIC0_CH0                       ((USIC_CH_TypeDef            *) USIC0_CH0_BASE)
 #define USIC0_CH1                       ((USIC_CH_TypeDef            *) USIC0_CH1_BASE)
@@ -5900,7 +5902,9 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define SCU_POWER                       ((SCU_POWER_Type          *) SCU_POWER_BASE)
 #define SCU_CLK                         ((SCU_CLK_TypeDef            *) SCU_CLK_BASE)
 #define SCU_RESET                       ((SCU_RESET_Type          *) SCU_RESET_BASE)
+#if defined(UC_DEVICE) && ((UC_DEVICE == XMC1200) || (UC_DEVICE == XMC1202))
 #define COMPARATOR                      ((COMPARATOR_Type         *) COMPARATOR_BASE)
+#endif
 #define SCU_ANALOG                      ((SCU_ANALOG_Type         *) SCU_ANALOG_BASE)
 #define CCU40                           ((CCU4_GLOBAL_TypeDef               *) CCU40_BASE)
 #define CCU40_CC40                      ((CCU4_CC4_TypeDef           *) CCU40_CC40_BASE)
@@ -5911,6 +5915,7 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define VADC_G0                         ((VADC_G_TypeDef             *) VADC_G0_BASE)
 #define VADC_G1                         ((VADC_G_TypeDef             *) VADC_G1_BASE)
 #define SHS0                            ((SHS_Type                *) SHS0_BASE)
+#if defined(UC_DEVICE) && ((UC_DEVICE == XMC1200) || (UC_DEVICE == XMC1202))
 #define BCCU0                           ((BCCU_Type               *) BCCU0_BASE)
 #define BCCU0_CH0                       ((BCCU_CH_Type            *) BCCU0_CH0_BASE)
 #define BCCU0_CH1                       ((BCCU_CH_Type            *) BCCU0_CH1_BASE)
@@ -5924,6 +5929,7 @@ typedef struct {                                    /*!< (@ 0x40040200) PORT2 St
 #define BCCU0_DE0                       ((BCCU_DE_Type            *) BCCU0_DE0_BASE)
 #define BCCU0_DE1                       ((BCCU_DE_Type            *) BCCU0_DE1_BASE)
 #define BCCU0_DE2                       ((BCCU_DE_Type            *) BCCU0_DE2_BASE)
+#endif
 #define PORT0                           ((PORT0_Type              *) PORT0_BASE)
 #define PORT1                           ((PORT1_Type              *) PORT1_BASE)
 #define PORT2                           ((PORT2_Type              *) PORT2_BASE)

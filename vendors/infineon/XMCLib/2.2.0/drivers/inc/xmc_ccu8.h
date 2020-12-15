@@ -102,7 +102,7 @@
  *     - Added XMC_CCU8_SLICE_GetTimerCompareMatchChannel1() and XMC_CCU8_SLICE_GetTimerCompareMatchChannel2()
  *
  * 2019-07-29:
- *     - Added XMC_CCU4_SLICE_GetStatus()
+ *     - Added XMC_CCU8_GetSliceStatusBit()
  *
  * @endcond
  */

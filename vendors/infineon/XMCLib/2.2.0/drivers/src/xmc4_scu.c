@@ -97,6 +97,11 @@
  * 2019-12-16:
  *     - Fix including files following the convention: angle brackets are used for standard includes and double quotes for everything else.
  *
+ * 2019-09-30:
+ *     - Fixes on XMC_SCU_CLOCK_StartUsbPll(), XMC_SCU_CLOCK_StartSystemPll() and XMC_SCU_CLOCK_StepSystemPllFrequency()
+ *
+ * 2020-11-11:
+ *     - Change making implementation of functions XMC_SCU_HighTemperature(), XMC_SCU_LowTemperature() and XMC_SCU_SetRawTempLimits() available only XMC41, XMC42 and XMC44
  * @endcond
  *
  */
@@ -379,7 +384,7 @@ bool XMC_SCU_IsTemperatureSensorBusy(void)
 }
 
 
-#if defined(SCU_GENERAL_DTEMPLIM_LOWER_Msk) && defined(SCU_GENERAL_DTEMPLIM_UPPER_Msk)
+#if ((UC_SERIES == XMC41) || (UC_SERIES == XMC42) || (UC_SERIES == XMC44))
 /* API to determine if device temperature has gone past the ceiling */
 bool XMC_SCU_HighTemperature(void)
 {
@@ -1134,6 +1139,10 @@ void XMC_SCU_CLOCK_StartUsbPll(uint32_t pdiv, uint32_t ndiv)
 {
   /* Go to bypass the USB PLL */
   SCU_PLL->USBPLLCON |= (uint32_t)SCU_PLL_USBPLLCON_VCOBYP_Msk;
+  while ((SCU_PLL->USBPLLSTAT & SCU_PLL_USBPLLSTAT_VCOBYST_Msk) == 0U)
+  {
+    /* wait for prescaler mode */
+  }
 
   /* disconnect Oscillator from USB PLL */
   SCU_PLL->USBPLLCON |= (uint32_t)SCU_PLL_USBPLLCON_FINDIS_Msk;
@@ -1156,6 +1165,17 @@ void XMC_SCU_CLOCK_StartUsbPll(uint32_t pdiv, uint32_t ndiv)
     /* wait for PLL Lock */
   }
 
+  /* Disable bypass- put PLL clock back */
+  SCU_PLL->USBPLLCON &= ~SCU_PLL_USBPLLCON_VCOBYP_Msk;
+  while ((SCU_PLL->USBPLLSTAT & SCU_PLL_USBPLLSTAT_VCOBYST_Msk) != 0U)
+  {
+    /* wait for normal mode */
+  }
+
+  /* Reset OSCDISCDIS */
+  SCU_PLL->USBPLLCON &= ~SCU_PLL_USBPLLCON_OSCDISCDIS_Msk;
+
+  SCU_TRAP->TRAPCLR = SCU_TRAP_TRAPCLR_UVCOLCKT_Msk;
 }
 
 /* API to disable USB PLL operation */
@@ -1689,6 +1709,10 @@ void XMC_SCU_CLOCK_StartSystemPll(XMC_SCU_CLOCK_SYSPLLCLKSRC_t source,
 
     /* Switch to prescaler mode */
     SCU_PLL->PLLCON0 |= (uint32_t)SCU_PLL_PLLCON0_VCOBYP_Msk;
+    while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_VCOBYST_Msk) == 0U)
+    {
+      /* wait for prescaler mode */
+    }
 
     /* disconnect Oscillator from PLL */
     SCU_PLL->PLLCON0 |= (uint32_t)SCU_PLL_PLLCON0_FINDIS_Msk;
@@ -1739,6 +1763,11 @@ void XMC_SCU_CLOCK_StartSystemPll(XMC_SCU_CLOCK_SYSPLLCLKSRC_t source,
     SCU_PLL->PLLCON1 = (uint32_t)((SCU_PLL->PLLCON1 & ~SCU_PLL_PLLCON1_K1DIV_Msk) |
                                   ((kdiv - 1UL) << SCU_PLL_PLLCON1_K1DIV_Pos));
 
+    while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_K1RDY_Msk) == 0U)
+    {
+      /* wait until K1-divider operates on the configured value  */
+    }
+
     /* Switch to prescaler mode */
     SCU_PLL->PLLCON0 |= (uint32_t)SCU_PLL_PLLCON0_VCOBYP_Msk;
 
@@ -1747,6 +1776,8 @@ void XMC_SCU_CLOCK_StartSystemPll(XMC_SCU_CLOCK_SYSPLLCLKSRC_t source,
       /* wait for prescaler mode */
     }
   }
+
+  SCU_TRAP->TRAPCLR = SCU_TRAP_TRAPCLR_SOSCWDGT_Msk | SCU_TRAP_TRAPCLR_SVCOLCKT_Msk;
 }
 
 /* API to stop main PLL operation */
@@ -1760,6 +1791,11 @@ void XMC_SCU_CLOCK_StepSystemPllFrequency(uint32_t kdiv)
 {
   SCU_PLL->PLLCON1 = (uint32_t)((SCU_PLL->PLLCON1 & ~SCU_PLL_PLLCON1_K2DIV_Msk) |
                                 ((kdiv - 1UL) << SCU_PLL_PLLCON1_K2DIV_Pos));
+
+  while ((SCU_PLL->PLLSTAT & SCU_PLL_PLLSTAT_K2RDY_Msk) == 0U)
+  {
+    /* wait until K2-divider operates on the configured value  */
+  }
 
   XMC_SCU_lDelay(50U);
 }

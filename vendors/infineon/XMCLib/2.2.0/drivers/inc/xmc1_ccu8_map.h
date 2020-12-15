@@ -1,6 +1,6 @@
 /**
  * @file xmc1_ccu8_map.h
- * @date 2019-07-30
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -46,6 +46,9 @@
  *
  * 2019-07-30:
  *     - Added support for XMC1404-Q040
+ *
+ * 2020-12-05:
+ *     - Added CCU81_IN<x>_SCU_GSC81. CCU81_IN<x>_SCU_GSC80 are marked as deprecated
  *
  * @endcond
  */
@@ -838,7 +841,8 @@
 #define CCU81_IN0_POSIF1_OUT5              	4
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -863,7 +867,8 @@
 #define CCU81_IN1_POSIF1_OUT5              	4
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -888,7 +893,8 @@
 #define CCU81_IN2_POSIF1_OUT5              	4
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
 #define CCU81_IN2_SCU_ACMP3_OUT            	18
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -913,7 +919,8 @@
 #define CCU81_IN3_POSIF1_OUT5              	4
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
 #define CCU81_IN3_SCU_ACMP3_OUT            	17
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 
@@ -1030,7 +1037,8 @@
 #define CCU81_IN0_P0_12                    	20
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -1051,7 +1059,8 @@
 #define CCU81_IN1_P0_13                    	20
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -1072,7 +1081,8 @@
 #define CCU81_IN2_P0_10                    	1
 #define CCU81_IN2_P0_14                    	20
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -1092,7 +1102,8 @@
 #define CCU81_IN3_ERU1_PDOUT3              	21
 #define CCU81_IN3_P0_15                    	20
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 
@@ -1215,7 +1226,8 @@
 #define CCU81_IN0_POSIF1_OUT5              	4
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -1239,7 +1251,8 @@
 #define CCU81_IN1_POSIF1_OUT5              	4
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -1264,7 +1277,8 @@
 #define CCU81_IN2_POSIF1_OUT5              	4
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
 #define CCU81_IN2_SCU_ACMP3_OUT            	18
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -1288,7 +1302,8 @@
 #define CCU81_IN3_POSIF1_OUT5              	4
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
 #define CCU81_IN3_SCU_ACMP3_OUT            	17
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 
@@ -1415,7 +1430,8 @@
 #define CCU81_IN0_POSIF1_OUT5              	4
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -1440,7 +1456,8 @@
 #define CCU81_IN1_POSIF1_OUT5              	4
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -1465,7 +1482,8 @@
 #define CCU81_IN2_POSIF1_OUT5              	4
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
 #define CCU81_IN2_SCU_ACMP3_OUT            	18
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -1490,7 +1508,8 @@
 #define CCU81_IN3_POSIF1_OUT5              	4
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
 #define CCU81_IN3_SCU_ACMP3_OUT            	17
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 
@@ -1607,7 +1626,8 @@
 #define CCU81_IN0_P0_12                    	20
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -1628,7 +1648,8 @@
 #define CCU81_IN1_P0_13                    	20
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -1649,7 +1670,8 @@
 #define CCU81_IN2_P0_10                    	1
 #define CCU81_IN2_P0_14                    	20
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -1669,7 +1691,8 @@
 #define CCU81_IN3_ERU1_PDOUT3              	21
 #define CCU81_IN3_P0_15                    	20
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 #if (UC_DEVICE == XMC1404) && (UC_PACKAGE == VQFN40)
@@ -1785,7 +1808,8 @@
 #define CCU81_IN0_P0_12                    	20
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -1806,7 +1830,8 @@
 #define CCU81_IN1_P0_13                    	20
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -1827,7 +1852,8 @@
 #define CCU81_IN2_P0_10                    	1
 #define CCU81_IN2_P0_14                    	20
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -1847,7 +1873,8 @@
 #define CCU81_IN3_ERU1_PDOUT3              	21
 #define CCU81_IN3_P0_15                    	20
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 #if (UC_DEVICE == XMC1404) && (UC_PACKAGE == LQFP64)
@@ -1973,7 +2000,8 @@
 #define CCU81_IN0_POSIF1_OUT5              	4
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -1998,7 +2026,8 @@
 #define CCU81_IN1_POSIF1_OUT5              	4
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -2023,7 +2052,8 @@
 #define CCU81_IN2_POSIF1_OUT5              	4
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
 #define CCU81_IN2_SCU_ACMP3_OUT            	18
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -2048,7 +2078,8 @@
 #define CCU81_IN3_POSIF1_OUT5              	4
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
 #define CCU81_IN3_SCU_ACMP3_OUT            	17
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 
@@ -2171,7 +2202,8 @@
 #define CCU81_IN0_POSIF1_OUT5              	4
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -2195,7 +2227,8 @@
 #define CCU81_IN1_POSIF1_OUT5              	4
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -2220,7 +2253,8 @@
 #define CCU81_IN2_POSIF1_OUT5              	4
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
 #define CCU81_IN2_SCU_ACMP3_OUT            	18
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -2244,7 +2278,8 @@
 #define CCU81_IN3_POSIF1_OUT5              	4
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
 #define CCU81_IN3_SCU_ACMP3_OUT            	17
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 
@@ -2371,7 +2406,8 @@
 #define CCU81_IN0_POSIF1_OUT5              	4
 #define CCU81_IN0_SCU_ACMP0_OUT            	18
 #define CCU81_IN0_SCU_ACMP1_OUT            	17
-#define CCU81_IN0_SCU_GSC80                	7
+#define CCU81_IN0_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN0_SCU_GSC81 */
+#define CCU81_IN0_SCU_GSC81                	7
 #define CCU81_IN1_BCCU0_OUT4               	8
 #define CCU81_IN1_BCCU0_OUT7               	9
 #define CCU81_IN1_CCU41_GP2                	2
@@ -2396,7 +2432,8 @@
 #define CCU81_IN1_POSIF1_OUT5              	4
 #define CCU81_IN1_SCU_ACMP1_OUT            	18
 #define CCU81_IN1_SCU_ACMP2_OUT            	17
-#define CCU81_IN1_SCU_GSC80                	7
+#define CCU81_IN1_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN1_SCU_GSC81 */
+#define CCU81_IN1_SCU_GSC81                	7
 #define CCU81_IN2_BCCU0_OUT1               	9
 #define CCU81_IN2_BCCU0_OUT5               	8
 #define CCU81_IN2_CCU41_SR3                	10
@@ -2421,7 +2458,8 @@
 #define CCU81_IN2_POSIF1_OUT5              	4
 #define CCU81_IN2_SCU_ACMP0_OUT            	17
 #define CCU81_IN2_SCU_ACMP3_OUT            	18
-#define CCU81_IN2_SCU_GSC80                	7
+#define CCU81_IN2_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN2_SCU_GSC81 */
+#define CCU81_IN2_SCU_GSC81                	7
 #define CCU81_IN3_BCCU0_OUT2               	9
 #define CCU81_IN3_BCCU0_OUT8               	8
 #define CCU81_IN3_CCU41_SR3                	10
@@ -2446,7 +2484,8 @@
 #define CCU81_IN3_POSIF1_OUT5              	4
 #define CCU81_IN3_SCU_ACMP2_OUT            	18
 #define CCU81_IN3_SCU_ACMP3_OUT            	17
-#define CCU81_IN3_SCU_GSC80                	7
+#define CCU81_IN3_SCU_GSC80                	7  /**< @deprecated use instead CCU81_IN3_SCU_GSC81 */
+#define CCU81_IN3_SCU_GSC81                	7
 #endif
 
 #endif /* XMC1_CCU8_MAP_H */

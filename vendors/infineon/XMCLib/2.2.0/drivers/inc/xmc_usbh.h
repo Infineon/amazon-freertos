@@ -1,6 +1,6 @@
 /**
  * @file xmc_usbh.h
- * @date 2018-06-21
+ * @date 2020-11-20
  *
  *****************************************************************************
  * XMClib v2.2.0 - XMC Peripheral Driver Library
@@ -46,6 +46,8 @@
  *     - Removed Keil specific inclusions and macros<br>
  * 2018-06-21:
  *     - Fixed compilation issues for XMC42
+ * 2020-11-20:
+ *     - Fixed compilation errors for XMC4504
  * @endcond
  *
  */
@@ -55,7 +57,7 @@
 
 #include "xmc_common.h"
 
-#if ((UC_SERIES == XMC45) || (UC_SERIES == XMC44) || (UC_SERIES == XMC43) || (UC_SERIES == XMC47) || (UC_SERIES == XMC48) || defined(DOXYGEN))
+#if (defined(USB0) && ((UC_SERIES == XMC45) || (UC_SERIES == XMC44) || (UC_SERIES == XMC43) || (UC_SERIES == XMC47) || (UC_SERIES == XMC48))) || defined(DOXYGEN)
 
 #include "xmc_scu.h"
 #include "xmc_gpio.h"

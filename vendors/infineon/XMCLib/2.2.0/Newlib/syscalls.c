@@ -49,6 +49,7 @@
  * V1.5 09 Mar 2016, JFT : Add dso_handle to support destructors call at exit 
  * V1.6 20 Apr 2017, JFT : Foward declaration of __sbrk to fix link time optimization (-flto) compilation errors
  * V1.7 21 Sep 2019, JFT : Fixed C++ compilation issues
+ * V1.8 11 Nov 2020, JFT : Fix compilation with ARMCC
  * @endcond
  */
 
@@ -57,7 +58,7 @@
  * typically be provided for the underlying platform.
  *
  */
-#if defined ( __GNUC__ )
+#if defined ( __GNUC__ ) && !defined (__ARMCC_VERSION)
 
 #include <stdint.h>
 #include <errno.h>

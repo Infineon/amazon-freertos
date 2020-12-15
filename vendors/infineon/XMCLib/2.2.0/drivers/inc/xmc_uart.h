@@ -1,6 +1,6 @@
 /**
 * @file xmc_uart.h
-* @date 2019-05-07
+* @date 2020-12-05
 *
 * @cond
 *****************************************************************************
@@ -67,6 +67,9 @@
 *       It selects normal divider mode for baudrate generator instead of default fractional divider decreasing jitter at cost of frequency selection
 *     - Added XMC_UART_CH_SetBaudrateEx()
 *
+* 2020-12-05:
+*    - Added XMC_UART_CH_InitEx() that allows user select if automatic baudrate configuration should be done or not
+* 
 * @endcond
 *
 */
@@ -252,6 +255,7 @@ extern "C" {
  * @param channel Constant pointer to USIC channel handle of type @ref XMC_USIC_CH_t \n
  * 				  \b Range: @ref XMC_UART0_CH0, XMC_UART0_CH1,XMC_UART1_CH0, XMC_UART1_CH1,XMC_UART2_CH0, XMC_UART2_CH1 @note Availability of UART1 and UART2 depends on device selection
  * @param config Constant pointer to UART configuration structure of type @ref XMC_UART_CH_CONFIG_t.
+ * @param init_brg Selects if the baudrate generator should be configured automatically.
  * @return XMC_UART_CH_STATUS_t Status of initializing the USIC channel for UART protocol.\n
  *          \b Range: @ref XMC_UART_CH_STATUS_OK if initialization is successful.\n
  *                    @ref XMC_UART_CH_STATUS_ERROR if configuration of baudrate failed.
@@ -270,7 +274,34 @@ extern "C" {
  * \par<b>Related APIs:</b><BR>
  * XMC_UART_CH_Start(), XMC_UART_CH_Stop(), XMC_UART_CH_Transmit()\n\n\n
  */
-void XMC_UART_CH_Init(XMC_USIC_CH_t *const channel, const XMC_UART_CH_CONFIG_t *const config);
+void XMC_UART_CH_InitEx(XMC_USIC_CH_t *channel, const XMC_UART_CH_CONFIG_t *const config, bool init_brg);
+
+/**
+ * @param channel Constant pointer to USIC channel handle of type @ref XMC_USIC_CH_t \n
+ * 				  \b Range: @ref XMC_UART0_CH0, XMC_UART0_CH1,XMC_UART1_CH0, XMC_UART1_CH1,XMC_UART2_CH0, XMC_UART2_CH1 @note Availability of UART1 and UART2 depends on device selection
+ * @param config Constant pointer to UART configuration structure of type @ref XMC_UART_CH_CONFIG_t.
+ * @return XMC_UART_CH_STATUS_t Status of initializing the USIC channel for UART protocol.\n
+ *          \b Range: @ref XMC_UART_CH_STATUS_OK if initialization is successful.\n
+ *                    @ref XMC_UART_CH_STATUS_ERROR if configuration of baudrate failed.
+ *
+ * \par<b>Description</b><br>
+ * Initializes the USIC channel for UART protocol.\n\n
+ * During the initialization, USIC channel is enabled, baudrate is configured with the defined oversampling value
+ * in the intialization structure. If the oversampling value is set to 0 in the structure, the default oversampling of 16
+ * is considered. Sampling point for each symbol is configured at the half of sampling period. Symbol value is decided by the
+ * majority decision among 3 samples.
+ * Word length is configured with the number of data bits. If the value of \a frame_length is 0, then USIC channel frame length
+ * is set to the same value as word length. If \a frame_length is greater than 0, it is set as the USIC channel frame length.
+ * Parity mode is set to the value configured for \a parity_mode.
+ * The USIC channel should be set to UART mode by calling the XMC_UART_CH_Start() API after the initialization.
+ *
+ * \par<b>Related APIs:</b><BR>
+ * XMC_UART_CH_Start(), XMC_UART_CH_Stop(), XMC_UART_CH_Transmit()\n\n\n
+ */
+__STATIC_INLINE void XMC_UART_CH_Init(XMC_USIC_CH_t *const channel, const XMC_UART_CH_CONFIG_t *const config)
+{
+  XMC_UART_CH_InitEx(channel, config, true);
+}
 
 /**
  * @param channel Constant pointer to USIC channel handle of type @ref XMC_USIC_CH_t \n

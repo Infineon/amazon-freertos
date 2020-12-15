@@ -85,7 +85,7 @@
  *     - Added XMC_CCU4_SetSuspendMode(), XMC_CCU4_SLICE_GetPrescaler()
  *
  * 2019-07-29:
- *     - Added XMC_CCU4_SLICE_GetStatus()
+ *     - Added XMC_CCU4_GetSliceStatusBit()
  *
  * @endcond
  */

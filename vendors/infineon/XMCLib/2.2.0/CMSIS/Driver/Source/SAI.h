@@ -34,8 +34,8 @@
 
 /**
  * @file SAI.h
- * @date XXXX
- * @version 1.1
+ * @date 19 Nov., 2020
+ * @version 1.2
  *
  * @brief SAI CMSIS Driver for Infineon XMC devices
  *
@@ -43,12 +43,16 @@
  *
  * Version 1.0 Initial version<br>
  * Version 1.1 Added interrupt priority
+ * Version 1.2 Fixed compiler warnings
  */
 
-#include "Driver_SAI.h"
 #include "xmc_scu.h"
 #include "xmc_gpio.h"
 #include "xmc_i2s.h"
+
+#include "Driver_SAI.h"
+#include "RTE_Components.h"
+#include "RTE_Device.h"
 
 // I2S flags
 #define I2S_INITIALIZED     (      1U)
@@ -156,3 +160,33 @@ typedef struct
   volatile I2S_INFO        *info;                           // Pointer to run-time information
   XMC_USIC_CH_t            *i2s;                            // Pointer to I2S peripheral
 } const I2S_RESOURCES;
+
+#if (RTE_I2S0 != 0)
+extern void I2S0_ISR(void);
+extern ARM_DRIVER_SAI Driver_SAI0;
+#endif
+
+#if (RTE_I2S1 != 0)
+extern void I2S1_ISR(void);
+extern ARM_DRIVER_SAI Driver_SAI1;
+#endif
+
+#if (RTE_I2S2 != 0)
+extern void I2S2_ISR(void);
+extern ARM_DRIVER_SAI Driver_SAI2;
+#endif
+
+#if (RTE_I2S3 != 0)
+extern void I2S3_ISR(void);
+extern ARM_DRIVER_SAI Driver_SAI3;
+#endif
+
+#if (RTE_I2S4 != 0)
+extern void I2S4_ISR(void);
+extern ARM_DRIVER_SAI Driver_SAI4;
+#endif
+
+#if (RTE_I2S5 != 0)
+extern void I2S5_ISR(void);
+extern ARM_DRIVER_SAI Driver_SAI5;
+#endif

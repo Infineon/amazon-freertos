@@ -120,6 +120,8 @@ static __ALIGNED(4) uint8_t eth_tx_buf[configNUM_TX_DESCRIPTORS][XMC_ETH_MAC_BUF
 #endif
 #endif
 
+#define TX_BUFFER_FREE_WAIT ( pdMS_TO_TICKS( 5UL ) )
+#define MAX_TX_ATTEMPTS     ( 10 )
 
 /* If ipconfigETHERNET_DRIVER_FILTERS_FRAME_TYPES is set to 1, then the Ethernet
 driver will filter incoming packets and only pass the stack those packets it
@@ -148,30 +150,27 @@ void ETH0_0_IRQHandler(void)
   ulStatusRegister = XMC_ETH_MAC_GetEventStatus(&eth_mac);
   XMC_ETH_MAC_ClearEventStatus(&eth_mac, ulStatusRegister);
 
-  if (netif_task_handler != 0)
-  {
-    /* xHigherPriorityTaskWoken must be initialised to pdFALSE.  If calling
-       xTaskNotifyFromISR() unblocks the handling task, and the priority of
-       the handling task is higher than the priority of the currently running task,
-       then xHigherPriorityTaskWoken will automatically get set to pdTRUE. */
-    xHigherPriorityTaskWoken = pdFALSE;
+  /* xHigherPriorityTaskWoken must be initialised to pdFALSE.  If calling
+     xTaskNotifyFromISR() unblocks the handling task, and the priority of
+     the handling task is higher than the priority of the currently running task,
+     then xHigherPriorityTaskWoken will automatically get set to pdTRUE. */
+  xHigherPriorityTaskWoken = pdFALSE;
 
-    /* Unblock the handling task so the task can perform any processing necessitated
-       by the interrupt.  xHandlingTask is the task's handle, which was obtained
-       when the task was created.  The handling task's notification value
-       is bitwise ORed with the interrupt status - ensuring bits that are already
-       set are not overwritten. */
-    xTaskNotifyFromISR(netif_task_handler, ulStatusRegister, eSetBits, &xHigherPriorityTaskWoken );
+  /* Unblock the handling task so the task can perform any processing necessitated
+     by the interrupt.  xHandlingTask is the task's handle, which was obtained
+     when the task was created.  The handling task's notification value
+     is bitwise ORed with the interrupt status - ensuring bits that are already
+     set are not overwritten. */
+  xTaskNotifyFromISR(netif_task_handler, ulStatusRegister, eSetBits, &xHigherPriorityTaskWoken );
 
-    /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
-       The macro used to do this is dependent on the port and may be called
-       portEND_SWITCHING_ISR. */
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-  }
+  /* Force a context switch if xHigherPriorityTaskWoken is now set to pdTRUE.
+     The macro used to do this is dependent on the port and may be called
+     portEND_SWITCHING_ISR. */
+  portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
 #if (ipconfigZERO_COPY_RX_DRIVER == 0)
-static void prvNetworkInterfaceInput(void)
+static BaseType_t prvNetworkInterfaceInput(void)
 {
   uint32_t xReceivedLength;
   uint8_t *pucBuffer;
@@ -213,63 +212,79 @@ static void prvNetworkInterfaceInput(void)
   XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
   XMC_ETH_MAC_ResumeRx(&eth_mac);
 
+	return ( xReceivedLength > 0 );
+
 }
 #else
-static void prvNetworkInterfaceInput(void)
+static BaseType_t prvNetworkInterfaceInput(void)
 {
   uint32_t xReceivedLength;
   uint8_t *pucBuffer;
-  NetworkBufferDescriptor_t *pxDescriptor;
-  const TickType_t xDescriptorWaitTime = pdMS_TO_TICKS( 250 );
+  NetworkBufferDescriptor_t *pxCurDescriptor;
+  NetworkBufferDescriptor_t *pxNewDescriptor = NULL;
+
   xIPStackEvent_t xRxEvent = { eNetworkRxEvent, NULL };
 
   xReceivedLength = XMC_ETH_MAC_GetRxFrameSize(&eth_mac);
-  if ((xReceivedLength > 0) && (xReceivedLength <= ipTOTAL_ETHERNET_FRAME_SIZE))
+  if (xReceivedLength > 0)
   {
-    pucBuffer = XMC_ETH_MAC_GetRxBuffer(&eth_mac);
-
-    if (ipCONSIDER_FRAME_FOR_PROCESSING(pucBuffer))
+    /* Check if it is a valid frame */
+    if (xReceivedLength <= ipTOTAL_ETHERNET_FRAME_SIZE)
     {
-      /* Allocate a new network buffer descriptor that references an Ethernet
-         frame large enough to hold the maximum network packet size (as defined
-         in the FreeRTOSIPConfig.h header file). */
-      pxDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, xDescriptorWaitTime);
-      if (pxDescriptor != NULL)
+      pucBuffer = XMC_ETH_MAC_GetRxBuffer(&eth_mac);
+
+      if (ipCONSIDER_FRAME_FOR_PROCESSING(pucBuffer))
       {
-        XMC_ETH_MAC_SetRxBuffer(&eth_mac, pxDescriptor->pucEthernetBuffer);
-
-        pxDescriptor->pucEthernetBuffer = pucBuffer;
-        pxDescriptor->xDataLength = xReceivedLength;
-
-        *( ( NetworkBufferDescriptor_t ** )
-          ( pxDescriptor->pucEthernetBuffer - ipBUFFER_PADDING ) ) = pxDescriptor;
-
-        /*
-         * The network buffer descriptor now points to the Ethernet buffer that
-         * contains the received data, and the Ethernet DMA descriptor now points
-         * to a newly allocated (and empty) Ethernet buffer ready to receive more
-         * data.  No data was copied.  Only pointers to data were swapped.
-         */
-
-        xRxEvent.pvData = ( void * )pxDescriptor;
-
-        /* Pass the data to the TCP/IP task for processing. */
-        if (xSendEventStructToIPTask( &xRxEvent, xDescriptorWaitTime ) == pdFALSE)
+        /* Allocate a new network buffer descriptor that references an Ethernet
+           frame large enough to hold the maximum network packet size (as defined
+           in the FreeRTOSIPConfig.h header file). */
+        pxNewDescriptor = pxGetNetworkBufferWithDescriptor(ipTOTAL_ETHERNET_FRAME_SIZE, 0);
+        if (pxNewDescriptor != NULL)
         {
-          /* Could not send the descriptor into the TCP/IP stack, it must be released. */
-          vReleaseNetworkBufferAndDescriptor(pxDescriptor);
-          iptraceETHERNET_RX_EVENT_LOST();
+          XMC_ETH_MAC_SetRxBuffer(&eth_mac, pxNewDescriptor->pucEthernetBuffer);
+
+			    pxCurDescriptor = pxPacketBuffer_to_NetworkBuffer( pucBuffer );
+			    configASSERT( pxCurDescriptor != NULL );
+
+          pxCurDescriptor->xDataLength = xReceivedLength;
+
+          /*
+           * The network buffer descriptor now points to the Ethernet buffer that
+           * contains the received data, and the Ethernet DMA descriptor now points
+           * to a newly allocated (and empty) Ethernet buffer ready to receive more
+           * data.  No data was copied.  Only pointers to data were swapped.
+           */
+
+          xRxEvent.pvData = ( void * )pxCurDescriptor;
+
+          /* Pass the data to the TCP/IP task for processing. */
+          if (xSendEventStructToIPTask( &xRxEvent, 0 ) == pdFALSE)
+          {
+            /* Could not send the descriptor into the TCP/IP stack, it must be released. */
+            vReleaseNetworkBufferAndDescriptor(pxCurDescriptor);
+            iptraceETHERNET_RX_EVENT_LOST();
+          }
+          else
+          {
+            iptraceNETWORK_INTERFACE_RECEIVE();
+          }
         }
         else
         {
-          iptraceNETWORK_INTERFACE_RECEIVE();
+          /* The event was lost because a network buffer was not available.
+             Call the standard trace macro to log the occurrence. */
+          iptraceETHERNET_RX_EVENT_LOST();
         }
       }
     }
+
+    XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
   }
 
-  XMC_ETH_MAC_ReturnRxDescriptor(&eth_mac);
   XMC_ETH_MAC_ResumeRx(&eth_mac);
+
+	return ( xReceivedLength > 0 );
+
 }
 #endif
 
@@ -290,7 +305,7 @@ static void vClearTXBuffers()
       NetworkBufferDescriptor_t *pxDescriptor = pxPacketBuffer_to_NetworkBuffer(ucPayLoad);
       if (pxDescriptor != NULL)
       {
-      vReleaseNetworkBufferAndDescriptor(pxDescriptor);
+        vReleaseNetworkBufferAndDescriptor(pxDescriptor);
       }
       XMC_ETH_MAC_SetTxBufferEx(&eth_mac, ulTxDescriptorToClear, 0);
     }
@@ -320,7 +335,7 @@ static void set_link_up(void)
   XMC_ETH_MAC_SetLink(&eth_mac, speed, duplex);
 
   /* Enable ethernet interrupts */
-  XMC_ETH_MAC_EnableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_TRANSMIT));
+  XMC_ETH_MAC_EnableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_RECEIVE_BUFFER_UNAVAILABLE | XMC_ETH_MAC_EVENT_TRANSMIT));
 
   NVIC_SetPriority(ETH0_0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 62U, 0U));
   NVIC_ClearPendingIRQ(ETH0_0_IRQn);
@@ -334,7 +349,7 @@ static void set_link_up(void)
 
 static void set_link_down(void)
 {
-  XMC_ETH_MAC_DisableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_TRANSMIT));
+  XMC_ETH_MAC_DisableEvent(&eth_mac, (uint32_t)(XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_RECEIVE_BUFFER_UNAVAILABLE | XMC_ETH_MAC_EVENT_TRANSMIT));
   NVIC_DisableIRQ(ETH0_0_IRQn);
 
   XMC_ETH_MAC_DisableTx(&eth_mac);
@@ -360,13 +375,9 @@ static void netif_task(void *arg)
                     &ulInterruptStatus, /* Receives the notification value. */
                     portMAX_DELAY);     /* Block indefinitely. */
 
-    if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_RECEIVE) != 0)
+    if ((ulInterruptStatus & (XMC_ETH_MAC_EVENT_RECEIVE | XMC_ETH_MAC_EVENT_RECEIVE_BUFFER_UNAVAILABLE)) != 0)
     {
-      /* Go through the application owned descriptors */
-      while (XMC_ETH_MAC_IsRxDescriptorOwnedByDma(&eth_mac) == pdFALSE)
-      {
-        prvNetworkInterfaceInput();
-      }
+	  	while (prvNetworkInterfaceInput());
     }
 
     if ((ulInterruptStatus & XMC_ETH_MAC_EVENT_TRANSMIT) != 0 )
@@ -516,8 +527,8 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxNetworkB
 BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxDescriptor, BaseType_t xReleaseAfterSend )
 {
   (void)xReleaseAfterSend;
-  const TickType_t xBlockTimeTicks = pdMS_TO_TICKS(50u);
   BaseType_t xReturn = pdFAIL;
+  int32_t x;
 
   do
   {
@@ -526,9 +537,18 @@ BaseType_t xNetworkInterfaceOutput( NetworkBufferDescriptor_t * const pxDescript
       break;
     }
 
-    if (xSemaphoreTake(xTXDescriptorSemaphore, xBlockTimeTicks) != pdPASS)
+  	for (x = 0; x < MAX_TX_ATTEMPTS; ++x)
     {
-      /* Time-out waiting for a free TX descriptor. */
+      if (xSemaphoreTake(xTXDescriptorSemaphore, 0) == pdPASS)
+      {
+  			break;
+      }
+      iptraceWAITING_FOR_TX_DMA_DESCRIPTOR();	
+      vTaskDelay(TX_BUFFER_FREE_WAIT);
+    }
+
+    if (x == MAX_TX_ATTEMPTS)
+    {
       break;
     }
     
@@ -586,6 +606,9 @@ void vNetworkInterfaceAllocateRAMToBuffers(
     /* pucEthernetBuffer is set to point ipBUFFER_PADDING bytes in from the
        beginning of the allocated buffer. */
     pxDescriptor[ x ].pucEthernetBuffer = &( ucBuffers[ x ][ ipBUFFER_PADDING ] );
+    pxDescriptor[ x ].xDataLength = 0;
+    pxDescriptor[ x ].usPort = 0;
+    pxDescriptor[ x ].usBoundPort = 0;
 
     /* The following line is also required, but will not be required in
        future versions. */

@@ -34,8 +34,8 @@
 
 /**
  * @file SPI.h
- * @date 31 August, 2018
- * @version 2.6
+ * @date 19 Nov, 2020
+ * @version 2.7
  *
  * @brief SPI Driver for Infineon XMC devices
  *
@@ -45,12 +45,16 @@
  * Version 2.4 Added Status Structure for handling the driver status<br>
  * Version 2.5 Adapted to xmc1400 devices<br>
  * Version 2.6 Fixed SPI_INFO.mode variable type<br>
+ * Version 2.7 Fixed compiler warnings
  */
 
-#include "Driver_SPI.h"
 #include "xmc_scu.h"
 #include "xmc_gpio.h"
 #include "xmc_spi.h"
+
+#include "Driver_SPI.h"
+#include "RTE_Components.h"
+#include "RTE_Device.h"
 
 // SPI flags
 #define SPI_INITIALIZED       (1 << 0)
@@ -171,4 +175,33 @@ typedef struct
   uint32_t                 spi_slave_select_line7;                 // Slave Select Line 7
 } const SPI_RESOURCES;
 
+#if (RTE_SPI0 != 0)
+extern void SPI0_ISR(void);
+extern ARM_DRIVER_SPI Driver_SPI0;
+#endif
+
+#if (RTE_SPI1 != 0)
+extern void SPI1_ISR(void);
+extern ARM_DRIVER_SPI Driver_SPI1;
+#endif
+
+#if (RTE_SPI2 != 0)
+extern void SPI2_ISR(void);
+extern ARM_DRIVER_SPI Driver_SPI2;
+#endif
+
+#if (RTE_SPI3 != 0)
+extern void SPI3_ISR(void);
+extern ARM_DRIVER_SPI Driver_SPI3;
+#endif
+
+#if (RTE_SPI4 != 0)
+extern void SPI4_ISR(void);
+extern ARM_DRIVER_SPI Driver_SPI4;
+#endif
+
+#if (RTE_SPI5 != 0)
+extern void SPI5_ISR(void);
+extern ARM_DRIVER_SPI Driver_SPI5;
+#endif
 

@@ -26,6 +26,8 @@
 #ifndef AWS_INTEGRATION_TEST_TCP_CONFIG_H
 #define AWS_INTEGRATION_TEST_TCP_CONFIG_H
 
+#include "FreeRTOSIPConfig.h"
+
 /**
  * @file aws_integration_test_tcp_portable.h
  * @brief Port-specific variables for TCP tests. */

@@ -107,7 +107,7 @@ extern void vLoggingPrintf( const char * pcFormatString,
  * FreeRTOSConfig.h, not FreeRTOSIPConfig.h. Consideration needs to be given as to
  * the priority assigned to the task executing the IP stack relative to the
  * priority assigned to tasks that use the IP stack. */
-#define ipconfigIP_TASK_PRIORITY                   ( configMAX_PRIORITIES - 1 )
+#define ipconfigIP_TASK_PRIORITY                   ( configMAX_PRIORITIES - 2 )
 
 /* The size, in words (not bytes), of the stack allocated to the FreeRTOS+TCP
  * task.  This setting is less important when the FreeRTOS Win32 simulator is used
@@ -209,9 +209,9 @@ extern uint32_t ulRand();
  * are available to the IP stack.  The total number of network buffers is limited
  * to ensure the total amount of RAM that can be consumed by the IP stack is capped
  * to a pre-determinable value. */
-#define ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS    24
-#define configNUM_RX_DESCRIPTORS 12
-#define configNUM_TX_DESCRIPTORS 12
+#define ipconfigNUM_NETWORK_BUFFER_DESCRIPTORS    16
+#define configNUM_RX_DESCRIPTORS 8
+#define configNUM_TX_DESCRIPTORS 8
 
 /* A FreeRTOS queue is used to send events from application tasks to the IP
  * stack.  ipconfigEVENT_QUEUE_LENGTH sets the maximum number of events that can
@@ -280,7 +280,7 @@ extern uint32_t ulRand();
  * because the packet will already have been passed into the stack).  If the
  * Ethernet driver does all the necessary filtering in hardware then software
  * filtering can be removed by using a value other than 1 or 0. */
-#define ipconfigETHERNET_DRIVER_FILTERS_FRAME_TYPES    1
+#define ipconfigETHERNET_DRIVER_FILTERS_FRAME_TYPES    0
 
 /* The windows simulator cannot really simulate MAC interrupts, and needs to
  * block occasionally to allow other tasks to run. */

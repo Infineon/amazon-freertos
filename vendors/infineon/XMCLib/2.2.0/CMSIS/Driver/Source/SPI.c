@@ -34,13 +34,14 @@
 
 /**
  * @file SPI.c
- * @date 16 Dec., 2019
- * @version 2.12
+ * @date 19 Nov., 2020
+ * @version 2.13
  *
  * @brief spi Driver for Infineon XMC devices
  *
  * History
  *
+ * Version 2.13 Fixed compiler warnings
  * Version 2.12 Added interrupt priority
  *              Fixed current mode identification
  *
@@ -67,8 +68,6 @@
  */
 
 #include "SPI.h"
-#include "RTE_Device.h"
-#include "RTE_Components.h"
 
 #if defined(RTE_Drivers_SPI)
 
@@ -76,7 +75,7 @@
 #error "SPI not configured in RTE_Device.h!"
 #endif
 
-#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,12)   /* driver version */
+#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,13)   /* driver version */
 
 #define SPI_BIT_ORDER_MSB_LSB (0UL)
 #define SPI_BIT_ORDER_LSB_MSB (1UL)

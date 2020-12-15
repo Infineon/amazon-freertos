@@ -1,6 +1,6 @@
 /**
  * @file xmc_usic.h
- * @date 2019-07-01
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -103,6 +103,11 @@
  * 2020-04-30:
  *     - Added XMC_USIC_CH_TXFIFO_SetTriggerLimit() and XMC_USIC_CH_RXFIFO_SetTriggerLimit()
  *
+ * 2020-12-05:
+ *     - Added XMC_USIC_CH_BRG_CLOCK_SOURCE_DX1S to XMC_USIC_CH_BRG_CLOCK_SOURCE_t
+ *     - Added XMC_USIC_CH_BRG_CTQSEL_t
+ *     - Added XMC_USIC_CH_SetBaudrateDivider()
+ * 
  * @endcond
  *
  */
@@ -427,8 +432,21 @@ typedef enum XMC_USIC_CH_RXFIFO_EVENT
 typedef enum XMC_USIC_CH_BRG_CLOCK_SOURCE
 {
   XMC_USIC_CH_BRG_CLOCK_SOURCE_DIVIDER = 0x0UL, /**< Baudrate generator clock source : Source divider. (Internal clock source)*/
-  XMC_USIC_CH_BRG_CLOCK_SOURCE_DX1T    = 0x2UL << USIC_CH_BRG_CLKSEL_Pos  /**< Baudrate generator clock source : DX1T. (External clock source) */
+  XMC_USIC_CH_BRG_CLOCK_SOURCE_DX1T    = 0x2UL << USIC_CH_BRG_CLKSEL_Pos,  /**< Baudrate generator clock source : DX1T. (External clock source) */
+  XMC_USIC_CH_BRG_CLOCK_SOURCE_DX1S    = 0x3UL << USIC_CH_BRG_CLKSEL_Pos  /**< Baudrate generator clock source : DX1S. (External clock source) */
 } XMC_USIC_CH_BRG_CLOCK_SOURCE_t;
+
+/**
+* USIC channel input selection for CTQ
+*/
+typedef enum XMC_USIC_CH_BRG_CTQSEL
+{
+  XMC_USIC_CH_BRG_CTQSEL_PDIV = 0x0UL, /**< fCTQIN = fPDIV */
+  XMC_USIC_CH_BRG_CTQSEL_PPP  = 0x1UL << USIC_CH_BRG_CTQSEL_Pos,  /**< fCTQIN = fPPP */
+  XMC_USIC_CH_BRG_CTQSEL_SCLK = 0x2UL << USIC_CH_BRG_CTQSEL_Pos,  /**< fCTQIN = fSCLK */
+  XMC_USIC_CH_BRG_CTQSEL_MCLK = 0x3UL << USIC_CH_BRG_CTQSEL_Pos  /**< fCTQIN = fMCLK */
+} XMC_USIC_CH_BRG_CTQSEL_t;
+
 
 /**
 * USIC channel baudrate generator divider mode
@@ -708,6 +726,30 @@ XMC_USIC_CH_STATUS_t XMC_USIC_CH_SetBaudrate(XMC_USIC_CH_t *const channel, uint3
  */
 XMC_USIC_CH_STATUS_t XMC_USIC_CH_SetBaudrateEx(XMC_USIC_CH_t *const channel, int32_t rate, int32_t oversampling);
 
+/**
+ * @param  channel Pointer to USIC channel handler of type @ref XMC_USIC_CH_t \n
+ *           \b Range: @ref XMC_USIC0_CH0, @ref XMC_USIC0_CH1 to @ref XMC_USIC2_CH1 based on device support.
+ * @param  clksel Baudrate generator clock source.
+ * @param  pppen Enable 2:1 Divider for fPPP.
+ * @param  pdiv Divider Factor to generate fPDIV = fPPP / (pDIV + 1)
+ * @param  ctqsel Input selection for CTQ.
+ * @param  pctq Pre-Divider for Time Quanta Counter. fCTQIN / (PCQT + 1)
+ * @param  dctq Denominator for Time Quanta Counter. fTQ / (DCTQ + 1)
+ * @return None
+ *
+ * \par<b>Description</b><br>
+ * Configures the baudrate generator of the USIC channel.
+ *
+ * \par<b>Related APIs:</b><BR>
+ * XMC_USIC_CH_SetFractionalDivider() \n\n\n
+ */
+void XMC_USIC_CH_SetBaudrateDivider(XMC_USIC_CH_t *const channel, 
+                                    XMC_USIC_CH_BRG_CLOCK_SOURCE_t clksel,
+                                    bool pppen,
+                                    uint32_t pdiv,
+                                    XMC_USIC_CH_BRG_CTQSEL_t ctqsel,
+                                    uint32_t pctq,
+                                    uint32_t dctq);
 
 /**
  * @param  channel Pointer to USIC channel handler of type @ref XMC_USIC_CH_t \n

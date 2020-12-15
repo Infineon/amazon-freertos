@@ -1,0 +1,95 @@
+#include "optiga/optiga_util.h"
+
+/**
+ * Sample metadata
+ */
+static uint8_t metadata [] = {
+    //Metadata tag in the data object
+    0x20, 0x03,
+        // Change Access COndition Set to never
+	    //(this is a revertable action, till lifecycle of the Object is less than operational)
+        0xD0, 0x01, 0xFF,
+};
+
+/**
+ * Callback when optiga_util_xxxx/optiga_crypt_xxxx operation is completed asynchronously
+ */
+static volatile optiga_lib_status_t optiga_lib_status;
+//lint --e{818} suppress "argument "context" is not used in the sample provided"
+static void optiga_lib_callback(void * context, optiga_lib_status_t return_status)
+{
+    optiga_lib_status = return_status;
+    if (NULL != context)
+    {
+        // callback to upper layer here
+    }
+}
+
+
+void update_metadata(void)
+{
+    optiga_lib_status_t return_status = 0;
+    optiga_util_t * me_util = NULL;
+
+    do {
+        /**
+         * 1. Create OPTIGA Util and Crypt Instances
+         */
+        me_util = optiga_util_create(0, optiga_lib_callback, NULL);
+        if (NULL == me_util)
+        {
+            break;
+        }
+
+        /*
+        A new key should be already generated and printed out on the console before comming to this line,
+        as it will lock the key object and you CANNOT revert this.
+        */
+        optiga_lib_status = OPTIGA_LIB_BUSY;
+        return_status = optiga_util_write_metadata(me_util,
+                                                   0xE0F2,
+                                                   metadata,
+                                                   sizeof(metadata));
+        if (OPTIGA_LIB_SUCCESS != return_status)
+        {
+            break;
+        }
+
+        while (OPTIGA_LIB_BUSY == optiga_lib_status)
+        {
+            //Wait until the optiga_crypt_ecc_generate_keypair operation is completed
+        }
+
+        if (OPTIGA_LIB_SUCCESS != optiga_lib_status)
+        {
+            //Key pair generation failed
+            return_status = optiga_lib_status;
+            break;
+        }
+
+        optiga_lib_status = OPTIGA_LIB_BUSY;
+        return_status = optiga_util_write_metadata(me_util,
+                                                   0xE0E2,
+                                                   metadata,
+                                                   sizeof(metadata));
+        if (OPTIGA_LIB_SUCCESS != return_status)
+        {
+            break;
+        }
+
+        while (OPTIGA_LIB_BUSY == optiga_lib_status)
+        {
+            //Wait until the optiga_crypt_ecc_generate_keypair operation is completed
+        }
+
+        if (OPTIGA_LIB_SUCCESS != optiga_lib_status)
+        {
+            //Key pair generation failed
+            return_status = optiga_lib_status;
+            break;
+        }
+
+        optiga_util_destroy(me_util);
+    } while (0);
+
+}

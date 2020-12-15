@@ -1,6 +1,6 @@
 /**
  * @file xmc_i2s.c
- * @date 2019-12-16
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -70,6 +70,9 @@
  * 2019-12-16:
  *     - Fix including files following the convention: angle brackets are used for standard includes and double quotes for everything else.
  *
+ * 2020-12-05:
+ *     - Added XMC_I2S_CH_InitEx that allows user select if automatic baudrate configuration should be done or not
+ * 
  * @endcond
  *
  */
@@ -96,13 +99,13 @@
  ********************************************************************************************************************/
 
 /* Initializes the selected I2S channel with the config structure. */
-void XMC_I2S_CH_Init(XMC_USIC_CH_t *const channel, const XMC_I2S_CH_CONFIG_t *const config)
+void XMC_I2S_CH_InitEx(XMC_USIC_CH_t *const channel, const XMC_I2S_CH_CONFIG_t *const config, bool init_brg)
 {
   XMC_ASSERT("XMC_I2S_CH_Init: data_delayed_sclk_periods value not valid", (config->data_delayed_sclk_periods  > 0U) &&
              (config->data_delayed_sclk_periods  < config->frame_length));
   XMC_USIC_CH_Enable(channel);
 
-  if (config->bus_mode == XMC_I2S_CH_BUS_MODE_MASTER)
+  if ((config->bus_mode == XMC_I2S_CH_BUS_MODE_MASTER) && init_brg)
   {
     /* Configure baud rate */
     (void)XMC_I2S_CH_SetBaudrateEx(channel, config->baudrate, config->normal_divider_mode);

@@ -34,8 +34,8 @@
 
 /**
  * @file CAN.h
- * @date 16 Dec., 2019
- * @version 1.1
+ * @date 19 Nov., 2020
+ * @version 1.2
  *
  * @brief CAN Driver for Infineon XMC devices
  *
@@ -43,12 +43,16 @@
  *
  * Version 1.0 Initial version<br>
  * Version 1.1 Added interrupt priority
+ * Version 1.2 Fixed compiler warnings
  */
 
-#include "Driver_CAN.h"
 #include "xmc_scu.h"
 #include "xmc_gpio.h"
 #include "xmc_can.h"
+
+#include "Driver_CAN.h"
+#include "RTE_Components.h"
+#include "RTE_Device.h"
 
 // CAN flags
 #define CAN_INITIALIZED       (1 << 0)
@@ -109,3 +113,33 @@ typedef struct CAN_RESOURCES
   XMC_CAN_NODE_t                 *can_node;                 // Pointer to CAN Node
   XMC_CAN_MO_t                   *can_mo;                   // Pointer to Message Object
 } CAN_RESOURCES_t;
+
+#if (RTE_CAN0 != 0)
+extern void CAN0_ISR(void);
+extern ARM_DRIVER_CAN Driver_CAN0;
+#endif
+
+#if (RTE_CAN1 != 0)
+extern void CAN1_ISR(void);
+extern ARM_DRIVER_CAN Driver_CAN1;
+#endif
+
+#if (RTE_CAN2 != 0)
+extern void CAN2_ISR(void);
+extern ARM_DRIVER_CAN Driver_CAN2;
+#endif
+
+#if (RTE_CAN3 != 0)
+extern void CAN3_ISR(void);
+extern ARM_DRIVER_CAN Driver_CAN3;
+#endif
+
+#if (RTE_CAN4 != 0)
+extern void CAN4_ISR(void);
+extern ARM_DRIVER_CAN Driver_CAN4;
+#endif
+
+#if (RTE_CAN5 != 0)
+extern void CAN5_ISR(void);
+extern ARM_DRIVER_CAN Driver_CAN5;
+#endif

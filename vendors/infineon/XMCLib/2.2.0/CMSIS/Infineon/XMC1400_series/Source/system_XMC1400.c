@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
  * @file     system_XMC1400.c
  * @brief    Device specific initialization for the XMC1400-Series according to CMSIS
- * @version  V1.8
- * @date     03 Mar 2020
+ * @version  V1.9
+ * @date     13 Nov 2020
  *
  * @cond
  *********************************************************************************************************************
@@ -56,6 +56,7 @@
  * V1.6, 04 June 2019, Sync. code of SystemCoreClockSetup() to XMC_SCU_CLOCK_Init() in xmc1_scu.c
  * V1.7, 02 Dec 2019, Fix including device header file following the convention: angle brackets are used for standard includes and double quotes for everything else.
  * V1.8, 03 Mar 2020, Fix seeting of ANAOSCHPCTRL accoring to OSC_CM.D001 in errata
+ * V1.9, 13 Nov 2020, Added options to disable/enable the OSC_HP/LP. 
  *
  * @endcond
  */
@@ -105,11 +106,23 @@
 //    <o> OSCHP external oscillator mode
 //       <0=> Crystal mode
 //       <1=> External clock direct input mode
-//    <i> Default: Crystal mode
+//       <2=> Power down
+//    <i> Default: Power down
 */
-#define OSCHP_MODE 0
+#define OSCHP_MODE 2
 #define OSCHP_MODE_XTAL 0
 #define OSCHP_MODE_DIRECT 1
+#define OSCHP_MODE_POWER_DOWN 2
+
+/*
+//    <o> OSCLP external oscillator mode
+//       <0=> Oscillator mode
+//       <2=> Power down
+//    <i> Default: Power down
+*/
+#define OSCLP_MODE 2
+#define OSCLP_MODE_XTAL 0
+#define OSCLP_MODE_POWER_DOWN 2
 
 /*
 //    <o> RTC clock source selection
@@ -129,6 +142,15 @@
 #define PCLK_CLOCK_SRC 1
 #define PCLK_CLOCK_SRC_MCLK 0
 #define PCLK_CLOCK_SRC_2XMCLK 1
+
+
+#if (DCLK_CLOCK_SRC == DCLK_CLOCK_SRC_EXT_XTAL) && (OSCHP_MODE == OSCHP_MODE_POWER_DOWN)
+#error Selected OSC_HP as DCLK clock source but OSC_HP is disabled
+#endif
+
+#if (RTC_CLOCK_SRC == RTC_CLOCK_SRC_EXT_XTAL) && (OSCLP_MODE == OSCLP_MODE_POWER_DOWN)
+#error Selected OSC_LP as RTC clock source but OSC_LP is disabled
+#endif
 
 /*
 //-------- <<< end of configuration section >>> ------------------
@@ -153,7 +175,7 @@ uint32_t SystemCoreClock __at( 0x20003FFC );
 /*******************************************************************************
  * LOCAL FUNCTIONS
  *******************************************************************************/
-#if (DCLK_CLOCK_SRC != DCLK_CLOCK_SRC_DCO1) || ((RTC_CLOCK_SRC == RTC_CLOCK_SRC_EXT_XTAL) && (!defined(DISABLE_WAIT_RTC_XTAL_OSC_STARTUP)))
+#if (OSCHP_MODE != OSCHP_MODE_POWER_DOWN) || ((OSCLP_MODE != OSCLP_MODE_POWER_DOWN) && (!defined(DISABLE_WAIT_RTC_XTAL_OSC_STARTUP)))
 __STATIC_FORCEINLINE void delay(uint32_t cycles)
 {
   while(--cycles > 0)
@@ -186,7 +208,7 @@ __WEAK void SystemCoreClockSetup(void)
   /* disable bit protection */
   SCU_GENERAL->PASSWD = 0x000000C0UL;
 
-#if DCLK_CLOCK_SRC != DCLK_CLOCK_SRC_DCO1
+#if OSCHP_MODE == OSCHP_MODE_XTAL
 
   /* OSC_CM.D001 Additions and corrections related to ANAOSCHPCTRL register */
   if (OSCHP_GetFrequency() <= 20000000U)
@@ -225,23 +247,29 @@ __WEAK void SystemCoreClockSetup(void)
 
   } while (SCU_INTERRUPT->SRRAW1 & SCU_INTERRUPT_SRRAW1_LOECI_Msk);
 
-  /* DCLK source using OSC_HP */
-  SCU_CLK->CLKCR1 |= SCU_CLK_CLKCR1_DCLKSEL_Msk;
-  
 #else
-    
-  /* DCLK source using DCO1 */
-  SCU_CLK->CLKCR1 &= ~SCU_CLK_CLKCR1_DCLKSEL_Msk;
-  
+  /* Disable OSC_HP */  
+  SCU_ANALOG->ANAOSCHPCTRL |= SCU_ANALOG_ANAOSCHPCTRL_MODE_Msk;
 #endif    
 
-#if RTC_CLOCK_SRC == RTC_CLOCK_SRC_EXT_XTAL
+#if DCLK_CLOCK_SRC != DCLK_CLOCK_SRC_DCO1
+  /* DCLK source using OSC_HP */
+  SCU_CLK->CLKCR1 |= SCU_CLK_CLKCR1_DCLKSEL_Msk; 
+#else   
+  /* DCLK source using DCO1 */
+  SCU_CLK->CLKCR1 &= ~SCU_CLK_CLKCR1_DCLKSEL_Msk;
+#endif  
+
+#if OSCLP_MODE == OSCLP_MODE_XTAL
   /* Enable OSC_LP */
   SCU_ANALOG->ANAOSCLPCTRL &= ~SCU_ANALOG_ANAOSCLPCTRL_MODE_Msk;
 #ifndef DISABLE_WAIT_RTC_XTAL_OSC_STARTUP  
   /* Wait oscillator startup time ~5s */
   delay(6500000);
 #endif  
+#else
+  /* Disable OSC_LP */
+  SCU_ANALOG->ANAOSCLPCTRL |= SCU_ANALOG_ANAOSCLPCTRL_MODE_Msk;
 #endif  
 
   /* Update PCLK selection mux. */

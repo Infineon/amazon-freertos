@@ -616,7 +616,7 @@ void XMC_CAN_MO_Config(const XMC_CAN_MO_t *const can_mo)
       ((can_mo->can_mo_type != XMC_CAN_MO_TYPE_RECMSGOBJ) &&
        (can_mo->can_mo_type != XMC_CAN_MO_TYPE_TRANSMSGOBJ)))
   {
-    ; /*Do nothing*/
+    /*Do nothing*/
   }
   else
   {

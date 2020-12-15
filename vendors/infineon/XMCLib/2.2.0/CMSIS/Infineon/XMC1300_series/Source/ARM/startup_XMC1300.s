@@ -277,7 +277,7 @@ __user_initial_stackheap PROC
 
 ;* ================== START OF INTERRUPT HANDLER VENEERS ==================== */
 ; Veneers are located to fix SRAM Address 0x2000'0000
-                AREA    |.ARM.__at_0x20000000|, CODE, READWRITE
+                AREA    |VENEERS|, CODE, READWRITE
 
 ; Each Veneer has exactly a lengs of 4 Byte
 

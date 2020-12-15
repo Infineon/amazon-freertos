@@ -1,6 +1,6 @@
 /**
  * @file xmc_uart.c
- * @date 2019-12-16
+ * @date 2020-12-05
  *
  * @cond
  *****************************************************************************
@@ -67,6 +67,9 @@
  * 2019-12-16:
  *     - Fix including files following the convention: angle brackets are used for standard includes and double quotes for everything else.
  *
+ * 2020-12-05:
+ *     - Added XMC_UART_CH_InitEx that allows user select if automatic baudrate configuration should be done or not
+ * 
  * @endcond
  *
  */
@@ -89,7 +92,7 @@
  * API IMPLEMENTATION
  *********************************************************************************************************************/
 
-void XMC_UART_CH_Init(XMC_USIC_CH_t *channel, const XMC_UART_CH_CONFIG_t *const config)
+void XMC_UART_CH_InitEx(XMC_USIC_CH_t *channel, const XMC_UART_CH_CONFIG_t *const config, bool init_brg)
 {
   uint32_t oversampling = XMC_UART_CH_OVERSAMPLING;
 
@@ -101,16 +104,19 @@ void XMC_UART_CH_Init(XMC_USIC_CH_t *channel, const XMC_UART_CH_CONFIG_t *const 
     oversampling = (uint32_t)config->oversampling;
   }
 
-  /* Configure baud rate */
-  if (config->normal_divider_mode)
+  if (init_brg)
   {
-    /* Normal divider mode */
-    (void)XMC_USIC_CH_SetBaudrateEx(channel, config->baudrate, oversampling);
-  }
-  else
-  {
-    /* Fractional divider mode */
-    (void)XMC_USIC_CH_SetBaudrate(channel, config->baudrate, oversampling);
+    /* Configure baud rate */
+    if (config->normal_divider_mode)
+    {
+      /* Normal divider mode */
+      (void)XMC_USIC_CH_SetBaudrateEx(channel, config->baudrate, oversampling);
+    }
+    else
+    {
+      /* Fractional divider mode */
+      (void)XMC_USIC_CH_SetBaudrate(channel, config->baudrate, oversampling);
+    }
   }
 
   /* Configure frame format

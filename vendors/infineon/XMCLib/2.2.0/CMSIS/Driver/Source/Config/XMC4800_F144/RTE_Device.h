@@ -34,8 +34,8 @@
 
 /**
  * @file RTE_Device.h
- * @date 16 Dec., 2019
- * @version 1.2.0
+ * @date 13 Nov., 2020
+ * @version 1.3.0
  *
  * @brief RTE Device Configuration for Infineon XMC48/47_F144
  *
@@ -56,6 +56,9 @@
  * - [New] Added IRQ priority setting for drivers
  * - [New] Added Hold delay option for I2C driver
  *
+ * Version 1.3.0
+ * - [New] Added CAN clock source selection
+ * 
  */
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -74,6 +77,14 @@
 #define FIFO_SIZE_8 3
 #define FIFO_SIZE_16 4
 #define FIFO_SIZE_32 5
+
+/*
+//    <o> CAN clock source
+//       <1=> FPERI
+//       <2=> OSC_HP
+//    <i> Default: FPERI
+*/
+#define RTE_CAN_CLKSRC 1
 
 // <e> CAN0 (Controller area network) [Driver_CAN0]
 // <i> Configuration settings for Driver_CAN0 in component ::Drivers:CAN
@@ -939,7 +950,7 @@
 // <h> SPI0_SLAVE SELECT Pins 
 // <e> SLAVE SELECT LINE 0
 // <i> Enable slave select line 0
-#define RTE_SPI0_SLAVE_SELECT_LINE0 0
+#define RTE_SPI0_SLAVE_SELECT_LINE0     0
 //   <o> SPI0_SLAVE SELECT LINE 0 Pin <0=>P0_7 <1=>P1_0 <2=>P1_11
 #define RTE_SPI0_SLAVE_SELECT_LINE_0_ID                0
 #if    (RTE_SPI0_SLAVE_SELECT_LINE_0_ID == 0)
@@ -958,7 +969,7 @@
 
 // <e> SLAVE SELECT LINE 1
 // <i> Enable slave select line 1
-#define RTE_SPI0_SLAVE_SELECT_LINE1 0 
+#define RTE_SPI0_SLAVE_SELECT_LINE1     0 
 //   <o> SPI0_SLAVE SELECT LINE 1 Pin <0=>P1_8
 #define RTE_SPI0_SLAVE_SELECT_LINE_1_ID                0
 #if    (RTE_SPI0_SLAVE_SELECT_LINE_1_ID == 0)
@@ -971,7 +982,7 @@
 
 // <e> SLAVE SELECT LINE 2
 // <i> Enable slave select line 2
-#define RTE_SPI0_SLAVE_SELECT_LINE2 0
+#define RTE_SPI0_SLAVE_SELECT_LINE2     0
 //   <o> SPI0_SLAVE SELECT LINE 2 Pin <0=>P4_6
 #define RTE_SPI0_SLAVE_SELECT_LINE_2_ID                0
 #if    (RTE_SPI0_SLAVE_SELECT_LINE_2_ID == 0)
@@ -984,7 +995,7 @@
 
 // <e> SLAVE SELECT LINE 3
 // <i> Enable slave select line 3
-#define RTE_SPI0_SLAVE_SELECT_LINE3 0
+#define RTE_SPI0_SLAVE_SELECT_LINE3     0
 //   <o> SPI0_SLAVE SELECT LINE 3 Pin <0=>P4_5
 #define RTE_SPI0_SLAVE_SELECT_LINE_3_ID                0
 #if    (RTE_SPI0_SLAVE_SELECT_LINE_3_ID == 0)
@@ -997,7 +1008,7 @@
 
 // <e> SLAVE SELECT LINE 4
 // <i> Enable slave select line 4
-#define RTE_SPI0_SLAVE_SELECT_LINE4 0
+#define RTE_SPI0_SLAVE_SELECT_LINE4     0
 //   <o> SPI0_SLAVE SELECT LINE 4 Pin <0=>P4_4
 #define RTE_SPI0_SLAVE_SELECT_LINE_4_ID                0
 #if    (RTE_SPI0_SLAVE_SELECT_LINE_4_ID == 0)
@@ -1010,8 +1021,8 @@
 
 // <e> SLAVE SELECT LINE 5
 // <i> Enable slave select line 5
-#define RTE_SPI0_SLAVE_SELECT_LINE5 0
-// <o> SPI0_SLAVE SELECT LINE 5 Pin <0=>P4_3
+#define RTE_SPI0_SLAVE_SELECT_LINE5     0
+//   <o> SPI0_SLAVE SELECT LINE 5 Pin <0=>P4_3
 #define RTE_SPI0_SLAVE_SELECT_LINE_5_ID                0
 #if    (RTE_SPI0_SLAVE_SELECT_LINE_5_ID == 0)
 #define RTE_SPI0_SLAVE_SELECT_LINE_5_PORT              P4_3
@@ -1166,7 +1177,7 @@
 // <h> SPI1_SLAVE SELECT Pins
 // <e> SLAVE SELECT LINE 0
 // <i> Enable slave select line 0
-#define RTE_SPI1_SLAVE_SELECT_LINE0 0
+#define RTE_SPI1_SLAVE_SELECT_LINE0     0
 //   <o> SPI1_SLAVE SELECT LINE 0 Pin <0=>P2_3 <1=>P3_1 <2=>P4_1 <3=>P6_1
 #define RTE_SPI1_SLAVE_SELECT_LINE_0_ID                0
 #if    (RTE_SPI1_SLAVE_SELECT_LINE_0_ID == 0)
@@ -1188,7 +1199,7 @@
 
 // <e> SLAVE SELECT LINE 1
 // <i> Enable slave select line 1
-#define RTE_SPI1_SLAVE_SELECT_LINE1 0
+#define RTE_SPI1_SLAVE_SELECT_LINE1     0
 //   <o> SPI1_SLAVE SELECT LINE 1 Pin <0=>P3_12 <1=>P6_0
 #define RTE_SPI1_SLAVE_SELECT_LINE_1_ID                0
 #if    (RTE_SPI1_SLAVE_SELECT_LINE_1_ID == 0)
@@ -1204,7 +1215,7 @@
 
 // <e> SLAVE SELECT LINE 2
 // <i> Enable slave select line 2
-#define RTE_SPI1_SLAVE_SELECT_LINE2 0
+#define RTE_SPI1_SLAVE_SELECT_LINE2     0
 //   <o> SPI1_SLAVE SELECT LINE 2 Pin <0=>P1_14  <1=>P3_11
 #define RTE_SPI1_SLAVE_SELECT_LINE_2_ID                0
 #if    (RTE_SPI1_SLAVE_SELECT_LINE_2_ID == 0)
@@ -1220,7 +1231,7 @@
 
 // <e> SLAVE SELECT LINE 3
 // <i> Enable slave select line 3
-#define RTE_SPI1_SLAVE_SELECT_LINE3 0
+#define RTE_SPI1_SLAVE_SELECT_LINE3     0
 //   <o> SPI1_SLAVE SELECT LINE 3 Pin <0=>P1_13 <1=>P3_8
 #define RTE_SPI1_SLAVE_SELECT_LINE_3_ID                0
 #if    (RTE_SPI1_SLAVE_SELECT_LINE_3_ID == 0)
@@ -1378,7 +1389,7 @@
 //   <h> SPI2_SLAVE SELECT Pins 
 // <e> SLAVE SELECT LINE 0
 // <i> Enable slave select line 0
-#define RTE_SPI2_SLAVE_SELECT_LINE0 0
+#define RTE_SPI2_SLAVE_SELECT_LINE0     0
 //   <o> SPI2_SLAVE SELECT LINE 0 Pin <0=>P0_6 <1=>P5_9
 #define RTE_SPI2_SLAVE_SELECT_LINE_0_ID                0
 #if    (RTE_SPI2_SLAVE_SELECT_LINE_0_ID == 0)
@@ -1394,7 +1405,7 @@
 
 // <e> SLAVE SELECT LINE 1
 // <i> Enable slave select line 1
-#define RTE_SPI2_SLAVE_SELECT_LINE1 0
+#define RTE_SPI2_SLAVE_SELECT_LINE1     0
 //   <o> SPI2_SLAVE SELECT LINE 1 Pin <0=>P0_14 <1=>P5_11
 #define RTE_SPI2_SLAVE_SELECT_LINE_1_ID                0
 #if    (RTE_SPI2_SLAVE_SELECT_LINE_1_ID == 0)
@@ -1410,7 +1421,7 @@
 
 // <e> SLAVE SELECT LINE 2
 // <i> Enable slave select line 2
-#define RTE_SPI2_SLAVE_SELECT_LINE2 0
+#define RTE_SPI2_SLAVE_SELECT_LINE2     0
 //   <o> SPI2_SLAVE SELECT LINE 2 Pin <0=>P0_15
 #define RTE_SPI2_SLAVE_SELECT_LINE_2_ID                0
 #if    (RTE_SPI2_SLAVE_SELECT_LINE_2_ID == 0)
@@ -1422,7 +1433,7 @@
 // </e>
 // <e> SLAVE SELECT LINE 3
 // <i> Enable slave select line 3
-#define RTE_SPI2_SLAVE_SELECT_LINE3 0
+#define RTE_SPI2_SLAVE_SELECT_LINE3     0
 //   <o> SPI2_SLAVE SELECT LINE 3 Pin <0=>P3_14
 #define RTE_SPI2_SLAVE_SELECT_LINE_3_ID                0
 #if    (RTE_SPI2_SLAVE_SELECT_LINE_3_ID == 0)
@@ -1570,7 +1581,7 @@
 //   <h> SPI3_SLAVE SELECT Pins 
 // <e> SLAVE SELECT LINE 0
 // <i> Enable slave select line 0
-#define RTE_SPI3_SLAVE_SELECT_LINE0 0
+#define RTE_SPI3_SLAVE_SELECT_LINE0     0
 //   <o> SPI3_SLAVE SELECT LINE 0 Pin <0=>P0_9 <1=>P0_12
 #define RTE_SPI3_SLAVE_SELECT_LINE_0_ID                0
 #if    (RTE_SPI3_SLAVE_SELECT_LINE_0_ID == 0)
@@ -1586,7 +1597,7 @@
 
 // <e> SLAVE SELECT LINE 1
 // <i> Enable slave select line 1
-#define RTE_SPI3_SLAVE_SELECT_LINE1 0
+#define RTE_SPI3_SLAVE_SELECT_LINE1     0
 //   <o> SPI3_SLAVE SELECT LINE 1 Pin <0=>P0_2 <1=>P3_3
 #define RTE_SPI3_SLAVE_SELECT_LINE_1_ID                0
 #if    (RTE_SPI3_SLAVE_SELECT_LINE_1_ID == 0)
@@ -1602,7 +1613,7 @@
 
 // <e> SLAVE SELECT LINE 2
 // <i> Enable slave select line 2
-#define RTE_SPI3_SLAVE_SELECT_LINE2 0
+#define RTE_SPI3_SLAVE_SELECT_LINE2     0
 //   <o> SPI3_SLAVE SELECT LINE 2 Pin <0=>P3_4
 #define RTE_SPI3_SLAVE_SELECT_LINE_2_ID                0
 #if    (RTE_SPI3_SLAVE_SELECT_LINE_2_ID == 0)
@@ -1615,7 +1626,7 @@
 
 // <e> SLAVE SELECT LINE 3
 // <i> Enable slave select line 3
-#define RTE_SPI3_SLAVE_SELECT_LINE3 0
+#define RTE_SPI3_SLAVE_SELECT_LINE3     0
 //   <o> SPI3_SLAVE SELECT LINE 3 Pin <0=>P3_5
 #define RTE_SPI3_SLAVE_SELECT_LINE_3_ID                0
 #if    (RTE_SPI3_SLAVE_SELECT_LINE_3_ID == 0)
@@ -1628,7 +1639,7 @@
 
 // <e> SLAVE SELECT LINE 4
 // <i> Enable slave select line 4
-#define RTE_SPI3_SLAVE_SELECT_LINE4 0
+#define RTE_SPI3_SLAVE_SELECT_LINE4     0
 //   <o> SPI3_SLAVE SELECT LINE 4 Pin <0=>P3_6
 #define RTE_SPI3_SLAVE_SELECT_LINE_4_ID                0
 #if    (RTE_SPI3_SLAVE_SELECT_LINE_4_ID == 0)
@@ -1789,7 +1800,7 @@
 
 // <e> SLAVE SELECT LINE 1
 // <i> Enable slave select line 1
-#define RTE_SPI4_SLAVE_SELECT_LINE1 0
+#define RTE_SPI4_SLAVE_SELECT_LINE1     0
 //   <o> SPI4_SLAVE SELECT LINE 1 Pin <0=>P5_4
 #define RTE_SPI4_SLAVE_SELECT_LINE_1_ID                0
 #if    (RTE_SPI4_SLAVE_SELECT_LINE_1_ID == 0)
@@ -1802,7 +1813,7 @@
 
 // <e> SLAVE SELECT LINE 2
 // <i> Enable slave select line 2
-#define RTE_SPI4_SLAVE_SELECT_LINE2 0
+#define RTE_SPI4_SLAVE_SELECT_LINE2     0
 //   <o> SPI4_SLAVE SELECT LINE 2 Pin <0=>P5_5
 #define RTE_SPI4_SLAVE_SELECT_LINE_2_ID                0
 #if    (RTE_SPI4_SLAVE_SELECT_LINE_2_ID == 0)
@@ -1815,7 +1826,7 @@
 
 // <e> SLAVE SELECT LINE 3
 // <i> Enable slave select line 3
-#define RTE_SPI4_SLAVE_SELECT_LINE3 0
+#define RTE_SPI4_SLAVE_SELECT_LINE3     0
 //   <o> SPI4_SLAVE SELECT LINE 3 Pin <0=>P5_6
 #define RTE_SPI4_SLAVE_SELECT_LINE_3_ID                0
 #if    (RTE_SPI4_SLAVE_SELECT_LINE_3_ID == 0)
@@ -1828,7 +1839,7 @@
 
 // <e> SLAVE SELECT LINE 4
 // <i> Enable slave select line 4
-#define RTE_SPI4_SLAVE_SELECT_LINE4 0
+#define RTE_SPI4_SLAVE_SELECT_LINE4     0
 //   <o> SPI4_SLAVE SELECT LINE 4 Pin <0=>P2_6
 #define RTE_SPI4_SLAVE_SELECT_LINE_4_ID                0
 #if    (RTE_SPI4_SLAVE_SELECT_LINE_4_ID == 0)
@@ -1971,7 +1982,7 @@
 //   <h> SPI5_SLAVE SELECT Pins 
 // <e> SLAVE SELECT LINE 0
 // <i> Enable slave select line 0
-#define RTE_SPI5_SLAVE_SELECT_LINE0 0
+#define RTE_SPI5_SLAVE_SELECT_LINE0     0
 //   <o> SPI5_SLAVE SELECT LINE 0 Pin <0=>P3_0 <1=>P4_1
 #define RTE_SPI5_SLAVE_SELECT_LINE_0_ID                0
 #if    (RTE_SPI5_SLAVE_SELECT_LINE_0_ID == 0)
@@ -1987,7 +1998,7 @@
 
 // <e> SLAVE SELECT LINE 1
 // <i> Enable slave select line 1
-#define RTE_SPI5_SLAVE_SELECT_LINE1 0
+#define RTE_SPI5_SLAVE_SELECT_LINE1     0
 //   <o> SPI5_SLAVE SELECT LINE 1 Pin <0=>P4_2
 #define RTE_SPI5_SLAVE_SELECT_LINE_1_ID                0
 #if    (RTE_SPI5_SLAVE_SELECT_LINE_1_ID == 0)
@@ -2000,7 +2011,7 @@
 
 // <e> SLAVE SELECT LINE 2
 // <i> Enable slave select line 2
-#define RTE_SPI5_SLAVE_SELECT_LINE2 0
+#define RTE_SPI5_SLAVE_SELECT_LINE2     0
 //   <o> SPI5_SLAVE SELECT LINE 2 Pin <0=>P4_3
 #define RTE_SPI5_SLAVE_SELECT_LINE_2_ID                0
 #if    (RTE_SPI5_SLAVE_SELECT_LINE_2_ID == 0)

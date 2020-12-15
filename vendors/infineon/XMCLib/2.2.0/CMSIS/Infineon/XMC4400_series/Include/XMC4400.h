@@ -16532,8 +16532,10 @@ typedef struct {                                    /*!< (@ 0x48028F00) PORT15 S
 #define SCU_POWER                       ((SCU_POWER_TypeDef          *) SCU_POWER_BASE)
 #define SCU_RESET                       ((SCU_RESET_TypeDef          *) SCU_RESET_BASE)
 #define LEDTS0                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS0_BASE)
+#if defined(UC_DEVICE) && (UC_DEVICE == XMC4400)
 #define ETH0_CON                        ((ETH0_CON_GLOBAL_TypeDef           *) ETH0_CON_BASE)
 #define ETH0                            ((ETH_GLOBAL_TypeDef                *) ETH0_BASE)
+#endif
 #define USB0                            ((USB0_GLOBAL_TypeDef                *) USB0_BASE)
 #define USB0_EP0                        ((USB0_EP0_TypeDef           *) USB_EP_BASE)
 #define USB0_EP1                        ((USB0_EP_TypeDef             *) USB0_EP1_BASE)

@@ -50,12 +50,13 @@
 /***************************************************************************
  * HEADER FILES
  ***************************************************************************/
-#include "Driver_MCI.h"
 #include "xmc_scu.h"
 #include "xmc_gpio.h"
 #include "xmc_sdmmc.h"
-#include "RTE_Device.h"
+
+#include "Driver_MCI.h"
 #include "RTE_Components.h"
+#include "RTE_Device.h"
 
 /***************************************************************************
  *  MACROS

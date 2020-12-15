@@ -13108,7 +13108,10 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define SCU_HIBERNATE                   ((SCU_HIBERNATE_TypeDef      *) SCU_HIBERNATE_BASE)
 #define SCU_POWER                       ((SCU_POWER_TypeDef          *) SCU_POWER_BASE)
 #define SCU_RESET                       ((SCU_RESET_TypeDef          *) SCU_RESET_BASE)
+#if defined(UC_DEVICE) && ((UC_DEVICE == XMC4100) || (UC_DEVICE == XMC4104))
 #define LEDTS0                          ((LEDTS0_GLOBAL_TypeDef              *) LEDTS0_BASE)
+#endif
+#if defined(UC_DEVICE) && (UC_DEVICE == XMC4100)
 #define USB0                            ((USB0_GLOBAL_TypeDef                *) USB0_BASE)
 #define USB0_EP0                        ((USB0_EP0_TypeDef           *) USB_EP_BASE)
 #define USB0_EP1                        ((USB0_EP_TypeDef             *) USB0_EP1_BASE)
@@ -13117,15 +13120,19 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define USB0_EP4                        ((USB0_EP_TypeDef             *) USB0_EP4_BASE)
 #define USB0_EP5                        ((USB0_EP_TypeDef             *) USB0_EP5_BASE)
 #define USB0_EP6                        ((USB0_EP_TypeDef             *) USB0_EP6_BASE)
+#endif
 #define USIC0                           ((USIC_GLOBAL_TypeDef               *) USIC0_BASE)
 #define USIC1                           ((USIC_GLOBAL_TypeDef               *) USIC1_BASE)
 #define USIC0_CH0                       ((USIC_CH_TypeDef            *) USIC0_CH0_BASE)
 #define USIC0_CH1                       ((USIC_CH_TypeDef            *) USIC0_CH1_BASE)
 #define USIC1_CH0                       ((USIC_CH_TypeDef            *) USIC1_CH0_BASE)
 #define USIC1_CH1                       ((USIC_CH_TypeDef            *) USIC1_CH1_BASE)
+#if defined(UC_DEVICE) && ((UC_DEVICE == XMC4100) || (UC_DEVICE == XMC4108))
 #define CAN                             ((CAN_GLOBAL_TypeDef                *) CAN_BASE)
 #define CAN_NODE0                       ((CAN_NODE_TypeDef           *) CAN_NODE0_BASE)
+#if defined(UC_DEVICE) && (UC_DEVICE == XMC4100)
 #define CAN_NODE1                       ((CAN_NODE_TypeDef           *) CAN_NODE1_BASE)
+#endif
 #define CAN_MO0                         ((CAN_MO_TypeDef             *) CAN_MO0_BASE)
 #define CAN_MO1                         ((CAN_MO_TypeDef             *) CAN_MO1_BASE)
 #define CAN_MO2                         ((CAN_MO_TypeDef             *) CAN_MO2_BASE)
@@ -13158,6 +13165,7 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define CAN_MO29                        ((CAN_MO_TypeDef             *) CAN_MO29_BASE)
 #define CAN_MO30                        ((CAN_MO_TypeDef             *) CAN_MO30_BASE)
 #define CAN_MO31                        ((CAN_MO_TypeDef             *) CAN_MO31_BASE)
+#if defined(UC_DEVICE) && (UC_DEVICE == XMC4100)
 #define CAN_MO32                        ((CAN_MO_TypeDef             *) CAN_MO32_BASE)
 #define CAN_MO33                        ((CAN_MO_TypeDef             *) CAN_MO33_BASE)
 #define CAN_MO34                        ((CAN_MO_TypeDef             *) CAN_MO34_BASE)
@@ -13190,6 +13198,8 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define CAN_MO61                        ((CAN_MO_TypeDef             *) CAN_MO61_BASE)
 #define CAN_MO62                        ((CAN_MO_TypeDef             *) CAN_MO62_BASE)
 #define CAN_MO63                        ((CAN_MO_TypeDef             *) CAN_MO63_BASE)
+#endif /* UC_DEVICE == XMC4100 */
+#endif /* UC_DEVICE == XMC4100 || UC_DEVICE == XMC4108 */
 #define VADC                            ((VADC_GLOBAL_TypeDef               *) VADC_BASE)
 #define VADC_G0                         ((VADC_G_TypeDef             *) VADC_G0_BASE)
 #define VADC_G1                         ((VADC_G_TypeDef             *) VADC_G1_BASE)
@@ -13209,6 +13219,7 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define CCU80_CC81                      ((CCU8_CC8_TypeDef           *) CCU80_CC81_BASE)
 #define CCU80_CC82                      ((CCU8_CC8_TypeDef           *) CCU80_CC82_BASE)
 #define CCU80_CC83                      ((CCU8_CC8_TypeDef           *) CCU80_CC83_BASE)
+#if defined(UC_DEVICE) && ((UC_DEVICE == XMC4100) || (UC_DEVICE == XMC4104))
 #define HRPWM0                          ((HRPWM0_Type             *) HRPWM0_BASE)
 #define HRPWM0_CSG0                     ((HRPWM0_CSG_Type         *) HRPWM0_CSG0_BASE)
 #define HRPWM0_CSG1                     ((HRPWM0_CSG_Type         *) HRPWM0_CSG1_BASE)
@@ -13217,6 +13228,7 @@ typedef struct {                                    /*!< (@ 0x48028E00) PORT14 S
 #define HRPWM0_HRC1                     ((HRPWM0_HRC_Type         *) HRPWM0_HRC1_BASE)
 #define HRPWM0_HRC2                     ((HRPWM0_HRC_Type         *) HRPWM0_HRC2_BASE)
 #define HRPWM0_HRC3                     ((HRPWM0_HRC_Type         *) HRPWM0_HRC3_BASE)
+#endif
 #define POSIF0                          ((POSIF_GLOBAL_TypeDef              *) POSIF0_BASE)
 #define PORT0                           ((PORT0_Type              *) PORT0_BASE)
 #define PORT1                           ((PORT1_Type              *) PORT1_BASE)

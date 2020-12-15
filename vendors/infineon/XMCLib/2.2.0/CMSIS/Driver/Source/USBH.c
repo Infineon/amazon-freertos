@@ -47,12 +47,9 @@
  * Version 1.3 Added interrupt priority
  */
 
-#include <stdint.h>
 #include <string.h>
+
 #include "USBH.h"
-#include "Driver_USBH.h"
-#include "RTE_Device.h"
-#include "RTE_Components.h"
 
 #if defined (RTE_Drivers_USBH)
 

@@ -54,7 +54,8 @@
  *     - Updated the XMC_USBD_Disable() API to gate the clock after programming the SCU registers.<br>
  * 2019-12-16:
  *     - Fix including files following the convention: angle brackets are used for standard includes and double quotes for everything else.
- *
+ * 2020-09-03:
+ *     - Fix XMC_USBD_EndpointConfigure()
  * @endcond
  *
  */

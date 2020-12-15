@@ -34,8 +34,8 @@
 
 /**
  * @file CAN.c
- * @date 16 Dec., 2019
- * @version 1.5
+ * @date 19 Nov., 2020
+ * @version 1.6
  *
  * @brief CAN Driver for Infineon XMC devices
  *
@@ -51,12 +51,10 @@
  *             Disable internal loopback mode
  * Version 1.4 Fix compiler warnings
  * Version 1.5 Added interrupt priority
- *
+ * Version 1.6 Fixed compiler warnings. Added clock source selection.
  */
 
 #include "CAN.h"
-#include "RTE_Device.h"
-#include "RTE_Components.h"
 
 #if defined(RTE_Drivers_CAN)
 
@@ -64,7 +62,7 @@
 #error "CAN not configured in RTE_Device.h!"
 #endif
 
-#define ARM_CAN_DRV_VERSION            ARM_DRIVER_VERSION_MAJOR_MINOR(1,5)   /* driver version */
+#define ARM_CAN_DRV_VERSION            ARM_DRIVER_VERSION_MAJOR_MINOR(1,6)   /* driver version */
 #define DEFAULT_ACCEPTANCE_MASK        0x1FFFFFFF
 
 #if (UC_SERIES == XMC14) || (UC_DEVICE == XMC4108)
@@ -105,6 +103,7 @@ static const ARM_CAN_CAPABILITIES can_driver_capabilities =
   1U,                   /* Supports bus monitoring mode */
   0U,                   /* Supports internal loop-back mode */
   0U,                   /* Does not support external loop-back mode */
+  0U
 };
 
 /* Object Capabilities */
@@ -118,7 +117,8 @@ static const ARM_CAN_OBJ_CAPABILITIES can_object_capabilities =
   1U,   /* Object supports exact identifier filtering */
   0U,   /* Object does not support range identifier filtering */
   1U,   /* Object supports mask identifier filtering */
-  1U    /* Object can buffer 1 message */
+  1U,   /* Object can buffer 1 message */
+  0U
 };
 
 static bool global_can_initialized = false;
@@ -314,6 +314,7 @@ static ARM_DRIVER_VERSION CANX_GetVersion(void)
 ***********************************************************************************************************************/
 __STATIC_INLINE ARM_CAN_CAPABILITIES CAN_GetCapabilities(CAN_RESOURCES_t *can)
 {
+  (void)can;
   return can_driver_capabilities;
 }
 
@@ -527,7 +528,19 @@ static int32_t CAN_PowerControl(ARM_POWER_STATE state, CAN_RESOURCES_t *can)
 
       if (!global_can_initialized)
       {
+#if defined(MULTICAN_PLUS)
+#if RTE_CAN_CLKSRC != RTE_CAN_CLKSRC_OSC_HP
+#if (UC_FAMILY == XMC4)		
         XMC_CAN_InitEx(can->can, XMC_CAN_CANCLKSRC_FPERI, XMC_SCU_CLOCK_GetPeripheralClockFrequency());
+#else
+        XMC_CAN_InitEx(can->can, XMC_CAN_CANCLKSRC_MCLK, XMC_SCU_CLOCK_GetPeripheralClockFrequency());
+#endif				
+#else /* RTE_CAN_CLKSRC != RTE_CAN_CLKSRC_OSC_HP */
+        XMC_CAN_InitEx(can->can, RTE_CAN_CLKSRC_OSC_HP, OSCHP_GetFrequency());
+#endif        
+#else /* defined(MULTICAN_PLUS) */
+        XMC_CAN_InitEx(can->can, XMC_CAN_CANCLKSRC_FPERI, XMC_SCU_CLOCK_GetPeripheralClockFrequency());
+#endif
         global_can_initialized = true;
       }
       
@@ -567,8 +580,9 @@ static int32_t CAN_PowerControl(ARM_POWER_STATE state, CAN_RESOURCES_t *can)
 
       break;
 
-    default:
+    case ARM_POWER_LOW:
       return ARM_DRIVER_ERROR_UNSUPPORTED;
+			
   }
   return ARM_DRIVER_OK;
 }
@@ -863,7 +877,6 @@ static int32_t CAN_SetMode(ARM_CAN_MODE mode, CAN_RESOURCES_t *can)
       break;
 
     case ARM_CAN_MODE_LOOPBACK_EXTERNAL:
-    default:
       return ARM_DRIVER_ERROR_UNSUPPORTED;
   }
   return ARM_DRIVER_OK;
@@ -917,8 +930,9 @@ static int32_t CAN5_SetMode(ARM_CAN_MODE mode)
   \param[in]   obj_idx  Object index
   \return      \ref ARM_CAN_OBJ_CAPABILITIES
 ***********************************************************************************************************************/
-ARM_CAN_OBJ_CAPABILITIES CANX_ObjectGetCapabilities(uint32_t obj_idx)
+static ARM_CAN_OBJ_CAPABILITIES CANX_ObjectGetCapabilities(uint32_t obj_idx)
 {
+  (void)obj_idx;
   return can_object_capabilities;
 }
 
@@ -999,8 +1013,6 @@ static int32_t CAN_ObjectSetFilter(uint32_t obj_idx,
     case ARM_CAN_FILTER_ID_RANGE_REMOVE:
       return ARM_DRIVER_ERROR_UNSUPPORTED;
 
-    default:
-      return ARM_DRIVER_ERROR_UNSUPPORTED;
   }
   return ARM_DRIVER_OK;
 }
@@ -1118,8 +1130,6 @@ static int32_t CAN_ObjectConfigure(uint32_t obj_idx, ARM_CAN_OBJ_CONFIG obj_cfg,
       XMC_CAN_MO_SetEventNodePointer(can->can_mo, XMC_CAN_MO_POINTER_EVENT_RECEIVE, can->current_node_index); 
       break;
 
-    default:
-      return ARM_DRIVER_ERROR_UNSUPPORTED;
   }
   return ARM_DRIVER_OK;
 }
@@ -1823,4 +1833,4 @@ ARM_DRIVER_CAN Driver_CAN5 =
 };
 #endif
 
-#endif
+#endif /* defined(RTE_Drivers_CAN) */
