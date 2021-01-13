@@ -57,44 +57,6 @@ static uint8_t initialized = 0;
 // Ring buffer using DMA
 // The ring buffer is divided into two equal sized buffers
 static volatile uint8_t ring_buffer[RING_BUFFER_SIZE];
-static volatile uint8_t ring_buffer_cur = 0;
-
-/* DMA linked list */
-static __attribute__((aligned(32))) XMC_DMA_LLI_t dma_ll[2] =
-{
-  {
-	.block_size = RING_BUFFER_SIZE / 2,
-	.src_addr = (uint32_t)&(WIFI_IO_UART_CH->RBUF),
-	.dst_addr = (uint32_t)&ring_buffer[0],
-	.llp = &dma_ll[1],
-	.enable_interrupt = true,
-	.dst_transfer_width = XMC_DMA_CH_TRANSFER_WIDTH_8,
-	.src_transfer_width = XMC_DMA_CH_TRANSFER_WIDTH_8,
-	.dst_address_count_mode = XMC_DMA_CH_ADDRESS_COUNT_MODE_INCREMENT,
-	.src_address_count_mode = XMC_DMA_CH_ADDRESS_COUNT_MODE_NO_CHANGE,
-	.dst_burst_length = XMC_DMA_CH_BURST_LENGTH_1,
-	.src_burst_length = XMC_DMA_CH_BURST_LENGTH_1,
-	.transfer_flow = XMC_DMA_CH_TRANSFER_FLOW_P2M_DMA,
-	.enable_dst_linked_list = true,
-	.enable_src_linked_list = true,
-  },
-  {
-	.block_size = RING_BUFFER_SIZE / 2,
-	.src_addr = (uint32_t)&(WIFI_IO_UART_CH->RBUF),
-	.dst_addr = (uint32_t)&ring_buffer[RING_BUFFER_SIZE / 2],
-	.llp = &dma_ll[0],
-	.enable_interrupt = true,
-	.dst_transfer_width = XMC_DMA_CH_TRANSFER_WIDTH_8,
-	.src_transfer_width = XMC_DMA_CH_TRANSFER_WIDTH_8,
-	.dst_address_count_mode = XMC_DMA_CH_ADDRESS_COUNT_MODE_INCREMENT,
-	.src_address_count_mode = XMC_DMA_CH_ADDRESS_COUNT_MODE_NO_CHANGE,
-	.dst_burst_length = XMC_DMA_CH_BURST_LENGTH_1,
-	.src_burst_length = XMC_DMA_CH_BURST_LENGTH_1,
-	.transfer_flow = XMC_DMA_CH_TRANSFER_FLOW_P2M_DMA,
-	.enable_dst_linked_list = true,
-	.enable_src_linked_list = true,
-  }
-};
 
 static const XMC_DMA_CH_CONFIG_t dma_ch_config =
 {
@@ -108,11 +70,10 @@ static const XMC_DMA_CH_CONFIG_t dma_ch_config =
 	.src_burst_length = XMC_DMA_CH_BURST_LENGTH_1,
 	.transfer_flow = XMC_DMA_CH_TRANSFER_FLOW_P2M_DMA,
   },
-  .block_size = RING_BUFFER_SIZE / 2,
+  .block_size = RING_BUFFER_SIZE,
   .src_addr = (uint32_t)&(WIFI_IO_UART_CH->RBUF),
   .dst_addr = (uint32_t)&ring_buffer[0],
-  .linked_list_pointer = &dma_ll[0],
-  .transfer_type = XMC_DMA_CH_TRANSFER_TYPE_MULTI_BLOCK_SRCADR_LINKED_DSTADR_LINKED, /* Transfer type */
+  .transfer_type = XMC_DMA_CH_TRANSFER_TYPE_MULTI_BLOCK_SRCADR_RELOAD_DSTADR_RELOAD, /* Transfer type */
   .priority = XMC_DMA_CH_PRIORITY_0, /* Priority level */
   .src_handshaking = XMC_DMA_CH_SRC_HANDSHAKING_HARDWARE, /* Source handshaking */
   .src_peripheral_request = DMA0_PERIPHERAL_REQUEST_USIC1_SR0_0, /* Source peripheral trigger */
@@ -126,7 +87,7 @@ static void uart_task(void * pvParameters)
 
   while (1)
   {
-	end = (ring_buffer_cur * (RING_BUFFER_SIZE / 2)) + XMC_DMA_CH_GetTransferredData(XMC_DMA0, 0);
+	end = XMC_DMA_CH_GetTransferredData(XMC_DMA0, 0);
 
 	if (start != end)
 	{
@@ -152,17 +113,6 @@ static void uart_task(void * pvParameters)
 	vTaskDelay(pdMS_TO_TICKS(1UL));
   }
 }
-
-static void dma_ch0_event_handler(XMC_DMA_CH_EVENT_t event)
-{
-  ring_buffer_cur ^= 1;
-}
-
-void GPDMA0_0_IRQHandler(void)
-{
-  XMC_DMA_IRQHandler(XMC_DMA0);
-}
-
 
 static void delay(uint32_t cycles)
 {
@@ -191,13 +141,7 @@ void configure_uart(uint32_t baudrate) {
 	/* Enable DMA module */
 	XMC_DMA_Init(XMC_DMA0);
 	XMC_DMA_CH_Init(XMC_DMA0, 0, &dma_ch_config);
-	XMC_DMA_CH_EnableEvent(XMC_DMA0, 0, XMC_DMA_CH_EVENT_BLOCK_TRANSFER_COMPLETE);
-	XMC_DMA_CH_SetEventHandler(XMC_DMA0, 0, dma_ch0_event_handler);
 	XMC_DMA_CH_Enable(XMC_DMA0, 0);
-
-	/* Enable DMA event handling */
-	NVIC_SetPriority(GPDMA0_0_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 62, 0));
-	NVIC_EnableIRQ(GPDMA0_0_IRQn);
 
 	BaseType_t xReturned;
 	xReturned = xTaskCreate( uart_task,
