@@ -278,7 +278,9 @@ Grants your device the permission to subscribe to any MQTT topic filter\.
 `iot:Receive`  
 Grants your device the permission to receive messages from the AWS IoT message broker on any MQTT topic\.
 
-1. Choose **Create**\.
+ _**NOTE:** NOTE – The examples in this document are intended only for dev environments. All devices in your fleet must have credentials with privileges that authorize only intended actions on specific resources. The specific permission policies can vary for your use case. Identify the permission policies that best meet your business and security requirements. For more information, refer to [Example policies](https://docs.aws.amazon.com/iot/latest/developerguide/example-iot-policies.html) and [Security Best practices](https://docs.aws.amazon.com/iot/latest/developerguide/security-best-practices.html)._\
+
+ 6. Choose **Create**\.
 
 **To create an IoT thing**
 
