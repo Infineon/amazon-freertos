@@ -1,4 +1,4 @@
-# **[Warning: this branch is DEPRICATED]**: Use the default one instead - https://github.com/Infineon/amazon-freertos/README.md
+# **[Warning: this branch is DEPRICATED]**: Use the default one instead - https://github.com/Infineon/amazon-freertos/blob/feature/infineon/README.md
 
 
 __This repository is a forked version of the main FreeRTOS github [repo](https://github.com/aws/amazon-freertos/).
