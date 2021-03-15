@@ -1,3 +1,6 @@
+# **[Warning: this branch is DEPRICATED]**: Use the default one instead - https://github.com/Infineon/amazon-freertos/README.md
+
+
 __This repository is a forked version of the main FreeRTOS github [repo](https://github.com/aws/amazon-freertos/).
 It focuses on helping to integrate the OPTIGA Trust X and M embedded security solutions.__
 
