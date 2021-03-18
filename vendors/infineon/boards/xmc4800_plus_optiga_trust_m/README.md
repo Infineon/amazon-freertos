@@ -293,10 +293,6 @@ Grants your device the permission to receive messages from the AWS IoT message b
 
 At this point, you will need to attach a certificate and private key to your Thing. This can be accomplished in different ways, based on your device configuration.
 
-* XMC4700 Relax Kit without a secure element, follow **Section 9.1**.
-* XMC4700 Relax Kit with OPTIGA Trust X, follow **Section 9.2**
-* XMC4700 Relax Kit with OPTIGA Trust M, follow **Section 9.3**
-
 ## 9.1: Provision the XMC4800 with an OPTIGA™ Trust M
 The OPTIGA™  Trust M supports 2 modes for device provisioning. 
 
@@ -383,9 +379,7 @@ Building FreeRTOS can be accomplished with DAVE IDE or with CMAKE. If you are us
 
 1. First, you will need to set the secure element configuration for your board. Right click the Project and navigate to **Build Configurations** and then **Set Active**. 
 
-2. In the **Set Active** menu, choose **build_standard** if you are not using a secure element, **build_optiga_trustm** with the OPTIGA™ Trust M, or **build_optiga_trustx** with the OPTIGA™ Trust X.
-
-![XNC4700 DAVE configuration](https://github.com/Infineon/amazon-freertos/raw/feature/infineon/vendors/infineon/boards/xmc4700_relaxkit/images/XMC4700DAVEBuild.png)
+2. In the **Set Active** menu, choose **Debug**
 
 3. From the **Project** menu, choose **Build Active Project**\. 
 
