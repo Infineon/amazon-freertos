@@ -344,9 +344,11 @@ The certificate is already pre-loaded on the OPTIGA™ Trust M, you will not nee
 
 1. Open the file ``demos/config_files/iot_pkcs11_config.h``
 
-1. Set ``pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS`` to ``0xE0F0``
+1. Set ``pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS`` to ``0xE0F0`` (in case you used the Dev Mode Key Provisioning use the value ``0xE0F1``)
 
-1. Set ``pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS`` to ``0xE0E0``
+1. Set ``pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS`` to ``0xE0E0`` (in case you used the Dev Mode Key Provisioning use the value ``0xE0E1``)
+
+1. Set ``pkcs11configLABEL_JITP_CERTIFICATE`` to ``0xE0E0`` (in case you used the Dev Mode Key Provisioning use the value ``0xE0E1``)
 
 1. Open the file ``demos/include/aws_clientcredential_keys.h``.
 
