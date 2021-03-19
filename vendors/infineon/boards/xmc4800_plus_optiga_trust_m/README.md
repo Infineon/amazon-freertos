@@ -348,12 +348,11 @@ The certificate is already pre-loaded on the OPTIGA™ Trust M, you will not nee
 
 1. Set ``pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS`` to ``0xE0E0`` (in case you used the Dev Mode Key Provisioning use the value ``0xE0E1``)
 
-1. Set ``pkcs11configLABEL_JITP_CERTIFICATE`` to ``0xE0E0`` (in case you used the Dev Mode Key Provisioning use the value ``0xE0E2``)
+1. Set ``pkcs11configLABEL_JITP_CERTIFICATE`` to ``0xE0E0`` (in case you used the Dev Mode Key Provisioning use the value ``0xE0E1``)
 
 1. Open the file ``demos/include/aws_clientcredential_keys.h``.
 
 1. Ensure ``keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM``, ``keyCLIENT_CERTIFICATE_PEM``, and ``keyCLIENT_PRIVATE_KEY_PEM`` are set to ``""``
-    * In case you used the Dev Mode Key Provisioning you should populate ``keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM`` and ``keyCLIENT_CERTIFICATE_PEM`` with the result certificates you have generated as part of the Dev Mode Key Provisioning excercise).
 
 # 10: Configure FreeRTOS
 You need to provide FreeRTOS with your AWS IoT endpoint so the application running on your board can send requests to the correct endpoint\.
