@@ -201,11 +201,8 @@ CK_RV xDerToPemAndPrint( CK_BYTE_PTR pDerCertificate, CK_ULONG ulDerCertificateL
 
 				printf("%.64s\n",pPemCertificate + ulReadOffset);
 			}
-			if (ulReadOffset > ulPemCertificateLength)
-			{
-				ulReadOffset-=64;
-				printf("%.64s\n", pPemCertificate + ulReadOffset);
-			}
+			ulReadOffset-=64;
+			printf("%.64", pPemCertificate + ulReadOffset);
 			printf("-----END CERTIFICATE-----\n");
 		}
 
