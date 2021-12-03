@@ -17,11 +17,10 @@ If you have downloaded the repo without using the `--recurse-submodules` argumen
 git submodule update --init --recursive
 ```
 
-## Important branches to know
-master            --> Development is done continuously on this branch  
-release           --> Fully tested released source code  
-release-candidate --> Preview of upcoming release  
-feature/*         --> Alpha/beta of an upcoming feature  
+## Important branches/tags to know
+202007-MTBAFR2149 --> PSoC 6 and CYW Evaluation Kit support (latest release)
+201910-MTBAFR2149 --> PSoC 6 and CYW Evaluation Kit support (this release) 
+feature/infineon  --> XMC and OPTIGA support
 
 ## Getting Started
 
