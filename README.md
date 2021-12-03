@@ -21,6 +21,7 @@ git submodule update --init --recursive
 
 ## Important branches/tags to know
 202007-MTBAFR2149 --> PSoC 6 and CYW Evaluation Kit support
+
 feature/infineon  --> XMC and OPTIGA support
 
 ## Getting Started
