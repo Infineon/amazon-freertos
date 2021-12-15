@@ -19,11 +19,10 @@ If you have downloaded the repo without using the `--recurse-submodules` argumen
 git submodule update --init --recursive
 ```
 
-## Important branches to know
-master            --> Development is done continuously on this branch  
-release           --> Fully tested released source code  
-release-candidate --> Preview of upcoming release  
-feature/*         --> Alpha/beta of an upcoming feature  
+## Important branches/tags to know
+202007-MTBAFR2149 --> PSoC 6 and CYW Evaluation Kit support
+
+feature/infineon  --> XMC and OPTIGA support
 
 ## Getting Started
 
@@ -39,23 +38,23 @@ For additional boards that are supported for FreeRTOS, please visit the [AWS Dev
 
 The following MCU boards are supported for FreeRTOS:
 1. **Cypress CY8CPROTO-062-4343W** - [Cypress PSoC 6 Wi-Fi BT Prototyping Kit](http://www.cypress.com/CY8CPROTO-062-4343W).
-    * [Getting Started Guide](https://community.cypress.com/community/modustoolbox-amazon-freertos-sdk)
-    * IDEs: [ModusToolbox](https://community.cypress.com/community/modustoolbox-amazon-freertos-sdk)
+    * [Getting Started Guide](https://community.infineon.com/t5/Resource-Library/Getting-Started-with-Amazon-FreeRTOS-and-PSoC62-43xxx/ta-p/260261)
+    * IDEs: [ModusToolbox](https://www.cypress.com/products/modustoolbox)
 2. **Cypress CY8CKIT-062-WIFI-BT** - [Cypress PSoC 6 WiFi-BT Pioneer Kit](https://www.cypress.com/CY8CKIT-062-WiFi-BT).
-    * [Getting Started Guide](https://community.cypress.com/community/modustoolbox-amazon-freertos-sdk)
-    * IDEs: [ModusToolbox](https://community.cypress.com/community/modustoolbox-amazon-freertos-sdk)
+    * [Getting Started Guide](https://community.infineon.com/t5/Resource-Library/Getting-Started-with-Amazon-FreeRTOS-and-PSoC62-43xxx/ta-p/260261)
+    * IDEs: [ModusToolbox](https://www.cypress.com/products/modustoolbox)
 3. **Cypress PSoC 64** - [PSoC 64 Standard Secure AWS Wi-Fi Bluetooth Pioneer Kit](https://www.cypress.com/cy8ckit-064S0S2-4343W)
     * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_cypress_psoc64.html)
-    * IDE: [ModusToolbox](https://www.cypress.com/products/modustoolbox-software-environment)
+    * IDE: [ModusToolbox](https://www.cypress.com/products/modustoolbox)
 4. **Cypress CY8CKIT-062S2-43012** - [Cypress PSoC 6 WiFi-BT Pioneer Kit](https://www.cypress.com/CY8CKIT-062S2-43012).
-    * [Getting Started Guide](https://community.cypress.com/community/modustoolbox-amazon-freertos-sdk)
-    * IDEs: [ModusToolbox](https://community.cypress.com/community/modustoolbox-amazon-freertos-sdk)
+    * [Getting Started Guide](https://community.infineon.com/t5/Resource-Library/Getting-Started-with-Amazon-FreeRTOS-and-PSoC62-43xxx/ta-p/260261)
+    * IDEs: [ModusToolbox](https://www.cypress.com/products/modustoolbox)
 5. **Cypress CYW54907** - [Cypress CYW954907AEVAL1F Evaluation Kit](https://www.cypress.com/documentation/development-kitsboards/cyw954907aeval1f-evaluation-kit)
     * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_cypress_54.html)
-    * IDE: [WICED Studio](https://community.cypress.com/community/wiced-wifi)
+    * IDE: [WICED Studio](https://www.cypress.com/products/wiced-software)
 6. **Cypress CYW43907** - [Cypress CYW943907AEVAL1F Evaluation Kit](https://www.cypress.com/documentation/development-kitsboards/cyw943907aeval1f-evaluation-kit)
     * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_cypress_43.html)
-    * IDE: [WICED Studio](https://community.cypress.com/community/wiced-wifi)
+    * IDE: [WICED Studio](https://www.cypress.com/products/wiced-software)
 7. **Infineon** - [Infineon XMC4800 IoT Connectivity Kit](https://www.infineon.com/connectivitykit)
     * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_infineon.html)
     * IDE: [DAVE](https://infineoncommunity.com/dave-download_ID645)
